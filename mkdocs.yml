@@ -1,5 +1,5 @@
 site_name: 'HPE Storage Container Orchestrator Documentation'
-site_url: 'https://scod.hpedev.io'
+site_url: 'https://scod.hpedev.io/'
 theme: 
   name: readthedocs
   custom_dir: hpe_theme/
