@@ -10,7 +10,7 @@ extra_css:
   - css/hpedev.css
 google_analytics:
   - 'UA-79554149-3'
-  - 'https://scod.hpedev.io'
+  - 'auto'
 nav:
 #  - HPE CSI DRIVER FOR KUBERNETES:
 #   - 'Overview': 'csi/overview.md'
