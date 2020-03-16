@@ -1,17 +1,6 @@
-# Welcome to MkDocs
+# Welcome!
+This is the HPE Storage Container Orchestrator Documentation project. 
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
+An umbrella documentation project for all container integrations for HPE Storage tailored for IT Ops, developers and partners. Including HPE 3PAR/Primera, HPE Cloud Volumes and HPE Nimble Storage.
 
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+<div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg"></div>

@@ -1,1 +1,58 @@
-site_name: My Docs
+site_name: 'HPE Storage Container Orchestrator Documentation'
+site_url: 'https://scod.hpedev.io'
+theme: 
+  name: readthedocs
+  custom_dir: hpe_theme/
+repo_name: 'hpe-storage/scod'
+repo_url: 'https://github.com/hpe-storage/scod'
+copyright: 'Copyright 2020 Hewlett Packard Enterprise Development LP'
+extra_css:
+  - css/hpedev.css
+google_analytics:
+  - 'UA-79554149-3'
+  - 'https://scod.hpedev.io'
+nav:
+#  - HPE CSI DRIVER FOR KUBERNETES:
+#   - 'Overview': 'csi/overview.md'
+#   - 'Installing': 'csi/installing.md'
+#   - 'Using': 'csi/using.md'
+#   - 'Helm Charts': 'csi/helm.md'
+#   - 'Operators': 'csi/operators.md'
+# - CONTAINER STORAGE PROVIDERS:
+#   - 'HPE 3PAR/Primera': 'csp/3par_primera.md'
+#   - 'HPE Cloud Volumes': 'csp/cloud_volumes.md'
+#   - 'HPE Nimble Storage': 'csp/nimble_storage.md'
+# - HPE CONTAINER PLATFORM:
+#   - 'Overview': 'hcp/overview.md'
+#   - 'Configure': 'hcp/configure.md'
+# - PARTNER ECOSYSTEMS:
+#   - 'Red Hat OpenShift': 'partners/openshift.md'
+#   - 'Google Anthos': 'partners/anthos.md'
+#   - 'Rancher': 'partners/rancher.md'
+# - MANAGED KUBERNETES:
+#   - 'Amazon Elastic Kubernetes Engine': 'managed/eks.md'
+#   - 'Azure Kubernetes Service': 'managed/aks.md'
+#   - 'Google Kubernetes Engine': 'managed/eks.md'
+# - DOCKER VOLUME PLUGINS:
+#   - 'HPE 3PAR/Primera': 'docker/3par_primera.md'
+#   - 'HPE Cloud Volumes': 'docker/cloud_volumes.md'
+#   - 'HPE Nimble Storage': 'docker/nimble_storage.md'
+# - LEGACY FLEXVOLUME DRIVER:
+#   - 'Overview': 'flexvolume/overview.md'
+#   - 'Installing': 'flexvolume/installing.md'
+#   - 'Using': 'flexvolume/using.md'
+#   - 'Helm Charts': 'flexvolume/helm.md'
+# - WORKLOAD BLUEPRINTS:
+#   - 'Running MongoDB on HPE Storage': 'workloads/mongodb.md'
+#   - 'Hybrid Cloud CI/CD pipelines': 'workloads/hybrid_cloud_cicd.md'
+# - COMMUNITY:
+#   - 'HPE DEV': 'community/hpe_dev.md'
+#   - 'Blogs': 'community/blogs.md'
+# - LEARN:
+#   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
+#   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
+#   - 'External Resources': 'learn/links.md'
+ - LEGAL:
+#    - 'Contributing': 'legal/contributing.md'
+#    - 'Support': 'legal/support.md'
+    - 'License': 'legal/license.md'

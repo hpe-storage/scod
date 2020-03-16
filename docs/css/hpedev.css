@@ -1,0 +1,16 @@
+.wy-side-nav-search, .wy-nav-top {
+    background: #477083;
+}
+.wy-nav-side {
+    background: #425563;
+}
+
+.wy-menu-vertical a:hover {
+    background-color: #00b388;
+    color: #fff;
+}
+
+.wy-menu-vertical span {
+    font-weight: bold;
+    color: #ddd;
+}
