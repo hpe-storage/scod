@@ -31,6 +31,6 @@ All the documentation lives in [docs](docs). Your edits should immediatly reload
 Once edits are done, commit and push your branch (don't forget the sign-off, see [contributing](docs/legal/contributing.md)) and submit a [pull request](https://github.com/hpe-storage/scod/pulls) (PR).
 
 # Get in touch
-The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) feel free to reach out there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
+The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
 
 We appreciate your support and contributions!
