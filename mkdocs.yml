@@ -1,5 +1,7 @@
 site_name: 'HPE Storage Container Orchestrator Documentation'
+site_description: 'Reference documentation for container orchestrator integration for HPE storage'
 site_url: 'https://scod.hpedev.io/'
+site_author: 'Hewlett Packard Enterprise'
 theme: 
   name: readthedocs
   custom_dir: hpe_theme/
@@ -11,6 +13,8 @@ extra_css:
 google_analytics:
   - 'UA-79554149-3'
   - 'auto'
+use_directory_urls: false
+edit_uri: ''
 nav:
 #  - HPE CSI DRIVER FOR KUBERNETES:
 #   - 'Overview': 'csi/overview.md'
@@ -53,6 +57,6 @@ nav:
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
  - LEGAL:
-#    - 'Contributing': 'legal/contributing.md'
+    - 'Contributing': 'legal/contributing.md'
 #    - 'Support': 'legal/support.md'
     - 'License': 'legal/license.md'
