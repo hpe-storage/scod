@@ -37,10 +37,10 @@ nav:
 #   - 'Amazon Elastic Kubernetes Engine': 'managed/eks.md'
 #   - 'Azure Kubernetes Service': 'managed/aks.md'
 #   - 'Google Kubernetes Engine': 'managed/eks.md'
-# - DOCKER VOLUME PLUGINS:
+  - DOCKER VOLUME PLUGINS:
 #   - 'HPE 3PAR/Primera': 'docker/3par_primera.md'
-#   - 'HPE Cloud Volumes': 'docker/cloud_volumes.md'
-#   - 'HPE Nimble Storage': 'docker/nimble_storage.md'
+    - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes.md'
+    - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage.md'
 # - LEGACY FLEXVOLUME DRIVER:
 #   - 'Overview': 'flexvolume/overview.md'
 #   - 'Installing': 'flexvolume/installing.md'
@@ -56,7 +56,7 @@ nav:
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
- - LEGAL:
+  - LEGAL:
     - 'Contributing': 'legal/contributing.md'
 #    - 'Support': 'legal/support.md'
     - 'License': 'legal/license.md'
