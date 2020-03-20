@@ -260,7 +260,7 @@ The Docker Volume plugin leverages the existing Docker CLI and APIs, therefor al
 
 **Note**: The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  
 
-Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-driver.json:`
+Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-driver.json`:
 
 ```json
 {
@@ -352,7 +352,7 @@ docker plugin rm cvblock
 
 ### Config Directory
 
-The config directory is at `/etc/hpe`storage/`. When a plugin is installed and enabled, the HPE Cloud Volumes certificates are created in the config directory.
+The config directory is at `/etc/hpe-storage/`. When a plugin is installed and enabled, the HPE Cloud Volumes certificates are created in the config directory.
 
 ```shell
 ls -l /etc/hpe-storage/

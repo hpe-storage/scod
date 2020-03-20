@@ -502,7 +502,7 @@ docker plugin rm nimble
 
 ### Config Directory
 
-The config directory is at `/etc/hpe`storage/`. When a plugin is installed and enabled, the Nimble Group certificates are created in the config directory.
+The config directory is at `/etc/hpe-storage/`. When a plugin is installed and enabled, the Nimble Group certificates are created in the config directory.
 
 ```shell
 ls -l /etc/hpe-storage/
