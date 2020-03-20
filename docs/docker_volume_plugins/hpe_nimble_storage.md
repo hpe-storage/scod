@@ -107,7 +107,7 @@ List of parameters which are supported to be settable by the plugin
 | `SCOPE`                 | Scope of the plugin (`global` or `local`)                   | `global` |
 | `PROTOCOL`              | Scsi protocol supported by the plugin (`iscsi` or `fc`)     | `iscsi`  |
 
-## Security Consideration
+## Security considerations
 The HPE Nimble Storage credentials are visible to any user who can execute `docker plugin inspect nimble`. To limit credential visibility, the variables should be unset after certificates have been generated. The following set of steps can be used to accomplish this:
 
 Add the credentials
