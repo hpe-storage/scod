@@ -143,30 +143,30 @@ The `overrides` map allows the docker host administrator to enforce a certain op
 
 Example config file in `/etc/hpe-storage/volume-driver.json`:
 ```json
-    {
-      "global": {
-                "snapPrefix": "BaseFor",
-                "initiators": ["eth0"],
-                "automatedConnection": true,
-                "existingCloudSubnet": "10.1.0.0/24",
-                "region": "us-east-1",
-                "privateCloud": "vpc-data",
-                "cloudComputeProvider": "Amazon AWS"
-      },
-      "defaults": {
-                "limitIOPS": 1000,
-                "fsOwner": "0:0",
-                "fsMode": "600",
-                "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
-                "perfPolicy": "Other",
-                "protectionTemplate": "twicedaily:4",
-                "encryption": true,
-                "volumeType": "PF",
-                "destroyOnRm": true
-      },
-      "overrides": {
-      }
-    }
+{
+  "global": {
+            "snapPrefix": "BaseFor",
+            "initiators": ["eth0"],
+            "automatedConnection": true,
+            "existingCloudSubnet": "10.1.0.0/24",
+            "region": "us-east-1",
+            "privateCloud": "vpc-data",
+            "cloudComputeProvider": "Amazon AWS"
+  },
+  "defaults": {
+            "limitIOPS": 1000,
+            "fsOwner": "0:0",
+            "fsMode": "600",
+            "description": "Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin",
+            "perfPolicy": "Other",
+            "protectionTemplate": "twicedaily:4",
+            "encryption": true,
+            "volumeType": "PF",
+            "destroyOnRm": true
+  },
+  "overrides": {
+  }
+}
 ```
 
 For an exhaustive list of options use the `help` option from the docker CLI:
