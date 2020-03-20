@@ -132,7 +132,7 @@ docker plugin set cvblock PROVIDER_IP=< New portal address > PROVIDER_USERNAME=a
 
 **Note:** The `PROVIDER_REMOVE=false` parameter must be set if the plugin ever has been unassociated from a HPE Cloud Volumes portal.
 
-### Configuration files and options
+## Configuration files and options
 The configuration directory for the plugin is `/etc/hpe-storage` on the host. Files in this directory are preserved between plugin upgrades. The `/etc/hpe-storage/volume-driver.json` file contains three sections, `global`, `defaults` and `overrides`. The global options are plugin runtime parameters and doesn't have any end-user configurable keys at this time.
 
 The `defaults` map allows the docker host administrator to set default options during volume creation. The docker user may override these default options with their own values for a specific option.
@@ -174,6 +174,7 @@ For an exhaustive list of options use the `help` option from the docker CLI:
 ```shell
 $ docker volume create -d cvblock -o help
 ```
+
 ## Node fencing
 If you are considering using any Docker clustering technologies for your Docker deployment, it is important to understand the fencing mechanism used to protect data. Attaching the same Docker Volume to multiple containers on the same host is fully supported. Mounting the same volume on multiple hosts is not supported.
 
