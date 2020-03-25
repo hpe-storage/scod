@@ -1,3 +1,5 @@
+[TOC]
+
 # Requirements
 
 - Docker Engine 17.09 or greater
@@ -13,7 +15,7 @@
 **Note:** Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Nimble Storage, please use the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver)).
 
 ## Limitations
-HPE Nimble Storage provides a Docker certified plugin delivered through the Docker Store. HPE Nimble Storage also provides a Docker Volume plugin for Windows Containers as part of the Nimble Windows Toolkit (NWT) which is available on [HPE InfoSight](https://infosight.hpe.com/tenant/Nimble.Tenant.0013400001Ug0UxAAJ/resources/nimble/software/Integration%20Kits/HPE%20Nimble%20Storage%20Docker%20Volume%20Plugin). Certain features and capabilities are not available through the managed plugin. Please understand these limitations before deploying either of these plugins.
+HPE Nimble Storage provides a Docker certified plugin delivered through the Docker Store. HPE Nimble Storage also provides a Docker Volume plugin for Windows Containers, it's available on [HPE InfoSight](https://infosight.hpe.com/org/urn%3Ainfosight%3A605d9baf-c394-4882-9742-a44bd8678cad/resources/nimble/software/Integration%20Kits/HPE%20Nimble%20Storage%20Volume%20Plugin%20for%20Docker%20Windows%20Containers) along with its [documentation](https://infosight.hpe.com/InfoSight/media/software/active/18/291/pubs_Volume_Plugin_for_Docker_on_Windows_Containers_Guide_Docker_2_0_0.pdf). Certain features and capabilities are not available through the managed plugin. Please understand these limitations before deploying either of these plugins.
 
 The managed plugin does NOT provide:
 
@@ -87,15 +89,14 @@ systemctl restart open-iscsi multipath-tools
 
 **NOTE:** To use the plugin on Fibre Channel environments use the `PROTOCOL=FC` environment variable.
 
-### Making Changes
+### Making changes
 The `docker plugin set` command can only be used on the plugin if it is disabled. To disable the plugin, use the `docker plugin disable` command. For example:
 
 ```
 docker plugin disable nimble
 ```
 
-#### Settable Parameters
-List of parameters which are supported to be settable by the plugin
+List of parameters which are supported to be settable by the plugin.
 
 |  Parameter              |  Description                                                |  Default |
 |-------------------------|-------------------------------------------------------------|----------|
@@ -349,13 +350,12 @@ Add these parameters to the `/etc/sysctl.d/99-hung_task_timeout.conf` file and r
 **Note:** Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.
 
 ## Usage
+These are some basic examples on how to use the HPE Nimble Storage Volume Plugin for Docker.
 
 ### Create a Docker Volume
 Using `docker volume create`.
 
 **Note:** The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
-
-#### Example
 
 Create a Docker volume with a custom description:
 
@@ -380,7 +380,6 @@ The volume is mounted inside the container on `/data`.
 ### Clone a Docker Volume
 Use the `docker volume create` command with the `cloneOf` option to clone a Docker volume to a new Docker volume.
 
-#### Example
 Clone the Docker volume named `myvol1` to a new Docker volume named `myvol1-clone`.
 
 ```shell
@@ -417,26 +416,21 @@ Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-dr
 }
 ```
 
-### Import a Volume to Docker
+### Import a volume to Docker
 
-#### Before you begin
+**Before you begin**
 Take the volume you want to import offline before importing it. For information about how to take a volume offline, refer to either the `CLI Administration Guide` or the `GUI Administration Guide` on [HPE InfoSight](https://infosight.hpe.com). Use the `create` command with the `importVol` option to import an HPE Nimble Storage volume to Docker and name it.
 
-#### Example
 Import the HPE Nimble Storage volume named `mynimblevol` as a Docker volume named `myvol3-imported`.
 
 ```shell
 docker volume create –d nimble -o importVol=mynimblevol --name=myvol3-imported
 ```
 
-### Import a Volume Snapshot to Docker
+### Import a volume snapshot to Docker
 
 Use the create command with the `importVolAsClone` option to import a HPE Nimble Storage volume snapshot as a Docker volume. Optionally, specify a particular snapshot on the HPE Nimble Storage volume using the snapshot option.
 
-#### Procedure
-Import a HPE Nimble Storage volume snapshot to Docker.
-
-#### Example
 Import the HPE Nimble Storage snapshot `aSnapshot` on the volume `importMe` as a Docker volume named `importedSnap`.
 
 ```shell
@@ -445,20 +439,17 @@ docker volume create -d nimble -o importVolAsClone=mynimblevol -o snapshot=mysna
 
 **Note:** If no snapshot is specified, the latest snapshot on the volume is imported.
 
-### Restore an Offline Docker Volume with Specified Snapshot
+### Restore an offline Docker Volume with specified snapshot
 It's important that the volume to be restored is in an offline state on the array.
 
-#### Example
 If the volume snapshot is not specified, the last volume snapshot is used.
 
 ```shell
 docker volume create -d nimble -o importVol=myvol1.docker -o forceImport -o restore -o snapshot=mysnap1 --name=myvol1-restored
 ```
 
-### List Volumes
+### List volumes
 List Docker volumes.
-
-#### Example
 
 ```shell
 docker volume ls
@@ -474,8 +465,6 @@ When you remove volumes from Docker control they are set to the offline state on
 with a `-o destroyOnRm` flag.
 
 **Important:** Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.
-
-#### Example
 
 Remove the volume named `myvol1`.
 
@@ -500,8 +489,6 @@ docker plugin rm nimble
 
 ## Troubleshooting
 
-### Config Directory
-
 The config directory is at `/etc/hpe-storage/`. When a plugin is installed and enabled, the Nimble Group certificates are created in the config directory.
 
 ```shell
@@ -515,7 +502,7 @@ total 16
 Additionally there is a config file `volume-driver.json` present at the same location. This file can be edited
 to set default parameters for create volumes for docker.
 
-### Log file
+#### Log file location
 
 The docker plugin logs are located at `/var/log/hpe-docker-plugin.log`
 
@@ -523,7 +510,7 @@ The docker plugin logs are located at `/var/log/hpe-docker-plugin.log`
 
 Upgrading from 2.5.1 or older plugins, please follow the below steps
 
-#### Ubuntu 16.04 LTS and Ubuntu 18.04 LTS:
+Ubuntu 16.04 LTS and Ubuntu 18.04 LTS:
 
 ```shell
 docker plugin disable nimble:latest –f
@@ -532,7 +519,7 @@ docker plugin set nimble PROVIDER_IP=192.168.1.1 PROVIDER_USERNAME=admin PROVIDE
 docker plugin enable nimble:latest
 ```
 
-#### Red Hat 7.5+, CentOS 7.5+, Oracle Enterprise Linux 7.5+ and Fedora 28+:
+Red Hat 7.5+, CentOS 7.5+, Oracle Enterprise Linux 7.5+ and Fedora 28+:
 
 ```shell
 docker plugin disable nimble:latest –f

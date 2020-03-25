@@ -30,6 +30,27 @@ All the documentation lives in [docs](docs). Your edits should immediatly reload
 
 Once edits are done, commit and push your branch (don't forget the sign-off, see [contributing](docs/legal/contributing.md)) and submit a [pull request](https://github.com/hpe-storage/scod/pulls) (PR).
 
+# Style guides
+The goal is to try keep content as cohesive as possible. Some old sources may require some refactoring to fit into the MkDocs styles we adopt.
+
+## Embedding objects
+Using external sources such as YouTube and Asciinema is encouraged. Here are a few hints on how to get the best results.
+
+### YouTube
+Figure out the video ID of the video you want to embed, it's the `v` variable in the URL of the YouTube video. Let's assume the source has a 16:9 aspect ratio. Pay attention to the `width` and `height`, replace the `<VIDEO ID>` string with the video you would like to embed.
+
+```
+<iframe width="696" height="392" src="https://www.youtube.com/embed/<VIDEO ID>" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+```
+
+**Note:** Make sure the video is "embeddable" (hit play in your local rendering).
+
+### Asciinema
+Set the column width of your terminal to 96 columns. Copy & paste the embed code straight from asciinema.org (click "Share" on the recording and copy "Embed the player"). It should look like this:
+```
+<script id="asciicast-236786" src="https://asciinema.org/a/236786.js" async></script>
+```
+
 # Get in touch
 The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
 

@@ -1,3 +1,5 @@
+[TOC]
+
 # Requirements
 
 - Docker Engine 17.09 or greater
@@ -23,7 +25,7 @@ The managed plugin does provide a simple way to manage HPE Cloud Volumes integra
 
 ## Installation
 
-### Plugin Privileges
+### Plugin privileges
 In order to create connections, attach devices and mount file systems, the plugin requires more privileges than a standard application container. These privileges are enumerated during installation. These permissions need to be granted for the plugin to operate correctly.
 
 ```shell
@@ -41,8 +43,11 @@ Plugin "cvblock" is requesting the following privileges:
  - allow-all-devices: [true]
  - capabilities: [CAP_SYS_ADMIN CAP_SYS_MODULE CAP_MKNOD]
 ```
+### Host configuration and installation
 
-These procedures **requires** root privileges.
+Setting up the plugin varies between Linux distributions.
+
+These procedures **requires** root privileges on the cloud instance.
 
 Red Hat 7.5+, CentOS 7.5+:
 ```shell
@@ -79,14 +84,13 @@ systemctl daemon-reload
 systemctl restart open-iscsi multipath-tools
 ```
 
-### Making Changes
+### Making changes
 The `docker plugin set` command can only be used on the plugin if it is disabled. To disable the plugin, use the `docker plugin disable` command. For example:
 
 ```shell
 docker plugin disable cvblock
 ```
 
-#### Settable Parameters
 List of parameters which are supported to be settable by the plugin
 
 |  Parameter              |  Description                                                |  Default |
@@ -212,8 +216,6 @@ Using `docker volume create`.
 
 **Note:** The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
 
-#### Example
-
 Create a Docker volume with a custom description:
 
 ```shell
@@ -237,7 +239,6 @@ The volume is mounted inside the container on `/data`.
 ### Clone a Docker Volume
 Use the `docker volume create` command with the `cloneOf` option to clone a Docker volume to a new Docker volume.
 
-#### Example
 Clone the Docker volume named `myvol1` to a new Docker volume named `myvol1-clone`.
 
 ```shell
@@ -277,24 +278,18 @@ Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-dr
 
 ### Import a Volume to Docker
 
-#### Before you begin
 Take the volume you want to import offline before importing it. For information about how to take a volume offline, refer to the [HPE Cloud Volumes documentation](https://docs.cloudvolumes.hpe.com/help/). Use the `create` command with the `importVol` option to import an HPE Cloud Volume to Docker and name it.
 
-#### Example
 Import the HPE Cloud Volume named `mycloudvol` as a Docker volume named `myvol3-imported`.
 
 ```shell
 docker volume create –d cvblock -o importVol=mycloudvol --name=myvol3-imported
 ```
 
-### Import a Volume Snapshot to Docker
+### Import a volume snapshot to Docker
 
 Use the create command with the `importVolAsClone` option to import a HPE Cloud Volume snapshot as a Docker volume. Optionally, specify a particular snapshot on the HPE Cloud Volume using the snapshot option.
 
-#### Procedure
-Import a HPE Cloud Volume snapshot to Docker.
-
-#### Example
 Import the HPE Cloud Volumes snapshot `aSnapshot` on the volume `importMe` as a Docker volume named `importedSnap`.
 
 ```shell
@@ -303,20 +298,17 @@ docker volume create -d cvblock -o importVolAsClone=mycloudvol -o snapshot=mysna
 
 **Note:** If no snapshot is specified, the latest snapshot on the volume is imported.
 
-### Restore an Offline Docker Volume with Specified Snapshot
+### Restore an offline Docker Volume with specified snapshot
 It's important that the volume to be restored is in an offline state on the array.
 
-#### Example
 If the volume snapshot is not specified, the last volume snapshot is used.
 
 ```shell
 docker volume create -d cvblock -o importVol=myvol1.docker -o forceImport -o restore -o snapshot=mysnap1 --name=myvol1-restored
 ```
 
-### List Volumes
+### List volumes
 List Docker volumes.
-
-#### Example
 
 ```shell
 docker volume ls
@@ -333,8 +325,6 @@ with a `-o destroyOnRm` flag.
 
 **Important:** Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.
 
-#### Example
-
 Remove the volume named `myvol1`.
 
 ```shell
@@ -344,13 +334,11 @@ docker volume rm myvol1
 ## Uninstall
 The plugin can be removed using the `docker plugin rm` command. This command will not remove the configuration directory (`/etc/hpe-storage/`).
 
-```
+```shell
 docker plugin rm cvblock
 ```
 
 ## Troubleshooting
-
-### Config Directory
 
 The config directory is at `/etc/hpe-storage/`. When a plugin is installed and enabled, the HPE Cloud Volumes certificates are created in the config directory.
 
@@ -365,6 +353,6 @@ total 16
 Additionally there is a config file `volume-driver.json` present at the same location. This file can be edited
 to set default parameters for create volumes for docker.
 
-### Log file
+### Log file location
 
 The docker plugin logs are located at `/var/log/hpe-docker-plugin.log`
