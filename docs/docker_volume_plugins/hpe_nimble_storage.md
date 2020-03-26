@@ -16,7 +16,8 @@ This is the documentation for [HPE Nimble Storage Volume Plugin for Docker](http
 | 3.0.0      | 5.0.8.x and 5.1.3.x onwards | [v3.0.0](https://github.com/hpe-storage/common-host-utils/blob/master/cmd/dockervolumed/managedplugin/release-notes/v3.0.0.md)|
 | 3.1.0      | 5.0.8.x and 5.1.3.x onwards | [v3.1.0](https://github.com/hpe-storage/common-host-utils/blob/master/cmd/dockervolumed/managedplugin/release-notes/v3.1.0.md)|
 
-**Note:** Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Nimble Storage, please use the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver)).
+!!! note
+    Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Nimble Storage, please use the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver) or the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) depending on your situation.
 
 ## Limitations
 HPE Nimble Storage provides a Docker certified plugin delivered through the Docker Store. HPE Nimble Storage also provides a Docker Volume plugin for Windows Containers, it's available on [HPE InfoSight](https://infosight.hpe.com/org/urn%3Ainfosight%3A605d9baf-c394-4882-9742-a44bd8678cad/resources/nimble/software/Integration%20Kits/HPE%20Nimble%20Storage%20Volume%20Plugin%20for%20Docker%20Windows%20Containers) along with its [documentation](https://infosight.hpe.com/InfoSight/media/software/active/18/291/pubs_Volume_Plugin_for_Docker_on_Windows_Containers_Guide_Docker_2_0_0.pdf). Certain features and capabilities are not available through the managed plugin. Please understand these limitations before deploying either of these plugins.
@@ -145,7 +146,8 @@ Start the plugin
 docker plugin enable nimble
 ```
 
-**Note:** Certificates are stored in `/etc/hpe-storage/` on the host and will be preserved across plugin updates.
+!!! note
+    Certificates are stored in `/etc/hpe-storage/` on the host and will be preserved across plugin updates.
 
 In the event of reassociating the plugin with a different HPE Nimble Storage group, certain procedures need to be followed:
 
@@ -351,7 +353,8 @@ kernel.hung_task_timeout_secs = 150
 
 Add these parameters to the `/etc/sysctl.d/99-hung_task_timeout.conf` file and reboot the system.
 
-**Note:** Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.
+!!! important 
+    Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.
 
 ## Usage
 These are some basic examples on how to use the HPE Nimble Storage Volume Plugin for Docker.
@@ -359,7 +362,8 @@ These are some basic examples on how to use the HPE Nimble Storage Volume Plugin
 ### Create a Docker Volume
 Using `docker volume create`.
 
-**Note:** The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
+!!! note
+    The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
 
 Create a Docker volume with a custom description:
 
@@ -404,7 +408,8 @@ There are several ways to provision a Docker volume depending on what tools are 
 
 The Docker Volume plugin leverages the existing Docker CLI and APIs, therefor all native Docker tools may be used to provision a volume.
 
-**Note**: The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  
+!!! note
+    The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  
 Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-driver.json:`
 
 ```json
@@ -441,7 +446,8 @@ Import the HPE Nimble Storage snapshot `aSnapshot` on the volume `importMe` as a
 docker volume create -d nimble -o importVolAsClone=mynimblevol -o snapshot=mysnap1 --name=myvol4-clone
 ```
 
-**Note:** If no snapshot is specified, the latest snapshot on the volume is imported.
+!!! note
+    If no snapshot is specified, the latest snapshot on the volume is imported.
 
 ### Restore an offline Docker Volume with specified snapshot
 It's important that the volume to be restored is in an offline state on the array.
@@ -465,7 +471,8 @@ nimble:latest              myvol1-clone
 ### Remove a Docker Volume
 When you remove volumes from Docker control they are set to the offline state on the array. Access to the volumes and related snapshots using the Docker Volume plugin can be reestablished.
 
-**Note:** To delete volumes from the HPE Nimble Storage array using the remove command, the volume should have been created
+!!! note
+    To delete volumes from the HPE Nimble Storage array using the remove command, the volume should have been created
 with a `-o destroyOnRm` flag.
 
 **Important:** Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.
@@ -483,7 +490,8 @@ The plugin can be removed using the `docker plugin rm` command. This command wil
 docker plugin rm nimble
 ```
 
-**Note:** If this is the last plugin to reference the Nimble Group and to completely remove the configuration directory, follow the steps as below
+!!! important
+    If this is the last plugin to reference the Nimble Group and to completely remove the configuration directory, follow the steps as below
 
 ```shell
 docker plugin set nimble PROVIDER_REMOVE=true
@@ -531,4 +539,5 @@ docker plugin upgrade --grant-all-permissions  nimble store/hpestorage/nimble:3.
 docker plugin enable nimble:latest
 ```
 
-**Note**: In Swarm Mode Drain the existing running containers to the node where the plugin is upgraded.
+!!! important
+    In Swarm Mode, drain the existing running containers to the node where the plugin is upgraded.

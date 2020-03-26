@@ -16,6 +16,7 @@ google_analytics:
 use_directory_urls: false
 edit_uri: ''
 markdown_extensions:
+  - admonition:
   - toc:
       permalink: True
       separator: "_"

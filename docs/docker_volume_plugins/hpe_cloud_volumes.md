@@ -15,7 +15,8 @@ This is the documentation for [HPE Cloud Volumes Plugin for Docker](https://hub.
 |-------------|------------------|
 | 3.1.0       | [v3.1.0](https://github.com/hpe-storage/common-host-utils/blob/master/cmd/dockervolumed/managedplugin/release-notes/v3.1.0.md)|
 
-**Note:** Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Cloud Volumes, please use the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver)).
+!!! note
+    Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Nimble Storage, please use the [HPE Volume Driver for Kubernetes FlexVolume Plugin](https://github.com/hpe-storage/flexvolume-driver) or the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver) depending on your situation.
 
 ## Limitations
 HPE Cloud Volumes provides a Docker certified plugin delivered through the Docker Store. Certain features and capabilities are not available through the managed plugin. Please understand these limitations before deploying either of these plugins.
@@ -138,7 +139,8 @@ The plugin is now ready for re-configuration
 docker plugin set cvblock PROVIDER_IP=< New portal address > PROVIDER_USERNAME=admin PROVIDER_PASSWORD=admin PROVIDER_REMOVE=false
 ```
 
-**Note:** The `PROVIDER_REMOVE=false` parameter must be set if the plugin ever has been unassociated from a HPE Cloud Volumes portal.
+!!! note
+    The `PROVIDER_REMOVE=false` parameter must be set if the plugin ever has been unassociated from a HPE Cloud Volumes portal.
 
 ## Configuration files and options
 The configuration directory for the plugin is `/etc/hpe-storage` on the host. Files in this directory are preserved between plugin upgrades. The `/etc/hpe-storage/volume-driver.json` file contains three sections, `global`, `defaults` and `overrides`. The global options are plugin runtime parameters and doesn't have any end-user configurable keys at this time.
@@ -147,7 +149,8 @@ The `defaults` map allows the docker host administrator to set default options d
 
 The `overrides` map allows the docker host administrator to enforce a certain option for every volume creation. The docker user may not override the option and any attempt to do so will be silently ignored.
 
-**Note:** `defaults` and `overrides` are dynamically read during runtime while `global` changes require a plugin restart.
+!!! note
+    `defaults` and `overrides` are dynamically read during runtime while `global` changes require a plugin restart.
 
 Example config file in `/etc/hpe-storage/volume-driver.json`:
 ```json
@@ -211,14 +214,17 @@ kernel.hung_task_timeout_secs = 150
 
 Add these parameters to the `/etc/sysctl.d/99-hung_task_timeout.conf` file and reboot the system.
 
-**Note:** Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.
+!!! important
+    Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.
 
 ## Usage
+These are some basic examples on how to use the HPE Cloud Volumes Plugin for Docker.
 
 ### Create a Docker Volume
 Using `docker volume create`.
 
-**Note:** The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
+!!! note
+    The plugin applies a set of default options when you `create` new volumes unless you override them using the `volume create -o key=value` option flags.
 
 Create a Docker volume with a custom description:
 
@@ -263,7 +269,8 @@ There are several ways to provision a Docker volume depending on what tools are 
 
 The Docker Volume plugin leverages the existing Docker CLI and APIs, therefor all native Docker tools may be used to provision a volume.
 
-**Note**: The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  
+!!! note
+    The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  
 
 Config file `volume-driver.json`, which is stored at `/etc/hpe-storage/volume-driver.json`:
 
@@ -300,7 +307,8 @@ Import the HPE Cloud Volumes snapshot `aSnapshot` on the volume `importMe` as a 
 docker volume create -d cvblock -o importVolAsClone=mycloudvol -o snapshot=mysnap1 --name=myvol4-clone
 ```
 
-**Note:** If no snapshot is specified, the latest snapshot on the volume is imported.
+!!! note
+    If no snapshot is specified, the latest snapshot on the volume is imported.
 
 ### Restore an offline Docker Volume with specified snapshot
 It's important that the volume to be restored is in an offline state on the array.
@@ -324,7 +332,8 @@ cvblock:latest              myvol1-clone
 ### Remove a Docker Volume
 When you remove volumes from Docker control they are set to the offline state on the array. Access to the volumes and related snapshots using the Docker Volume plugin can be reestablished.
 
-**Note:** To delete volumes from the HPE Cloud Volumes portal using the remove command, the volume should have been created
+!!! note
+    To delete volumes from the HPE Cloud Volumes portal using the remove command, the volume should have been created
 with a `-o destroyOnRm` flag.
 
 **Important:** Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.

@@ -5,6 +5,7 @@ This is an umbrella documentation project for all Kubernetes and Docker integrat
 
 Use the navigation on the left-hand side to explore the different topics. Feel free to contribute to this project but please read the [contributing guidelines](legal/contributing.md).
 
-Did you know SCOD is "docs" in reverse?
-
 <div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg"></div>
+
+!!! note "Did you know?"
+    SCOD is "docs" in reverse?
