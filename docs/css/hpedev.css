@@ -14,3 +14,65 @@
     font-weight: bold;
     color: #ddd;
 }
+
+/* blue */
+.rst-content .note {
+    background: #DBF4FF;
+}
+.rst-content .note .admonition-title {
+    background-color: #67B2D5;
+}
+.rst-content .seealso {
+    background: #DBF4FF;
+}
+.rst-content .seealso .admonition-title {
+    background-color: #67B2D5;
+}
+
+/* green */
+.rst-content .tip {
+    background: #DAFFFD;
+}
+.rst-content .tip .admonition-title {
+    background-color: #00B6AE;
+}
+.rst-content .important {
+    background: #DAFFFD;
+}
+.rst-content .important .admonition-title {
+    background-color: #00B6AE;
+}
+.rst-content .hint {
+    background: #DAFFFD;
+}
+.rst-content .hint .admonition-title {
+    background-color: #00B6AE;
+}
+
+/* orange */
+.rst-content .warning {
+    background: #FFE3D7;
+}
+.rst-content .warning .admonition-title {
+    background-color: #FF9161;
+}
+.rst-content .caution {
+    background: #FFE3D7;
+}
+.rst-content .caution .admonition-title {
+    background-color: #FF9161;
+}
+
+/* red */
+.rst-content .danger {
+    background: #E9E2F0;
+}
+.rst-content .danger .admonition-title {
+    background-color: #A250F0;
+}
+.rst-content .error {
+    background: #E9E2F0;
+}
+.rst-content .error .admonition-title {
+    background-color: #A250F0;
+}

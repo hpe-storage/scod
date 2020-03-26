@@ -51,6 +51,38 @@ Set the column width of your terminal to 96 columns. Copy & paste the embed code
 <script id="asciicast-236786" src="https://asciinema.org/a/236786.js" async></script>
 ```
 
+## Admonitions
+Adding Spinx-style exclaimations into the docs is encouraged to emphasize a point in a paragraph. Triple bangs will be translated to an admonition block.
+
+```
+!!! note
+    This is my note!
+```
+
+It's also possible to create your own header.
+```
+!!! note "Did you know?"
+    Admonitions are cool!
+```
+
+There are four different types of blocks that are mapped by the following keywords:
+
+* Blue: `note`, `seealso`
+* Green: `tip`, `hint`, `important`
+* Orange: `warning`, `caution`
+* Purple: `danger`, `error`
+
+## Fenced code blocks
+All code blocks needs to be labelled by language or style. MkDocs is not very clever to fall back to plain text, if the code block doesn't render properly, use `text`.
+
+Start fenced code blocks like this:
+```
+```json
+{ 
+  "key": "value"
+}
+```
+
 # Get in touch
 The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
 
