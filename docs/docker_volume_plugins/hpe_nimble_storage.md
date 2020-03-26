@@ -472,8 +472,7 @@ nimble:latest              myvol1-clone
 When you remove volumes from Docker control they are set to the offline state on the array. Access to the volumes and related snapshots using the Docker Volume plugin can be reestablished.
 
 !!! note
-    To delete volumes from the HPE Nimble Storage array using the remove command, the volume should have been created
-with a `-o destroyOnRm` flag.
+    To delete volumes from the HPE Nimble Storage array using the remove command, the volume should have been created with a `-o destroyOnRm` flag.
 
 **Important:** Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.
 
