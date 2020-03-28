@@ -6,16 +6,17 @@ This is the source files for [https://scod.hpedev.io](scod.hpedev.io). The refer
 # Build, edit and preview
 Before considering contributions to SCOD, ensure you agree with the [license](docs/legal/license.md) and [contribution guidelines](docs/legal/contributing.md) established by Hewlett Packard Enterprise.
 
-SCOD uses [MkDocs](https://www.mkdocs.org). Ensure you have Python (with `pip`) preinstalled, then install `mkdocs`.
-
-```
-pip install mkdocs
-```
-
 Fork [this repository](https://github.com/hpe-storage/scod/fork) and clone it.
 
 ```
 git clone https://github.com/< your username or organization >/scod
+cd scod
+```
+
+SCOD uses [MkDocs](https://www.mkdocs.org) 1.0.4. Ensure you have Python (with `pip`) preinstalled, then install `mkdocs` along wit the required plugins.
+
+```
+pip install -r requirements.txt
 ```
 
 Startup a local instance of MkDocs while working on your local copy.
@@ -24,7 +25,7 @@ Startup a local instance of MkDocs while working on your local copy.
 mkdocs serve
 ```
 
-MkDocs is now listening on [localhost](http://127.0.0.1:8000).
+MkDocs is now listening on [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 All the documentation lives in [docs](docs). Your edits should immediatly reload the web browser. Adding navigation is done by adding leaves in `mkdocs.yml`. Adding a new top leaf require organizing the markdown files in subfolder under docs. Images and other binary assets should live in [docs/img](docs/img) and follow the leaf, i.e an image that belongs to [docs/legal/license.md](docs/legal/license.md) should be placed in [docs/img/legal](docs/img/legal).
 

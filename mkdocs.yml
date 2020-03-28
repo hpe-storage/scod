@@ -52,23 +52,24 @@ nav:
     - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
 #  - LEGACY FLEXVOLUME DRIVER:
-#    - 'Container Provider (Nimble/CV)': 'flexvolume/container_provider/index.md'
-#    - 'Dory and Doryd': 'flexvolume/dory/index.md'
+#    - 'Container Provider (Nimble/CV)': 'flexvolume_driver/container_provider/index.md'
+#    - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
 #    - 'HPE Nimble Storage': 'flexvolume/container_provider/index.md'
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
-# - COMMUNITY:
-#   - 'HPE DEV': 'community/hpe_dev.md'
-#   - 'Blogs': 'community/blogs.md'
 # - LEARN:
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
+  - EXTERNAL LINKS:
+    - 'HPE Storage on GitHub': 'https://github.com/hpe-storage'
+    - 'Storage for Containers on hpe.com': 'https://hpe.com/storage/containers'
+  - COMMUNITY:
+    - 'HPE Developer Community': 'https://developer.hpe.com'
+    - 'Sign up to HPE DEV on Slack': 'https://slack.hpedev.io'
+#   - 'Blogs': 'community/blogs/index.md'
   - LEGAL:
     - 'Contributing': 'legal/contributing/index.md'
 #    - 'Support': 'legal/support.md'
     - 'License': 'legal/license/index.md'
-  - EXTERNAL LINKS:
-    - 'HPE storage on GitHub': 'https://github.com/hpe-storage'
-    - 'Storage for containers on hpe.com': 'https://hpe.com/storage/containers'
