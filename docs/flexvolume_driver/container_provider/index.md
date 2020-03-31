@@ -4,6 +4,8 @@ The HPE Volume Driver for Kubernetes FlexVolume Plugin leverages HPE Nimble Stor
 !!! important
     Using HPE Nimble Storage with Kubernetes 1.13 and newer, please use the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver).
 
+Source code and developer documentation is available in the [hpe-storage/flexvolume-driver](https://github.com/hpe-storage/flexvolume-driver) GitHub repo.
+
 [TOC]
 
 ## Platform requirements
