@@ -12,10 +12,10 @@ Source code and developer documentation is available in the [hpe-storage/flexvol
 The FlexVolume driver supports multiple backends that are based on a "container provider" architecture. Currently, Nimble and Cloud Volumes are supported.
 
 ### HPE Nimble Storage Platform Requirements
-| Driver      | HPE Nimble Storage Version | Release Notes    |
-|-------------|----------------------------|------------------|
-| v3.0.0      | 5.0.8.x and 5.1.3.x onwards          | [v3.0.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.0.0.md)|
-| v3.1.0      | 5.0.8.x and 5.1.3.x onwards          | [v3.1.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md)|
+| Driver      | HPE Nimble Storage Version | Release Notes    | Blog | 
+|-------------|----------------------------|------------------|--------------|
+| v3.0.0      | 5.0.8.x and 5.1.3.x onwards          | [v3.0.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.0.0.md)| [HPE Storage Tech Insiders](https://community.hpe.com/t5/HPE-Storage-Tech-Insiders/Released-HPE-Volume-Driver-for-Kubernetes-FlexVolume-Plugin-3-0/ba-p/7063875) |
+| v3.1.0      | 5.0.8.x and 5.1.3.x onwards          | [v3.1.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md)| 
 
 * OpenShift Container Platform 3.9, 3.10 and 3.11.
 * Kubernetes 1.10 and above.
@@ -26,9 +26,9 @@ The FlexVolume driver supports multiple backends that are based on a "container 
 
 ### HPE Cloud Volumes Platform Requirements
 
-| Driver      | Release Notes    |
-|-------------|------------------|
-| v3.1.0      | [v3.1.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md)|
+| Driver      | Release Notes    | Blog | 
+|-------------|------------------|------|
+| v3.1.0      | [v3.1.0](https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md)| [Using HPE Cloud Volumes with Amazon EKS](https://developer.hpe.com/blog/using-hpe-cloud-volumes-with-amazon-eks) |
 
 * Amazon EKS 1.12/1.13
 * Microsoft Azure AKS 1.12/1.13

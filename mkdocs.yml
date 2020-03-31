@@ -56,18 +56,19 @@ nav:
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
-# - LEARN:
+  - LEARN:
+    - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
-  - EXTERNAL LINKS:
-    - 'SCOD on GitHub': 'https://github.com/hpe-storage/scod'
-    - 'HPE Storage on GitHub': 'https://github.com/hpe-storage'
-    - 'Storage for Containers on hpe.com': 'https://hpe.com/storage/containers'
   - COMMUNITY:
     - 'HPE Developer Community': 'https://developer.hpe.com'
     - 'Sign up to HPE DEV on Slack': 'https://slack.hpedev.io'
 #   - 'Blogs': 'community/blogs/index.md'
+  - EXTERNAL LINKS:
+    - 'SCOD on GitHub': 'https://github.com/hpe-storage/scod'
+    - 'HPE Storage on GitHub': 'https://github.com/hpe-storage'
+    - 'Storage for Containers on hpe.com': 'https://hpe.com/storage/containers'
   - LEGAL:
     - 'Contributing': 'legal/contributing/index.md'
     - 'Support': 'legal/support/index.md'
