@@ -74,7 +74,7 @@ There are four different types of blocks that are mapped by the following keywor
 * Purple: `danger`, `error`
 
 ## Fenced code blocks
-All code blocks needs to be labelled by language or style. MkDocs is not very clever to fall back to plain text, if the code block doesn't render properly, use `text`.
+All code blocks needs to be labelled by language or style. MkDocs is not very clever to fall back to plain text, if the code block doesn't render properly, use `text` for red text and `markdown` for black text.
 
 Start fenced code blocks like this:
 ```
