@@ -213,7 +213,7 @@ Below is an example `/etc/hpe-storage/volume-driver.json` outlining the above us
 
 For an exhaustive list of options use the `help` option from the docker CLI:
 
-```text
+```markdown
 $ docker volume create -d nimble -o help
 Nimble Storage Docker Volume Driver: Create Help
 Create or Clone a Nimble Storage backed Docker Volume or Import an existing
@@ -340,7 +340,7 @@ We recommend running a dedicated Docker host that does not host any other critic
 
 The following kernel parameters control the system behavior when a hung task is detected:
 
-```text
+```markdown
 # Reset after these many seconds after a panic
 kernel.panic = 5
 

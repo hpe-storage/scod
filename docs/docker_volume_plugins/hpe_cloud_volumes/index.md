@@ -201,7 +201,7 @@ We recommend running a dedicated Docker host that does not host any other critic
 
 The following kernel parameters control the system behavior when a hung task is detected:
 
-```text
+```markdown
 # Reset after these many seconds after a panic
 kernel.panic = 5
 

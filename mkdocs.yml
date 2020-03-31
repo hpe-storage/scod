@@ -28,10 +28,8 @@ plugins:
 nav:
 #  - HPE CSI DRIVER FOR KUBERNETES:
 #   - 'Overview': 'csi_driver/index.md'
-#   - 'Installing': 'csi_driver/installing.md'
-#   - 'Using': 'csi_driver/using.md'
-#   - 'Helm Charts': 'csi_driver/helm.md'
-#   - 'Operators': 'csi_driver/operators.md'
+#   - 'Helm Charts': 'csi_driver/helm/index.md'
+#   - 'Operators': 'csi_driver/operators/index.md'
 # - CONTAINER STORAGE PROVIDERS:
 #   - 'HPE 3PAR/Primera': 'csp/3par_primera/index.md'
 #   - 'HPE Cloud Volumes': 'csp/cloud_volumes/index.md'
@@ -51,8 +49,8 @@ nav:
 #   - 'HPE 3PAR/Primera': 'docker_volume_plugins/3par_primera/index.md'
     - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
-#  - LEGACY FLEXVOLUME DRIVER:
-#    - 'Container Provider (Nimble/CV)': 'flexvolume_driver/container_provider/index.md'
+  - LEGACY FLEXVOLUME DRIVER:
+    - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
 #    - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
 #    - 'HPE Nimble Storage': 'flexvolume/container_provider/index.md'
 # - WORKLOAD BLUEPRINTS:
