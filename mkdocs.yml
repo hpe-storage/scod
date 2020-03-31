@@ -51,8 +51,8 @@ nav:
     - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
   - LEGACY FLEXVOLUME DRIVER:
     - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
-#    - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
-#    - 'HPE Nimble Storage': 'flexvolume/container_provider/index.md'
+#    - 'Ansible installer for 3PAR/Primera': 'flexvolume/container_provider/index.md'
+    - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
@@ -61,6 +61,7 @@ nav:
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
   - EXTERNAL LINKS:
+    - 'SCOD on GitHub': 'https://github.com/hpe-storage/scod'
     - 'HPE Storage on GitHub': 'https://github.com/hpe-storage'
     - 'Storage for Containers on hpe.com': 'https://hpe.com/storage/containers'
   - COMMUNITY:
@@ -69,5 +70,5 @@ nav:
 #   - 'Blogs': 'community/blogs/index.md'
   - LEGAL:
     - 'Contributing': 'legal/contributing/index.md'
-#    - 'Support': 'legal/support.md'
+    - 'Support': 'legal/support/index.md'
     - 'License': 'legal/license/index.md'

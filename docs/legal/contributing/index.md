@@ -1,4 +1,4 @@
-# Contributing
+# Introduction
 
 We welcome and encourage community contributions to SCOD.
 
@@ -7,7 +7,7 @@ We welcome and encourage community contributions to SCOD.
 The best way to directly collaborate with the project contributors is through GitHub: [https://github.com/hpe-storage/scod](https://github.com/hpe-storage/scod)
 
 * If you want to contribute to our documentation by either fixing a typo or creating a page, please open a GitHub [pull request](https://github.com/hpe-storage/scod/pulls).
-* If you want to raise an issue such as a defect, an enhancement request or a general issue, please open a GitHub [issue](https://github.com/hpe-storage/scod/issues)).
+* If you want to raise an issue such as a defect, an enhancement request or a general issue, please open a GitHub [issue](https://github.com/hpe-storage/scod/issues).
 
 Before you start writing, we recommend discussing your plans through a GitHub issue, especially for more ambitious contributions. This gives other contributors a chance to point you in the right direction, give you feedback on your contribution, and help you find out if someone else is working on the same thing.
 
