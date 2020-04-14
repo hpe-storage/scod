@@ -8,19 +8,18 @@ Source code and developer documentation is available in the [hpe-storage/python-
 
 [TOC]
 
-
 Refer to the [SPOCK](https://spock.corp.int.hpe.com/spock/utility/document.aspx?docurl=Shared%20Documents/hw/3par/3par_volume_plugin_for_docker.pdf) page for the latest support matrix for HPE 3PAR and HPE Primera Volume Plug-in for Docker.
 
 ## Platform requirements
-The HPE 3PAR/Primera FlexVolume driver supports multiple backends that are based on a "container provider" architecture. 
+The HPE 3PAR/Primera FlexVolume driver supports multiple backends that are based on a "container provider" architecture.
 
 ### HPE 3PAR/Primera Storage Platform Requirements
                 
 Ensure that you have reviewed the [System Requirements](https://github.com/hpe-storage/python-hpedockerplugin/blob/master/README.md).
 
-| Driver      | HPE 3PAR/Primera OS Version | Release Notes    |
+| Driver  | HPE 3PAR/Primera OS Version | Release Notes  |
 |-------------|----------------------------|------------------|
-| v3.3.1      | 3PAR OS: 3.3.1 MU5+<br>  Primera OS: 4.0+       | [v3.3.1](https://github.com/hpe-storage/python-hpedockerplugin/releases)| 
+| v3.3.1  | 3PAR OS: 3.3.1 MU5+<br>  Primera OS: 4.0+  | [v3.3.1](https://github.com/hpe-storage/python-hpedockerplugin/releases)|
 
 
 * OpenShift Container Platform 3.9, 3.10 and 3.11.
@@ -32,7 +31,7 @@ Ensure that you have reviewed the [System Requirements](https://github.com/hpe-s
 ## Deploying to Kubernetes
 The recommended way to deploy and manage the HPE 3PAR and Primera Volume Plug-in for Kubernetes is to use Ansible.
 
-Use the following steps to configure Ansible to perform the installation. 
+Use the following steps to configure Ansible to perform the installation.
 
 ### Step 1: Install Ansible
 
@@ -51,7 +50,6 @@ Ansible communicates with remote machines over the SSH protocol. By default, Ans
 
 ##### Ansible: Check your SSH connections
 Confirm that you can connect using SSH to all the nodes in your Kubernetes cluster using the same username. If necessary, add your public SSH key to the `authorized_keys` file on those systems.
-
 
 ### Step 2: Clone the Github repository
 
@@ -82,7 +80,7 @@ $ vi python-hpedockerplugin/ansible_3par_docker_plugin/hosts
 192.168.1.53
 ```
 
-#### Step 3: Create the properties file
+### Step 4: Create the properties file
 
 Create the **properties/plugin_configuration_properties.yml** based on your HPE 3PAR/Primera Storage array configuration.
 
@@ -158,19 +156,19 @@ INVENTORY:
 !!! hint Additional options available
     Refer to [plugin_configuration_properties_sample.yml](https://github.com/hpe-storage/python-hpedockerplugin/blob/master/ansible_3par_docker_plugin/properties/plugin_configuration_properties_sample.yml) for additional properties file examples. <br> (i.e. Replication, Multiple Arrays, and File Persona configurations)
 
-#### Step 4: Run the Ansible playbook.
-```shell
+### Step 5: Run the Ansible playbook.
+```markdown
 $ cd python-hpedockerplugin/ansible_3par_docker_plugin/
 $ ansible-playbook -i hosts install_hpe_3par_volume_driver.yml
 ```
 
-#### Step 5: Verify the installation
+### Step 6: Verify the installation
 
 * Once playbook has completed successfully, the PLAY RECAP should look like below
-```yaml
+```markdown
 Installer should not show any failures and PLAY RECAP should look like below
 
-PLAY RECAP ***********************************************************************************************************************************************************************************
+PLAY RECAP ***********************************************************************
 <Master1-IP>           : ok=85   changed=33   unreachable=0    failed=0
 <Master2-IP>           : ok=76   changed=29   unreachable=0    failed=0
 <Master3-IP>           : ok=76   changed=29   unreachable=0    failed=0
@@ -181,13 +179,13 @@ localhost              : ok=9    changed=3    unreachable=0    failed=0
 
 * Verify plugin installation on all nodes.
 
-```shell
+```markdown
 $ docker ps | grep plugin; ssh <Master2-IP> "docker ps | grep plugin";ssh <Master3-IP> "docker ps | grep plugin";ssh <Worker1-IP> "docker ps | grep plugin";ssh <Worker2-IP> "docker ps | grep plugin"
-51b9d4b1d591        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes                           plugin_container
-a43f6d8f5080        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes                           plugin_container
-a88af9f46a0d        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes                           plugin_container
-5b20f16ab3af        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes                           plugin_container
-b0813a22cbd8        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes                           plugin_container
+51b9d4b1d591        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
+a43f6d8f5080        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
+a88af9f46a0d        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
+5b20f16ab3af        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
+b0813a22cbd8        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
 ```
 
 * Verify the HPE FlexVolume driver Pod is running.
@@ -255,7 +253,7 @@ spec:
 Check that a new `PersistentVolume` is created based on your claim:
 
 ```shell
-kubectl get pv
+$ kubectl get pv
 NAME                                              CAPACITY     ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM               STORAGECLASS   REASON   AGE
 sc-gold-pvc-13336da3-7ca3-11e9-826c-00505692581f  25Gi         RWO            Delete           Bound    default/pvc-gold    sc-gold                 3s
 ```
@@ -285,8 +283,8 @@ spec:
 
 Check if the pod is running successfully:
 
-```shell
-kubectl get pod pod-nginx
+```markdown
+$ kubectl get pod pod-nginx
 NAME          READY   STATUS    RESTARTS   AGE
 pod-nginx     1/1     Running   0          2m29s
 ```
@@ -306,7 +304,7 @@ metadata:
   name: sc-gold-snap-mongo
 provisioner: hpe.com/hpe
 parameters:
-   virtualCopyOf: "sc-mongo-10dc1195-779b-11e9-b787-0050569bb07c"
+  virtualCopyOf: "sc-mongo-10dc1195-779b-11e9-b787-0050569bb07c"
 ```
 
 #### Clone a volume
@@ -320,7 +318,7 @@ metadata:
   name: sc-gold-clone
 provisioner: hpe.com/hpe
 parameters:
-   cloneOf: "sc-gold-2a82c9e5-6213-11e9-8d53-0050569bb07c"
+  cloneOf: "sc-gold-2a82c9e5-6213-11e9-8d53-0050569bb07c"
 ```
 
 #### Replicate a containerized volume
@@ -348,7 +346,6 @@ metadata:
   name: import-clone-legacy-prod
 provisioner: hpe.com/hpe
 parameters:
-  pool: "flash"
   importVol: "production-db-vol"
 ```
 
@@ -407,17 +404,15 @@ These parameters are mutable betweeen a parent volume and creating a clone from 
 
 | Parameter | Type | Options | Example  |
 |-----------|-----------|-----------|-----------|
-| size                 | Integer | -                                          | size: "10"                       |
-| provisioning         |   | thin, full, dedupe                         | provisioning: "thin"             |
-| flash-cache          | Text  | true, false                                | flash-cache: "true"              |
-| compression          | boolean | true, false                                | compression: "true"              |
-| MountConflictDelay   | Integer | -                                          | MountConflictDelay: "30"         |
-| qos-name             | Text  | vvset name                                 | qos-name: "<vvset_name>"         |
-| replicationGroup     | Text  | 3PAR RCG name                              | replicationGroup: "Test-RCG"     |
+| size  | Integer | -  | size: "10"  |
+| provisioning  |   | thin, full, dedupe  | provisioning: "thin"  |
+| flash-cache  | Text  | true, false  | flash-cache: "true"  |
+| compression  | boolean | true, false   | compression: "true"  |
+| MountConflictDelay  | Integer | -  | MountConflictDelay: "30"  |
+| qos-name  | Text  | vvset name  | qos-name: "<vvset_name>"  |
+| replicationGroup  | Text  | 3PAR RCG name  | replicationGroup: "Test-RCG"  |
 | fsOwner | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
 | fsMode | Octal digits | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
-
-
 
 #### Cloning/Snapshot parameters
 
@@ -425,10 +420,10 @@ Either use `cloneOf` and reference a PVC in the current namespace or use `virtua
 
 | Parameter | Type | Options | Example  |
 |-----------|-----------|-----------|-----------|
-| cloneOf              | Text  | volume name                                | cloneOf: "<volume_name\>"         |
-| virtualCopyOf        | Text  | volume name                                | virtualCopyOf: "<volume_name\>"   |
-| expirationHours      | Integer | option of virtualCopyOf                    | expirationHours: "10"            |
-| retentionHours       | Integer | option of virtualCopyOf                    | retentionHours: "10"             |
+| cloneOf  | Text  | volume name  | cloneOf: "<volume_name\>"  |
+| virtualCopyOf  | Text  | volume name  | virtualCopyOf: "<volume_name\>"  |
+| expirationHours  | Integer | option of virtualCopyOf  | expirationHours: "10"  |
+| retentionHours  | Integer | option of virtualCopyOf  | retentionHours: "10"  |
 
 #### Replication parameters
 
@@ -436,7 +431,7 @@ Replication supports Synchronous and Asynchronous modes. If the replicationGroup
 
 | Parameter | Type | Options | Example  |
 |-----------|-----------|-----------|-----------|
-| replicationGroup     | Text  | 3PAR RCG name                              | replicationGroup: "<rcg_name\>"     |
+| replicationGroup  | Text  | 3PAR RCG name  | replicationGroup: "<rcg_name\>"  |
 
 #### Import parameters
 
@@ -485,10 +480,10 @@ $ docker volume create -d hpe -o help=backends
 It should output:
 
 ```shell
-======================================================
-NAME                                          STATUS
-======================================================
-DEFAULT                                        OK
+=================================
+NAME                     STATUS
+=================================
+DEFAULT                   OK
 ```
 
 #### ETCD
