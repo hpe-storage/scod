@@ -35,7 +35,7 @@ The FlexVolume driver supports multiple backends that are based on a "container 
 * US regions only
 
 ## Deploying to Kubernetes
-The recommend way to deploy and manage the HPE Volume Driver for Kubernetes FlexVolume Plugin is to use Helm. Please see the [co-deployments](https://github.com/hpe-storage/co-deployments) repository for further information.
+The recommended way to deploy and manage the HPE Volume Driver for Kubernetes FlexVolume Plugin is to use Helm. Please see the [co-deployments](https://github.com/hpe-storage/co-deployments) repository for further information.
 
 Use the following steps for a manual installation.
 
@@ -250,7 +250,7 @@ To get started, create a `StorageClass` API object referencing the `hpe-secret` 
 Sample storage classes can be found for [HPE Nimble Storage](https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-nimble-storage/sc-nimble.yaml) and [HPE Cloud Volumes](https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-cloud-volumes/sc-cv.yaml).
 
 !!! hint
-    See `StorageClass` paramters for [HPE Nimble Storage](#hpe_nimble_storage_storageclass_parameters) and [HPE Clound Volumes](#hpe_cloud_volumes_storageclass_parameters) for a comprehensive overview.
+    See `StorageClass` parameters for [HPE Nimble Storage](#hpe_nimble_storage_storageclass_parameters) and [HPE Clound Volumes](#hpe_cloud_volumes_storageclass_parameters) for a comprehensive overview.
 
 ### Test and verify volume provisioning
 
