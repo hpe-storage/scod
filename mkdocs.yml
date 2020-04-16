@@ -25,6 +25,7 @@ markdown_extensions:
       active_class: 'active'
       template: 'default'
 plugins:
+  - search:
   - redirects:
       redirect_maps:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
