@@ -25,7 +25,7 @@ This guide is primarily written to accommodate a highly manual installation on u
 The following example walks through deployment of the **latest** CSI driver.
 
 !!! caution "Critical"
-    It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the [Helm chart](helm/index.md) or [Operator](operators/index.md).
+    It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the [Helm chart](deployment.md#helm) or [Operator](deployment.md#operator).
 
 
 ### Manual CSI driver install
