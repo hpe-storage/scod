@@ -3,9 +3,13 @@
 {% block site_meta %}
     {{ super() }}
     {% if page %}<meta property="og:title" content="HPE Storage Container Orchestrator Documentation"/>
-    <meta property="og:url" content="https://scod.hpedev.io"/>
-    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
     <meta property="og:description" content="This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage."/>{% endif %}
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
     {% endblock %}
 
 {% block footer %}
