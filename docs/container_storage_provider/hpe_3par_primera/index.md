@@ -28,19 +28,18 @@ Refer [Deployment](../../csi_driver/deployment.md).
 [Deploy using Helm](../../csi_driver/deployment.md#helm)
 
 !!! Important
-    Helm3 only supported
+    Only Helm3 supported
 
 #### Post-Install
 
-Verify the deployment using helm ls -n kube-system
+Verify helm deployment
 ```
 $ helm ls -n kube-system
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
 hpe-csi kube-system     1               2020-04-17 15:12:46.984202589 +0530 IST deployed        hpe-csi-driver-2.0.0    1.1.1
 ```
 
-
-2.	Verify the pods are in Running state
+Verify pods are in Running state
 ```
 $ kubectl get pods -n kube-system |grep hpe
 hpe-csi-controller-84d8569476-5svkw                          5/5     Running   0          37m
@@ -49,7 +48,7 @@ hpe-csi-node-xs87s                                           2/2     Running   0
 hpe3parprimera-csp-6847b9f649-nmzss                          1/1     Running   0          37m
 ```
 
-3.	Verify images for CSI driver and CSP.
+Verify images for CSI and CSP driver version installed
 ```
 $ kubectl describe pod hpe-csi-controller-84d8569476-5svkw -n kube-system |grep csi-driver |grep Image
     Image:         hpestorage/csi-driver:v1.1.1
@@ -60,7 +59,7 @@ $ kubectl describe pod hpe3parprimera-csp-6847b9f649-nmzss -n kube-system |grep 
     Image ID:       docker-pullable://docker.io/hpestorage/hpe3parprimera-csp@sha256:7697caceed28f7d369b81a215666a1bfb4303e6209383a07e7eff0d4cca1f9df
 ```
 
-4.	Verify crds are installed.
+Verify CRDs are installed
 ```
 $ kubectl get crd |grep hpe
 hpecsidrivers.storage.hpe.com                    2020-04-17T09:16:45Z
@@ -69,6 +68,36 @@ hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
 ```
 
 #### Un-install
+
+Uninstall helm chart
+```
+$ helm uninstall hpe-csi -n kube-system
+release "hpe-csi" uninstalled
+```
+
+Verify Chart is deleted
+``` 
+$ helm ls -n kube-system
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+```
+
+Verify no **hpe*** resources found other than the default pods
+```
+[root@k8s-master00 hpe-csi-driver]# kubectl get pods -n kube-system |grep hpe
+etcd-k8s-master00.in.rdlabs.hpecorp.net                      1/1     Running   5          73d
+kube-apiserver-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   5          73d
+kube-controller-manager-k8s-master00.in.rdlabs.hpecorp.net   1/1     Running   5          73d
+kube-scheduler-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   4          73d
+```
+
+!!! Note
+    CRDs will not be removed as part of helm uninstall
+```
+$ kubectl get crd |grep hpe
+hpecsidrivers.storage.hpe.com                    2020-04-17T09:16:45Z
+hpenodeinfos.storage.hpe.com                     2020-04-17T09:42:44Z
+hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
+```
 
 ### Deploying to OpenShift
 
@@ -83,7 +112,7 @@ hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
 Get started using the Container Storage Provider by setting up `Secret`, `StorageClass`, `PVC` API objects.
 
 ### Block storage Usage Table
-| CSP for 3PAR and Primera v1.0.0| Features supported on K8S| Features Supported on OpenShift| Notes    |
+| CSP for 3PAR and Primera v1.0.0| Feature supported on K8S | Feature supported on OpenShift | Notes    |
 |--------------------------------|--------------------------|--------------------------------|----------|
 |<br>Dynamic provisioning:<br><ul><li>Create volume</li><li>Delete volume</li><li>List volume</li></ul>|YES|  YES ||
 | Volume Expansion | YES   |   NO   | k8s version 1.16 onwards |
@@ -124,6 +153,15 @@ You should now see the HPE secret in the `kube-system`(K8S)/`hpe-csi`(OpenShift)
 
 ### Step 2: Create a storage class
 
+Valid parameters for StorageClass
+
+|Parameter          | Valid values          | Notes                 |
+|-------------------|-----------------------|-----------------------|
+|snap_cpg           | Pre existing CPG      | cpg will be used as snap_cpg when not specified|
+|provisioning_type  | "full"/"tpvv"/"tdvv"  | **3PAR**:<br><li>For full provisioning use full</li><li>For thin provisioning use thin</li><li>For dedup provisioning use tdvv</li><br>**Primera**:<br><li>To create thin provision volume use thin</li>|
+|compression        | "true"/"false"        | default - "false"<br>To create a compressed volume, set compression as "true"<br>To create compressed volume minimum size requirement is 16GiB<br><li>To create a compressed volume on Primera, set compression as "true" along with provisioning_type set as "tdvv" |
+|accessProtocol     | "fc"/"iscsi"          | default - "iscsi"<br>For Primera 4.0/4.1 set it to "fc"|
+
 Save below file as `3par-sc.yaml`.
 
 ```yaml
@@ -158,14 +196,6 @@ create a storage class
 ```yaml
 kubectl create -f 3par-sc.yaml
 ```
-
-!!! Note
-    name is user defined name
-    <br>Below parameters are valid:
-    <br>- <b>snap_cpg</b>: cpg used for creating a snapshot
-    <br>- <b>provisioning_type</b>: "full"/"tpvv"/"tdvv"
-    <br>- <b>compression</b>: "true"/"false"
-    <br>- <b>accessProtocol</b>: "fc"/"iscsi"
 
 ### Step 3: Create a PVC
 
@@ -310,10 +340,11 @@ kubectl create -f clonePVC.yaml
 
 1. One node plugin on every worker node
 2. One controller pod across the cluster, and 
-3. One csp pod across the cluster.
+3. One csp pod across the cluster
 
-Confirm it, by 
-- Check for worker nodes.
+Confirm it, by
+
+* Check for worker nodes
 ```
 [root@cssosbe01-196119 ~]# kubectl get nodes -o wide
 NAME               STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION          CONTAINER-RUNTIME
@@ -323,7 +354,7 @@ cssosbe01-196121   Ready    master   39d   v1.16.6   192.168.196.121   <none>   
 cssosbe01-196150   Ready    <none>   39d   v1.16.6   192.168.196.150   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 cssosbe01-196151   Ready    <none>   39d   v1.16.6   192.168.196.151   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 ```
-- Check for Controller,CSP and Node Plugin pods
+* Check for Controller,CSP and Node Plugin pods
 ```
 [root@cssosbe01-196119 ~]# kubectl get pods -o wide -n kube-system | grep hpe
 hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
@@ -331,10 +362,8 @@ hpe-csi-node-cbvcl                         2/2     Running   0          42h   19
 hpe-csi-node-w8hx5                         2/2     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 hpe3parprimera-csp-778cf87c8b-mffh2        1/1     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 ```
-- Check for REST endpoint of CSP service is reachable
-<br>
+* Check for REST endpoint of CSP service is reachable
     - CSP (Container Storage Provider) hosts a REST server on port 8080 for the CSI controller/node plugin to communicate
-<br>
     - If the CSP REST endpoint on above port is not reachable, it will lead to failure in provisioning and pod mount operations.
 
 To check whether this Service is up or not, the user can confirm it by
@@ -408,10 +437,10 @@ eg.
 NAMESPACE     NAME                                                             READY   STATUS              RESTARTS   AGE    IP               NODE                                     NOMINATED NODE   READINESS GATES
 kube-system   coredns-6955765f44-pfwwj                                         1/1     Running             0          2d2h   10.244.0.2       cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
 kube-system   coredns-6955765f44-wlm5g                                         1/1     Running             0          2d2h   10.244.0.3       cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
-kube-system   etcd-cssosbe01-196113.in.rdlabs.hpecorp.net                      1/1     Running             0          2d2h   15.212.196.113   cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
-kube-system   hpe-csi-controller-5b69668588-mk74b                              4/4     Running             0          21h    15.212.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
-kube-system   hpe-csi-node-96b5c                                               0/2     ContainerCreating   0          21h    15.212.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
-kube-system   hpe-csi-node-p9655                                               0/2     ContainerCreating   0          21h    15.212.196.114   cssosbe01-196114.in.rdlabs.hpecorp.net   <none>           <none>
+kube-system   etcd-cssosbe01-196113.in.rdlabs.hpecorp.net                      1/1     Running             0          2d2h   192.168.196.113   cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
+kube-system   hpe-csi-controller-5b69668588-mk74b                              4/4     Running             0          21h    192.168.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
+kube-system   hpe-csi-node-96b5c                                               0/2     ContainerCreating   0          21h    192.168.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
+kube-system   hpe-csi-node-p9655                                               0/2     ContainerCreating   0          21h    192.168.196.114   cssosbe01-196114.in.rdlabs.hpecorp.net   <none>           <none>
 
 ```
 
@@ -423,7 +452,7 @@ Name:                 hpe-csi-node-96b5c
 Namespace:            kube-system
 Priority:             2000001000
 Priority Class Name:  system-node-critical
-Node:                 cssosbe01-196115.in.rdlabs.hpecorp.net/15.212.196.115
+Node:                 cssosbe01-196115.in.rdlabs.hpecorp.net/192.168.196.115
 Start Time:           Wed, 05 Feb 2020 06:46:05 -0500
 Labels:               app=hpe-csi-node
                       controller-revision-hash=764cb85467
@@ -431,9 +460,9 @@ Labels:               app=hpe-csi-node
                       role=hpe-csi
 Annotations:          <none>
 Status:               Pending
-IP:                   15.212.196.115
+IP:                   192.168.196.115
 IPs:
-  IP:           15.212.196.115
+  IP:           192.168.196.115
 Controlled By:  DaemonSet/hpe-csi-node
 Containers:
   csi-node-driver-registrar:
@@ -613,7 +642,6 @@ Events:
 
 ### Logging levels 
 1. Log levels are controlled by the environment variable LOG_LEVEL 
-  Source ref: https://github.hpe.com/Ecosystem-Integration/hpe_3par_primera_csp/blob/master/build/hpe-csi-k8s-1.16.yaml#L205
 2. Log level `trace` is the most extensive logging
 ```yaml
  - name: hpe-csi-driver
@@ -628,8 +656,8 @@ Events:
               value: trace
 ```
 
-### PVC Creation in "Pending" state.
-1. Logon to the worker node where the CSP pod is running
+### PVC Creation in "Pending" state
+1. Log in to the worker node where the CSP pod is running
 2. vi `/var/log/hpe-3par-primera-csp.log`
 
 Eg. Here the volume creation fails for "Invalid CPG" as shown in the below log.
@@ -653,17 +681,19 @@ time="2020-02-06T05:08:06-05:00" level=info msg=" <<<<< Create Volume Call" file
 ### Known Limitations
 1. If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl create -f <file>.yaml`
 is done, there is a possibility of StorageClass or PVC being deleted before the POD is deleted. And this will
-lead to accidental deletion of SC/PVC. It's recommented to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
-
+lead to accidental deletion of SC/PVC. It's recommended to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
 2. Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
-3. Openshift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone / snapshot capability.
+3. OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone / snapshot capability.
 4. Due to RWO (constraint) in `accessMode` of PVC, the block volume associated with the PVC can only be used exclusively on a single worker node of kubernetes
 5. Clone volume creation requires the user to provide the same size as that of the source volume to be created. For eg. if the source volume is 20GiB, then the clone volume size also should match the same size.
    This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
    `kubectl describe hpevolumeinfo <pv-name>` can be used for getting the status of the clone operation. 
 6. Uninstall of the CSI driver does'nt remove Custom Resource Definitions like HPEVolumeInfo, HPENodeInfo etc.
-   Also this operation does'nt delete the user created PVC/PV and SC objects.
-7. TODO: Add CHAP related information.
+   Also this operation doesn't delete the user created PVC/PV and SC objects.
+7. CHAP must be enabled on the host before deploying CSI driver on the cluster.
+   Set `node.session.auth.authmethod`, `node.session.auth.username` and `node.session.auth.password` in `/etc/iscsi/iscsid.conf` to enable CHAP on host.
+   Value for `node.session.auth.authmethod` must be set to `CHAP`.
+
 ### Responsibilities for Controller/Node/CSP plugin
 1. Controller pod is responsible for create volume/delete volume calls. Also calls "Create host", "publish volume" calls via CSP
 2. Node plugin is responsible for rescan of the scsi devices (as part of `NodeStageVolume`) and creating a temporary staging location for node
