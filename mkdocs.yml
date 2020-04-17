@@ -55,8 +55,6 @@ nav:
     - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
     - 'Ansible installer for 3PAR/Primera': 'flexvolume_driver/hpe_3par_primera_installer/index.md'
     - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
-  - HPE CSI DRIVER:
-    - 'HPE 3PAR and Primera Container Storage Provider': 'csp/3par_primera/index.md'
   - DOCKER VOLUME PLUGINS:
 #    - 'HPE 3PAR/Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
     - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
