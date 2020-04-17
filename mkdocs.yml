@@ -20,45 +20,54 @@ markdown_extensions:
   - toc:
       permalink: True
       separator: "_"
+  - markdown_fenced_code_tabs:
+      single_block_as_tab: False
+      active_class: 'active'
+      template: 'default'
 plugins:
+  - search:
   - redirects:
       redirect_maps:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
-        'docker_volume_plugins/hpe_3par_primera_storage.md': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
 nav:
-#  - HPE CSI DRIVER FOR KUBERNETES:
-#   - 'Overview': 'csi_driver/index.md'
-#   - 'Helm Charts': 'csi_driver/helm/index.md'
-#   - 'Operators': 'csi_driver/operators/index.md'
-# - CONTAINER STORAGE PROVIDERS:
-#   - 'HPE 3PAR/Primera': 'csp/3par_primera/index.md'
+  - HPE CSI DRIVER FOR KUBERNETES:
+    - 'Introduction': 'csi_driver/index.md'
+    - 'Deployment': 'csi_driver/deployment.md'
+    - 'Using': 'csi_driver/using.md'
+    - 'Diagnostics': 'csi_driver/diagnostics.md'
+  - CONTAINER STORAGE PROVIDERS:
+#    - 'HPE 3PAR/Primera': 'container_storage_provider/hpe_3par_primera/index.md'
 #   - 'HPE Cloud Volumes': 'csp/cloud_volumes/index.md'
-#   - 'HPE Nimble Storage': 'csp/nimble_storage/index.md'
+    - 'HPE Nimble Storage': 'container_storage_provider/hpe_nimble_storage/index.md'
 # - HPE CONTAINER PLATFORM:
 #   - 'Overview': 'hcp/overview.md'
 #   - 'Configure': 'hcp/configure.md'
 # - PARTNER ECOSYSTEMS:
 #   - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
-#   - 'Rancher Labs': 'partners/rancer_labs/index.md'
+#   - 'Rancher Labs': 'partners/rancher_labs/index.md'
 # - MANAGED KUBERNETES:
 #   - 'Amazon Elastic Kubernetes Engine': 'managed/amazon_elastic_kubernetes_service/index.md'
 #   - 'Azure Kubernetes Service': 'managed/azure_kubernetes_service/index.md'
 #   - 'Google Kubernetes Engine': 'managed/google_kubernetes_engine/index.md'
-  - DOCKER VOLUME PLUGINS:
-    - 'HPE 3PAR/Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
-    - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
-    - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
   - LEGACY FLEXVOLUME DRIVER:
     - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
     - 'Ansible installer for 3PAR/Primera': 'flexvolume_driver/hpe_3par_primera_installer/index.md'
     - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
   - HPE CSI DRIVER:
     - 'HPE 3PAR and Primera Container Storage Provider': 'csp/3par_primera/index.md'
+  - DOCKER VOLUME PLUGINS:
+#    - 'HPE 3PAR/Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
+    - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
+    - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
+# - REFERENCE ARCHITECTURES:
+#   - 'HPE RA Library': ''
+#   - 'HPE InfoSight': ''
+#   - 'External': ''
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
