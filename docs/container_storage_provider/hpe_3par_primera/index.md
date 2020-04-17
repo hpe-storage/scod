@@ -8,24 +8,76 @@ The HPE 3PAR and Primera CSP is the reference implementation for the [HPE CSI Dr
 
 ### HPE 3PAR and Primera Storage Platform Requirements
 
-|  HPE 3PAR and Primera CSP for Kubernetes  |  Docker EE  |  Linux OS  |  OpenShift  |  Kubernetes  | 3PAR and Primera  |
-|-------------------------------------------|------------ |------------|-------------|--------------|-------------------|
-|HPE 3PAR and HPE Primera CSP v.1.0.0|Based on Kubernetes version guidelines<br><br><ul><li>For K8s 1.17: Docker Version 19.03.4 is recommended</li><li>For K8s 1.16: Docker Version 18.06.2 is recommended</li></ul>|<ul><li>CentOS: 7.7</li><li>RHEL: 7.6, 7.7 / RHCOS</li></ul>|<ul><li>OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes</li></ul>| K8s 1.16, 1.17 |<ul><li>3PAR 3.3.1 MU5 (FC & iSCSI)</li><li>Primera OS: 4.0.0, 4.1.0 (FC only)</li><ul>|
+|  CSI version  |  HPE 3PAR and Primera CSP  |  Linux OS  |  OpenShift  |  Kubernetes  | 3PAR and Primera  |
+|---------------|----------------------------|------------|-------------|--------------|-------------------|
+|v1.1.1|v1.0.0|<ul><li>CentOS: 7.7</li><li>RHEL: 7.6, 7.7 / RHCOS</li></ul>|<ul><li>OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes</li></ul>| K8s 1.16, 1.17 |<ul><li>3PAR 3.3.1 MU5 (FC & iSCSI)</li><li>Primera OS: 4.0.0, 4.1.0 (FC only)</li><ul>|
 
 !!! Important
     * Minimum 2 iSCSI IP ports should be in ready state
     * FC array should be in ready state and zoned with initiator hosts
+    * FC supported only on Bare metal and Fabric SAN
 
     **Note:** 3PAR supports FC and iSCSI, Primera supports FC protocol
 
-## Deployemnt
+## Deployment
 Refer [Deployment](../../csi_driver/deployment.md).
 
 ### Deploying to Kubernetes
+
+#### Install
 [Deploy using Helm](../../csi_driver/deployment.md#helm)
 
+!!! Important
+    Helm3 only supported
+
+#### Post-Install
+
+Verify the deployment using helm ls -n kube-system
+```
+$ helm ls -n kube-system
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+hpe-csi kube-system     1               2020-04-17 15:12:46.984202589 +0530 IST deployed        hpe-csi-driver-2.0.0    1.1.1
+```
+
+
+2.	Verify the pods are in Running state
+```
+$ kubectl get pods -n kube-system |grep hpe
+hpe-csi-controller-84d8569476-5svkw                          5/5     Running   0          37m
+hpe-csi-node-nsbhd                                           2/2     Running   0          37m
+hpe-csi-node-xs87s                                           2/2     Running   0          37m
+hpe3parprimera-csp-6847b9f649-nmzss                          1/1     Running   0          37m
+```
+
+3.	Verify images for CSI driver and CSP.
+```
+$ kubectl describe pod hpe-csi-controller-84d8569476-5svkw -n kube-system |grep csi-driver |grep Image
+    Image:         hpestorage/csi-driver:v1.1.1
+    Image ID:      docker-pullable://docker.io/hpestorage/csi-driver@sha256:ee34278175e4fdba0f323c8c86a8292a9fdb60af796f2f1b83f62b7bfb5f4974
+	
+$ kubectl describe pod hpe3parprimera-csp-6847b9f649-nmzss -n kube-system |grep Image
+    Image:          hpestorage/hpe3parprimera-csp:v1.0.0
+    Image ID:       docker-pullable://docker.io/hpestorage/hpe3parprimera-csp@sha256:7697caceed28f7d369b81a215666a1bfb4303e6209383a07e7eff0d4cca1f9df
+```
+
+4.	Verify crds are installed.
+```
+$ kubectl get crd |grep hpe
+hpecsidrivers.storage.hpe.com                    2020-04-17T09:16:45Z
+hpenodeinfos.storage.hpe.com                     2020-04-17T09:42:44Z
+hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
+```
+
+#### Un-install
+
 ### Deploying to OpenShift
+
+#### Install
 [Deploy using Operator](../../csi_driver/deployment.md#operator)
+
+#### Post-Install
+
+#### Un-install
 
 ## Getting Started
 Get started using the Container Storage Provider by setting up `Secret`, `StorageClass`, `PVC` API objects.
@@ -34,12 +86,13 @@ Get started using the Container Storage Provider by setting up `Secret`, `Storag
 | CSP for 3PAR and Primera v1.0.0| Features supported on K8S| Features Supported on OpenShift| Notes    |
 |--------------------------------|--------------------------|--------------------------------|----------|
 |<br>Dynamic provisioning:<br><ul><li>Create volume</li><li>Delete volume</li><li>List volume</li></ul>|YES|  YES ||
-| Volume Exapnsion | YES   |   NO   |      |
-| Multi User        | YES   |   YES  |      |
+| Volume Expansion | YES   |   NO   | k8s version 1.16 onwards |
+| Multi User        | YES   |   YES  | |
 | Publish/Unpublish volumes |  YES   |   YES  |      |
-| Snapshost and clones  |  YES  |   NO  | k8s version 1.17 onwards|
-| Helm Charts  |  YES  |  NA   |     |
-| RH Operators Deployment  |  NA  |  YES  |      |
+| Snapshot and Clone  |  YES  |   NO  | k8s version 1.17 onwards|
+
+!!! Note
+    CPG can be associated with a domain. And the user supplied in the secret file of the backend, should have access to all domains. Role of this user should be either super/edit.
 
 ### Step 1: Create a secret
 Replace the `password` string (`YWRtaW4=`) below with a base64 encoded version of your password and replace the `backend` with your array IP address and save it as `hpe3parprimera-secret.yaml`.
@@ -67,7 +120,7 @@ kubectl create -f hpe-secret.yaml
 secret "hpe3parprimera-secret" created
 ```
 
-You should now see the HPE secret in the `kube-system` namespace.
+You should now see the HPE secret in the `kube-system`(K8S)/`hpe-csi`(OpenShift) namespace.
 
 ### Step 2: Create a storage class
 
@@ -90,14 +143,13 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/node-publish-secret-name: hpe3parprimera-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  # Uncomment for k8s 1.14 for resize support
-  #csi.storage.k8s.io/resizer-secret-name: hpe3parprimera-secret
-  #csi.storage.k8s.io/resizer-secret-namespace: kube-system
-  # Uncomment for k8s 1.15 for resize support
+  # check with QA
+  csi.storage.k8s.io/resizer-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: hpe3parprimera-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  # Use pre-existing CPG on 3PAR/Primera
   cpg: "FC_r6"
-  # tpvv: "False"
   provisioning_type: "tpvv"
   accessProtocol: "iscsi"
 ```
@@ -117,13 +169,13 @@ kubectl create -f 3par-sc.yaml
 
 ### Step 3: Create a PVC
 
-Save below file as `pvc-nginx40.yaml`.
+Save below file as `pvc-minio.yaml`.
 
 ```yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-nginx40
+  name: pvc-minio
 spec:
   accessModes:
     - ReadWriteOnce
@@ -135,7 +187,7 @@ spec:
 
 create a PVC
 ```
-kubectl create -f pvc-nginx40.yaml
+kubectl create -f pvc-minio.yaml
 ```
 
 ### Step 4: Create a POD
@@ -167,7 +219,7 @@ spec:
   volumes:
     - name: export
       persistentVolumeClaim:
-        claimName: pvc-nginx40
+        claimName: pvc-minio
 ```
 
 create a POD
@@ -200,10 +252,7 @@ kubectl create -f Snapshotclass.yaml
 ```
 
 !!! Note
-```
-Valid parameters for snapshotClass are 
-read_only : <"true"/"false"> default value is false.
-```
+    Valid parameters for snapshotClass are read_only : "true"/"false" default value is "false".
 
 #### Step 5.2: Create a snapshot
 
@@ -217,7 +266,7 @@ metadata:
 spec:
   volumeSnapshotClassName: my-snapclass-1
   source:
-    persistentVolumeClaimName: pvc-nginx40
+    persistentVolumeClaimName: pvc-minio
 ```
 
 create a snapshot
@@ -237,13 +286,13 @@ metadata:
 spec:
   storageClassName: 3par-sc
   dataSource:  
-    name: pvc-nginx40
+    name: pvc-minio
     kind: PersistentVolumeClaim
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 19Gi
 ```
 
 create a clone
@@ -268,23 +317,25 @@ Confirm it, by
 ```
 [root@cssosbe01-196119 ~]# kubectl get nodes -o wide
 NAME               STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION          CONTAINER-RUNTIME
-cssosbe01-196119   Ready    master   39d   v1.16.6   15.212.196.119   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
-cssosbe01-196120   Ready    master   39d   v1.16.6   15.212.196.120   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
-cssosbe01-196121   Ready    master   39d   v1.16.6   15.212.196.121   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
-cssosbe01-196150   Ready    <none>   39d   v1.16.6   15.212.196.150   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
-cssosbe01-196151   Ready    <none>   39d   v1.16.6   15.212.196.151   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
+cssosbe01-196119   Ready    master   39d   v1.16.6   192.168.196.119   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
+cssosbe01-196120   Ready    master   39d   v1.16.6   192.168.196.120   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
+cssosbe01-196121   Ready    master   39d   v1.16.6   192.168.196.121   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
+cssosbe01-196150   Ready    <none>   39d   v1.16.6   192.168.196.150   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
+cssosbe01-196151   Ready    <none>   39d   v1.16.6   192.168.196.151   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 ```
 - Check for Controller,CSP and Node Plugin pods
 ```
 [root@cssosbe01-196119 ~]# kubectl get pods -o wide -n kube-system | grep hpe
-hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   15.212.196.150   cssosbe01-196150   <none>           <none>
-hpe-csi-node-cbvcl                         2/2     Running   0          42h   15.212.196.151   cssosbe01-196151   <none>           <none>
-hpe-csi-node-w8hx5                         2/2     Running   0          42h   15.212.196.150   cssosbe01-196150   <none>           <none>
-hpe3parprimera-csp-778cf87c8b-mffh2        1/1     Running   0          42h   15.212.196.150   cssosbe01-196150   <none>           <none>
+hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
+hpe-csi-node-cbvcl                         2/2     Running   0          42h   192.168.196.151   cssosbe01-196151   <none>           <none>
+hpe-csi-node-w8hx5                         2/2     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
+hpe3parprimera-csp-778cf87c8b-mffh2        1/1     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 ```
 - Check for REST endpoint of CSP service is reachable
-CSP (Container Storage Provider) hosts a REST server on port 8080 for the CSI controller/node plugin to communicate
-If the CSP REST endpoint on above port is not reachable, it will lead to failure in provisioning and pod mount operations.
+<br>
+    - CSP (Container Storage Provider) hosts a REST server on port 8080 for the CSI controller/node plugin to communicate
+<br>
+    - If the CSP REST endpoint on above port is not reachable, it will lead to failure in provisioning and pod mount operations.
 
 To check whether this Service is up or not, the user can confirm it by
 ```
@@ -305,42 +356,48 @@ If the above call goes fine "Welcome!" will be listed
 Eg. /etc/multipath.conf
 ```
 defaults {
-    polling_interval 10
-    max_fds          8192
+    find_multipaths     no
+    user_friendly_names yes
+}
+blacklist {
+    devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
+    devnode "^hd[a-z]"
+    device {
+        product ".*"
+        vendor  ".*"
+    }
+}
+blacklist_exceptions {
+    property "(ID_WWN|SCSI_IDENT_.*|ID_SERIAL)"
+    device {
+        vendor  "Nimble"
+        product "Server"
+    }
+    device {
+        product "VV"
+        vendor  "3PARdata"
+    }
 }
 devices {
     device {
-        no_path_retry        18
-        rr_weight            uniform
-        hardware_handler     "0"
-        path_selector        "round-robin 0"
-        path_grouping_policy multibus
-        product              "VV"
-        rr_min_io_rq         1
-        features             "0"
-        failback             immediate
-        vendor               "3PARdata"
-        #getuid_callout      "/lib/udev/scsi_id --whitelisted --device=/dev/%n"
-        path_checker         tur
-    }
-    device {
-        product              "Server"
-        hardware_handler     "1 alua"
-        vendor               "Nimble"
-        path_grouping_policy group_by_prio
-        path_selector        "service-time 0"
-        no_path_retry        30
-        path_checker         tur
         prio                 alua
         dev_loss_tmo         infinity
-        fast_io_fail_tmo     5
+        rr_weight            uniform
+        path_checker         tur
+        hardware_handler     "1 alua"
+        rr_min_io_rq         1
+        no_path_retry        30
+        path_grouping_policy group_by_prio
+        vendor               "Nimble"
         failback             immediate
+        product              "Server"
+        fast_io_fail_tmo     5
+        path_selector        "service-time 0"
     }
 }
-
 ```
 2. CSP log file is in the node which runs the csp service (cssosbe01-196150 in above example), Log location `/var/log/hpe-3par-primera-csp.log`
-3. Controller plugin log is in node where the hpe-csi-controller* pod (eg 15.212.196.150) is running. Log location: `/var/log/hpe-csi-controller.log`
+3. Controller plugin log is in node where the hpe-csi-controller* pod (eg 192.168.196.150) is running. Log location: `/var/log/hpe-csi-controller.log`
 4. Node plugin log is in node where the  hpe-csi-node* pod is running (eg. ip ending with 150,151) , Log location: `/var/log/hpe-csi-node.log`
 
 ### Steps to debug if the pods are in "ContainerCreating" state
