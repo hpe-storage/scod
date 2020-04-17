@@ -1,5 +1,6 @@
 # Overview
-TBD
+
+The HPE 3PAR and Primera CSP is the reference implementation for the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes.
 
 [TOC]
 
@@ -18,16 +19,241 @@ TBD
     **Note:** 3PAR supports FC and iSCSI, Primera supports FC protocol
 
 ## Deployemnt
-TBD
+Refer [Deployment](../../csi_driver/deployment.md).
 
 ### Deploying to Kubernetes
-TBD
+[Deploy using Helm](../../csi_driver/deployment.md#helm)
 
 ### Deploying to OpenShift
-TBD
+[Deploy using Operator](../../csi_driver/deployment.md#operator)
 
 ## Getting Started
-TBD
+Get started using the Container Storage Provider by setting up `Secret`, `StorageClass`, `PVC` API objects.
+
+### Block storage Usage Table
+| CSP for 3PAR and Primera v1.0.0| Features supported on K8S| Features Supported on OpenShift| Notes    |
+|--------------------------------|--------------------------|--------------------------------|----------|
+|<br>Dynamic provisioning:<br><ul><li>Create volume</li><li>Delete volume</li><li>List volume</li></ul>|YES|  YES ||
+| Volume Exapnsion | YES   |   NO   |      |
+| Multi User        | YES   |   YES  |      |
+| Publish/Unpublish volumes |  YES   |   YES  |      |
+| Snapshost and clones  |  YES  |   NO  | k8s version 1.17 onwards|
+| Helm Charts  |  YES  |  NA   |     |
+| RH Operators Deployment  |  NA  |  YES  |      |
+
+### Step 1: Create a secret
+Replace the `password` string (`YWRtaW4=`) below with a base64 encoded version of your password and replace the `backend` with your array IP address and save it as `hpe3parprimera-secret.yaml`.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe3parprimera-secret 
+  namespace: kube-system
+stringData:
+  serviceName: hpe3parprimera-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.1
+  username: admin  
+data:
+  # echo -n "admin" | base64
+  password: YWRtaW4=
+```
+
+Create the secret:
+
+```yaml
+kubectl create -f hpe-secret.yaml
+secret "hpe3parprimera-secret" created
+```
+
+You should now see the HPE secret in the `kube-system` namespace.
+
+### Step 2: Create a storage class
+
+Save below file as `3par-sc.yaml`.
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: 3par-sc
+provisioner: csi.hpe.com
+allowVolumeExpansion: true
+parameters:
+  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/provisioner-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  # Uncomment for k8s 1.14 for resize support
+  #csi.storage.k8s.io/resizer-secret-name: hpe3parprimera-secret
+  #csi.storage.k8s.io/resizer-secret-namespace: kube-system
+  # Uncomment for k8s 1.15 for resize support
+  csi.storage.k8s.io/controller-expand-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  cpg: "FC_r6"
+  # tpvv: "False"
+  provisioning_type: "tpvv"
+  accessProtocol: "iscsi"
+```
+
+create a storage class
+```yaml
+kubectl create -f 3par-sc.yaml
+```
+
+!!! Note
+    name is user defined name
+    <br>Below parameters are valid:
+    <br>- <b>snap_cpg</b>: cpg used for creating a snapshot
+    <br>- <b>provisioning_type</b>: "full"/"tpvv"/"tdvv"
+    <br>- <b>compression</b>: "true"/"false"
+    <br>- <b>accessProtocol</b>: "fc"/"iscsi"
+
+### Step 3: Create a PVC
+
+Save below file as `pvc-nginx40.yaml`.
+
+```yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-nginx40
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 19Gi
+  storageClassName: 3par-sc
+```
+
+create a PVC
+```
+kubectl create -f pvc-nginx40.yaml
+```
+
+### Step 4: Create a POD
+
+Save below file as `pod-hpe.yaml`.
+
+```yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-hpe
+spec:
+  containers:
+  - name: minio
+    image: minio/minio:latest
+    args:
+    - server
+    - /export
+    env:
+    - name: MINIO_ACCESS_KEY
+      value: minio
+    - name: MINIO_SECRET_KEY
+     value: doryspeakswhale
+    ports:
+    - containerPort: 9000
+    volumeMounts:
+    - name: export
+      mountPath: /export
+  volumes:
+    - name: export
+      persistentVolumeClaim:
+        claimName: pvc-nginx40
+```
+
+create a POD
+```
+kubectl create -f pod-hpe.yaml
+```
+
+### Step 5: Create a snapshot
+
+#### Step 5.1: Create a snapshotStorageClass
+
+Save below file as `Snapshotclass.yaml`.
+
+```yaml
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshotClass
+metadata:
+  name: my-snapclass-1
+driver: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "Snapshot create by the HPE CSI Driver"
+  csi.storage.k8s.io/snapshotter-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+```
+
+create a snapshotClass
+```
+kubectl create -f Snapshotclass.yaml
+```
+
+!!! Note
+```
+Valid parameters for snapshotClass are 
+read_only : <"true"/"false"> default value is false.
+```
+
+#### Step 5.2: Create a snapshot
+
+Save below file as `volumeSnapshot.yaml`.
+
+```yaml
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshot
+metadata:
+  name: my-snapshot-1
+spec:
+  volumeSnapshotClassName: my-snapclass-1
+  source:
+    persistentVolumeClaimName: pvc-nginx40
+```
+
+create a snapshot
+```
+kubectl create -f volumeSnapshot.yaml
+```
+
+### Step 6: Create a clone
+
+Save below file as `clonePVC.yaml`.
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-clone-1
+spec:
+  storageClassName: 3par-sc
+  dataSource:  
+    name: pvc-nginx40
+    kind: PersistentVolumeClaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+create a clone
+```
+kubectl create -f clonePVC.yaml
+```
+
+!!! Note
+    While creating a clone of a PVC, storage should be of same size that of PVC
+
 
 ## Diagnostics and Troubleshooting
 ### Pre-requisites check
@@ -382,7 +608,7 @@ lead to accidental deletion of SC/PVC. It's recommented to get the individual ob
    Also this operation does'nt delete the user created PVC/PV and SC objects.
 7. TODO: Add CHAP related information.
 ### Responsibilities for Controller/Node/CSP plugin
-1. Controller pod is responsible for create volume/delete volume calls. Also calls "Create host","publish volume" calls via CSP
+1. Controller pod is responsible for create volume/delete volume calls. Also calls "Create host", "publish volume" calls via CSP
 2. Node plugin is responsible for rescan of the scsi devices (as part of `NodeStageVolume`) and creating a temporary staging location for node
 3. Node plugin as initiates `NodePublishVolume` after doing staging process in step 2, and does the bind mount of the staging location to the actual pod mount directory.
 4. CSP plugin supplies the REST response for each of the controller/node plugin operation
