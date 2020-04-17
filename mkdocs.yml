@@ -62,6 +62,10 @@ nav:
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
+# - REFERENCE ARCHITECTURES:
+#   - 'HPE RA Library': ''
+#   - 'HPE InfoSight': ''
+#   - 'External': ''
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
