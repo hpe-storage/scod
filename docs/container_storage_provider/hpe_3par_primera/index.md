@@ -8,16 +8,14 @@ The HPE 3PAR and Primera CSP is the reference implementation for the [HPE CSI Dr
 
 ### HPE 3PAR and Primera Storage Platform Requirements
 
-|  CSI version  |  HPE 3PAR and Primera CSP  |  Linux OS  |  OpenShift  |  Kubernetes  | 3PAR and Primera  |
-|---------------|----------------------------|------------|-------------|--------------|-------------------|
-|v1.1.1|v1.0.0|<ul><li>CentOS: 7.7</li><li>RHEL: 7.6, 7.7 / RHCOS</li></ul>|<ul><li>OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes</li></ul>| K8s 1.16, 1.17 |<ul><li>3PAR 3.3.1 MU5 (FC & iSCSI)</li><li>Primera OS: 4.0.0, 4.1.0 (FC only)</li><ul>|
+|  CSI |  CSP |  Linux OS  |  OpenShift  |  Kubernetes  | 3PAR and Primera OS  |
+|------|------|------------|-------------|--------------|----------------------|
+|v1.1.1|v1.0.0|<ul><li>CentOS: 7.7</li><li>RHEL: 7.6, 7.7 / RHCOS</li></ul>|<ul><li>OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes</li></ul>| K8s 1.16, 1.17 |<ul><li>3PAR OS: 3.3.1 (FC & iSCSI)</li><li>Primera OS: 4.0.0, 4.1.0 (FC only)</li><ul>|
 
 !!! Important
-    * Minimum 2 iSCSI IP ports should be in ready state
-    * FC array should be in ready state and zoned with initiator hosts
-    * FC supported only on Bare metal and Fabric SAN
-
-    **Note:** 3PAR supports FC and iSCSI, Primera supports FC protocol
+    &emsp;- Minimum 2 iSCSI IP ports should be in ready state<br>
+    &emsp;- FC array should be in ready state and zoned with initiator hosts<br>
+    &emsp;- FC supported only on Bare metal and Fabric SAN
 
 ## Deployment
 Refer [Deployment](../../csi_driver/deployment.md).
@@ -36,25 +34,39 @@ Verify helm deployment
 ```
 $ helm ls -n kube-system
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-hpe-csi kube-system     1               2020-04-17 15:12:46.984202589 +0530 IST deployed        hpe-csi-driver-2.0.0    1.1.1
+hpe-csi kube-system     1               2020-04-20 10:12:52.625989599 +0530 IST deployed        hpe-csi-driver-1.2.0    1.1.1
 ```
 
-Verify pods are in Running state
+Verify CSI resources are deployed and running
 ```
-$ kubectl get pods -n kube-system |grep hpe
-hpe-csi-controller-84d8569476-5svkw                          5/5     Running   0          37m
-hpe-csi-node-nsbhd                                           2/2     Running   0          37m
-hpe-csi-node-xs87s                                           2/2     Running   0          37m
-hpe3parprimera-csp-6847b9f649-nmzss                          1/1     Running   0          37m
+$ kubectl get all -n kube-system | grep csi
+pod/hpe-csi-controller-84d8569476-t27gb                          5/5     Running   0          30m
+pod/hpe-csi-node-mbxmd                                           2/2     Running   0          30m
+pod/hpe-csi-node-zqn8l                                           2/2     Running   0          30m
+daemonset.apps/hpe-csi-node   2         2         2       2            2           <none>                        30m
+deployment.apps/hpe-csi-controller   1/1     1            1           30m
+replicaset.apps/hpe-csi-controller-84d8569476   1         1         1       30m
+```
+
+Verify 3PAR/Primera CSP resources are deployed and running
+```
+$ kubectl get all -n kube-system | grep primera
+pod/primera3par-csp-66f775b555-fst5r                             1/1     Running   0          32m
+service/primera3par-csp-svc   ClusterIP   10.106.209.207   <none>        8080/TCP                 32m
+deployment.apps/primera3par-csp      1/1     1            1           32m
+replicaset.apps/primera3par-csp-66f775b555      1         1         1       32m
+
+$ kubectl get secret -n kube-system |grep primera
+primera3par-secret                               Opaque                                5      34m
 ```
 
 Verify images for CSI and CSP driver version installed
 ```
-$ kubectl describe pod hpe-csi-controller-84d8569476-5svkw -n kube-system |grep csi-driver |grep Image
+$ kubectl describe pod/hpe-csi-controller-84d8569476-t27gb -n kube-system | grep csi-driver | grep Image
     Image:         hpestorage/csi-driver:v1.1.1
     Image ID:      docker-pullable://docker.io/hpestorage/csi-driver@sha256:ee34278175e4fdba0f323c8c86a8292a9fdb60af796f2f1b83f62b7bfb5f4974
-	
-$ kubectl describe pod hpe3parprimera-csp-6847b9f649-nmzss -n kube-system |grep Image
+
+$ kubectl describe pod/primera3par-csp-66f775b555-fst5r -n kube-system | grep Image
     Image:          hpestorage/hpe3parprimera-csp:v1.0.0
     Image ID:       docker-pullable://docker.io/hpestorage/hpe3parprimera-csp@sha256:7697caceed28f7d369b81a215666a1bfb4303e6209383a07e7eff0d4cca1f9df
 ```
@@ -62,9 +74,9 @@ $ kubectl describe pod hpe3parprimera-csp-6847b9f649-nmzss -n kube-system |grep 
 Verify CRDs are installed
 ```
 $ kubectl get crd |grep hpe
-hpecsidrivers.storage.hpe.com                    2020-04-17T09:16:45Z
-hpenodeinfos.storage.hpe.com                     2020-04-17T09:42:44Z
-hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
+hpecsidrivers.storage.hpe.com                    2020-04-20T05:03:20Z
+hpenodeinfos.storage.hpe.com                     2020-04-20T05:23:15Z
+hpevolumeinfos.storage.hpe.com                   2020-04-20T05:23:15Z
 ```
 
 #### Un-install
@@ -83,14 +95,14 @@ NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
 
 Verify no **hpe*** resources found other than the default pods
 ```
-[root@k8s-master00 hpe-csi-driver]# kubectl get pods -n kube-system |grep hpe
+$ kubectl get pods -n kube-system |grep hpe
 etcd-k8s-master00.in.rdlabs.hpecorp.net                      1/1     Running   5          73d
 kube-apiserver-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   5          73d
 kube-controller-manager-k8s-master00.in.rdlabs.hpecorp.net   1/1     Running   5          73d
 kube-scheduler-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   4          73d
 ```
 
-!!! Note
+!!! Caution
     CRDs will not be removed as part of helm uninstall
 ```
 $ kubectl get crd |grep hpe
@@ -121,7 +133,10 @@ Get started using the Container Storage Provider by setting up `Secret`, `Storag
 | Snapshot and Clone  |  YES  |   NO  | k8s version 1.17 onwards|
 
 !!! Note
-    CPG can be associated with a domain. And the user supplied in the secret file of the backend, should have access to all domains. Role of this user should be either super/edit.
+    Multi-domain support<br>
+    &emsp;- CPG can be associated with a domain<br>
+    &emsp;- The user supplied in the secret file of the backend, should have access to all domains<br>
+    &emsp;- Role of this user should be either super/edit
 
 ### Step 1: Create a secret
 Replace the `password` string (`YWRtaW4=`) below with a base64 encoded version of your password and replace the `backend` with your array IP address and save it as `hpe3parprimera-secret.yaml`.
@@ -133,7 +148,7 @@ metadata:
   name: hpe3parprimera-secret 
   namespace: kube-system
 stringData:
-  serviceName: hpe3parprimera-csp-svc
+  serviceName: primera3par-csp-svc
   servicePort: "8080"
   backend: 192.168.1.1
   username: admin  
@@ -338,15 +353,15 @@ kubectl create -f clonePVC.yaml
 ### Pre-requisites check
 #### Check if all the pods are running 
 
-1. One node plugin on every worker node
-2. One controller pod across the cluster, and 
-3. One csp pod across the cluster
+* One node plugin on every worker node
+* One controller pod across the cluster, and
+* One csp pod across the cluster
 
 Confirm it, by
 
 * Check for worker nodes
 ```
-[root@cssosbe01-196119 ~]# kubectl get nodes -o wide
+$ kubectl get nodes -o wide
 NAME               STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION          CONTAINER-RUNTIME
 cssosbe01-196119   Ready    master   39d   v1.16.6   192.168.196.119   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 cssosbe01-196120   Ready    master   39d   v1.16.6   192.168.196.120   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
@@ -354,9 +369,9 @@ cssosbe01-196121   Ready    master   39d   v1.16.6   192.168.196.121   <none>   
 cssosbe01-196150   Ready    <none>   39d   v1.16.6   192.168.196.150   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 cssosbe01-196151   Ready    <none>   39d   v1.16.6   192.168.196.151   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 ```
-* Check for Controller,CSP and Node Plugin pods
+* Check for Controller, CSP and Node Plugin pods
 ```
-[root@cssosbe01-196119 ~]# kubectl get pods -o wide -n kube-system | grep hpe
+$ kubectl get pods -o wide -n kube-system | grep hpe
 hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 hpe-csi-node-cbvcl                         2/2     Running   0          42h   192.168.196.151   cssosbe01-196151   <none>           <none>
 hpe-csi-node-w8hx5                         2/2     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
@@ -368,12 +383,12 @@ hpe3parprimera-csp-778cf87c8b-mffh2        1/1     Running   0          42h   19
 
 To check whether this Service is up or not, the user can confirm it by
 ```
-[root@k8smaster build]# kubectl get services -n kube-system
+$ kubectl get services -n kube-system
 NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
-hpe3parprimera-csp-svc   ClusterIP   10.111.253.102   <none>        8080/TCP                 14h
+primera3par-csp-svc   ClusterIP   10.111.253.102   <none>        8080/TCP                 14h
 kube-dns                 ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP   141d
 ``` 
-`hpe3parprimera-csp-svc` is the kubernetes service which exposes the REST server running in the CSP pod to the external services via kubernetes internal networking
+`primera3par-csp-svc` is the kubernetes service which exposes the REST server running in the CSP pod to the external services via kubernetes internal networking
 Try making a health check call like
 ```
 export no_proxy=$no_proxy,10.111.253.102
@@ -425,15 +440,15 @@ devices {
     }
 }
 ```
-2. CSP log file is in the node which runs the csp service (cssosbe01-196150 in above example), Log location `/var/log/hpe-3par-primera-csp.log`
-3. Controller plugin log is in node where the hpe-csi-controller* pod (eg 192.168.196.150) is running. Log location: `/var/log/hpe-csi-controller.log`
-4. Node plugin log is in node where the  hpe-csi-node* pod is running (eg. ip ending with 150,151) , Log location: `/var/log/hpe-csi-node.log`
+* CSP log file is in the node which runs the csp service (cssosbe01-196150 in above example), Log location `/var/log/hpe-3par-primera-csp.log`
+* Controller plugin log is in node where the hpe-csi-controller* pod (eg 192.168.196.150) is running. Log location: `/var/log/hpe-csi-controller.log`
+* Node plugin log is in node where the  hpe-csi-node* pod is running (eg. ip ending with 150,151) , Log location: `/var/log/hpe-csi-node.log`
 
 ### Steps to debug if the pods are in "ContainerCreating" state
-1. Identify the pod which is "ContainerCreating" state .. 
+* Identify the pod which is "ContainerCreating" state
 eg.
 ```
-[root@cssosbe01-196113 ~]# kubectl get pods --all-namespaces -o wide
+$ kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                                             READY   STATUS              RESTARTS   AGE    IP               NODE                                     NOMINATED NODE   READINESS GATES
 kube-system   coredns-6955765f44-pfwwj                                         1/1     Running             0          2d2h   10.244.0.2       cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
 kube-system   coredns-6955765f44-wlm5g                                         1/1     Running             0          2d2h   10.244.0.3       cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
@@ -444,10 +459,10 @@ kube-system   hpe-csi-node-p9655                                               0
 
 ```
 
-2. Issue `kubectl describe pod <pod-name> -n kube-system`
+* Issue `kubectl describe pod <pod-name> -n kube-system`
 eg.
 ```
-[root@cssosbe01-196113 ~]# kubectl describe pod hpe-csi-node-96b5c -n kube-system
+$ kubectl describe pod hpe-csi-node-96b5c -n kube-system
 Name:                 hpe-csi-node-96b5c
 Namespace:            kube-system
 Priority:             2000001000
@@ -641,8 +656,8 @@ Events:
 
 
 ### Logging levels 
-1. Log levels are controlled by the environment variable LOG_LEVEL 
-2. Log level `trace` is the most extensive logging
+* Log levels are controlled by the environment variable LOG_LEVEL
+* Log level `trace` is the most extensive logging
 ```yaml
  - name: hpe-csi-driver
           image: hpestorage/csi-driver:v1.1.1
@@ -657,8 +672,8 @@ Events:
 ```
 
 ### PVC Creation in "Pending" state
-1. Log in to the worker node where the CSP pod is running
-2. vi `/var/log/hpe-3par-primera-csp.log`
+* Log in to the worker node where the CSP pod is running
+* vi `/var/log/hpe-3par-primera-csp.log`
 
 Eg. Here the volume creation fails for "Invalid CPG" as shown in the below log.
 ```
@@ -675,27 +690,26 @@ time="2020-02-06T05:08:06-05:00" level=info msg="Create volumes response: {\"cod
 time="2020-02-06T05:08:06-05:00" level=info msg="Error creating volume:  404 Not Found" file="create_volume_cmd.go:58"
 time="2020-02-06T05:08:06-05:00" level=info msg=">>>>> Create Volume Cmd" file="create_volume_cmd.go:79"
 time="2020-02-06T05:08:06-05:00" level=info msg=" <<<<< Create Volume Call" file="request_handler.go:114"
-
 ```
 
 ### Known Limitations
-1. If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl create -f <file>.yaml`
+* If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl create -f <file>.yaml`
 is done, there is a possibility of StorageClass or PVC being deleted before the POD is deleted. And this will
 lead to accidental deletion of SC/PVC. It's recommended to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
-2. Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
-3. OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone / snapshot capability.
-4. Due to RWO (constraint) in `accessMode` of PVC, the block volume associated with the PVC can only be used exclusively on a single worker node of kubernetes
-5. Clone volume creation requires the user to provide the same size as that of the source volume to be created. For eg. if the source volume is 20GiB, then the clone volume size also should match the same size.
-   This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
-   `kubectl describe hpevolumeinfo <pv-name>` can be used for getting the status of the clone operation. 
-6. Uninstall of the CSI driver does'nt remove Custom Resource Definitions like HPEVolumeInfo, HPENodeInfo etc.
-   Also this operation doesn't delete the user created PVC/PV and SC objects.
-7. CHAP must be enabled on the host before deploying CSI driver on the cluster.
-   Set `node.session.auth.authmethod`, `node.session.auth.username` and `node.session.auth.password` in `/etc/iscsi/iscsid.conf` to enable CHAP on host.
-   Value for `node.session.auth.authmethod` must be set to `CHAP`.
+* Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
+* OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone / snapshot capability.
+* Due to RWO (constraint) in `accessMode` of PVC, the block volume associated with the PVC can only be used exclusively on a single worker node of kubernetes
+* Clone volume creation requires the user to provide the same size as that of the source volume to be created. For eg. if the source volume is 20GiB, then the clone volume size also should match the same size.
+This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
+`kubectl describe hpevolumeinfo <pv-name>` can be used for getting the status of the clone operation.
+* Uninstall of the CSI driver does'nt remove Custom Resource Definitions like HPEVolumeInfo, HPENodeInfo etc.
+Also this operation doesn't delete the user created PVC/PV and SC objects.
+* CHAP must be enabled on the host before deploying CSI driver on the cluster if user wants CHAP feature.
+Set `node.session.auth.authmethod`, `node.session.auth.username` and `node.session.auth.password` in `/etc/iscsi/iscsid.conf` to enable CHAP on host.
+Value for `node.session.auth.authmethod` must be set to `CHAP`.
 
 ### Responsibilities for Controller/Node/CSP plugin
-1. Controller pod is responsible for create volume/delete volume calls. Also calls "Create host", "publish volume" calls via CSP
-2. Node plugin is responsible for rescan of the scsi devices (as part of `NodeStageVolume`) and creating a temporary staging location for node
-3. Node plugin as initiates `NodePublishVolume` after doing staging process in step 2, and does the bind mount of the staging location to the actual pod mount directory.
-4. CSP plugin supplies the REST response for each of the controller/node plugin operation
+* Controller pod is responsible for create volume/delete volume calls. Also calls "Create host", "publish volume" calls via CSP
+* Node plugin is responsible for rescan of the scsi devices (as part of `NodeStageVolume`) and creating a temporary staging location for node
+* Node plugin as initiates `NodePublishVolume` after doing staging process in step 2, and does the bind mount of the staging location to the actual pod mount directory.
+* CSP plugin supplies the REST response for each of the controller/node plugin operation
