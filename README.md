@@ -112,6 +112,6 @@ Example:
 There should be an example of this [here](https://scod.hpedev.io/csi_driver/deployment.html#advanced_install).
 
 # Get in touch
-The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) (sign up [here](https://slack.hpedev.io) if you don't have an @hpe.com address) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out to us there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
+The HPE storage team hangs out on [hpedev.slack.com](https://hpedev.slack.com) (sign up [here](https://slack.hpedev.io) if you don't have an @hpe.com address) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out to us there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
 
 We appreciate your support and contributions!
