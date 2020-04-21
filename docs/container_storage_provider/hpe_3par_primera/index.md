@@ -693,7 +693,7 @@ time="2020-02-06T05:08:06-05:00" level=info msg=" <<<<< Create Volume Call" file
 ```
 
 ### Known Limitations
-* If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl create -f <file>.yaml`
+* If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl delete -f <file>.yaml`
 is done, there is a possibility of StorageClass or PVC being deleted before the POD is deleted. And this will
 lead to accidental deletion of SC/PVC. It's recommended to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
 * Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
