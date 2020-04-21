@@ -173,7 +173,7 @@ Valid parameters for StorageClass
 |Parameter          | Valid values          | Notes                 |
 |-------------------|-----------------------|-----------------------|
 |snap_cpg           | Pre existing CPG      | cpg will be used as snap_cpg when not specified|
-|provisioning_type  | "full"/"tpvv"/"tdvv"  | **3PAR**:<br><li>For full provisioning use full</li><li>For thin provisioning use thin</li><li>For dedup provisioning use tdvv</li><br>**Primera**:<br><li>To create thin provision volume use thin</li>|
+|provisioning_type  | "full"/"tpvv"/"tdvv"  | **3PAR**:<br><li>For full provisioning use full</li><li>For thin provisioning use tpvv</li><li>For dedup provisioning use tdvv</li><br>**Primera**:<br><li>To create thin provision volume use thin</li>|
 |compression        | "true"/"false"        | default - "false"<br>To create a compressed volume, set compression as "true"<br>To create compressed volume minimum size requirement is 16GiB<br><li>To create a compressed volume on Primera, set compression as "true" along with provisioning_type set as "tdvv" |
 |accessProtocol     | "fc"/"iscsi"          | default - "iscsi"<br>For Primera 4.0/4.1 set it to "fc"|
 
