@@ -174,7 +174,7 @@ Valid parameters for StorageClass
 |-------------------|-----------------------|-----------------------|
 |snap_cpg           | Pre existing CPG      | cpg will be used as snap_cpg when not specified|
 |provisioning_type  | "full"/"tpvv"/"tdvv"  | **3PAR**:<br><li>For full provisioning use full</li><li>For thin provisioning use tpvv</li><li>For dedup provisioning use tdvv</li><br>**Primera**:<br><li>To create thin provision volume use tpvv</li><li>To create DECO volume use provisioning_type as "tdvv" and compression set to "true"</li>|
-|compression        | "true"/"false"        | default - "false"<br>To create a compressed volume, set compression as "true"<br>To create compressed volume minimum size requirement is 16GiB<br><li>To create a compressed volume on Primera, set compression as "true" along with provisioning_type set as "tdvv" |
+|compression        | "true"/"false"        | default - "false"<br>To create a compressed volume, set compression as "true".<br>To create compression enabled volume, size of the volume should be at least 16GiB.<br>To create a compressed volume on Primera, set compression as "true" along with provisioning_type set as "tdvv".<br>Fully provisioned volume cannot be compressed.|
 |accessProtocol     | "fc"/"iscsi"          | default - "iscsi"<br>For Primera 4.0/4.1 set it to "fc"|
 
 Save below file as `3par-sc.yaml`.
