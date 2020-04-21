@@ -84,6 +84,33 @@ Start fenced code blocks like this:
 }
 ```
 
+## Fenced code tabs
+It's common that different incarnations of a certain command or manifest is unique to a situation where a single variable may differ. This is tedious to point out in a code block in an efficient manner as users most likely want to copy and paste the code block into a terminal. With the use of the `markdown-fenced-code-tabs` plugin it's possible to "stack" code blocks on top of each other and they will appear as tabs when rendered in MkDocs.
+
+Example: 
+
+```
+```json fct_label="Kubernetes 1.18"
+{ 
+  "version": "1.18"
+  "dosomestuff": {
+    "key": "val"
+  }
+}
+```
+
+```
+```json fct_label="Kubernetes 1.17
+{ 
+  "version": "1.17",
+  "dostuff": {
+    "key": "val"
+  }
+}
+```
+
+There should be an example of this [here](https://scod.hpedev.io/csi_driver/deployment.html#advanced_install).
+
 # Get in touch
 The HPE storage team hang out on [hpedev.slack.com](https://hpedev.slack.com) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.
 
