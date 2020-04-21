@@ -1,6 +1,6 @@
 # Choose your platform
 
-HPE provide a broad portolio of products that integrate with Docker, Kubernetes and neighboring ecosystems. The following table provide an overview of integrations available for each primary storage platform.
+HPE provides a broad portfolio of products that integrate with Docker, Kubernetes and neighboring ecosystems. The following table provide an overview of integrations available for each primary storage platform.
 
 | Ecosystem | ![](img/3par.jpg) <br /><br /> HPE 3PAR / Primera | ![](img/nimble.jpg)<br /><br /> HPE Nimble Storage | ![](img/cloud2.jpg) <br /><br /> HPE Cloud Volumes |
 | :---: | :---: | :---: | :---: |
