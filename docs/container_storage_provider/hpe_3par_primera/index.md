@@ -362,7 +362,7 @@ If the above call goes fine "Welcome!" will be listed
 
 - Check for the multipath file in worker nodes
 Eg. /etc/multipath.conf
-```buildoutcfg
+```markdown
 defaults {
     find_multipaths     no
     user_friendly_names yes
@@ -425,7 +425,7 @@ devices {
 ```
 
 ### Steps to debug if the pods are in "ContainerCreating" state
-* Identify the pod which is "ContainerCreating" state
+* Identify the pod which is in "ContainerCreating" state
 ```markdown
 $ kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                                             READY   STATUS              RESTARTS   AGE    IP               NODE                                     NOMINATED NODE   READINESS GATES
@@ -435,7 +435,6 @@ kube-system   etcd-cssosbe01-196113.in.rdlabs.hpecorp.net                      1
 kube-system   hpe-csi-controller-5b69668588-mk74b                              4/4     Running             0          21h    192.168.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
 kube-system   hpe-csi-node-96b5c                                               0/2     ContainerCreating   0          21h    192.168.196.115   cssosbe01-196115.in.rdlabs.hpecorp.net   <none>           <none>
 kube-system   hpe-csi-node-p9655                                               0/2     ContainerCreating   0          21h    192.168.196.114   cssosbe01-196114.in.rdlabs.hpecorp.net   <none>           <none>
-
 ```
 
 * Execute `kubectl describe pod <pod-name> -n kube-system`
