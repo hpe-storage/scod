@@ -30,7 +30,6 @@ plugins:
       redirect_maps:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
-        'docker_volume_plugins/hpe_3par_primera_storage.md': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
 nav:
   - HPE CSI DRIVER FOR KUBERNETES:
     - 'Introduction': 'csi_driver/index.md'
@@ -38,7 +37,7 @@ nav:
     - 'Using': 'csi_driver/using.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
-#    - 'HPE 3PAR/Primera': 'container_storage_provider/hpe_3par_primera/index.md'
+    - 'HPE 3PAR/Primera Storage': 'container_storage_provider/hpe_3par_primera_storage/index.md'
 #   - 'HPE Cloud Volumes': 'csp/cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'container_storage_provider/hpe_nimble_storage/index.md'
 # - HPE CONTAINER PLATFORM:
@@ -52,13 +51,6 @@ nav:
 #   - 'Amazon Elastic Kubernetes Engine': 'managed/amazon_elastic_kubernetes_service/index.md'
 #   - 'Azure Kubernetes Service': 'managed/azure_kubernetes_service/index.md'
 #   - 'Google Kubernetes Engine': 'managed/google_kubernetes_engine/index.md'
-<<<<<<< HEAD
-  - DOCKER VOLUME PLUGINS:
-    - 'HPE 3PAR/Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
-    - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
-    - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
-=======
->>>>>>> upstream/master
   - LEGACY FLEXVOLUME DRIVER:
     - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
     - 'Ansible installer for 3PAR/Primera': 'flexvolume_driver/hpe_3par_primera_installer/index.md'

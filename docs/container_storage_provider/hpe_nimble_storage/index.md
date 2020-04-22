@@ -10,7 +10,7 @@ A `StorageClass` is used to provision or clone an HPE Nimble Storage-backed pers
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
-Please see [using the HPE CSI Driver](../../csi_driver/using.html#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
+Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
 
 !!! note
     These are optional parameters unless specified.
