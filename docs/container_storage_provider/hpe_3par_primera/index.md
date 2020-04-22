@@ -196,9 +196,6 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/node-publish-secret-name: hpe3parprimera-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  # check with QA
-  csi.storage.k8s.io/resizer-secret-name: hpe3parprimera-secret
-  csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: hpe3parprimera-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   # Use pre-existing CPG on 3PAR/Primera
@@ -310,8 +307,10 @@ $ kubectl create -f clonePVC.yaml
 ```
 
 !!! Note
-    While creating a clone of a PVC, storage should be of same size that of PVC
+    While creating a clone of a PVC, storage should be of same size that of PVC. Only online copy is supported.
 
+### Step 7: Expand Volume
+Refer [expand volume](../../csi_driver/using.md#expanding_pvcs) for more details.
 
 ## Diagnostics and Troubleshooting
 ### Pre-requisites check
