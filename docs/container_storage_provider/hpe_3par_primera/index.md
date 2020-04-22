@@ -408,9 +408,24 @@ devices {
 * Controller plugin log is in node where the hpe-csi-controller* pod (eg 192.168.196.150) is running. Log location: `/var/log/hpe-csi-controller.log`
 * Node plugin log is in node where the  hpe-csi-node* pod is running (eg. ip ending with 150,151) , Log location: `/var/log/hpe-csi-node.log`
 
+### Logging levels 
+* Log levels are controlled by the environment variable LOG_LEVEL
+* Log level `trace` is the most extensive logging
+```yaml
+ - name: hpe-csi-driver
+          image: hpestorage/csi-driver:v1.1.1
+          args :
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--flavor=kubernetes"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: LOG_LEVEL
+              value: trace
+```
+
 ### Steps to debug if the pods are in "ContainerCreating" state
 * Identify the pod which is "ContainerCreating" state
-eg.
 ```markdown
 $ kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                                             READY   STATUS              RESTARTS   AGE    IP               NODE                                     NOMINATED NODE   READINESS GATES
@@ -615,22 +630,6 @@ Events:
 - In the above example you can see the configmap "hpe-linux-config" is missing due to which the pods is not getting initialized.
 - Execute `wget https://github.com/hpe-storage/co-deployments/raw/master/yaml/csi-driver/v1.1.0/hpe-linux-config.yaml` to get the hpe-linux-config.yaml to create the above configmap
 - Execute `kubectl create -f hpe-linux-config.yaml`
-
-### Logging levels 
-* Log levels are controlled by the environment variable LOG_LEVEL
-* Log level `trace` is the most extensive logging
-```yaml
- - name: hpe-csi-driver
-          image: hpestorage/csi-driver:v1.1.1
-          args :
-            - "--endpoint=$(CSI_ENDPOINT)"
-            - "--flavor=kubernetes"
-          env:
-            - name: CSI_ENDPOINT
-              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
-            - name: LOG_LEVEL
-              value: trace
-```
 
 ### PVC Creation in "Pending" state
 * Log in to the worker node where the CSP pod is running
