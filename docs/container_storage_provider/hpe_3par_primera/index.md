@@ -168,14 +168,21 @@ You should now see the HPE secret in the `kube-system`(K8S)/`hpe-csi`(OpenShift)
 
 ### Step 2: Create a storage class
 
-Valid parameters for StorageClass
+**Common parameters for provisioning**
 
-|Parameter          | Valid values          | Notes                 |
-|-------------------|-----------------------|-----------------------|
-|snap_cpg           | Pre existing CPG      | cpg will be used as snap_cpg when not specified|
-|provisioning_type  | "full"/"tpvv"/"tdvv"  | **3PAR**:<br><li>For full provisioning use full</li><li>For thin provisioning use tpvv</li><li>For dedup provisioning use tdvv</li><br>**Primera**:<br><li>To create thin provision volume use tpvv</li><li>To create DECO volume use provisioning_type as "tdvv" and compression set to "true"</li>|
-|compression        | "true"/"false"        | default - "false"<br>To create a compressed volume, set compression as "true".<br>To create compression enabled volume, size of the volume should be at least 16GiB.<br>To create a compressed volume on Primera, set compression as "true" along with provisioning_type set as "tdvv".<br>Fully provisioned volume cannot be compressed.|
-|accessProtocol     | "fc"/"iscsi"          | default - "iscsi"<br>For Primera 4.0/4.1 set it to "fc"|
+These parameters are used for volume provisioning on supported platform.
+
+|    Parameter      |  Option | Description | 3PAR | Primera |
+| ----------------- | ------- | ----------- | ---- | ------- |
+| accessProtocol    |   fc    | The access protocol to use when accessing the persistent volume | X | X |
+| accessProtocol    |  iscsi  | The access protocol to use when accessing the persistent volume |   | X |
+| cpg               |  Text   | The name of existing CPG to be used for volume provisioning     | X | X |
+| snap_cpg          |  Text   | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | X | X |
+| compression       | Boolean | Indicates that the volume should be compressed | X | |
+| provisioning_type |  tpvv   | Indicates Thin provisioned volume type | X | X |
+| provisioning_type |  full   | Indicates Full provisioned volume type | X | |
+| provisioning_type |  dedup  | Indicates Thin Deduplication volume type | X | |
+| provisioning_type |  reduce | Indicates Thin Deduplication/Compression volume type | | X |
 
 Save below file as `3par-sc.yaml`.
 
