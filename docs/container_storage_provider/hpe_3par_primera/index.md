@@ -31,14 +31,14 @@ Refer [Deployment](../../csi_driver/deployment.md).
 #### Post-Install
 
 Verify helm deployment
-```
+```markdown
 $ helm ls -n kube-system
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
 hpe-csi kube-system     1               2020-04-20 10:12:52.625989599 +0530 IST deployed        hpe-csi-driver-1.2.0    1.1.1
 ```
 
 Verify CSI resources are deployed and running
-```
+```markdown
 $ kubectl get all -n kube-system | grep csi
 pod/hpe-csi-controller-84d8569476-t27gb                          5/5     Running   0          30m
 pod/hpe-csi-node-mbxmd                                           2/2     Running   0          30m
@@ -49,7 +49,7 @@ replicaset.apps/hpe-csi-controller-84d8569476   1         1         1       30m
 ```
 
 Verify 3PAR/Primera CSP resources are deployed and running
-```
+```markdown
 $ kubectl get all -n kube-system | grep primera
 pod/primera3par-csp-66f775b555-fst5r                             1/1     Running   0          32m
 service/primera3par-csp-svc   ClusterIP   10.106.209.207   <none>        8080/TCP                 32m
@@ -61,7 +61,7 @@ primera3par-secret                               Opaque                         
 ```
 
 Verify images for CSI and CSP driver version installed
-```
+```markdown
 $ kubectl describe pod/hpe-csi-controller-84d8569476-t27gb -n kube-system | grep csi-driver | grep Image
     Image:         hpestorage/csi-driver:v1.1.1
     Image ID:      docker-pullable://docker.io/hpestorage/csi-driver@sha256:ee34278175e4fdba0f323c8c86a8292a9fdb60af796f2f1b83f62b7bfb5f4974
@@ -72,7 +72,7 @@ $ kubectl describe pod/primera3par-csp-66f775b555-fst5r -n kube-system | grep Im
 ```
 
 Verify CRDs are installed
-```
+```markdown
 $ kubectl get crd |grep hpe
 hpenodeinfos.storage.hpe.com                     2020-04-20T05:23:15Z
 hpevolumeinfos.storage.hpe.com                   2020-04-20T05:23:15Z
@@ -81,19 +81,19 @@ hpevolumeinfos.storage.hpe.com                   2020-04-20T05:23:15Z
 #### Un-install
 
 Uninstall helm chart
-```
+```markdown
 $ helm uninstall hpe-csi -n kube-system
 release "hpe-csi" uninstalled
 ```
 
 Verify Chart is deleted
-``` 
+```markdown
 $ helm ls -n kube-system
 NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
 ```
 
 Verify no **hpe*** resources found other than the default pods
-```
+```markdown
 $ kubectl get pods -n kube-system |grep hpe
 etcd-k8s-master00.in.rdlabs.hpecorp.net                      1/1     Running   5          73d
 kube-apiserver-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   5          73d
@@ -103,12 +103,6 @@ kube-scheduler-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   4
 
 !!! Caution
     CRDs will not be removed as part of helm uninstall
-```
-$ kubectl get crd |grep hpe
-hpecsidrivers.storage.hpe.com                    2020-04-17T09:16:45Z
-hpenodeinfos.storage.hpe.com                     2020-04-17T09:42:44Z
-hpevolumeinfos.storage.hpe.com                   2020-04-17T09:42:44Z
-```
 
 ### Deploying to OpenShift
 
@@ -158,8 +152,8 @@ data:
 
 Create the secret:
 
-```yaml
-kubectl create -f hpe-secret.yaml
+```markdown
+$ kubectl create -f hpe-secret.yaml
 secret "hpe3parprimera-secret" created
 ```
 
@@ -174,7 +168,7 @@ These parameters are used for volume provisioning on supported platform.
 |    Parameter      |  Option | Description | 3PAR | Primera |
 | ----------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol    |   fc    | The access protocol to use when accessing the persistent volume | X | X |
-| accessProtocol    |  iscsi  | The access protocol to use when accessing the persistent volume |   | X |
+| accessProtocol    |  iscsi  | The access protocol to use when accessing the persistent volume | X |   |
 | cpg               |  Text   | The name of existing CPG to be used for volume provisioning     | X | X |
 | snap_cpg          |  Text   | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | X | X |
 | compression       | Boolean | Indicates that the volume should be compressed | X | |
@@ -214,8 +208,8 @@ parameters:
 ```
 
 create a storage class
-```yaml
-kubectl create -f 3par-sc.yaml
+```markdown
+$ kubectl create -f 3par-sc.yaml
 ```
 
 ### Step 3: Create a PVC
@@ -238,7 +232,7 @@ spec:
 
 create a PVC
 ```
-kubectl create -f pvc-minio.yaml
+$ kubectl create -f pvc-minio.yaml
 ```
 
 ### Step 4: Create a POD
@@ -274,56 +268,20 @@ spec:
 ```
 
 create a POD
-```
-kubectl create -f pod-hpe.yaml
+```markdown
+$ kubectl create -f pod-hpe.yaml
 ```
 
 ### Step 5: Create a snapshot
+Refer [enable CSI snapshot](../../csi_driver/using.md#enabling_csi_snapshots) for more details.
 
-#### Step 5.1: Create a snapshotStorageClass
+**VolumeSnapshotClass parameters**
 
-Save below file as `Snapshotclass.yaml`.
+These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. Please see [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots) for more details.
 
-```yaml
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshotClass
-metadata:
-  name: my-snapclass-1
-driver: csi.hpe.com
-deletionPolicy: Delete
-parameters:
-  description: "Snapshot create by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: hpe3parprimera-secret
-  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
-```
-
-create a snapshotClass
-```
-kubectl create -f Snapshotclass.yaml
-```
-
-!!! Note
-    Valid parameters for snapshotClass are read_only : "true"/"false" default value is "false".
-
-#### Step 5.2: Create a snapshot
-
-Save below file as `volumeSnapshot.yaml`.
-
-```yaml
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshot
-metadata:
-  name: my-snapshot-1
-spec:
-  volumeSnapshotClassName: my-snapclass-1
-  source:
-    persistentVolumeClaimName: pvc-minio
-```
-
-create a snapshot
-```
-kubectl create -f volumeSnapshot.yaml
-```
+| Parameter   | String  | Description |
+| ----------- | ------  | ----------- |
+|  read_only  | Boolean | <li><b>true</b>: Specifies that the copied volume is read-only</li><li><b>false</b>: (default) The volume is read/write</li> |
 
 ### Step 6: Create a clone
 
@@ -347,8 +305,8 @@ spec:
 ```
 
 create a clone
-```
-kubectl create -f clonePVC.yaml
+```markdown
+$ kubectl create -f clonePVC.yaml
 ```
 
 !!! Note
@@ -366,7 +324,7 @@ kubectl create -f clonePVC.yaml
 Confirm it, by
 
 * Check for worker nodes
-```
+```markdown
 $ kubectl get nodes -o wide
 NAME               STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION          CONTAINER-RUNTIME
 cssosbe01-196119   Ready    master   39d   v1.16.6   192.168.196.119   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
@@ -376,7 +334,7 @@ cssosbe01-196150   Ready    <none>   39d   v1.16.6   192.168.196.150   <none>   
 cssosbe01-196151   Ready    <none>   39d   v1.16.6   192.168.196.151   <none>        CentOS Linux 7 (Core)   3.10.0-957.el7.x86_64   docker://18.9.7
 ```
 * Check for Controller, CSP and Node Plugin pods
-```
+```markdown
 $ kubectl get pods -o wide -n kube-system | grep hpe
 hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 hpe-csi-node-cbvcl                         2/2     Running   0          42h   192.168.196.151   cssosbe01-196151   <none>           <none>
@@ -388,7 +346,7 @@ primera3par-csp-778cf87c8b-mffh2           1/1     Running   0          42h   19
     - If the CSP REST endpoint on above port is not reachable, it will lead to failure in provisioning and pod mount operations.
 
 To check whether this Service is up or not, the user can confirm it by
-```
+```markdown
 $ kubectl get services -n kube-system
 NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
 primera3par-csp-svc   ClusterIP   10.111.253.102   <none>        8080/TCP                 14h
@@ -396,7 +354,7 @@ kube-dns                 ClusterIP   10.96.0.10       <none>        53/UDP,53/TC
 ``` 
 `primera3par-csp-svc` is the kubernetes service which exposes the REST server running in the CSP pod to the external services via kubernetes internal networking
 Try making a health check call like
-```
+```markdown
 export no_proxy=$no_proxy,10.111.253.102
 curl http://10.111.253.102:8080/
 ```
@@ -404,7 +362,7 @@ If the above call goes fine "Welcome!" will be listed
 
 - Check for the multipath file in worker nodes
 Eg. /etc/multipath.conf
-```
+```buildoutcfg
 defaults {
     find_multipaths     no
     user_friendly_names yes
@@ -453,7 +411,7 @@ devices {
 ### Steps to debug if the pods are in "ContainerCreating" state
 * Identify the pod which is "ContainerCreating" state
 eg.
-```
+```markdown
 $ kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                                             READY   STATUS              RESTARTS   AGE    IP               NODE                                     NOMINATED NODE   READINESS GATES
 kube-system   coredns-6955765f44-pfwwj                                         1/1     Running             0          2d2h   10.244.0.2       cssosbe01-196113.in.rdlabs.hpecorp.net   <none>           <none>
@@ -465,9 +423,8 @@ kube-system   hpe-csi-node-p9655                                               0
 
 ```
 
-* Issue `kubectl describe pod <pod-name> -n kube-system`
-eg.
-```
+* Execute `kubectl describe pod <pod-name> -n kube-system`
+```markdown
 $ kubectl describe pod hpe-csi-node-96b5c -n kube-system
 Name:                 hpe-csi-node-96b5c
 Namespace:            kube-system
@@ -654,12 +611,10 @@ Events:
   ----     ------       ----                       ----                                             -------
   Warning  FailedMount  <invalid> (x667 over 20h)  kubelet, cssosbe01-196115.in.rdlabs.hpecorp.net  (combined from similar events): Unable to attach or mount volumes: unmounted volumes=[linux-config-file], unattached volumes=[etc-kubernetes log-dir etc-os-release usrlocal pods-mount-dir device-dir lib-modules etc-hpe-storage-dir libsystemd etc-redhat-release plugin-dir registration-dir etc-multipath var-lib-iscsi runsystemd hpe-csi-node-sa-token-kx95r sys iscsiadm linux-config-file runlock etc-iscsi etc-multipath-conf]: timed out waiting for the condition
   Warning  FailedMount  <invalid> (x537 over 21h)  kubelet, cssosbe01-196115.in.rdlabs.hpecorp.net  MountVolume.SetUp failed for volume "linux-config-file" : configmap "hpe-linux-config" not found
-
 ```
 - In the above example you can see the configmap "hpe-linux-config" is missing due to which the pods is not getting initialized.
-- Issue `wget https://github.com/hpe-storage/co-deployments/raw/master/yaml/csi-driver/v1.1.0/hpe-linux-config.yaml` to get the hpe-linux-config.yaml to create the above configmap
-- Issue `kubectl create -f hpe-linux-config.yaml`
-
+- Execute `wget https://github.com/hpe-storage/co-deployments/raw/master/yaml/csi-driver/v1.1.0/hpe-linux-config.yaml` to get the hpe-linux-config.yaml to create the above configmap
+- Execute `kubectl create -f hpe-linux-config.yaml`
 
 ### Logging levels 
 * Log levels are controlled by the environment variable LOG_LEVEL
@@ -682,7 +637,7 @@ Events:
 * vi `/var/log/hpe-3par-primera-csp.log`
 
 Eg. Here the volume creation fails for "Invalid CPG" as shown in the below log.
-```
+```markdown
 time="2020-02-06T05:08:06-05:00" level=info msg="<<<<<< Get Volume By Name" file="request_handler.go:187"
 time="2020-02-06T05:08:06-05:00" level=info msg=">>>>> Create Volume Call " file="request_handler.go:85"
 time="2020-02-06T05:08:06-05:00" level=info msg="Create volume request is : %v {\"data\":{\"name\":\"pvc-0647b318-1291-4c93-b77e-1dcbeeb3ccc2\",\"size\":20401094656,\"config\":{\"access_protocol\":\"iscsi\",\"cpg\":\"FC_rq\",\"multi_initiator\":false,\"provisioning_type\":\"tpvv\"}}}\n" file="create_volume_request.go:72"
@@ -703,7 +658,7 @@ time="2020-02-06T05:08:06-05:00" level=info msg=" <<<<< Create Volume Call" file
 is done, there is a possibility of StorageClass or PVC being deleted before the POD is deleted. And this will
 lead to accidental deletion of SC/PVC. It's recommended to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
 * Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
-* OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone / snapshot capability.
+* OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone/snapshot capability.
 * Due to RWO (constraint) in `accessMode` of PVC, the block volume associated with the PVC can only be used exclusively on a single worker node of kubernetes
 * Clone volume creation requires the user to provide the same size as that of the source volume to be created. For eg. if the source volume is 20GiB, then the clone volume size also should match the same size.
 This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
