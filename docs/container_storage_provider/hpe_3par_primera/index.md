@@ -67,8 +67,8 @@ $ kubectl describe pod/hpe-csi-controller-84d8569476-t27gb -n kube-system | grep
     Image ID:      docker-pullable://docker.io/hpestorage/csi-driver@sha256:ee34278175e4fdba0f323c8c86a8292a9fdb60af796f2f1b83f62b7bfb5f4974
 
 $ kubectl describe pod/primera3par-csp-66f775b555-fst5r -n kube-system | grep Image
-    Image:          hpestorage/hpe3parprimera-csp:v1.0.0
-    Image ID:       docker-pullable://docker.io/hpestorage/hpe3parprimera-csp@sha256:7697caceed28f7d369b81a215666a1bfb4303e6209383a07e7eff0d4cca1f9df
+    Image:          hpestorage/primera3par-csp:v1.0.0
+    Image ID:       docker-pullable://docker.io/hpestorage/primera3par-csp@sha256:7697caceed28f7d369b81a215666a1bfb4303e6209383a07e7eff0d4cca1f9df
 ```
 
 Verify CRDs are installed
@@ -382,7 +382,7 @@ $ kubectl get pods -o wide -n kube-system | grep hpe
 hpe-csi-controller-84bdfc8df6-m2wxk        4/4     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 hpe-csi-node-cbvcl                         2/2     Running   0          42h   192.168.196.151   cssosbe01-196151   <none>           <none>
 hpe-csi-node-w8hx5                         2/2     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
-hpe3parprimera-csp-778cf87c8b-mffh2        1/1     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
+primera3par-csp-778cf87c8b-mffh2           1/1     Running   0          42h   192.168.196.150   cssosbe01-196150   <none>           <none>
 ```
 * Check for REST endpoint of CSP service is reachable
     - CSP (Container Storage Provider) hosts a REST server on port 8080 for the CSI controller/node plugin to communicate
