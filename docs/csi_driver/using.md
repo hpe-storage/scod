@@ -344,7 +344,7 @@ parameters:
   allowOverrides: description,accessProtocol
 ```
 
-```yaml fct_label="HPE 3PAR and Primera Storage"
+```yaml fct_label="HPE 3PAR and Primera"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -385,7 +385,7 @@ spec:
   storageClassName: hpe-scod-override
 ```
 
-```yaml fct_label="HPE 3PAR and Primera Storage"
+```yaml fct_label="HPE 3PAR and Primera"
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

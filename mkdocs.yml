@@ -39,7 +39,7 @@ nav:
     - 'Using': 'csi_driver/using.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
-    - 'HPE 3PAR/Primera Storage': 'container_storage_provider/hpe_3par_primera/index.md'
+    - 'HPE 3PAR/Primera': 'container_storage_provider/hpe_3par_primera/index.md'
 #   - 'HPE Cloud Volumes': 'csp/cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'container_storage_provider/hpe_nimble_storage/index.md'
 # - HPE CONTAINER PLATFORM:

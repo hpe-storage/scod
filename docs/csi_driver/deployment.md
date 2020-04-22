@@ -54,7 +54,7 @@ data:
   password: YWRtaW4=
 ```
 
-```yaml fct_label="HPE 3PAR and Primera Storage"
+```yaml fct_label="HPE 3PAR and Primera"
 apiVersion: v1
 kind: Secret
 metadata:

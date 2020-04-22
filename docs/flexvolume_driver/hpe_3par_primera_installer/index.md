@@ -152,9 +152,8 @@ INVENTORY:
 | hpe3par_server_ip_pool  | Yes  | No default value | This parameter is specific to fileshare. It can be specified as a mix of range of IPs and individual IPs delimited by comma. Each range or individual IP must be followed by the corresponding subnet mask delimited by semi-colon E.g.: IP-Range:Subnet-Mask,Individual-IP:SubnetMask|
 | hpe3par_default_fpg_size  | No  | No default value | This parameter is specific to fileshare. Default fpg size, It must be in the range 1TiB to 64TiB. If not specified here, it defaults to 16TiB |
 
-
 !!! Hint 
-    Refer to [Replication Support](#replication_support) for details on enabling Replication support.<br>
+    Refer to [Replication Support](#replication_support) for details on enabling Replication support.
 
 ##### File Persona Example Configuration
 
