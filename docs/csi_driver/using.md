@@ -352,18 +352,18 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe3parprimera-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
   cpg: "FC_r6"
   provisioning_type: "tpvv"
   accessProtocol: "iscsi"
-  allowOverrides: cpg,provisioning_type,accessProtocol
+  allowOverrides: cpg,provisioning_type
 ```
 
 The end-user may now control those parameters (the `StorageClass` provides the default values).

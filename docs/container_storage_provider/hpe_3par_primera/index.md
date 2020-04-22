@@ -6,7 +6,7 @@ The HPE 3PAR/Primera Storage CSP integrates as part of the [HPE CSI Driver for K
 
 ## StorageClass Example
 
-A `StorageClass` is used to provision an HPE 3PAR/Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI . 
+A `StorageClass` is used to provision an HPE 3PAR/Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI Snapshots and Clones. 
 
 Here is an example of a StorageClass using the HPE 3PAR/Primera CSP. Please see [Common Parameters](#common_parameters_for_provisioning) for additional parameter options.
 
@@ -38,7 +38,7 @@ parameters:
 
 ## StorageClass parameters
 
-All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
+All parameters enumerated reflects the current version and may contain unannounced features and capabilities. 
 
 ### Common parameters for provisioning
 
@@ -55,6 +55,9 @@ These parameters are used for volume provisioning and supported platform.
 |                                   | full    | Indicates Full provisioned volume type. | X |   |
 |                                   | dedup   | Indicates Thin Deduplication volume type. | X |   |
 |                                   | reduce  | Indicates Thin Deduplication/Compression volume type. |   | X |
+
+!!! Important
+    The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
 
 ### Primera Data Reduction volumes
 
