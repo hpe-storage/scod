@@ -35,6 +35,9 @@ This guide assumes using a supported HPE storage backend. Use the tabs in the co
 ### Create a secret with backend details
 Replace the password string (`YWRtaW4=`) with a base64 encoded version of your password and replace the `backend` with the IP address of the CSP backend and save it as `hpe-secret.yaml`:
 
+!!! Important
+    Minimum 3PAR\Primera user role: **edit** required on domain
+
 ```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
@@ -51,7 +54,7 @@ data:
   password: YWRtaW4=
 ```
 
-```yaml fct_label="HPE 3PAR and Primera"
+```yaml fct_label="HPE 3PAR and Primera Storage"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -66,6 +69,8 @@ data:
   # echo -n "3pardata" | base64
   password: M3BhcmRhdGE=
 ```
+!!! Note
+    If you are deploying 3PAR/Primera and Nimble CSPs in the same cluster, each `secret` name must be unique.
 
 Create the secret using `kubectl`:
 
@@ -85,7 +90,7 @@ hpe-secret            Opaque                                5         149m
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 ### Common
-These object configration files are common for all versions of Kubernetes.
+These object configuration files are common for all versions of Kubernetes.
 
 Worker node IO settings:
 
