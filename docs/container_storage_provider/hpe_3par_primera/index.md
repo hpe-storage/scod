@@ -74,7 +74,6 @@ $ kubectl describe pod/primera3par-csp-66f775b555-fst5r -n kube-system | grep Im
 Verify CRDs are installed
 ```
 $ kubectl get crd |grep hpe
-hpecsidrivers.storage.hpe.com                    2020-04-20T05:03:20Z
 hpenodeinfos.storage.hpe.com                     2020-04-20T05:23:15Z
 hpevolumeinfos.storage.hpe.com                   2020-04-20T05:23:15Z
 ```
