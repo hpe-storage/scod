@@ -153,10 +153,96 @@ INVENTORY:
 | hpe3par_default_fpg_size  | No  | No default value | This parameter is specific to fileshare. Default fpg size, It must be in the range 1TiB to 64TiB. If not specified here, it defaults to 16TiB |
 
 
-!!! hint Additional options available
-    Refer to [plugin_configuration_properties_sample.yml](https://github.com/hpe-storage/python-hpedockerplugin/blob/master/ansible_3par_docker_plugin/properties/plugin_configuration_properties_sample.yml) for additional properties file examples. <br> (i.e. Replication, Multiple Arrays, and File Persona configurations)
+!!! Hint 
+    Refer to [Replication Support](#replication_support) for details on enabling Replication support.<br>
 
-### Step 5: Run the Ansible playbook.
+##### File Persona Example Configuration
+
+```markdown
+#Mandatory Parameters for Filepersona-----------------------------------------------------------------------------------
+  DEFAULT_FILE:
+    # Specify the port to be used by HPE 3PAR plugin etcd cluster
+    host_etcd_port_number: 23790
+    # Plugin Driver - File driver
+    hpedockerplugin_driver: hpedockerplugin.hpe.hpe_3par_file.HPE3PARFileDriver
+    hpe3par_ip: 192.168.2.50
+    hpe3par_username: demo_user
+    hpe3par_password: demo_pass
+    hpe3par_cpg: demo_cpg
+    hpe3par_port: 8080
+    hpe3par_server_ip_pool: 192.168.98.3-192.168.98.10:255.255.192.0 
+#Optional Parameters for Filepersona-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    hpe3par_default_fpg_size: 16
+```
+
+##### Multiple Backend Example Configuration
+
+```markdown
+INVENTORY:
+  DEFAULT:
+#Mandatory Parameters-----------------------------------------------------------------------------------
+
+    # Specify the port to be used by HPE 3PAR plugin etcd cluster
+    host_etcd_port_number: 23790
+    # Plugin Driver - iSCSI
+    hpedockerplugin_driver: hpedockerplugin.hpe.hpe_3par_iscsi.HPE3PARISCSIDriver
+    hpe3par_ip: 192.168.1.50
+    hpe3par_username: 3paradm
+    hpe3par_password: 3pardata
+    hpe3par_port: 8080
+    hpe3par_cpg: FC_r6
+
+    # Plugin version - Required only in DEFAULT backend
+    volume_plugin: hpestorage/legacyvolumeplugin:3.3.1
+    # Dory installer version - Required for Openshift/Kubernetes setup
+    # Supported versions are dory_installer_v31, dory_installer_v32
+    dory_installer_version: dory_installer_v32
+
+#Optional Parameters------------------------------------------------------------------------------------
+
+    # Uncomment to encrypt passwords in hpe.conf using defined passphrase. Don't set it to empty string
+    #encryptor_key: < encrypt_key1 >
+    
+    #ssh_hosts_key_file: '/root/.ssh/known_hosts'
+    logging: DEBUG
+    #hpe3par_debug: True
+    #suppress_requests_ssl_warning: True
+    #hpe3par_snapcpg: FC_r6
+    #hpe3par_iscsi_chap_enabled: True
+    #use_multipath: False
+    #enforce_multipath: False
+    #vlan_tag: True
+
+#Additional Backend (Optional)--------------------------------------------------------------------------
+  
+  3PAR1:
+#Mandatory Parameters-----------------------------------------------------------------------------------
+
+    # Specify the port to be used by HPE 3PAR plugin etcd cluster
+    host_etcd_port_number: 23790
+    # Plugin Driver - Fibre Channel
+    hpedockerplugin_driver: hpedockerplugin.hpe.hpe_3par_fc.HPE3PARFCDriver
+    hpe3par_ip: 192.168.2.50
+    hpe3par_username: 3paradm
+    hpe3par_password: 3pardata
+    hpe3par_port: 8080
+    hpe3par_cpg: FC_r6
+
+#Optional Parameters------------------------------------------------------------------------------------
+
+    # Uncomment to encrypt passwords in hpe.conf using defined passphrase. Don't set it to empty string
+    #encryptor_key: < encrypt_key2 >
+    
+    #ssh_hosts_key_file: '/root/.ssh/known_hosts'
+    logging: DEBUG
+    #hpe3par_debug: True
+    #suppress_requests_ssl_warning: True
+    hpe3par_snapcpg: FC_r6
+    #use_multipath: False
+    #enforce_multipath: False
+```
+
+### Step 5: Run the Ansible playbook
 ```markdown
 $ cd python-hpedockerplugin/ansible_3par_docker_plugin/
 $ ansible-playbook -i hosts install_hpe_3par_volume_driver.yml
@@ -323,17 +409,17 @@ parameters:
 
 #### Replicate a containerized volume
 
-This `StorageClass` will add a standard backend volume to a 3PAR Replication Group. If the replicationGroup specified does not exist, the plugin will create one. **Requires the plugin and arrays to be configured for replication**
+This `StorageClass` will add a standard backend volume to a 3PAR Replication Group. If the replicationGroup specified does not exist, the plugin will create one. See [Replication Support](#replication_support) for more details on configuring replication.
 
 ```yaml
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: sc-replicated-vol
+  name: sc-mongodb-replicated
 provisioner: hpe.com/hpe
 parameters:
   provisioning: 'full'
-  replicationGroup: 'nginx-replicated-app'
+  replicationGroup: 'mongodb-app1'
 ```
 
 #### Import (cutover) a volume
@@ -386,6 +472,31 @@ spec:
 
 This will create a `PV` thinly provisioned using the `FC-r6` cpg.
 
+### Upgrade
+In order to upgrade the driver, simply modify the `ansible_3par_docker_plugin/properties/plugin_configuration_properties_sample.yml` used for the initial deployment and modify `hpestorage/legacyvolumeplugin` to the latest image from docker hub.
+
+For example:
+```markdown
+    volume_plugin: hpestorage/legacyvolumeplugin:3.3
+
+    Change to:
+    volume_plugin: hpestorage/legacyvolumeplugin:3.3.1
+```
+
+Re-run the installer.
+```shell
+$ ansible-playbook -i hosts install_hpe_3par_volume_driver.yml
+```
+
+### Uninstall 
+Run the following to uninstall the FlexVolume driver from the cluster.
+
+```
+$ cd ~
+$ cd python-hpedockerplugin/ansible_3par_docker_plugin
+$ ansible-playbook -i hosts uninstall/uninstall_hpe_3par_volume_driver.yml
+```
+
 ## StorageClass parameters
 This section highlights all the available `StorageClass` parameters that are supported.
 
@@ -425,14 +536,6 @@ Either use `cloneOf` and reference a PVC in the current namespace or use `virtua
 | expirationHours  | Integer | option of virtualCopyOf  | expirationHours: "10"  |
 | retentionHours  | Integer | option of virtualCopyOf  | retentionHours: "10"  |
 
-#### Replication parameters
-
-Replication supports Synchronous and Asynchronous modes. If the replicationGroup specified does not exist, the plugin will create one. **Requires the plugin and arrays to be configured for replication**
-
-| Parameter | Type | Options | Example  |
-|-----------|-----------|-----------|-----------|
-| replicationGroup  | Text  | 3PAR RCG name  | replicationGroup: "<rcg_name\>"  |
-
 #### Import parameters
 
 Importing volumes to Kubernetes requires the source 3PAR/Primera volume to be offline. 
@@ -440,6 +543,61 @@ Importing volumes to Kubernetes requires the source 3PAR/Primera volume to be of
 | Parameter | Type | Description | Example  |
 |-----------|-----------|-----------|-----------|
 | importVol | Text | volume name | importVol: "<volume_name\>" |
+
+#### Replication Support
+
+The HPE 3PAR/Primer FlexVolume driver supports array based synchronous and asynchronous replication. In order to enable replication within the FlexVolume driver, the arrays need to be properly zoned, visible to the Kubernetes cluster, and replication configured. For Peer Persistence, a quorum witness will need to be configured. 
+
+Once the replication is enabled at the array level, the FlexVolume driver will need to be configured. 
+
+!!! Important
+    Replication support can be enabled during initial deployment through the plugin configuration file. In order to enable replication support post deployment, modify the **plugin_configuration_properties.yml** used for deployment, add the replication parameter section below, and re-run the Ansible installer.
+
+Edit the **plugin_configuration_properties.yml** file and edit the Optional Replication Section.
+
+```markdown
+INVENTORY:
+  DEFAULT:
+#Mandatory Parameters-----------------------------------------------------------------------------------
+
+    # Specify the port to be used by HPE 3PAR plugin etcd cluster
+    host_etcd_port_number: 23790
+    # Plugin Driver - iSCSI
+    hpedockerplugin_driver: hpedockerplugin.hpe.hpe_3par_iscsi.HPE3PARISCSIDriver
+    hpe3par_ip: <local_3par_ip>
+    hpe3par_username: <local_3par_user>
+    hpe3par_password: <local_3par_password>
+    hpe3par_port: 8080
+    hpe3par_cpg: FC_r6
+
+    # Plugin version - Required only in DEFAULT backend
+    volume_plugin: hpestorage/legacyvolumeplugin:3.3.1
+    # Dory installer version - Required for Openshift/Kubernetes setup
+    dory_installer_version: dory_installer_v32
+
+#Optional Parameters------------------------------------------------------------------------------------
+
+    logging: DEBUG
+    hpe3par_snapcpg: FC_r6
+    use_multipath: False
+    enforce_multipath: False
+
+#Optional Replication Parameters------------------------------------------------------------------------
+    replication_device:
+      backend_id: remote_3PAR
+      #Quorum Witness required for Peer Persistence only
+      #quorum_witness_ip: <quorum_witness_ip>
+      replication_mode: synchronous
+      cpg_map: "local_CPG:remote_CPG"
+      snap_cpg_map: "local_copy_CPG:remote_copy_CPG"
+      hpe3par_ip: <remote_3par_ip>
+      hpe3par_username: <remote_3par_user>
+      hpe3par_password: <remote_3par_password>
+      hpe3par_port: 8080
+      #vlan_tag: False
+```
+
+Once the properties file is configured, you can proceed with the [standard installation steps](#step_5_run_the_ansible_playbook). 
 
 ## Diagnostics
 
