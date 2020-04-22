@@ -5,6 +5,8 @@ This is an umbrella documentation project for all Kubernetes and Docker integrat
 
 Use the navigation on the left-hand side to explore the different topics. Feel free to contribute to this project but please read the [contributing guidelines](legal/contributing/index.md).
 
+Use the navigation to the left. Not sure what you're looking for? → [Get started](welcome)!
+
 <div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg"></div>
 
 !!! note "Did you know?"

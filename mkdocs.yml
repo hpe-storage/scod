@@ -31,6 +31,8 @@ plugins:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
 nav:
+  - WELCOME:
+    - 'Get started!': 'welcome/index.md'
   - HPE CSI DRIVER FOR KUBERNETES:
     - 'Introduction': 'csi_driver/index.md'
     - 'Deployment': 'csi_driver/deployment.md'
