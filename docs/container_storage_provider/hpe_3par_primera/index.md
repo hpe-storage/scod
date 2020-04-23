@@ -112,6 +112,32 @@ kube-scheduler-k8s-master00.in.rdlabs.hpecorp.net            1/1     Running   4
 #### Post-Install
 
 #### Un-install
+Delete HPECSIDriver via OCP web console
+
+![Delete CSIDriver](img/delete_csi_driver.png)
+
+Verify controller and node pods are deleted
+```markdown
+$ oc get all -n my-hpe-csi
+NAME                                          READY   STATUS    RESTARTS   AGE
+pod/hpe-csi-driver-operator-f875b5879-4lxqc   1/1     Running   0          28m
+
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hpe-csi-driver-operator   1/1     1            1           28m
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/hpe-csi-driver-operator-f875b5879   1         1         1       28m
+```
+
+Delete HPE CSI Operator via OCP web console
+
+![Delete CSI Operator](img/delete_operator.png)
+
+Verify no resources found after deletion
+```markdown
+$ oc get all -n my-hpe-csi
+No resources found.
+```
 
 ## Getting Started
 Get started using the Container Storage Provider by setting up `Secret`, `StorageClass`, `PVC` API objects.
