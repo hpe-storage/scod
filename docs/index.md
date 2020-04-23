@@ -1,5 +1,4 @@
 ## HPE Storage Container Orchestrator Documentation 
-![Publish docs via GitHub Pages](https://github.com/hpe-storage/scod/workflows/Publish%20docs%20via%20GitHub%20Pages/badge.svg)
 
 This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage.
 
@@ -7,7 +6,10 @@ Use the navigation on the left-hand side to explore the different topics. Feel f
 
 Use the navigation to the left. Not sure what you're looking for? → [Get started](welcome)!
 
-<div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg"></div>
+<div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg" alt="A screaming monkey with a pink mohawk aka The Gremlin"></div>
 
 !!! note "Did you know?"
     SCOD is "docs" in reverse?
+
+<div align="right"><img src="https://github.com/hpe-storage/scod/workflows/Publish%20docs%20via%20GitHub%20Pages/badge.svg"></div>
+
