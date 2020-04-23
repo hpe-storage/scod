@@ -6,7 +6,7 @@ HPE provides a broad portfolio of products that integrate with Docker, Kubernete
 | :---: | :---: | :---: | :---: |
 | K8s 1.13+ | [CSI driver](../csi_driver/index.md) | [CSI driver](../csi_driver/index.md) | [FlexVolume driver](../flexvolume_driver/container_provider/index.md) |
 | k8s < 1.13 | [FlexVolume driver](../flexvolume_driver/hpe_3par_primera_installer/index.md) | [FlexVolume driver](../flexvolume_driver/container_provider/index.md) | [FlexVolume driver](../flexvolume_driver/container_provider/index.md) |
-| Docker | Docker Volume Plugin | [Docker Volume Plugin](../docker_volume_plugins/hpe_nimble_storage/index.html) | [Docker Volume Plugin](../docker_volume_plugins/hpe_cloud_volumes/index.html) |
+| Docker | Docker Volume Plugin | [Docker Volume Plugin](../docker_volume_plugins/hpe_nimble_storage/index.md) | [Docker Volume Plugin](../docker_volume_plugins/hpe_cloud_volumes/index.md) |
 
 # Help me choose
 

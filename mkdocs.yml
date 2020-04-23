@@ -45,10 +45,6 @@ nav:
 # - HPE CONTAINER PLATFORM:
 #   - 'Overview': 'hcp/overview.md'
 #   - 'Configure': 'hcp/configure.md'
-# - PARTNER ECOSYSTEMS:
-#   - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
-#   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
-#   - 'Rancher Labs': 'partners/rancher_labs/index.md'
 # - MANAGED KUBERNETES:
 #   - 'Amazon Elastic Kubernetes Engine': 'managed/amazon_elastic_kubernetes_service/index.md'
 #   - 'Azure Kubernetes Service': 'managed/azure_kubernetes_service/index.md'
@@ -68,6 +64,10 @@ nav:
 #   - 'HPE RA Library': ''
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
+  - PARTNER ECOSYSTEMS:
+    - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
+#   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
+#   - 'Rancher Labs': 'partners/rancher_labs/index.md'
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
 #   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
