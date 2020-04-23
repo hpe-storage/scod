@@ -63,10 +63,6 @@ Release highlights: Initial GA release with support for Dynamic Provisioning, CS
     <th>Platforms</th>
     <td>3PAR OS 3.3.1 MU5 or later, Primera OS 4.0 or later
   </tr>
-  <tr>
-    <th>Data protocol</th>
-    <td>Fibre Channel, iSCSI </td>
-  </tr>
 </table>
 
 #### HPE CSI Driver for Kubernetes 1.1.0
