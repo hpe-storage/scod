@@ -8,6 +8,29 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](https://h20272.www2.hpe.com/spock/index.aspx) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
 
+#### HPE 3PAR and Primera Container Storage Provider 1.0
+
+Release highlights: Initial GA release with support for Dynamic Provisioning, CSI snapshots, and volume resize.
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.16-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3
+  </tr>
+    <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI (3PAR only) </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>3PAR OS 3.3.1 MU5 or later, Primera OS 4.0 or later
+  </tr>
+</table>
+
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
