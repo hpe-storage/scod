@@ -17,7 +17,7 @@ How to deploy an HPE Nimble Storage array is beyond the scope of this document. 
 
 #### Single tenant deployment
 
-The CSP require access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
+The CSP requires access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
 
 ## StorageClass parameters
 

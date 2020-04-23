@@ -46,7 +46,7 @@ The Operator will be installed in `my-hpe-csi-driver-operator` namespace. Watch 
 kubectl get csv -n my-hpe-csi-driver-operator
 ```
 
-Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to what CSP is being deployed.
+Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to which CSP is being deployed.
 
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: storage.hpe.com/v1
