@@ -1,22 +1,129 @@
 # Overview 
 
-The HPE CSI Driver is deployed by using industry standard means by using either a Helm chart or an Operator. An "advanced install" from object configuration files is provided as reference for partners, OEMs and users wanting to perform customizations and their own packaging or deployment methodoligies.
+The HPE CSI Driver is deployed by using industry standard means, either a Helm chart or an Operator. An "advanced install" from object configuration files is provided as reference for partners, OEMs and users wanting to perform customizations and their own packaging or deployment methodoligies.
 
 [TOC]
 
 ## Helm
 
-[Helm](https://helm.sh) is the package manager for Kubernetes. Software is being delivered in a format designated a "chart". Helm is a [standalone CLI](https://helm.sh/docs/intro/install/) that interacts with the Kubernetes API server using your `KUBECONFIG` file.
+[Helm](https://helm.sh) is the package manager for Kubernetes. Software is being delivered in a format designated as a "chart". Helm is a [standalone CLI](https://helm.sh/docs/intro/install/) that interacts with the Kubernetes API server using your `KUBECONFIG` file.
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver). The chart supports both Helm 2 and Helm 3. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the CSI driver using Helm.
 
+- Go to the chart on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver).
+
 ## Operator
 
-The Operator pattern is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native Kubernetes experience for any software running on Kubernetes.
+The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running in Kubernetes.
 
-The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator). The CSI Operator images are hosted both on docker.io and officially certified containers on Red Hat Container Catalog. For Red Hat OpenShift Container Platform, please see [Installing Operators from the OperatorHub](https://docs.openshift.com/container-platform/4.3/operators/olm-adding-operators-to-cluster.html). 
+The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator). The CSI Operator images are hosted both on docker.io and officially certified containers on Red Hat Container Catalog.
 
-Follow the documentation from the respective upstream sources on how to deploy an Operator. Instantiate the `HPECSIDriver` with the required values for `backend`, `serviceName`, `username` and `password` once the Operator is deployed. See "View YAML Example" on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator) for an example Custom Resource Definition.
+### Red Hat OpenShift Container Platform
+
+The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift. There are a few tweaks needed and there's a separate section for OpenShift.
+
+- See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section 
+
+### Upstream Kubernetes and others
+
+Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
+
+As an example, we'll deploy version `0.14.1` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself while is the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
+
+```markdown
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/0.14.1/install.sh | bash -s 0.14.1
+```
+
+Install the HPE CSI Operator.
+
+```markdown
+kubectl create -f https://operatorhub.io/install/hpe-csi-driver-operator.yaml
+```
+
+The Operator will be installed in `my-hpe-csi-driver-operator` namespace. Watch it come up by inspecting the `ClusterServiceVersion` (CSV).
+
+```markdown
+kubectl get csv -n my-hpe-csi-driver-operator
+```
+
+Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to what CSP is being deployed.
+
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+spec:
+  crd:
+    nodeInfo:
+      create: false
+  cspName: nimble-csp
+  flavor: kubernetes
+  imagePullPolicy: Always
+  images:
+    csiDriverImage: 'hpestorage/csi-driver:v1.1.0'
+    cspImage: 'hpestorage/nimble-csp:v1.1.0'
+  logLevel: info
+  secret:
+    backend: 192.168.1.1
+    create: true
+    name: nimble-secret
+    password: admin
+    serviceName: nimble-csp-svc
+    servicePort: '8080'
+    username: admin
+  storageClass:
+    allowVolumeExpansion: true
+    create: true
+    defaultClass: false
+    name: hpe-standard
+    parameters:
+      accessProtocol: iscsi
+      fsType: xfs
+      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
+```
+
+```markdown fct_label="HPE 3PAR and Primera"
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+spec:
+  crd:
+    nodeInfo:
+      create: false
+  cspName: primera3par-csp
+  flavor: kubernetes
+  imagePullPolicy: Always
+  images:
+    csiDriverImage: 'hpestorage/csi-driver:v1.1.0'
+    cspImage: 'hpestorage/primera3par-csp:v1.1.0'
+  logLevel: info
+  secret:
+    backend: 10.1.1.1
+    create: true
+    name: hpe-secret
+    password: 3pardata
+    serviceName: primera3par-csp-svc
+    servicePort: '8080'
+    username: 3paradm
+  storageClass:
+    allowVolumeExpansion: true
+    create: true
+    defaultClass: false
+    name: hpe-standard
+    parameters:
+      accessProtocol: fc
+      fsType: xfs
+```
+
+Create a `HPECSIDriver` with the manifest.
+
+```markdown
+kubectl create -f hpe-csi-operator.yaml
+```
+
+The CSI driver is now ready for use. Proceed to the [next section to learn about using](using.md) the driver.
 
 ## Advanced install
 

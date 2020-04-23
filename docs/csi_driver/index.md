@@ -37,7 +37,7 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 
 ## Compatibility and support
 
-These are the combinations HPE has tested and can provide offical support services around for each of the CSI driver releases. Each Container Service Provider has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
+These are the combinations HPE has tested and can provide offical support services around for each of the CSI driver releases. Each [Container Storage Provider](../container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
@@ -59,6 +59,11 @@ Release highlights: Broader ecosystem support, official support for CSI snapshot
     <th>Data protocol</th>
     <td>Fibre Channel, iSCSI </td>
   </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.1 or later
+    </td>
   <tr>
     <th>Release notes</th>
     <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.1.0.md>v1.1.0</a> on GitHub</td>
@@ -85,6 +90,12 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
     <th>Data protocol</th>
     <td>Fibre Channel, iSCSI </td>
   </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.1 or later
+    </td>
+  <tr>
   <tr>
     <th>Release notes</th>
     <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.0.0.md>v1.0.0</a> on GitHub</td>
