@@ -142,9 +142,6 @@ This guide assumes using a supported HPE storage backend. Use the tabs in the co
 ### Create a secret with backend details
 Replace the password string (`YWRtaW4=`) with a base64 encoded version of your password and replace the `backend` with the IP address of the CSP backend and save it as `hpe-secret.yaml`:
 
-!!! Important
-    Minimum 3PAR\Primera user role: **edit** required on domain
-
 ```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
@@ -177,7 +174,7 @@ data:
   password: M3BhcmRhdGE=
 ```
 !!! Note
-    If you are deploying 3PAR/Primera and Nimble CSPs in the same cluster, each `secret` name must be unique.
+    If you are deploying 3PAR or Primera and Nimble CSPs in the same cluster, each `secret` name must be unique.
 
 Create the secret using `kubectl`:
 
