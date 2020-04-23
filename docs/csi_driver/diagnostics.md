@@ -35,7 +35,7 @@ kubectl logs -f svc/nimble-csp-svc -n kube-system
 ```
 
 ```markdown fct_label="HPE 3PAR and Primera"
-kubectl logs -f svc/hpe3parprimera-csp-svc -n kube-system
+kubectl logs -f svc/primera3par-csp-svc -n kube-system
 ```
 
 ## Log collector

@@ -671,3 +671,6 @@ Value for `node.session.auth.authmethod` must be set to `CHAP`.
 * Node plugin is responsible for rescan of the scsi devices (as part of `NodeStageVolume`) and creating a temporary staging location for node
 * Node plugin as initiates `NodePublishVolume` after doing staging process in step 2, and does the bind mount of the staging location to the actual pod mount directory.
 * CSP plugin supplies the REST response for each of the controller/node plugin operation
+
+### Support
+Limited to the plug-in only, best effort support is available for HPE 3PAR and HPE Primera controllers supported by the plug-in and bundled with All Inclusive software with an active HPE Pointnext support agreement. Since the HPE Pointnext support for the plug-in is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply to the plug-in. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.

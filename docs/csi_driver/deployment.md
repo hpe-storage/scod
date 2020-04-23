@@ -58,7 +58,7 @@ metadata:
   name: hpe-secret
   namespace: kube-system
 stringData:
-  serviceName: hpe3parprimera-csp-svc
+  serviceName: primera3par-csp-svc
   servicePort: "8080"
   backend: 10.10.0.1
   username: 3paradm
@@ -85,7 +85,7 @@ hpe-secret            Opaque                                5         149m
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 ### Common
-These object configration files are common for all versions of Kubernetes.
+These object configuration files are common for all versions of Kubernetes.
 
 Worker node IO settings:
 

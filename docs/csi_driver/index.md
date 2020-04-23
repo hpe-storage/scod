@@ -37,7 +37,7 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 
 ## Compatibility and support
 
-These are the combinations HPE has tested and can provide offical support services around for each of the CSI driver releases. Each Container Service Provider has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
+These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each Container Service Provider has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
