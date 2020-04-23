@@ -133,4 +133,4 @@ These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. 
 
 ## Support
 
-Please refer to the HPE 3PAR and Primera Container Storage Provider [support statement](../../legal/support/index.html#hpe_3par_and_primera_container_storage_provider_support).
+Please refer to the HPE 3PAR and Primera Container Storage Provider [support statement](../../legal/support/index.md#hpe_3par_and_primera_container_storage_provider_support).
