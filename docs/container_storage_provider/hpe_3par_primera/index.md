@@ -12,7 +12,7 @@ The HPE 3PAR and Primera CSP is the reference implementation for the [HPE CSI Dr
 |------|------|------------|-------------|--------------|----------------------|
 |v1.1.1|v1.0.0|<ul><li>CentOS: 7.7</li><li>RHEL: 7.6, 7.7 / RHCOS</li></ul>|<ul><li>OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes</li></ul>| K8s 1.16, 1.17 |<ul><li>3PAR OS: 3.3.1 (FC & iSCSI)</li><li>Primera OS: 4.0.0, 4.1.0 (FC only)</li><ul>|
 
-### SPOC
+### SPOCK
 * [3PAR](https://spock.corp.int.hpe.com/SPOCK/Pages.internal/spock2Html.aspx?htmlFile=hw_3par.internal.html) 
 * [Primera](https://spock.corp.int.hpe.com/SPOCK/Pages.internal/spock2Html.aspx?htmlFile=hw_primera.internal.html) 
 
