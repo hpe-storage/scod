@@ -1,12 +1,12 @@
 # Introduction
 
-The HPE 3PAR and Primera Storage CSP integrates as part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
+The HPE 3PAR and Primera CSP integrates as part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
 
 [TOC]
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required 3PAR OS or Primera OS version for a particular version of the driver.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](https://h20272.www2.hpe.com/spock/index.aspx) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
