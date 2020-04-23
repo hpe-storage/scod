@@ -4,6 +4,17 @@ The HPE 3PAR and Primera Storage CSP integrates as part of the [HPE CSI Driver f
 
 [TOC]
 
+## Platform requirements
+
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required 3PAR OS or Primera OS version for a particular version of the driver.
+
+!!! tip
+    The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
+
+#### User Role Requirements
+
+The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for least privilege practices.
+
 ## StorageClass Example
 
 A `StorageClass` is used to provision an HPE 3PAR or Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI snapshots and clones. 
@@ -47,14 +58,14 @@ These parameters are used for volume provisioning and supported platforms.
 | Parameter                         | Option  | Description | 3PAR | Primera |
 | --------------------------------- | ------- | ----------- | :--: | :-----: |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-|                                   | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
+|                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
 | cpg <br /> (required)               | Text    | The name of existing CPG to be used for volume provisioning. | **X** | **X** | 
-| snap_cpg                          | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
-| compression                       | Boolean | Indicates that the volume should be compressed. | **X** |   |
+| snap_cpg                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
+| compression                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
 | provisioning_type <br /> (required) | tpvv    | Indicates Thin provisioned volume type. | **X** | **X** |
-|                                   | full    | Indicates Full provisioned volume type. | **X** |   |
-|                                   | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
-|                                   | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
+|                                     | full    | Indicates Full provisioned volume type. | **X** |   |
+|                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
+|                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
