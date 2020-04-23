@@ -11,11 +11,11 @@ Always check the corresponding CSI driver version in [compatibility and support]
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
-#### User Role Requirements
+#### User role requirements
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for least privilege practices.
 
-## StorageClass Example
+## StorageClass example
 
 A `StorageClass` is used to provision an HPE 3PAR or Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI snapshots and clones. 
 
