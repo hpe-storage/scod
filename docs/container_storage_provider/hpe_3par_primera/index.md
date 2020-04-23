@@ -1,16 +1,16 @@
 # Introduction
 
-The HPE 3PAR/Primera Storage CSP integrates as part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
+The HPE 3PAR and Primera Storage CSP integrates as part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
 
 [TOC]
 
 ## StorageClass Example
 
-A `StorageClass` is used to provision an HPE 3PAR/Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI Snapshots and Clones. 
+A `StorageClass` is used to provision an HPE 3PAR or Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI snapshots and clones. 
 
-Here is an example of a StorageClass using the HPE 3PAR/Primera CSP. Please see [Common Parameters](#common_parameters_for_provisioning) for additional parameter options.
+Here is an example of a `StorageClass` using the HPE 3PAR and Primera CSP. Please see [common parameters](#common_parameters_for_provisioning) for additional parameter options.
 
-```yaml
+```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -31,9 +31,9 @@ parameters:
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  cpg: "FC_r6"
-  provisioning_type: "tpvv"
-  accessProtocol: "iscsi"
+  cpg: FC_r6
+  provisioning_type: tpvv
+  accessProtocol: iscsi
 ```
 
 ## StorageClass parameters
@@ -42,19 +42,19 @@ All parameters enumerated reflects the current version and may contain unannounc
 
 ### Common parameters for provisioning
 
-These parameters are used for volume provisioning and supported platform.
+These parameters are used for volume provisioning and supported platforms.
 
 | Parameter                         | Option  | Description | 3PAR | Primera |
-| --------------------------------- | ------- | ----------- | ---- | ------- |
-| accessProtocol <br> (required)    | fc      | The access protocol to use when accessing the persistent volume. | X | X |
-|                                   | iscsi   | The access protocol to use when accessing the persistent volume. | X |   |
-| cpg <br> (required)               | Text    | The name of existing CPG to be used for volume provisioning. | X | X | 
-| snap_cpg                          | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | X | X |
-| compression                       | Boolean | Indicates that the volume should be compressed. | X |   |
-| provisioning_type <br> (required) | tpvv    | Indicates Thin provisioned volume type. | X | X |
-|                                   | full    | Indicates Full provisioned volume type. | X |   |
-|                                   | dedup   | Indicates Thin Deduplication volume type. | X |   |
-|                                   | reduce  | Indicates Thin Deduplication/Compression volume type. |   | X |
+| --------------------------------- | ------- | ----------- | :--: | :-----: |
+| accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
+|                                   | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
+| cpg <br /> (required)               | Text    | The name of existing CPG to be used for volume provisioning. | **X** | **X** | 
+| snap_cpg                          | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
+| compression                       | Boolean | Indicates that the volume should be compressed. | **X** |   |
+| provisioning_type <br /> (required) | tpvv    | Indicates Thin provisioned volume type. | **X** | **X** |
+|                                   | full    | Indicates Full provisioned volume type. | **X** |   |
+|                                   | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
+|                                   | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -65,14 +65,14 @@ These parameters are used to create Primera Data Reduction (Thinly Provisioned w
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| accessProtocol     | "fc"    | The access protocol to use when accessing the persistent volume. |
+| accessProtocol     | fc      | The access protocol to use when accessing the persistent volume. |
 | cpg                | Text    | The name of existing CPG to be used for volume provisioning. |
 | snap_cpg           | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
-| provisioning_type  | "reduce"  | **Required** |
+| provisioning_type  | reduce  | **Required** |
 
 Example `StorageClass` for provisioning Primera Data Reduction volumes
 
-```yaml
+```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -93,9 +93,9 @@ parameters:
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  cpg: "SSD_r6"
-  provisioning_type: "reduce"
-  accessProtocol: "fc"
+  cpg: SSD_r6
+  provisioning_type: reduce
+  accessProtocol: fc
 ```  
 
 ### Pod inline volume parameters (Local Ephemeral Volumes)
@@ -118,6 +118,6 @@ These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. 
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
-| description | Text    | Text to be added to the snapshot's description on the 3PAR/Primera array. |
-| writable    | Boolean | Indicates if the snapshot is writable on the 3PAR/Primera array. |
-| online      | Boolean | Indicates if the snapshot is set to online on the 3PAR/Primera array. |
+| description | Text    | Text to be added to the snapshot's description on the 3PAR or Primera array. |
+| writable    | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
+| online      | Boolean | Indicates if the snapshot is set to online on the 3PAR or Primera array. |

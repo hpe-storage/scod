@@ -92,7 +92,7 @@ $ vi python-hpedockerplugin/ansible_3par_docker_plugin/properties/plugin_configu
 ```yaml
 INVENTORY:
   DEFAULT:
-#Mandatory Parameters-----------------------------------------------------------------------------------
+#Mandatory Parameters--------------------------------------------------------------------------------
 
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
     host_etcd_port_number: 23790
@@ -111,7 +111,7 @@ INVENTORY:
     # Supported versions are dory_installer_v31, dory_installer_v32
     dory_installer_version: dory_installer_v32
 
-#Optional Parameters------------------------------------------------------------------------------------
+#Optional Parameters--------------------------------------------------------------------------------
 
     logging: DEBUG
     hpe3par_snapcpg: FC_r6
@@ -158,7 +158,7 @@ INVENTORY:
 ##### File Persona Example Configuration
 
 ```markdown
-#Mandatory Parameters for Filepersona-----------------------------------------------------------------------------------
+#Mandatory Parameters for Filepersona---------------------------------------------------------------
   DEFAULT_FILE:
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
     host_etcd_port_number: 23790
@@ -170,7 +170,7 @@ INVENTORY:
     hpe3par_cpg: demo_cpg
     hpe3par_port: 8080
     hpe3par_server_ip_pool: 192.168.98.3-192.168.98.10:255.255.192.0 
-#Optional Parameters for Filepersona-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Optional Parameters for Filepersona----------------------------------------------------------------
     hpe3par_default_fpg_size: 16
 ```
 
@@ -179,7 +179,7 @@ INVENTORY:
 ```markdown
 INVENTORY:
   DEFAULT:
-#Mandatory Parameters-----------------------------------------------------------------------------------
+#Mandatory Parameters-------------------------------------------------------------------------------
 
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
     host_etcd_port_number: 23790
@@ -197,11 +197,8 @@ INVENTORY:
     # Supported versions are dory_installer_v31, dory_installer_v32
     dory_installer_version: dory_installer_v32
 
-#Optional Parameters------------------------------------------------------------------------------------
+#Optional Parameters--------------------------------------------------------------------------------
 
-    # Uncomment to encrypt passwords in hpe.conf using defined passphrase. Don't set it to empty string
-    #encryptor_key: < encrypt_key1 >
-    
     #ssh_hosts_key_file: '/root/.ssh/known_hosts'
     logging: DEBUG
     #hpe3par_debug: True
@@ -212,10 +209,10 @@ INVENTORY:
     #enforce_multipath: False
     #vlan_tag: True
 
-#Additional Backend (Optional)--------------------------------------------------------------------------
+#Additional Backend (Optional)----------------------------------------------------------------------
   
   3PAR1:
-#Mandatory Parameters-----------------------------------------------------------------------------------
+#Mandatory Parameters-------------------------------------------------------------------------------
 
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
     host_etcd_port_number: 23790
@@ -227,11 +224,8 @@ INVENTORY:
     hpe3par_port: 8080
     hpe3par_cpg: FC_r6
 
-#Optional Parameters------------------------------------------------------------------------------------
+#Optional Parameters--------------------------------------------------------------------------------
 
-    # Uncomment to encrypt passwords in hpe.conf using defined passphrase. Don't set it to empty string
-    #encryptor_key: < encrypt_key2 >
-    
     #ssh_hosts_key_file: '/root/.ssh/known_hosts'
     logging: DEBUG
     #hpe3par_debug: True
@@ -557,7 +551,7 @@ Edit the **plugin_configuration_properties.yml** file and edit the Optional Repl
 ```markdown
 INVENTORY:
   DEFAULT:
-#Mandatory Parameters-----------------------------------------------------------------------------------
+#Mandatory Parameters-------------------------------------------------------------------------------
 
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
     host_etcd_port_number: 23790
@@ -574,14 +568,14 @@ INVENTORY:
     # Dory installer version - Required for Openshift/Kubernetes setup
     dory_installer_version: dory_installer_v32
 
-#Optional Parameters------------------------------------------------------------------------------------
+#Optional Parameters--------------------------------------------------------------------------------
 
     logging: DEBUG
     hpe3par_snapcpg: FC_r6
     use_multipath: False
     enforce_multipath: False
 
-#Optional Replication Parameters------------------------------------------------------------------------
+#Optional Replication Parameters--------------------------------------------------------------------
     replication_device:
       backend_id: remote_3PAR
       #Quorum Witness required for Peer Persistence only

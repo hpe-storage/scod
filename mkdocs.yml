@@ -39,7 +39,7 @@ nav:
     - 'Using': 'csi_driver/using.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
-    - 'HPE 3PAR/Primera': 'container_storage_provider/hpe_3par_primera/index.md'
+    - 'HPE 3PAR and Primera': 'container_storage_provider/hpe_3par_primera/index.md'
 #   - 'HPE Cloud Volumes': 'csp/cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'container_storage_provider/hpe_nimble_storage/index.md'
 # - HPE CONTAINER PLATFORM:
@@ -58,7 +58,7 @@ nav:
     - 'Ansible installer for 3PAR/Primera': 'flexvolume_driver/hpe_3par_primera_installer/index.md'
     - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
   - DOCKER VOLUME PLUGINS:
-#    - 'HPE 3PAR/Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
+#    - 'HPE 3PAR and Primera': 'docker_volume_plugins/hpe_3par_primera_storage/index.md'
     - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
     - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
 # - WORKLOAD BLUEPRINTS:

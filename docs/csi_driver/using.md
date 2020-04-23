@@ -340,7 +340,7 @@ parameters:
   csi.storage.k8s.io/node-publish-secret-name: nimble-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
   description: "Volume provisioned by the HPE CSI Driver"
-  accessProtocol: "iscsi"
+  accessProtocol: iscsi
   allowOverrides: description,accessProtocol
 ```
 
@@ -360,9 +360,9 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/node-publish-secret-name: hpe-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  cpg: "FC_r6"
-  provisioning_type: "tpvv"
-  accessProtocol: "iscsi"
+  cpg: FC_r6
+  provisioning_type: tpvv
+  accessProtocol: iscsi
   allowOverrides: cpg,provisioning_type
 ```
 
