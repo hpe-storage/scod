@@ -375,7 +375,7 @@ metadata:
   name: my-pvc-override
   annotations:
     csi.hpe.com/description: "This is my custom description"
-    csi.hpe.com/accessProtocol: "fc"
+    csi.hpe.com/accessProtocol: fc
 spec:
   accessModes:
     - ReadWriteOnce
@@ -391,8 +391,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: my-pvc-override
   annotations:
-    csi.hpe.com/provisioning_type: "full"
-    csi.hpe.com/cpg: "SSD_r6"
+    csi.hpe.com/provisioning_type: full
+    csi.hpe.com/cpg: SSD_r6
 spec:
   accessModes:
     - ReadWriteOnce
