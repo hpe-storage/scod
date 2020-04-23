@@ -129,6 +129,8 @@ These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. 
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
-| description | Text    | Text to be added to the snapshot's description on the 3PAR or Primera array. |
-| writable    | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
-| online      | Boolean | Indicates if the snapshot is set to online on the 3PAR or Primera array. |
+| read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
+
+## Support
+
+Please refer to the HPE 3PAR and Primera Container Storage Provider [support statement](../../legal/support/index.html#hpe_3par_and_primera_container_storage_provider_support).
