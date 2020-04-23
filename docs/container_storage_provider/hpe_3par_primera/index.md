@@ -8,8 +8,6 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](https://h20272.www2.hpe.com/spock/index.aspx) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
 
-#### HPE 3PAR and Primera Container Storage Provider 1.0
-
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
