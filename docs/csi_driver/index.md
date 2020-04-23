@@ -42,29 +42,6 @@ These are the combinations HPE has tested and can provide offical support servic
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
 
-#### HPE 3PAR and Primera Container Storage Provider 1.0
-
-Release highlights: Initial GA release with support for Dynamic Provisioning, CSI snapshots, and volume resize.
-
-<table>
-  <tr>
-    <th>Kubernetes</th>
-    <td>1.16-1.17</td>
-  </tr>
-  <tr>
-    <th>Worker OS</th>
-    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3
-  </tr>
-    <tr>
-    <th>Data protocol</th>
-    <td>Fibre Channel, iSCSI (3PAR only) </td>
-  </tr>
-  <tr>
-    <th>Platforms</th>
-    <td>3PAR OS 3.3.1 MU5 or later, Primera OS 4.0 or later
-  </tr>
-</table>
-
 #### HPE CSI Driver for Kubernetes 1.1.0
 
 Release highlights: Broader ecosystem support, official support for CSI snapshots and volume resize.

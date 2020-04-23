@@ -4,7 +4,7 @@ The HPE 3PAR and Primera Volume Plug-in for Docker leverages Ansible to deploy t
 !!! important
     Using HPE 3PAR/Primera Storage with Kubernetes 1.15 and newer, please use the [HPE CSI Driver for Kubernetes](https://github.com/hpe-storage/csi-driver).
 
-Source code and developer documentation is available in the [hpe-storage/python-hpedockerplugin](https://github.com/hpe-storage/python-hpedockerplugin) GitHub repo.
+Source code is available in the [hpe-storage/python-hpedockerplugin](https://github.com/hpe-storage/python-hpedockerplugin) GitHub repo.
 
 [TOC]
 
