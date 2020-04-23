@@ -42,6 +42,39 @@ These are the combinations HPE has tested and can provide offical support servic
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
 
+#### HPE CSI Driver for Kubernetes 1.1.1
+
+Release highlights: Support for HPE 3PAR and Primera Container Storage Provider
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.13-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.1+<br/>
+      3PAR OS 3.3.1+<br/>
+      Primera OS 4.0.0+ (FC only)<br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>TBA</td>
+</table>
+
 #### HPE CSI Driver for Kubernetes 1.1.0
 
 Release highlights: Broader ecosystem support, official support for CSI snapshots and volume resize.
