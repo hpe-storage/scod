@@ -4,13 +4,28 @@ The HPE Nimble Storage CSP is the reference implementation for the [HPE CSI Driv
 
 [TOC]
 
+## Platform requirements
+
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular version of the driver.
+
+!!! tip
+    The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
+
+### Setting up the Nimble array
+
+How to deploy an HPE Nimble Storage array is beyond the scope of this document. Please refer to [HPE InfoSight](https://infosight.hpe.com) for further reading.
+
+#### Single tenant deployment
+
+The CSP requires access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
+
 ## StorageClass parameters
 
 A `StorageClass` is used to provision or clone an HPE Nimble Storage-backed persistent volume. It can also be used to import an existing HPE Nimble Storage volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
-Please see [using the HPE CSI Driver](../../csi_driver/using.html#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
+Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
 
 !!! note
     These are optional parameters unless specified.
