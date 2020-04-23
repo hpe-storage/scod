@@ -323,7 +323,7 @@ The new PVC size may be observed with `kubectl get pvc/my/pvc` after a few momen
 
 The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be overridden in the `StorageClass` by setting the `allowOverrides` parameter:
 
-```yaml
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -344,9 +344,31 @@ parameters:
   allowOverrides: description,accessProtocol
 ```
 
-The end-user may now control those parameters (the `StorageClass` provide the default values).
+```yaml fct_label="HPE 3PAR and Primera"
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-scod-override
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  cpg: FC_r6
+  provisioning_type: tpvv
+  accessProtocol: iscsi
+  allowOverrides: cpg,provisioning_type
+```
 
-```yaml
+The end-user may now control those parameters (the `StorageClass` provides the default values).
+
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -354,6 +376,23 @@ metadata:
   annotations:
     csi.hpe.com/description: "This is my custom description"
     csi.hpe.com/accessProtocol: fc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: hpe-scod-override
+```
+
+```yaml fct_label="HPE 3PAR and Primera"
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-override
+  annotations:
+    csi.hpe.com/provisioning_type: full
+    csi.hpe.com/cpg: SSD_r6
 spec:
   accessModes:
     - ReadWriteOnce

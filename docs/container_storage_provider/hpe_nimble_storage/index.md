@@ -1,6 +1,6 @@
 # Introduction
 
-The HPE Nimble Storage CSP is the reference implementation for the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
+The HPE Nimble Storage CSP is the reference implementation for the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstracts the data management capabilities of the array for use by Kubernetes. 
 
 [TOC]
 

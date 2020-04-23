@@ -173,6 +173,8 @@ data:
   # echo -n "3pardata" | base64
   password: M3BhcmRhdGE=
 ```
+!!! Note
+    If you are deploying 3PAR or Primera and Nimble CSPs in the same cluster, each `secret` name must be unique.
 
 Create the secret using `kubectl`:
 
@@ -192,7 +194,7 @@ hpe-secret            Opaque                                5         149m
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 ### Common
-These object configration files are common for all versions of Kubernetes.
+These object configuration files are common for all versions of Kubernetes.
 
 Worker node IO settings:
 
