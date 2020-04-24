@@ -4,7 +4,7 @@ At this point the CSI driver and CSP should be configured. If you used either th
 [TOC]
 
 !!! tip
-    If you're familiar with the basic concepts of persistent storage on Kubernetes and is looking for an overview of example YAML declaration for different object types supported by the HPE CSI driver, [visit the source code repo](https://github.com/hpe-storage/csi-driver/tree/master/examples/kubernetes) on GitHub.
+    If you're familiar with the basic concepts of persistent storage on Kubernetes and are looking for an overview of example YAML declarations for different object types supported by the HPE CSI driver, [visit the source code repo](https://github.com/hpe-storage/csi-driver/tree/master/examples/kubernetes) on GitHub.
 
 ## Enabling CSI snapshots
 
@@ -112,6 +112,7 @@ reclaimPolicy: Delete
 These instructions are provided as an example on how to use the HPE CSI Driver with a [CSP](../container_storage_provider/index.md) supported by HPE.
 
 - [Create a PersistentVolumeClaim from a StorageClass](#create_a_persistentvolumeclaim_from_a_storageclass)
+- [Raw block volume](#raw_block_volume)
 - [Using CSI snapshots](#using_csi_snapshots)
 - [Expanding PVCs](#expanding_pvcs)
 - [Using PVC overrides](#using_pvc_overrides)
@@ -179,7 +180,7 @@ NAME              CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM             
 pvc-13336da3-7... 32Gi     RWO          Delete         Bound  default/my-first-pvc hpe-scod     3s
 ```
 
-The above output means that the HPE CSI Driver successfully provisioned a new volume. The volume is not attached to any node yet. It will only be attached to a node if a workload is scheduled requesting the `PersistentVolumeClaim`. Now, let us create a `Pod` that refers to the above volume. When the `Pod` is created, the volume will be attached, formatted and mounted according to the specification.
+The above output means that the HPE CSI Driver successfully provisioned a new volume. The volume is not attached to any node yet. It will only be attached to a node if a scheduled workload requests the `PersistentVolumeClaim`. Now, let us create a `Pod` that refers to the above volume. When the `Pod` is created, the volume will be attached, formatted and mounted according to the specification.
 
 ```yaml
 kind: Pod
@@ -219,7 +220,9 @@ my-pod      2/2     Running   0          2m29s
 !!! tip
     A simple `Pod` does not provide any automatic recovery if the node the `Pod` is scheduled on crashes or become unresponsive. Please see [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/) for different workload types that provide automatic recovery. A shortlist of recommended workload types that are suitable for persistent storage is available in [this blog post](https://datamattsson.tumblr.com/post/182297931146/highly-available-stateful-workloads-on-kubernetes) and best practices are outlined in [this blog post](https://datamattsson.tumblr.com/post/185031432701/best-practices-for-stateful-workloads-on).
 
-The default `volumeMode` for the `PersistentVolumeClaim` is set to `Filesystem`. If a Raw Block Device is desired, `volumeMode` needs to be set to `Block`. Example:
+### Raw block volume
+
+The default `volumeMode` for a `PersistentVolumeClaim` is `Filesystem`. If a raw block volume is desired, `volumeMode` needs to be set to `Block`. No filesystem will be created. Example:
 
 ```yaml
 apiVersion: v1
@@ -236,7 +239,7 @@ spec:
   volumeMode: Block
 ```
 
-Creating the `PersistentVolumeClaim` is identical to `volumeMode: Filesystem`, mapping the device in a `Pod` specification is slightly different as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
+Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
 ```yaml
 apiVersion: v1
@@ -260,7 +263,7 @@ spec:
 
 ### Using CSI snapshots
 
-CSI introduces snapshots as native objects in Kubernetes to allow end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source. 
+CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source. 
 
 !!! tip
     Ensure [CSI snapshots are enabled](#enabling_csi_snapshots). 
@@ -353,7 +356,7 @@ spec:
       storage: 32Gi
 ```
 
-Again, the size in `.spec.resources.requests.storage` must match the source `PersistentVolumeClaim`. This can get sticky from an automation perspective is volume expansion is being used on the source volume. It's recommended to inspect source `PersistentVolumeClaim` or `VolumeSnapshot` size prior creating a clone from either.
+Again, the size in `.spec.resources.requests.storage` must match the source `PersistentVolumeClaim`. This can get sticky from an automation perspective as volume expansion is being used on the source volume. It's recommended to inspect the source `PersistentVolumeClaim` or `VolumeSnapshot` size prior to creating a clone.
 
 !!! seealso "Learn more"
     For a more comprehensive tutorial on how to use snapshots and clones with CSI on Kubernetes 1.17, see [HPE CSI Driver for Kubernetes: Snapshots, Clones and Volume Expansion](https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion) on HPE DEV.

@@ -1,10 +1,10 @@
 # Introduction
 
-It's recommended that you're familiar with inspecting workloads on Kubernetes. This particular [cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods) is very useful to have readily available. 
+It's recommended to familiarize yourself with inspecting workloads on Kubernetes. This particular [cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods) is very useful to have readily available. 
 
 ## Sanity checks
 
-Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representable of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to checking the logs from the troublesome workload.
+Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
 ```markdown fct_label="HPE Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'

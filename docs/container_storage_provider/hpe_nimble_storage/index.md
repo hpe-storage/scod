@@ -1,15 +1,15 @@
 # Introduction
 
-The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contain important Nimble array setup requirements.
+The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important Nimble array setup requirements.
 
 !!! caution "Important"
-    It's important to understand the requirements of both the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (worker host OS and Kubernetes versions) and the CSP that has Nimble [platform requirements](#platform_requirements) for a successful deployment.
+    For a successful deployment, it's important to understand the Nimble platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (worker host OS and Kubernetes versions) and the CSP."
 
 [TOC]
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular version of the driver. If a certain feature is gated against a certain version of NimbleOS it will be called out where applicable.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular release of the driver. If a certain feature is gated against a certain version of NimbleOS it will be called out where applicable.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.

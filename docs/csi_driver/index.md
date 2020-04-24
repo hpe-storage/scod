@@ -142,13 +142,13 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
 * The only `accessModes` supported at this time is `RWO` which means only one `Pod` may have access to one `PVC` and one `PV`.
-* The CSI driver does not support iSCSI CHAP. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also need to be applied to new worker nodes before they join the cluster.
+* The CSI driver does not support iSCSI CHAP. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
 
 ## Kubernetes feature gates
 
 Different features mature at different rates. Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs.
 
-The following guidelines applies to what feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
+The following guidelines appliy to which feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
 
 ### Kubernetes 1.13
 
