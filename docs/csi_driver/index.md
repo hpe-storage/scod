@@ -1,8 +1,8 @@
 # Introduction
 
-A Container Storage Interface ([CSI](https://github.com/container-storage-interface/spec)) Driver for Kubernetes. The HPE CSI Driver for Kubernetes allows you to use a [Container Storage Provider](../container_storage_provider/index.md) (CSP) to perform data management operations on storage resources. The architecture of the CSI driver allows block storage vendors to implement a CSP that follows the [spec](https://github.com/hpe-storage/container-storage-provider) (a [browser friendly version](https://developer.hpe.com/api/hpe-nimble-csp/)).
+A Container Storage Interface ([CSI](https://github.com/container-storage-interface/spec)) Driver for Kubernetes. The HPE CSI Driver for Kubernetes allows you to use a [Container Storage Provider](../container_storage_provider/index.md) (CSP) to perform data management operations on storage resources. The architecture of the CSI driver allows block storage vendors to implement a CSP that follows the [specification](https://github.com/hpe-storage/container-storage-provider) (a [browser friendly version](https://developer.hpe.com/api/hpe-nimble-csp/)).
 
-It allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
+The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
 ![HPE CSI Driver Architecture](img/csi_driver_architecture-1.1.0.png)
 
@@ -41,6 +41,39 @@ These are the combinations HPE has tested and can provide offical support servic
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
+
+#### HPE CSI Driver for Kubernetes 1.1.1
+
+Release highlights: Support for HPE 3PAR and Primera Container Storage Provider.
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.13-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.1+<br/>
+      3PAR OS 3.3.1+<br/>
+      Primera OS 4.0.0+ (FC only)<br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>TBA</td>
+</table>
 
 #### HPE CSI Driver for Kubernetes 1.1.0
 
@@ -105,22 +138,28 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
    <td><a href=https://community.hpe.com/t5/HPE-Storage-Tech-Insiders/HPE-CSI-Driver-for-Kubernetes-1-0-Released/ba-p/7076820>HPE Storage Tech Insiders</a> (release), <a href=https://developer.hpe.com/blog/n0J8kpk1DJf4y7xD2D4X/introducing-a-multi-vendor-csi-driver-for-kubernetes>HPE DEV</a> (architecture and introduction)
 </table>
 
+## Known limitations
+
+* Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
+* The only `accessModes` supported at this time is `RWO` which means only one `Pod` may have access to one `PVC` and one `PV`.
+* The CSI driver does not support iSCSI CHAP. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
+
 ## Kubernetes feature gates
 
 Different features mature at different rates. Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs.
 
-The following guidelines applies to what feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
+The following guidelines appliy to which feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
 
-Kubernetes 1.13
+### Kubernetes 1.13
 
  * `--allow-privileged` flag must be set to true for the API server
 
-Kubernetes 1.14
+### Kubernetes 1.14
 
  * `--allow-privileged` flag must be set to true for the API server
  * `--feature-gates=ExpandCSIVolumes=true,ExpandInUsePersistentVolumes=true` feature gate flags must be set to true for both the API server and kubelet for resize support
 
-Kubernetes 1.15
+### Kubernetes 1.15
 
  * `--allow-privileged` flag must be set to true for the API server
  * `--feature-gates=ExpandCSIVolumes=true,ExpandInUsePersistentVolumes=true` feature gate flags must be set to true for both the API server and kubelet for resize support

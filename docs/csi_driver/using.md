@@ -3,6 +3,9 @@ At this point the CSI driver and CSP should be configured. If you used either th
 
 [TOC]
 
+!!! tip
+    If you're familiar with the basic concepts of persistent storage on Kubernetes and are looking for an overview of example YAML declarations for different object types supported by the HPE CSI driver, [visit the source code repo](https://github.com/hpe-storage/csi-driver/tree/master/examples/kubernetes) on GitHub.
+
 ## Enabling CSI snapshots
 
 Support for `VolumeSnapshotClass` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
@@ -108,6 +111,12 @@ reclaimPolicy: Delete
 
 These instructions are provided as an example on how to use the HPE CSI Driver with a [CSP](../container_storage_provider/index.md) supported by HPE.
 
+- [Create a PersistentVolumeClaim from a StorageClass](#create_a_persistentvolumeclaim_from_a_storageclass)
+- [Raw block volume](#raw_block_volume)
+- [Using CSI snapshots](#using_csi_snapshots)
+- [Expanding PVCs](#expanding_pvcs)
+- [Using PVC overrides](#using_pvc_overrides)
+
 ### Create a PersistentVolumeClaim from a StorageClass
 
 The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
@@ -163,7 +172,7 @@ spec:
 !!! note
     In most enviornments, there is a default `StorageClass` declared on the cluster. In such a scenario, the `.spec.storageClassName` can be omitted. The default `StorageClass` is controlled by an annotation: `.metadata.annotations.storageclass.kubernetes.io/is-default-class` set to either `"true"` or `"false"`.
 
-After the PVC has been declared, check that a new `PersistentVolume` is created based on your claim:
+After the `PersistentVolumeClaim` has been declared, check that a new `PersistentVolume` is created based on your claim:
 
 ```markdown
 kubectl get pv
@@ -171,7 +180,7 @@ NAME              CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM             
 pvc-13336da3-7... 32Gi     RWO          Delete         Bound  default/my-first-pvc hpe-scod     3s
 ```
 
-The above output means that the HPE CSI Driver successfully provisioned a new volume. The volume is not attached to any node yet. It will only be attached to a node if a workload is scheduled requesting the PVC. Now, let us create a `Pod` that refers to the above volume. When the `Pod` is created, the volume will be attached, formatted and mounted according to the specification.
+The above output means that the HPE CSI Driver successfully provisioned a new volume. The volume is not attached to any node yet. It will only be attached to a node if a scheduled workload requests the `PersistentVolumeClaim`. Now, let us create a `Pod` that refers to the above volume. When the `Pod` is created, the volume will be attached, formatted and mounted according to the specification.
 
 ```yaml
 kind: Pod
@@ -211,7 +220,9 @@ my-pod      2/2     Running   0          2m29s
 !!! tip
     A simple `Pod` does not provide any automatic recovery if the node the `Pod` is scheduled on crashes or become unresponsive. Please see [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/) for different workload types that provide automatic recovery. A shortlist of recommended workload types that are suitable for persistent storage is available in [this blog post](https://datamattsson.tumblr.com/post/182297931146/highly-available-stateful-workloads-on-kubernetes) and best practices are outlined in [this blog post](https://datamattsson.tumblr.com/post/185031432701/best-practices-for-stateful-workloads-on).
 
-The default `volumeMode` for the `PersistentVolumeClaim` is set to `Filesystem`. If a Raw Block Device is desired, `volumeMode` needs to be set to `Block`. Example:
+### Raw block volume
+
+The default `volumeMode` for a `PersistentVolumeClaim` is `Filesystem`. If a raw block volume is desired, `volumeMode` needs to be set to `Block`. No filesystem will be created. Example:
 
 ```yaml
 apiVersion: v1
@@ -228,7 +239,7 @@ spec:
   volumeMode: Block
 ```
 
-Creating the PVC is identical to `volumeMode: Filesystem`, mapping the device in a `Pod` specification is slightly different as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
+Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
 ```yaml
 apiVersion: v1
@@ -252,7 +263,10 @@ spec:
 
 ### Using CSI snapshots
 
-CSI introduces snapshots as native objects in Kubernetes to allow end-users to provision `VolumeSnapshot` objects from an existing PVC. New PVCs may then be created using the snapshot as a source.
+CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source. 
+
+!!! tip
+    Ensure [CSI snapshots are enabled](#enabling_csi_snapshots). 
 
 Start by creating a `VolumeSnapshotClass` referencing the `hpe-secret` and defining additional snapshot parameters.
 
@@ -301,6 +315,49 @@ Status:
   Restore Size:   32Gi
 ```
 
+It's now possible to create a new `PersistentVolumeClaim` from the `VolumeSnapshot`.
+
+```yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-from-snapshot
+spec:
+  dataSource:
+    name: my-snapshot
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+```
+
+!!! caution "Important"
+    The size in `.spec.resources.requests.storage` must match the `.spec.dataSource` size.
+
+The `.data.dataSource` attribute may also clone `PersistentVolumeClaim` directly, without creating a `VolumeSnapshot`.
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-from-pvc
+spec:
+  dataSource:
+    name: my-pvc
+    kind: PersistentVolumeClaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+```
+
+Again, the size in `.spec.resources.requests.storage` must match the source `PersistentVolumeClaim`. This can get sticky from an automation perspective as volume expansion is being used on the source volume. It's recommended to inspect the source `PersistentVolumeClaim` or `VolumeSnapshot` size prior to creating a clone.
+
 !!! seealso "Learn more"
     For a more comprehensive tutorial on how to use snapshots and clones with CSI on Kubernetes 1.17, see [HPE CSI Driver for Kubernetes: Snapshots, Clones and Volume Expansion](https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion) on HPE DEV.
 
@@ -308,7 +365,7 @@ Status:
 
 To perform expansion operations on Kubernetes 1.14+, you must enhance your `StorageClass` with some additional attributes. Please see [base `StorageClass` parameters](#base_storageclass_parameters).
 
-Then, a volume provisioned by a `StorageClass` with expansion attributes may have its PVCs expanded by altering the `.spec.resources.requests.storage` key of the `PersistentVolumeClaim`.
+Then, a volume provisioned by a `StorageClass` with expansion attributes may have its `PersistentVolumeClaim` expanded by altering the `.spec.resources.requests.storage` key of the `PersistentVolumeClaim`.
 
 This may be done by the `kubectl patch` command.
 
@@ -317,7 +374,7 @@ kubectl patch pvc/my-pvc --patch '{"spec": {"resources": {"requests": {"storage"
 persistentvolumeclaim/my-pvc patched
 ```
 
-The new PVC size may be observed with `kubectl get pvc/my/pvc` after a few moments.
+The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my/pvc` after a few moments.
 
 ### Using PVC Overrides
 

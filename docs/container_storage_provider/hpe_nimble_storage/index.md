@@ -1,12 +1,15 @@
 # Introduction
 
-The HPE Nimble Storage CSP is the reference implementation for the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstracts the data management capabilities of the array for use by Kubernetes. 
+The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important Nimble array setup requirements.
+
+!!! caution "Important"
+    For a successful deployment, it's important to understand the Nimble platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (worker host OS and Kubernetes versions) and the CSP."
 
 [TOC]
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular version of the driver.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular release of the driver. If a certain feature is gated against a certain version of NimbleOS it will be called out where applicable.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
@@ -22,6 +25,13 @@ The CSP requires access to a user with either `poweruser` or the `administrator`
 ## StorageClass parameters
 
 A `StorageClass` is used to provision or clone an HPE Nimble Storage-backed persistent volume. It can also be used to import an existing HPE Nimble Storage volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
+
+- [Common parameters for provisioning and cloning](#common_parameters_for_provisioning_and_cloning)
+- [Provisioning parameters](#provisioning_parameters)
+- [Pod inline volume parameters (Local Ephemeral Volumes)](#pod_inline_volume_parameters_local_ephemeral_volumes)
+- [Cloning parameters](#cloning_parameters)
+- [Import parameters](#import_parameters)
+- [VolumeSnapshotClass parameters](#volumesnapshotclass_parameters)
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
@@ -103,7 +113,9 @@ Importing volumes to Kubernetes requires the source Nimble volume to be offline.
 
 ## VolumeSnapshotClass parameters
 
-These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. Please see [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots) for more details.
+These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
+
+How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
