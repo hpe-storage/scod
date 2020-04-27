@@ -28,18 +28,6 @@ Always check the corresponding CSI driver version in [compatibility and support]
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for least privilege practices.
 
-## Deployment
-Please see [Deployment](../../csi_driver/deployment.md) for more details.
-
-### Deploying to Kubernetes
-Refer [Deploy using Helm](../../csi_driver/deployment.md#helm)
-
-!!! Important
-    Only Helm3 supported
-    
-### Deploying to OpenShift
-Refer [Deploy using Operator](../../csi_driver/deployment.md#operator)
-
 ## StorageClass example
 
 A `StorageClass` is used to provision an HPE 3PAR or Primera Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional base `StorageClass` examples like CSI snapshots and clones. 
@@ -155,22 +143,6 @@ These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
 | read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
-
-## Known Limitations
-* If StorageClass (SC), Persistent Volume Claim (PVC), POD definitions are present in same YAML file, and if `kubectl delete -f <file>.yaml`
-is done, there is a possibility of StorageClass or PVC being deleted before the POD is deleted. And this will
-lead to accidental deletion of SC/PVC. It's recommended to get the individual objects like `kubectl get <object>` and issue `kubectl delete <object>`
-* Array users (in both 3PAR and Primera) should have super/edit privileges to allow these users to do host creation.
-* OpenShift 4.2 runs on Kubernetes 1.14.x due to which there is no support for volume expansion, clone/snapshot capability.
-* Due to RWO (constraint) in `accessMode` of PVC, the block volume associated with the PVC can only be used exclusively on a single worker node of kubernetes
-* Clone volume creation requires the user to provide the same size as that of the source volume to be created. For eg. if the source volume is 20GiB, then the clone volume size also should match the same size.
-This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
-`kubectl describe hpevolumeinfo <pv-name>` can be used for getting the status of the clone operation.
-* Uninstall of the CSI driver does'nt remove Custom Resource Definitions like HPEVolumeInfo, HPENodeInfo etc.
-Also this operation does not delete the user created PVC/PV and SC objects.
-* CHAP must be enabled on the host before deploying CSI driver on the cluster if user wants CHAP feature.
-Set `node.session.auth.authmethod`, `node.session.auth.username` and `node.session.auth.password` in `/etc/iscsi/iscsid.conf` to enable CHAP on host.
-Value for `node.session.auth.authmethod` must be set to `CHAP`.
 
 ## Support
 
