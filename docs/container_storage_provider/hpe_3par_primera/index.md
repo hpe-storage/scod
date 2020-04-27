@@ -167,7 +167,7 @@ lead to accidental deletion of SC/PVC. It's recommended to get the individual ob
 This operation is performed on the target array as online copy process and there will be asynchronous task created for the same.
 `kubectl describe hpevolumeinfo <pv-name>` can be used for getting the status of the clone operation.
 * Uninstall of the CSI driver does'nt remove Custom Resource Definitions like HPEVolumeInfo, HPENodeInfo etc.
-Also this operation doesn't delete the user created PVC/PV and SC objects.
+Also this operation does not delete the user created PVC/PV and SC objects.
 * CHAP must be enabled on the host before deploying CSI driver on the cluster if user wants CHAP feature.
 Set `node.session.auth.authmethod`, `node.session.auth.username` and `node.session.auth.password` in `/etc/iscsi/iscsid.conf` to enable CHAP on host.
 Value for `node.session.auth.authmethod` must be set to `CHAP`.
