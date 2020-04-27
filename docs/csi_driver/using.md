@@ -46,15 +46,15 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-expand-secret-name: <backend>-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -71,15 +71,15 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/resizer-secret-name: hpe-secret
+  csi.storage.k8s.io/resizer-secret-name: <backend>-secret
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
 reclaimPolicy: Delete
 # Required to allow volume expansion
@@ -96,16 +96,21 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
 reclaimPolicy: Delete
 ```
+
+!!! important "Important"
+    Replace `<backend>-secret` with a `Secret` relevant to the backend being referenced.<br />
+    • `nimble-secret` for HPE Nimble Storage<br />
+    • `primera3par-secret` for HPE 3PAR and Primera
 
 ## Provisioning concepts
 
@@ -127,11 +132,11 @@ kubectl create -f-
 ^D (CTRL + D)
 ```
 
-To get started, create a `StorageClass` API object referencing the CSI driver secret `hpe-secret`.
+To get started, create a `StorageClass` API object referencing the CSI driver `Secret` relevant to the backend.
 
 These examples are for Kubernetes 1.15+
 
-```yaml
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -139,15 +144,37 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-expand-secret-name: nimble-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: nimble-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: nimble-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: nimble-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+```
+
+```yaml fct_label="HPE 3PAR and Primera"
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-scod
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -268,11 +295,11 @@ CSI introduces snapshots as native objects in Kubernetes that allows end-users t
 !!! tip
     Ensure [CSI snapshots are enabled](#enabling_csi_snapshots). 
 
-Start by creating a `VolumeSnapshotClass` referencing the `hpe-secret` and defining additional snapshot parameters.
+Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining additional snapshot parameters.
 
 Kubernetes 1.17+ (CSI snapshots in beta)
 
-```yaml
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
@@ -283,7 +310,22 @@ driver: csi.hpe.com
 deletionPolicy: Delete
 parameters:
   description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: hpe-secret
+  csi.storage.k8s.io/snapshotter-secret-name: nimble-secret
+  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+```
+
+```yaml fct_label="HPE 3PAR and Primera"
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshotClass
+metadata:
+  name: hpe-snapshot
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
+driver: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "Snapshot created by the HPE CSI Driver"
+  csi.storage.k8s.io/snapshotter-secret-name: primera3par-secret
   csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
 ```
 
@@ -409,13 +451,13 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
   cpg: FC_r6
   provisioning_type: tpvv

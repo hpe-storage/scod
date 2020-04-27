@@ -105,7 +105,7 @@ spec:
   secret:
     backend: 10.1.1.1
     create: true
-    name: hpe-secret
+    name: primera3par-secret
     password: 3pardata
     serviceName: primera3par-csp-svc
     servicePort: '8080'
@@ -145,13 +145,13 @@ The following example walks through deployment of the **latest** CSI driver.
 This guide assumes using a supported HPE storage backend. Use the tabs in the code blocks to pick which platform being used.
 
 ### Create a secret with backend details
-Replace the password string (`YWRtaW4=`) with a base64 encoded version of your password and replace the `backend` with the IP address of the CSP backend and save it as `hpe-secret.yaml`:
+Replace the password string (`YWRtaW4=`) with a base64 encoded version of your password and replace the `backend` with the IP address of the CSP backend and save it as `secret.yaml`:
 
 ```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
-  name: hpe-secret
+  name: nimble-secret
   namespace: kube-system
 stringData:
   serviceName: nimble-csp-svc
@@ -167,7 +167,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: hpe-secret
+  name: primera3par-secret
   namespace: kube-system
 stringData:
   serviceName: primera3par-csp-svc
@@ -184,16 +184,21 @@ data:
 Create the secret using `kubectl`:
 
 ```markdown
-kubectl create -f hpe-secret.yaml
-secret "hpe-secret" created
+kubectl create -f secret.yaml
 ```
 
-You should now see the `hpe-secret` in the `kube-system` namespace:
+You should now see the `Secret` in the `kube-system` namespace:
 
-```markdown
-kubectl -n kube-system get secret/hpe-secret
-NAME                  TYPE                                  DATA      AGE
-hpe-secret            Opaque                                5         149m
+```markdown fct_label="HPE Nimble Storage"
+kubectl -n kube-system get secret/nimble-secret
+NAME                     TYPE                                  DATA      AGE
+nimble-secret            Opaque                                5         149m
+```
+
+```markdown fct_label="HPE 3PAR and Primera"
+kubectl -n kube-system get secret/primera3par-secret
+NAME                          TYPE                                  DATA      AGE
+primera3par-secret            Opaque                                5         147m
 ```
 
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
