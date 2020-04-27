@@ -99,8 +99,8 @@ spec:
   flavor: kubernetes
   imagePullPolicy: Always
   images:
-    csiDriverImage: 'hpestorage/csi-driver:v1.1.0'
-    cspImage: 'hpestorage/primera3par-csp:v1.1.0'
+    csiDriverImage: 'hpestorage/csi-driver:v1.1.1'
+    cspImage: 'hpestorage/hpe3parprimera-csp:v1.0.0'
   logLevel: info
   secret:
     backend: 10.1.1.1
@@ -116,8 +116,10 @@ spec:
     defaultClass: false
     name: hpe-standard
     parameters:
-      accessProtocol: fc
-      fsType: xfs
+      accessProtocol: iscsi
+      fsType: ext4
+      cpg: SSD_r6
+      provisioning_type: tpvv
 ```
 
 Create a `HPECSIDriver` with the manifest.
