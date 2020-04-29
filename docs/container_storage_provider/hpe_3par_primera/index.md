@@ -23,7 +23,7 @@ Refer Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) 
 * [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 * [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 
-!!! tip
+!!! Tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
 #### User role requirements
