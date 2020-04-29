@@ -13,13 +13,15 @@ Always check the corresponding CSI driver version in [compatibility and support]
 | v1.1.1 | v1.0.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16, 1.17 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only) |
 
 !!! important
-    &emsp;- Minimum 2 iSCSI IP ports should be in ready state<br>
-    &emsp;- FC array should be in ready state and zoned with initiator hosts<br>
-    &emsp;- FC supported only on Bare metal and Fabric SAN
+    • Minimum 2 iSCSI IP ports should be in ready state<br />
+    • FC array should be in ready state and zoned with initiator hosts<br />
+    • FC supported only on Bare metal and Fabric SAN
 
 #### SPOCK
-* [3PAR](https://spock.corp.int.hpe.com/SPOCK/Pages.internal/spock2Html.aspx?htmlFile=hw_3par.internal.html) 
-* [Primera](https://spock.corp.int.hpe.com/SPOCK/Pages.internal/spock2Html.aspx?htmlFile=hw_primera.internal.html) 
+Refer Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE Storage Products for specific details.
+
+* [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
+* [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
@@ -34,7 +36,7 @@ A `StorageClass` is used to provision an HPE 3PAR or Primera Storage-backed pers
 
 Here is an example of a `StorageClass` using the HPE 3PAR and Primera CSP. Please see [common parameters](#common_parameters_for_provisioning) for additional parameter options.
 
-```yaml
+```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:

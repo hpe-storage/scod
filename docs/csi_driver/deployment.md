@@ -12,9 +12,6 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.
 
 - Go to the chart on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver).
 
-!!! Caution
-    CRDs will not be removed as part of helm uninstall
-
 ## Operator
 
 The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running in Kubernetes.
