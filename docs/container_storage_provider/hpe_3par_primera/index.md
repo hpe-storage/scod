@@ -18,12 +18,12 @@ Always check the corresponding CSI driver version in [compatibility and support]
     • FC supported only on Bare metal and Fabric SAN
 
 #### SPOCK
-Refer Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE Storage Products for specific details.
+Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE Storage Products for specific platform details (requires a HPE Passport account).
 
 * [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 * [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 
-!!! Tip
+!!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
 #### User role requirements
@@ -140,7 +140,9 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 
 ## VolumeSnapshotClass parameters
 
-These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. Please see [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots) for more details.
+These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
+
+How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
