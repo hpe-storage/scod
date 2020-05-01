@@ -42,7 +42,7 @@ curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/ope
 Change `my-hpe-csi-driver-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
 
 ```markdown
-oc new-project hpe-csi-driver --project-name="HPE CSI Driver for Kubernetes"
+oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
 sed -i 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
 ```
 
@@ -55,6 +55,113 @@ securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 
 !!! important
     Make note of the project name as it's needed for the Operator deployment in the next steps.
+
+#### Caveats
+
+At this time of writing (CSI Operator 1.1.0) the default `StorageClass` being shipped with the CSI driver is not very useful for OpenShift as it doesn't allow applications to write in the `PersistentVolumes`. Make sure to deploy a new `StorageClass` with `.parameters.fsMode` set to `"0770"`. This caveat will be removed in subsequent releases.
+
+* Learn how to create a base `StorageClass` in [using the CSI driver](csi_driver/using.md#base_storageclass_parameters).
+
+#### OpenShift CLI
+
+This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [next section](#openshift_web_console).
+
+It's assumed the SCC has been applied to the project and have `kube:admin` privileges. As an example, we'll deploy to the `hpe-csi-driver` project as described in previous steps.
+
+First, an `OperatorGroup` needs to be created.
+
+```yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: hpe-csi-driver-for-kubernetes
+  namespace: hpe-csi-driver
+spec:
+  targetNamespaces:
+  - hpe-csi-driver
+```
+
+Next, create a `Subscription` to the Operator.
+
+```yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: hpe-csi-operator
+  namespace: hpe-csi-driver
+spec:
+  channel: stable
+  name: hpe-csi-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+```
+
+The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the rollout of the Operator.
+
+```markdown
+oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
+Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "hpe-csi-driver-operator" successfully rolled out
+```
+
+The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
+
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+  namespace: hpe-csi-driver
+spec:
+  backendType: nimble
+  imagePullPolicy: Always
+  logLevel: info
+  secret:
+    backend: 192.168.1.1
+    create: true
+    password: admin
+    servicePort: '8080'
+    username: admin
+  storageClass:
+    allowVolumeExpansion: true
+    create: true
+    defaultClass: false
+    name: hpe-standard
+    parameters:
+      accessProtocol: iscsi
+      fsType: xfs
+      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
+```
+
+```markdown fct_label="HPE 3PAR and Primera"
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+  namespace: hpe-csi-driver
+spec:
+  backendType: primera3par
+  imagePullPolicy: Always
+  logLevel: info
+  secret:
+    backend: 10.10.10.1
+    create: true
+    password: 3pardata
+    servicePort: '8080'
+    username: 3paradm
+  storageClass:
+    allowVolumeExpansion: true
+    create: true
+    defaultClass: false
+    name: hpe-standard
+    parameters:
+      accessProtocol: iscsi
+      fsType: xfs
+      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
+```
+
+!!! note
+    As noted in the [caveats](#caveats), the installed `StorageClass` is not very useful for OpenShift. Create a new base `StorageClass` by following the steps in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
 #### OpenShift web console
 
@@ -81,7 +188,12 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 !!! note "Values"
     The required parameters are `.spec.backendType`, `.spec.secret.backend` and the credentials for the backend (`.spec.secret.username` and `.spec.secret.password`).
 
-There should also be a `StorageClass` named `hpe-standard` deployed on the cluster if the default parameters were used. See the CSI driver [using section](../../csi_driver/using.md) for details on how to use peristent storage on Kubernetes wit the HPE CSI Driver.
+By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
+
+![Operator Topology](img/webcon-7.png)
+
+!!! note
+    As noted in the [caveats](#caveats), the installed `StorageClass` is not very useful for OpenShift. Create a new base `StorageClass` by following the steps in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
 #### Additional information
 
