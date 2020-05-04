@@ -18,7 +18,7 @@ Always check the corresponding CSI driver version in [compatibility and support]
     • FC supported only on Bare metal and Fabric SAN
 
 #### SPOCK
-Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE Storage Products for specific platform details (requires a HPE Passport account).
+Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE storage products for specific platform details (requires a HPE Passport account).
 
 * [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 * [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
