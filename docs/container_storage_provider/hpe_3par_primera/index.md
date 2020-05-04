@@ -6,7 +6,22 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](https://h20272.www2.hpe.com/spock/index.aspx) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
+
+|  CSI   |   CSP  | Linux OS | OpenShift | Kubernetes | 3PAR and Primera OS |
+| ------ | ------ | -------- | --------- | ---------- | ------------------- |
+| v1.1.1 | v1.0.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16, 1.17 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only) |
+
+!!! important
+    • Minimum 2 iSCSI IP ports should be in ready state<br />
+    • FC array should be in ready state and zoned with initiator hosts<br />
+    • FC supported only on Bare metal and Fabric SAN
+
+#### SPOCK
+Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE storage products for specific platform details (requires a HPE Passport account).
+
+* [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
+* [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
@@ -30,17 +45,17 @@ provisioner: csi.hpe.com
 allowVolumeExpansion: true
 parameters:
   csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/resizer-secret-name: hpe-secret
+  csi.storage.k8s.io/resizer-secret-name: primera3par-secret
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   cpg: FC_r6
   provisioning_type: tpvv
@@ -92,17 +107,17 @@ provisioner: csi.hpe.com
 allowVolumeExpansion: true
 parameters:
   csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: hpe-secret
+  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-secret
+  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-secret
+  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/resizer-secret-name: hpe-secret
+  csi.storage.k8s.io/resizer-secret-name: primera3par-secret
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-expand-secret-name: hpe-secret
+  csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   cpg: SSD_r6
   provisioning_type: reduce
@@ -125,7 +140,9 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 
 ## VolumeSnapshotClass parameters
 
-These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. Please see [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots) for more details.
+These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
+
+How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |

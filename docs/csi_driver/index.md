@@ -7,7 +7,7 @@ The CSI driver architecture allows a complete separation of concerns between ups
 ![HPE CSI Driver Architecture](img/csi_driver_architecture-1.1.0.png)
 
 !!! tip
-    The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their on Container Storage Provider.
+    The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
 
 ## Table of Contents 
 
@@ -37,7 +37,7 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 
 ## Compatibility and support
 
-These are the combinations HPE has tested and can provide offical support services around for each of the CSI driver releases. Each [Container Storage Provider](../container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
+These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each [Container Storage Provider](../container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).

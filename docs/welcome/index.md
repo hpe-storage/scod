@@ -18,7 +18,7 @@ Interested in acquiring a persistent storage solution for your Kubernetes or Doc
 | Workloads | Tier0 | Tier1 and general purpose | Tier2, backups, DR | 
 | Market | Large Enterprise | Enterprise/SMB | Flexible |
 | Cloud  | Private | Private and Hybrid | Public |
-| Learn more | [hpe.com/storage/primera](http://hpe.com/storage/primera) | [hpe.com/storage/nimble](http://hpe.com/storage/nimble) | [cloudvolumes.hpe.com](https://cloudvolumes.hpe.com) |
+| Learn more | [hpe.com/storage/primera](http://hpe.com/storage/primera)<br />[hpe.com/storage/3par](http://hpe.com/storage/3par) | [hpe.com/storage/nimble](http://hpe.com/storage/nimble) | [cloudvolumes.hpe.com](https://cloudvolumes.hpe.com) |
 
 # Other HPE storage platforms
 
