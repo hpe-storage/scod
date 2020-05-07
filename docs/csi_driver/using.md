@@ -56,6 +56,7 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
@@ -81,6 +82,7 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 # Required to allow volume expansion
 allowVolumeExpansion: true
@@ -104,13 +106,15 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 ```
 
 !!! important "Important"
     Replace `<backend>-secret` with a `Secret` relevant to the backend being referenced.<br />
     • `nimble-secret` for HPE Nimble Storage<br />
-    • `primera3par-secret` for HPE 3PAR and Primera
+    • `primera3par-secret` for HPE 3PAR and Primera<br />
+    The example `StorageClass` do not work with the `primera3par` CSP version 1.0.0, use the example from [provisioning concepts](#provisioning_concepts) instead.
 
 ## Provisioning concepts
 
@@ -154,6 +158,8 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/provisioner-secret-name: nimble-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by the HPE CSI Driver for Kubernetes"
+  accessProtocol: iscsi
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
@@ -176,6 +182,9 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  cpg: FC_r6
+  provisioning_type: tpvv
+  accessProtocol: fc
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
