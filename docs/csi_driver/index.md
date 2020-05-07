@@ -72,7 +72,7 @@ Release highlights: Support for HPE 3PAR and Primera Container Storage Provider.
   </tr>
   <tr>
    <th>Blogs</th>
-   <td>TBA</td>
+   <td><a href="https://community.hpe.com/t5/hpe-storage-tech-insiders/hpe-csi-driver-for-kubernetes-1-1-1-and-hpe-3par-and-hpe-primera/ba-p/7086675">HPE Storage Tech Insiders</a> (release), <a href="https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-">HPE DEV</a> (tutorial for "primera3par" CSP)
 </table>
 
 #### HPE CSI Driver for Kubernetes 1.1.0
