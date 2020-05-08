@@ -114,7 +114,7 @@ reclaimPolicy: Delete
     Replace `<backend>-secret` with a `Secret` relevant to the backend being referenced.<br />
     • `nimble-secret` for HPE Nimble Storage<br />
     • `primera3par-secret` for HPE 3PAR and Primera<br />
-    The example `StorageClass` do not work with the `primera3par` CSP version 1.0.0, use the example from [provisioning concepts](#provisioning_concepts) instead.
+    The example `StorageClass` does not work with the `primera3par` CSP version 1.0.0, use the example from [provisioning concepts](#provisioning_concepts) instead.
 
 ## Provisioning concepts
 
