@@ -6,7 +6,7 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support). Also check the [SPOCK](#spock) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support). Also check [SPOCK](#spock) for the latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
 
 |  CSI   |   CSP  | Linux OS | OpenShift | Kubernetes | 3PAR and Primera OS |
 | ------ | ------ | -------- | --------- | ---------- | ------------------- |
