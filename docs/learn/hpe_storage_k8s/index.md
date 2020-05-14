@@ -607,7 +607,7 @@ hpe-standard (default)   csi.hpe.com   2m
 ```
 
 !!! Note 
-    We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](default_storageclass.md).
+    We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/).
 
 <h2>Creating a PersistentVolumeClaim</h2>
 
