@@ -23,7 +23,7 @@ The various parts of the Kubernetes Control Plane, such as the Kubernetes Master
 The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master.
 
 !!! Note
-    The “master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
+    "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
 
 **Kubernetes Nodes:** <br />
 The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
@@ -56,16 +56,16 @@ Ingress exposes HTTP and HTTPS routes from outside the cluster to services withi
 
 # Exercise 1: Get to know your Kubernetes Cluster
 
-All of this information is taken from the official documentation found on [kubernetes.io/docs](https://kubernetes.io/docs/)
+All of this information presented here is taken from the official documentation found on [kubernetes.io/docs](https://kubernetes.io/docs/).
 
 <h2>Overview of kubectl</h2>
 
-The Kubernetes command-line tool, kubectl, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of kubectl operations, see [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
+The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of `kubectl` operations, see [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
 
 For more information on how to install and setup `kubectl` on Linux, Windows or MacOS, see [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 <h2>Syntax</h2>
-Use the following syntax to run kubectl commands from your terminal window:
+Use the following syntax to run `kubectl` commands from your terminal window:
 
 `kubectl [command] [TYPE] [NAME] [flags]`
 
@@ -87,9 +87,9 @@ kubectl get po pod1
 
 <h2>Getting to know your cluster:</h2>
 
-Let's run through some simple kubectl commands to get familiar with your cluster.
+Let's run through some simple `kubectl` commands to get familiar with your cluster.
 
-In order to communicate with the Kubernetes cluster, `kubectl` looks for a file named config in the `$HOME/.kube` directory. You can specify other `kubeconfig` files by setting the KUBECONFIG environment variable or by setting the `--kubeconfig` flag.
+In order to communicate with the Kubernetes cluster, `kubectl` looks for a file named config in the `$HOME/.kube` directory. You can specify other `kubeconfig` files by setting the `KUBECONFIG` environment variable or by setting the `--kubeconfig` flag.
 
 To view your config file:
 
@@ -97,13 +97,13 @@ To view your config file:
 kubectl config view
 ```
 
-Check that kubectl and the config file is properly configured by getting the cluster state:
+Check that `kubectl` and the config file are properly configured by getting the cluster state.
 
 ```
 kubectl cluster-info
 ```
 
-If you see a URL response, kubectl is correctly configured to access your cluster.
+If you see a URL response, `kubectl` is correctly configured to access your cluster.
 
 The output is similar to this:
 
@@ -121,7 +121,7 @@ Now lets look at the nodes within our cluster.
 ```
 kubectl get nodes
 ```
-You should see output similar to below. As you can see, each node has a role as master or worker node (\<none>).
+You should see output similar to below. As you can see, each node has a role **master** or as **worker** nodes (\<none>).
 
 ```markdown
 $ kubectl get nodes
@@ -136,6 +136,8 @@ You can list any available pods.
 ```
 kubectl get pods
 ```
+
+Now that you have familiarized yourself with your cluster, lets configure the Kubernetes dashboard.
 
 <br />
 
@@ -152,14 +154,14 @@ Dashboard also provides information on the state of Kubernetes resources in your
 Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 
 <h2>Deploying the Dashboard UI</h2>
-The Dashboard UI is not deployed by default. To deploy it, run the following command:
+The Dashboard UI is not deployed by default. To deploy it, run the following command.
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 ```
 
 <h2>Accessing the Dashboard UI</h2>
-You can access Dashboard using `kubectl` from your desktop. Running this command will not work through SSH (i.e. Putty).
+You can access Dashboard using `kubectl` from your desktop.
 
 ```
 kubectl proxy
@@ -170,8 +172,8 @@ Open a web browser, copy the following URL to access the Dashboard.
 ```
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
-
-The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
+!!! Note
+    The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
 
 
 <h2>Create the Admin Service Account</h2>
@@ -191,10 +193,11 @@ Open a second terminal, if you don't have one open already.
     ```
 
 ```
-vi dashboard-adminuser.yml
+kubectl create -f-
 ```
+Press Enter.
 
-Copy the code below into `dashboard-adminuser.yml` file
+Copy the code below into the terminal.
 
 ```yaml
 apiVersion: v1
@@ -204,17 +207,17 @@ metadata:
   namespace: kube-system
 ```
 
-Run `kubectl apply`:
-
-```
-kubectl apply -f dashboard-adminuser.yml
-```
-
+Press Enter and Ctrl-D.
 
 <h3> Create ClusterRoleBinding</h3>
 Let's create the ClusterRoleBinding for the new admin-user. We will apply the `cluster-admin` role to the `admin-user`.
 
-Copy the code below into `admin-role-binding.yml` file
+```
+kubectl create -f-
+```
+Press Enter.
+
+Copy the code below into the terminal.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -230,12 +233,7 @@ subjects:
   name: admin-user
   namespace: kube-system
 ```  
-
-Run `kubectl apply`:
-
-```
-kubectl apply -f dashboard-adminuser.yml
-```
+Press Enter and Ctrl-D.
 
 <h3>Get Token</h3>
 
@@ -245,15 +243,15 @@ Now we are ready to get the token from the admin-user in order to log into the d
 kubectl -n kube-system get secret | grep admin-user
 ```
 
-It will return something similar to: `admin-user-token-n7jx9`
+It will return something similar to: `admin-user-token-n7jx9`.
 
-Now run:
+Now run.
 
 ```
 kubectl -n kube-system describe secret admin-user-token-n7jx9
 ```
 
-Copy the token value:
+Copy the token value.
 
 ```markdown
 Name:         admin-user-token-n7jx9
@@ -271,7 +269,7 @@ token:      <your token will be shown here>
 ca.crt:     1025 bytes
 ```
 
-Switch back over to your browser and paste the **token** into the dashboard then **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims).
+Switch back over to your browser and paste the **token** into the dashboard and **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims) and manage the cluster resources.
 
 <br />
 
@@ -400,20 +398,17 @@ Forwarding from [::1]:80 -> 8080
 !!! NOTE
     If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80). `port-forward` is meant for temporarily exposing an application outside of a Kubernetes cluster. For a more permanent solution, look into Ingress Controllers.
 
-Finally, we can open a browser and go to:
-```
-http://127.0.0.1:5000/
-```
+Finally, we can open a browser and go to **http://127.0.0.1**.
 
 If you see, **Welcome to nginx!**, you have successfully deployed your first pod.
 
-Now let's log into our pod. If you don't already, open another shell and run:
+We can now log into the pod. If you don't already, open another shell and run:
 
 ```
 kubectl exec -it <pod_name> /bin/bash
 ```
 
-You can explore the pod and run commands:
+You can explore the pod and run various commands. Also some commands might not be available within the pod. Why would that be?
 
 ```markdown
 root@first-nginx-pod-5bb4787f8d-7ndj6:/# df -h
@@ -436,7 +431,7 @@ Or modify the webpage:
 echo Hello from Kubernetes Storage > /usr/share/nginx/html/index.html
 ```
 
-Once done, exit the pod. Use **Ctrl+C** to exit the port-forwarding.
+Once done, press Ctrl-D to exit the pod. Use **Ctrl+C** to exit the port-forwarding.
 
 <br />
 
@@ -446,9 +441,7 @@ Once done, exit the pod. Use **Ctrl+C** to exit the port-forwarding.
 
 # Exercise 4: Install the HPE CSI Driver for Kubernetes
 
-To get started with the deployment of the HPE CSI Driver, check out the HPE Storage Container Orchestrator Documentation (SCOD for short) site. SCOD is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. It includes HPE 3PAR, HPE Primera, HPE Cloud Volumes and HPE Nimble Storage.
-
-The HPE CSI Driver is deployed by using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the CSI driver.
+To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver.
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
@@ -636,12 +629,12 @@ spec:
       storage: 50Gi
 #  storageClassName: hpe-standard
 ```
+Press Enter and Ctrl-D.
+
 !!! Note
     We can use `storageClassName` to override the default `StorageClass` with another available `StorageClass`.
 
-Press Enter and Ctrl-D.
-
-We can see the new Persistent Volume created
+We can see the **my-pvc** `PersistenVolumeClaim` created.
 ```
 kubectl get pvc
 NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
@@ -675,9 +668,9 @@ Events:        <none>
 ```
 
 
-We can also inspect the volume in a similar manner:
+We can also inspect the volume in a similar manner.
 ```
-$ kubectl describe pv pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8
+kubectl describe pv <volume_name>
 ```
 
 The output is similar to this:
@@ -815,4 +808,3 @@ Forwarding from [::1]:80 -> 8080
     If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80).
 
 Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**. Access the admin console at: **http://127.0.0.1/admin** using the admin/adminpassword used to deploy the Helm Chart. Happy Blogging!
-
