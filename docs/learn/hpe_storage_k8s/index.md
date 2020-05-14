@@ -288,6 +288,7 @@ Let's create a simple **nginx** webserver.
 ```
 kubectl create -f-
 ```
+Press Enter.
 
 Copy and paste the following
 ```yaml
