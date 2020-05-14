@@ -74,7 +74,8 @@ where `command`, `TYPE`, `NAME`, and `flags` are:
 * `command`: Specifies the operation that you want to perform on one or more resources, for example create, get, describe, delete.
 
 * `TYPE`: Specifies the resource type. Resource types are case-insensitive and you can specify the singular, plural, or abbreviated forms. For example, the following commands produce the same output:
-```
+
+```markdown
 kubectl get pod pod1
 kubectl get pods pod1
 kubectl get po pod1
@@ -118,7 +119,7 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 Now lets look at the nodes within our cluster.
 
-```
+```markdown
 kubectl get nodes
 ```
 You should see output similar to below. As you can see, each node has a role **master** or as **worker** nodes (\<none>).
@@ -133,7 +134,7 @@ kube-g1-node2     Ready    <none>   37d   v1.16.6
 
 You can list any available pods.
 
-```
+```markdown
 kubectl get pods
 ```
 
@@ -156,7 +157,7 @@ Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks
 <h2>Deploying the Dashboard UI</h2>
 The Dashboard UI is not deployed by default. To deploy it, run the following command.
 
-```
+```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 ```
 
@@ -169,7 +170,7 @@ kubectl proxy
 
 Open a web browser, copy the following URL to access the Dashboard.
 
-```
+```markdown
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
 !!! Note
@@ -199,7 +200,7 @@ Press Enter.
 
 Copy the code below into the terminal.
 
-```yaml
+```markdown
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -219,7 +220,7 @@ Press Enter.
 
 Copy the code below into the terminal.
 
-```yaml
+```markdown
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -239,7 +240,7 @@ Press Enter and Ctrl-D.
 
 Now we are ready to get the token from the admin-user in order to log into the dashboard. Run the following command:
 
-```
+```markdown
 kubectl -n kube-system get secret | grep admin-user
 ```
 
@@ -247,7 +248,7 @@ It will return something similar to: `admin-user-token-n7jx9`.
 
 Now run.
 
-```
+```markdown
 kubectl -n kube-system describe secret admin-user-token-n7jx9
 ```
 
@@ -289,7 +290,7 @@ kubectl create -f-
 Press Enter.
 
 Copy and paste the following
-```yaml
+```markdown
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -314,7 +315,7 @@ Press Enter and Ctrl-D.
 
 We can now see the pod running.
 
-```
+```markdown
 kubectl get pods
 NAME                               READY   STATUS    RESTARTS   AGE
 first-nginx-pod-5bb4787f8d-7ndj6   1/1     Running   0          6m39s
@@ -375,12 +376,13 @@ Events:
 ```
 
 Lets find the IP address of the pod.
-```
+
+```markdown
 kubectl describe pod <pod_name> | grep IP:
 ```
 
 The output should be similar to the following.
-```
+```markdown
 $ kubectl describe pod first-nginx-pod-5bb4787f8d-7ndj6 | grep IP:
 IP:           10.233.82.7
   IP:           10.233.82.7
@@ -389,7 +391,7 @@ IP:           10.233.82.7
 
 This IP address (10.233.82.7) is only accessible from within the cluster, so lets use `port-forward` to expose the `pod` port temporarily outside the cluster.
 
-```
+```markdown
 kubectl port-forward first-nginx-pod-5bb4787f8d-7ndj6 80:80
 Forwarding from 127.0.0.1:80 -> 8080
 Forwarding from [::1]:80 -> 8080
@@ -404,7 +406,7 @@ If you see, **Welcome to nginx!**, you have successfully deployed your first pod
 
 We can now log into the pod. If you don't already, open another shell and run:
 
-```
+```markdown
 kubectl exec -it <pod_name> /bin/bash
 ```
 
@@ -427,7 +429,7 @@ tmpfs                    1.9G     0  1.9G   0% /sys/firmware
 
 Or modify the webpage:
 
-```
+```markdown
 echo Hello from Kubernetes Storage > /usr/share/nginx/html/index.html
 ```
 
@@ -497,13 +499,13 @@ Save and exit.
 
 To install the chart with the name hpe-csi, add the HPE CSI Driver for Kubernetes helm repo.
 
-```
+```markdown
 helm repo add hpe https://hpe-storage.github.io/co-deployments
 helm repo update
 ```
 
 Install the latest chart:
-```
+```markdown
 helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f values.yaml
 ```
 
@@ -511,12 +513,12 @@ Wait a few minutes as the deployment finishes.
 
 Verify that everything is up and running correctly with the listing out the pods.
 
-```
+```markdown
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 ```
 
 The output is similar to this:
-```
+```markdown
 $ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY     STATUS    RESTARTS   AGE
 kube-system   csp-service-5df8679cf7-m4jcw          1/1       Running   0          5m
@@ -536,7 +538,7 @@ Now we will create a `StorageClass` that will be used in the following exercises
 
 Create a **hpe-standard** `StorageClass` based upon the CSP deployed.
 
-```
+```markdown
 kubectl create -f-
 ```
 
@@ -598,7 +600,7 @@ Press Enter and Ctrl-D.
 
 Now let's look at the available StorageClasses.
 
-```
+```markdown
 $ kubectl get sc
 NAME                     PROVISIONER   AGE
 hpe-standard (default)   csi.hpe.com   2m
@@ -611,7 +613,7 @@ hpe-standard (default)   csi.hpe.com   2m
 
 With a `StorageClass` available, we can create a `PVC` to request an amount of storage for our application.
 
-```
+```markdown
 kubectl create -f-
 ```
 
@@ -635,7 +637,8 @@ Press Enter and Ctrl-D.
     We can use `storageClassName` to override the default `StorageClass` with another available `StorageClass`.
 
 We can see the **my-pvc** `PersistenVolumeClaim` created.
-```
+
+```markdown
 kubectl get pvc
 NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
@@ -643,7 +646,7 @@ my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8 
 
 We can inspect the `PVC` further for additional information.
 
-```
+```markdown
 kubectl describe pvc my-pvc
 ```
 
@@ -667,9 +670,9 @@ Mounted By:    <none>
 Events:        <none>
 ```
 
-
 We can also inspect the volume in a similar manner.
-```
+
+```markdown
 kubectl describe pv <volume_name>
 ```
 
@@ -773,7 +776,7 @@ Now, let's use Helm to deploy Wordpress using the `PVC` created previously. When
 
 The first step is to add the Wordpress chart.
 
-```
+```markdown
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm search repo bitnami/wordpress
@@ -783,13 +786,13 @@ bitnami/wordpress       9.2.1           5.4.0           Web publishing platform 
 
 Deploy Wordpress by setting `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
 
-```
+```markdown
 helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false
 ```
 
 Check to verify that Wordpress and MariaDB were deployed and are in the **Running** state. This may take a few minutes.
 
-```
+```markdown
 kubectl get pods
 NAME                            READY     STATUS    RESTARTS   AGE
 my-wordpress-69b7976c85-9mfjv   1/1       Running   0          2m
@@ -798,7 +801,7 @@ my-wordpress-mariadb-0          1/1       Running   0          2m
 
 Finally lets take a look at the Wordpress site. You can use `kubectl port-forward` to access the Wordpress application from within the Kubernetes cluster to verify everything is working correctly.
 
-```
+```markdown
 kubectl port-forward svc/my-wordpress 80:80
 Forwarding from 127.0.0.1:80 -> 8080
 Forwarding from [::1]:80 -> 8080
