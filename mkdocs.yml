@@ -70,7 +70,7 @@ nav:
 #   - 'Rancher Labs': 'partners/rancher_labs/index.md'
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
-#   - 'Persistent Storage for Kubernetes': 'learn/kubernetes_storage.md'
+    - 'Persistent Storage for Kubernetes': 'learn/hpe_storage_k8s/index.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
   - COMMUNITY:
