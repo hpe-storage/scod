@@ -425,7 +425,7 @@ kubectl patch pvc/my-pvc --patch '{"spec": {"resources": {"requests": {"storage"
 persistentvolumeclaim/my-pvc patched
 ```
 
-The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my/pvc` after a few moments.
+The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my-pvc` after a few moments.
 
 ### Using PVC Overrides
 
