@@ -1,70 +1,68 @@
-<h1> Kubernetes and HPE Storage Exercises</h1>
-
-![alt text](https://scod.hpedev.io/img/hpe-dev-logo-mark-anim.svg "HPEDEV")
+# Overview
 
 This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using Nimble Storage, HPE Primera or HPE 3PAR storage systems.
 
 [TOC]
 
-# Kubernetes 101
+## Kubernetes 101
 
-<h3>The basics:</h3> The first thing we need to do is to understand the various components of Kubernetes.
+### The basics
 
-**Cluster:** <br />
+The first thing we need to do is to understand the various components of Kubernetes.
+
+#### Cluster
+
 This is everything. All components that make up a Kubernetes deployment. This includes the control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
 
-**Control Plane:** <br />
+#### Control Plane
 The various parts of the Kubernetes Control Plane, such as the Kubernetes Master and kubelet processes, govern how Kubernetes communicates with your cluster. The Control Plane maintains a record of all of the Kubernetes Objects in the system, and runs continuous control loops to manage those objects’ state. At any given time, the Control Plane’s control loops will respond to changes in the cluster and work to make the actual state of all the objects in the system match the desired state that you provided.
 
 !!! Note
     For example, when you use the Kubernetes API to create a Deployment, you provide a new desired state for the system. The Kubernetes Control Plane records that object creation, and carries out your instructions by starting the required applications and scheduling them to cluster nodes–thus making the cluster’s actual state match the desired state.
 
-**Kubernetes Master:** <br />
+#### Kubernetes Master
 The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master.
 
 !!! Note
     "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
 
-**Kubernetes Nodes:** <br />
+#### Kubernetes Nodes
 The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
 
-<h3> Kubernetes Objects </h3>
+### Kubernetes Objects 
 
-**Pods:** <br />
+#### Pods
 A Pod is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.
 
-**Deployments:** <br />
+#### Deployments
+
 A Deployment provides declarative updates for Pods and ReplicaSets.
 
-**DaemonSet:** <br />
+#### DaemonSet
 A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected.
 
-**Namespaces:** <br />
+#### Namespaces
 Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects. Namespaces are a way to divide cluster resources between multiple users.
 
-**Services:** <br />
+#### Services
 Expose an application running on a set of Pods as a network service.
 
-**Ingress:** <br />
+#### Ingress
 Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster via Ingress Controllers. Traffic routing is controlled by rules defined on the Ingress resource.
-
-<br />
 
 ---
 
-<br />
-
-# Exercise 1: Get to know your Kubernetes Cluster
+## Lab 1: Tour your cluster
 
 All of this information presented here is taken from the official documentation found on [kubernetes.io/docs](https://kubernetes.io/docs/).
 
-<h2>Overview of kubectl</h2>
+### Overview of kubectl
 
 The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of `kubectl` operations, see [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
 
 For more information on how to install and setup `kubectl` on Linux, Windows or MacOS, see [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-<h2>Syntax</h2>
+### Syntax
 Use the following syntax to run `kubectl` commands from your terminal window:
 
 `kubectl [command] [TYPE] [NAME] [flags]`
@@ -86,7 +84,7 @@ kubectl get po pod1
 [Kubernetes Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 
-<h2>Getting to know your cluster:</h2>
+### Getting to know your cluster:
 
 Let's run through some simple `kubectl` commands to get familiar with your cluster.
 
@@ -140,13 +138,9 @@ kubectl get pods
 
 Now that you have familiarized yourself with your cluster, lets configure the Kubernetes dashboard.
 
-<br />
-
 ---
 
-<br />
-
-# Exercise 2: Install Kubernetes Dashboard
+## Lab 2: Install K8s dashboard
 
 Dashboard is a web-based Kubernetes user interface. You can use Dashboard to deploy containerized applications to a Kubernetes cluster, troubleshoot your containerized application, and manage the cluster resources. You can use Dashboard to get an overview of applications running on your cluster, as well as for creating or modifying individual Kubernetes resources (such as Deployments, Jobs, DaemonSets, etc). For example, you can scale a Deployment, initiate a rolling update, restart a pod or deploy new applications using a deploy wizard.
 
@@ -154,14 +148,14 @@ Dashboard also provides information on the state of Kubernetes resources in your
 
 Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 
-<h2>Deploying the Dashboard UI</h2>
+### Deploying the Dashboard UI
 The Dashboard UI is not deployed by default. To deploy it, run the following command.
 
 ```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 ```
 
-<h2>Accessing the Dashboard UI</h2>
+### Accessing the Dashboard UI
 You can access Dashboard using `kubectl` from your desktop.
 
 ```
@@ -177,25 +171,29 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
     The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
 
 
-<h2>Create the Admin Service Account</h2>
+### Create the Admin Service Account
 
 To protect your cluster data, Dashboard deploys with a minimal RBAC configuration by default. Currently, Dashboard only supports logging in with a Bearer Token. To create a token for this demo, we will create an admin user.
 
-**Warning:** *_The admin user created in the tutorial will have administrative privileges and is for educational purposes only._*
+!!! warning
+    The admin user created in the tutorial will have administrative privileges and is for educational purposes only.
 
 Open a second terminal, if you don't have one open already. 
 
-!!!Pro Tip
-    The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this: <br />
-    ```
-    kubectl create -f-
-    < paste the YAML >
-    ^D (CTRL + D)
-    ```
+The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
+
+```markdown
+kubectl create -f-
+< paste the YAML >
+^D (CTRL + D)
+```
+
+Step by step:
 
 ```
 kubectl create -f-
 ```
+
 Press Enter.
 
 Copy the code below into the terminal.
@@ -210,7 +208,7 @@ metadata:
 
 Press Enter and Ctrl-D.
 
-<h3> Create ClusterRoleBinding</h3>
+### Create ClusterRoleBinding
 Let's create the ClusterRoleBinding for the new admin-user. We will apply the `cluster-admin` role to the `admin-user`.
 
 ```
@@ -236,7 +234,7 @@ subjects:
 ```  
 Press Enter and Ctrl-D.
 
-<h3>Get Token</h3>
+### Get Token
 
 Now we are ready to get the token from the admin-user in order to log into the dashboard. Run the following command:
 
@@ -272,13 +270,9 @@ ca.crt:     1025 bytes
 
 Switch back over to your browser and paste the **token** into the dashboard and **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims) and manage the cluster resources.
 
-<br />
-
 ---
 
-<br />
-
-# Exercise 3: Deploy your first pod
+## Lab 3: Deploy your first pod
 
 A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
 
@@ -435,13 +429,9 @@ echo Hello from Kubernetes Storage > /usr/share/nginx/html/index.html
 
 Once done, press Ctrl-D to exit the pod. Use **Ctrl+C** to exit the port-forwarding.
 
-<br />
-
 ---
 
-<br />
-
-# Exercise 4: Install the HPE CSI Driver for Kubernetes
+## Lab 4: Install the CSI driver
 
 To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver.
 
@@ -456,7 +446,7 @@ vi values.yaml
 ```
 Copy the following into the file. Make sure to set the **backendType:** to **nimble** or **primera3par** depending on your array type. Set the **backend:** to the array IP along with the array **username** and **password**.
 
-```yaml fct_label="HPE Nimble Storage"
+```markdown fct_label="HPE Nimble Storage"
 # HPE backend storage type (nimble, primera3par)
 backendType: nimble
 
@@ -473,7 +463,7 @@ storageClass:
   create: false
 ```
 
-```yaml fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE 3PAR and Primera"
 # HPE backend storage type (nimble, primera3par)
 backendType: primera3par
 
@@ -495,7 +485,7 @@ Save and exit.
 !!! Important 
     Deploying the HPE CSI Driver with the HPE 3PAR and Primera CSP currently doesn't support the creation of the default StorageClass in the Helm chart. Make sure to set `create: false` or omit the `StorageClass` section.
 
-<h2>Installing the chart</h2>
+### Installing the chart
 
 To install the chart with the name hpe-csi, add the HPE CSI Driver for Kubernetes helm repo.
 
@@ -532,7 +522,7 @@ kube-system   primera3par-csp-66f775b555-sfmnp      1/1       Running   0       
 
 If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Provider has been successfully deployed.
 
-<h2>Creating a StorageClass</h2><a name="storageclass"></a>
+### Creating a StorageClass
 
 Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` is similar to a Storage Profile and specifies the characteristics (such as Protection Templates, Performance Policies, etc) of the volume that we want to create.
 
@@ -543,7 +533,7 @@ kubectl create -f-
 ```
 
 Copy and paste the following:
-```yaml fct_label="HPE Nimble Storage"
+```markdown fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -570,7 +560,7 @@ parameters:
   allowOverrides: description,limitIops,performancePolicy
 ```
 
-```yaml fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE 3PAR and Primera"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -609,7 +599,7 @@ hpe-standard (default)   csi.hpe.com   2m
 !!! Note 
     We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/).
 
-<h2>Creating a PersistentVolumeClaim</h2>
+### Creating a PersistentVolumeClaim
 
 With a `StorageClass` available, we can create a `PVC` to request an amount of storage for our application.
 
@@ -629,7 +619,6 @@ spec:
   resources:
     requests:
       storage: 50Gi
-#  storageClassName: hpe-standard
 ```
 Press Enter and Ctrl-D.
 
@@ -719,15 +708,11 @@ Let's recap what we have learned.
 
 At this point we have validated the deployment of the HPE CSI Driver and are ready to deploy an application with persistent storage.
 
-<br />
-
 ---
 
-<br />
+## Lab 5: Deploying Wordpress
 
-# Exercise 5: Deploying Wordpress using HPE CSI Driver
-
-To begin, we will be using the **hpe-standard** `StorageClass` we created previously. If you don't have **hpe-standard** available, please refer to [StorageClass](#storageclass) for instructions on creating a `StorageClass`.
+To begin, we will be using the **hpe-standard** `StorageClass` we created previously. If you don't have **hpe-standard** available, please refer to [StorageClass](#creating_a_storageclass) for instructions on creating a `StorageClass`.
 
 Create a `PersistentVolumeClaim` for MariaDB for use by Wordpress. This object creates a `PersistentVolume` as defined, make sure to reference the correct `.spec.storageClassName`.
 
