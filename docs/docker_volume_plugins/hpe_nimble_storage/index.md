@@ -137,7 +137,7 @@ docker plugin disable nimble
 Remove the credentials
 
 ```shell
-docker plugin set nimble PROVIDER_USERNAME="" PROVIDER_PASSWORD=""
+docker plugin set nimble PROVIDER_USERNAME="true" PROVIDER_PASSWORD="true"
 ```
 
 Start the plugin
