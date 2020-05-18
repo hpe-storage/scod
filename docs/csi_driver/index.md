@@ -62,9 +62,9 @@ Release highlights: Support for HPE 3PAR and Primera Container Storage Provider.
   <tr>
     <th>Platforms</th>
     <td>
-      NimbleOS 5.0.1+ or NimbleOS 5.1.2+<br/>
-      3PAR OS 3.3.1+<br/>
-      Primera OS 4.0.0+ (FC only)<br/>
+      NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x<br/>
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
     </td>
   <tr>
     <th>Release notes</th>
@@ -95,7 +95,7 @@ Release highlights: Broader ecosystem support, official support for CSI snapshot
   <tr>
     <th>Platforms</th>
     <td>
-      NimbleOS 5.0.1+ or NimbleOS 5.1.2+
+      NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x
     </td>
   <tr>
     <th>Release notes</th>
@@ -125,9 +125,7 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
   </tr>
   <tr>
     <th>Platforms</th>
-    <td>
-      NimbleOS 5.0.1+ or NimbleOS 5.1.2+
-    </td>
+    <td>NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x</td>
   <tr>
   <tr>
     <th>Release notes</th>
