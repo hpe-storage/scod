@@ -76,6 +76,7 @@ nav:
   - COMMUNITY:
     - 'HPE Developer Community': 'https://developer.hpe.com'
     - 'Sign up to HPE DEV on Slack': 'https://slack.hpedev.io'
+    - 'Got feedback?': 'https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD'
 #   - 'Blogs': 'community/blogs/index.md'
   - EXTERNAL LINKS:
     - 'SCOD on GitHub': 'https://github.com/hpe-storage/scod'
