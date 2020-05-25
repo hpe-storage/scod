@@ -28,7 +28,7 @@ The Kubernetes master is responsible for maintaining the desired state for your 
 In Kubernetes, nodes pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of a control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
 
 <u>**Persistent Volumes:**</u> <br /> <br />
-<img src="img/persistent_volumes.png" alt="volume" width="235" height="235"> <br /> <br />
+<img src="img/persistent_volumes.png" alt="volume" width="285" height="235"> <br /> <br />
 <p>Because programs running on your cluster aren’t guaranteed to run on a specific node, data can’t be saved to any arbitrary place in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be. </p>
 To store data permanently, Kubernetes uses Persistent Volumes. Local, external storage via SAN arrays, or cloud drives can be attached to the cluster as a Persistent Volume.
 
