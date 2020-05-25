@@ -12,7 +12,6 @@ The first thing we need to do is to understand the various components of Kuberne
 
 #### Cluster
 
-<<<<<<< HEAD:docs/learn/persistent_storage/index.md
 <u>**Nodes:**</u> <br /> <br />
 <img src="img/node.png" alt="node" width="71" height="110"> <br /> <br />
 The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
@@ -20,23 +19,10 @@ The nodes in a cluster are the machines (VMs, physical servers, etc) that run yo
 <u>**Kubernetes Master:**</u> <br /> <br />
 <img src="img/master.png" alt="master" width="71" height="110"> <br /> <br />
 The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
-=======
-This is everything. All components that make up a Kubernetes deployment. This includes the control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
-
-#### Control Plane
-The various parts of the Kubernetes Control Plane, such as the Kubernetes Master and kubelet processes, govern how Kubernetes communicates with your cluster. The Control Plane maintains a record of all of the Kubernetes Objects in the system, and runs continuous control loops to manage those objects’ state. At any given time, the Control Plane’s control loops will respond to changes in the cluster and work to make the actual state of all the objects in the system match the desired state that you provided.
-
-!!! Note
-    For example, when you use the Kubernetes API to create a Deployment, you provide a new desired state for the system. The Kubernetes Control Plane records that object creation, and carries out your instructions by starting the required applications and scheduling them to cluster nodes–thus making the cluster’s actual state match the desired state.
-
-#### Kubernetes Master
-The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master.
->>>>>>> e51efc5e3ba8c37eb7eb12452805def17f6c5ac8:docs/learn/hpe_storage_k8s/index.md
 
 !!! Note
     "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
 
-<<<<<<< HEAD:docs/learn/persistent_storage/index.md
 <u>**Cluster:**</u> <br /> <br />
 <img src="img/cluster.png" alt="cluster" width="125" height="125"> <br /> <br />
 In Kubernetes, nodes pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of a control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
@@ -65,31 +51,6 @@ A Deployment provides declarative updates for Pods. You declare a desired state 
 
 <u>**Services:** </u> <br /> <br />
 A Service in Kubernetes defines the policy to be used to access your pods within a cluster.
-=======
-#### Kubernetes Nodes
-The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
-
-### Kubernetes Objects 
-
-#### Pods
-A Pod is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.
-
-#### Deployments
-
-A Deployment provides declarative updates for Pods and ReplicaSets.
-
-#### DaemonSet
-A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected.
-
-#### Namespaces
-Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects. Namespaces are a way to divide cluster resources between multiple users.
-
-#### Services
-Expose an application running on a set of Pods as a network service.
-
-#### Ingress
-Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster via Ingress Controllers. Traffic routing is controlled by rules defined on the Ingress resource.
->>>>>>> e51efc5e3ba8c37eb7eb12452805def17f6c5ac8:docs/learn/hpe_storage_k8s/index.md
 
 ---
 
@@ -216,12 +177,7 @@ You should see something similar to the following:
 !!! Note
     The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
 
-<<<<<<< HEAD:docs/learn/persistent_storage/index.md
 <h2>Create the Admin Service Account</h2>
-=======
-
-### Create the Admin Service Account
->>>>>>> e51efc5e3ba8c37eb7eb12452805def17f6c5ac8:docs/learn/hpe_storage_k8s/index.md
 
 To protect your cluster data, Dashboard deploys with a minimal RBAC configuration by default. Currently, Dashboard only supports logging in with a Bearer Token. To create a token for this demo, we will create an admin user.
 
@@ -320,7 +276,6 @@ ca.crt:     1025 bytes
 
 Switch back over to your browser and paste the **token** into the dashboard and **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims) and manage the cluster resources.
 
-<<<<<<< HEAD:docs/learn/persistent_storage/index.md
 You should see something similar to the following: 
 <br />
 
@@ -328,8 +283,6 @@ You should see something similar to the following:
 
 <br />
 
-=======
->>>>>>> e51efc5e3ba8c37eb7eb12452805def17f6c5ac8:docs/learn/hpe_storage_k8s/index.md
 ---
 
 ## Lab 3: Deploy your first pod
@@ -857,13 +810,9 @@ Forwarding from [::1]:80 -> 8080
 !!! NOTE
     If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80).
 
-<<<<<<< HEAD:docs/learn/persistent_storage/index.md
 Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**. Access the admin console at: **http://127.0.0.1/admin** using the admin/adminpassword used to deploy the Helm Chart. 
 
 [![](img/wordpress.png)](img/wordpress.png)
 
 
 **Happy Blogging!**
-=======
-Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**. Access the admin console at: **http://127.0.0.1/admin** using the admin/adminpassword used to deploy the Helm Chart. Happy Blogging!
->>>>>>> e51efc5e3ba8c37eb7eb12452805def17f6c5ac8:docs/learn/hpe_storage_k8s/index.md
