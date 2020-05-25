@@ -10,43 +10,45 @@ This is a free learning resource from HPE which walks you through various exerci
 
 <h3>The basics:</h3> The first thing we need to do is to understand the various components of Kubernetes.
 
-**Cluster:** <br />
-This is everything. All components that make up a Kubernetes deployment. This includes the control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
+<u>**Nodes:**</u> <br /> <br />
+<img src="img/node.png" alt="node" width="71" height="110"> <br /> <br />
+The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
 
-**Control Plane:** <br />
-The various parts of the Kubernetes Control Plane, such as the Kubernetes Master and kubelet processes, govern how Kubernetes communicates with your cluster. The Control Plane maintains a record of all of the Kubernetes Objects in the system, and runs continuous control loops to manage those objects’ state. At any given time, the Control Plane’s control loops will respond to changes in the cluster and work to make the actual state of all the objects in the system match the desired state that you provided.
-
-!!! Note
-    For example, when you use the Kubernetes API to create a Deployment, you provide a new desired state for the system. The Kubernetes Control Plane records that object creation, and carries out your instructions by starting the required applications and scheduling them to cluster nodes–thus making the cluster’s actual state match the desired state.
-
-**Kubernetes Master:** <br />
-The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master.
+<u>**Kubernetes Master:**</u> <br /> <br />
+<img src="img/master.png" alt="master" width="71" height="110"> <br /> <br />
+The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
 
 !!! Note
     "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
 
-**Kubernetes Nodes:** <br />
-The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
+<u>**Cluster:**</u> <br /> <br />
+<img src="img/cluster.png" alt="cluster" width="125" height="125"> <br /> <br />
+In Kubernetes, nodes pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of a control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
+
+<u>**Persistent Volumes:**</u> <br /> <br />
+<img src="img/persistent_volumes.png" alt="volume" width="235" height="235"> <br /> <br />
+<p>Because programs running on your cluster aren’t guaranteed to run on a specific node, data can’t be saved to any arbitrary place in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be. </p>
+To store data permanently, Kubernetes uses Persistent Volumes. Local, external storage via SAN arrays, or cloud drives can be attached to the cluster as a Persistent Volume.
 
 <h3> Kubernetes Objects </h3>
 
-**Pods:** <br />
+<u>**Containers:** </u> <br /> <br />
+<img src="img/container.png" alt="containers" width="169" height="208"> <br /> <br />
+Programs running on Kubernetes are packaged as containers which can run on Linux or Windows. A container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
+
+<u>**Pods:** </u> <br /> <br />
+<img src="img/pod.png" alt="pod" width="255" height="220"> <br /> <br />
 A Pod is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.
 
-**Deployments:** <br />
-A Deployment provides declarative updates for Pods and ReplicaSets.
-
-**DaemonSet:** <br />
-A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected.
-
-**Namespaces:** <br />
+<u>**Namespaces:** </u> <br /> <br />
+<img src="img/namespaces.png" alt="namespace" width="410" height="250"> <br /> <br />
 Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects. Namespaces are a way to divide cluster resources between multiple users.
 
-**Services:** <br />
-Expose an application running on a set of Pods as a network service.
+<u>**Deployments:** </u> <br /> <br />
+A Deployment provides declarative updates for Pods. You declare a desired state for your pods in your Deployment and Kubernetes will manage it for you automatically.
 
-**Ingress:** <br />
-Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster via Ingress Controllers. Traffic routing is controlled by rules defined on the Ingress resource.
+<u>**Services:** </u> <br /> <br />
+A Service in Kubernetes defines the policy to be used to access your pods within a cluster.
 
 <br />
 
@@ -173,9 +175,13 @@ Open a web browser, copy the following URL to access the Dashboard.
 ```markdown
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
+You should see something similar to the following:
+<br />
+
+[![](img/dashboard.png)](img/dashboard.png)
+
 !!! Note
     The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
-
 
 <h2>Create the Admin Service Account</h2>
 
@@ -271,6 +277,11 @@ ca.crt:     1025 bytes
 ```
 
 Switch back over to your browser and paste the **token** into the dashboard and **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims) and manage the cluster resources.
+
+You should see something similar to the following: 
+<br />
+
+[![](img/dashboard_success.png)](img/dashboard_success.png)
 
 <br />
 
@@ -403,6 +414,8 @@ Forwarding from [::1]:80 -> 8080
 Finally, we can open a browser and go to **http://127.0.0.1**.
 
 If you see, **Welcome to nginx!**, you have successfully deployed your first pod.
+
+<img style="border:1px solid black;" src="img/welcome-nginx.png" />
 
 We can now log into the pod. If you don't already, open another shell and run:
 
@@ -810,4 +823,9 @@ Forwarding from [::1]:80 -> 8080
 !!! NOTE
     If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80).
 
-Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**. Access the admin console at: **http://127.0.0.1/admin** using the admin/adminpassword used to deploy the Helm Chart. Happy Blogging!
+Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**. Access the admin console at: **http://127.0.0.1/admin** using the admin/adminpassword used to deploy the Helm Chart. 
+
+[![](img/wordpress.png)](img/wordpress.png)
+
+
+**Happy Blogging!**
