@@ -133,11 +133,15 @@ kube-g1-node1     Ready    <none>   37d   v1.16.6
 kube-g1-node2     Ready    <none>   37d   v1.16.6
 ```
 
-You can list any available pods.
+You can list pods.
 
 ```markdown
 kubectl get pods
 ```
+
+!!! note "Quiz"
+    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the `default` namespace. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the `default` namespace. Depending on the type of application and your user access level, applications can be deployed within one or more namespaces. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the namespace it was deployed under and use the `-n <namespace>` flag to view objects in other namespaces.
+
 
 Now that you have familiarized yourself with your cluster, let's configure the Kubernetes dashboard.
 
@@ -385,7 +389,7 @@ Events:
 Let's find the IP address of the pod.
 
 ```markdown
-kubectl describe pod <pod_name> | grep IP:
+kubectl get pod first-nginx-pod-5bb4787f8d-7ndj6 -o=jsonpath='{.status.podIP}'
 ```
 
 The output should be similar to the following.
@@ -706,7 +710,7 @@ Let's recap what we have learned.
 3. We can use **kubectl get** to list the `StorageClass`, `PVC` and `PV`.
 4. We can use **kubectl describe** to get details on the `StorageClass`, `PVC` or `PV`
 
-At this point we have validated the deployment of the HPE CSI Driver and are ready to deploy an application with persistent storage.
+At this point, we have validated the deployment of the HPE CSI Driver and are ready to deploy an application with persistent storage.
 
 ---
 
