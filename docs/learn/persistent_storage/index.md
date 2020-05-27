@@ -118,7 +118,7 @@ kubernetes-dashboard is running at https://10.90.200.11:6443/api/v1/namespaces/k
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
-Now lets look at the nodes within our cluster.
+Now let's look at the nodes within our cluster.
 
 ```markdown
 kubectl get nodes
@@ -139,7 +139,7 @@ You can list any available pods.
 kubectl get pods
 ```
 
-Now that you have familiarized yourself with your cluster, lets configure the Kubernetes dashboard.
+Now that you have familiarized yourself with your cluster, let's configure the Kubernetes dashboard.
 
 ---
 
@@ -382,7 +382,7 @@ Events:
   Normal  Started    43s        kubelet, kube-g18-node1  Started container nginx
 ```
 
-Lets find the IP address of the pod.
+Let's find the IP address of the pod.
 
 ```markdown
 kubectl describe pod <pod_name> | grep IP:
@@ -395,7 +395,7 @@ $ kubectl get pod first-nginx-pod-5bb4787f8d-7ndj6 -o=jsonpath='{.status.podIP}'
 
 ```
 
-This IP address (10.233.82.7) is only accessible from within the cluster, so lets use `port-forward` to expose the `pod` port temporarily outside the cluster.
+This IP address (10.233.82.7) is only accessible from within the cluster, so let's use `port-forward` to expose the `pod` port temporarily outside the cluster.
 
 ```markdown
 kubectl port-forward first-nginx-pod-5bb4787f8d-7ndj6 80:80
@@ -784,7 +784,7 @@ my-wordpress-69b7976c85-9mfjv   1/1       Running   0          2m
 my-wordpress-mariadb-0          1/1       Running   0          2m
 ```
 
-Finally lets take a look at the Wordpress site. You can use `kubectl port-forward` to access the Wordpress application from within the Kubernetes cluster to verify everything is working correctly.
+Finally let's take a look at the Wordpress site. You can use `kubectl port-forward` to access the Wordpress application from within the Kubernetes cluster to verify everything is working correctly.
 
 ```markdown
 kubectl port-forward svc/my-wordpress 80:80
