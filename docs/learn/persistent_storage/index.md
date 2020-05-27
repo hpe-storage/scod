@@ -1,6 +1,6 @@
 # Overview
 
-This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using Nimble Storage, HPE Primera or HPE 3PAR storage systems. This guide is by no means a comprehensive overview of the capabilities of Kubernetes but rather a getting started guide for individuals who wants to learn how to use Kubernetes with persistent storage.
+This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using HPE Nimble Storage, HPE Primera or HPE 3PAR storage systems. This guide is by no means a comprehensive overview of the capabilities of Kubernetes but rather a getting started guide for individuals who wants to learn how to use Kubernetes with persistent storage.
 
 [TOC]
 
@@ -13,17 +13,17 @@ The first thing we need to do is to understand the various components of Kuberne
 ##### <u>Nodes</u>
 
 ![](img/node.png) <br /> <br />
-The nodes in a cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
+The nodes in a Kubernetes cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
 
-##### <u>Kubernetes Master</u>
+##### <u>Master</u>
 
 ![](img/master.png) <br /> <br />
-The Kubernetes master is responsible for maintaining the desired state for your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
+The Kubernetes master is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
 
 !!! Note
-    "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node in the cluster, and this node is also referred to as the master. The master can also be replicated for availability and redundancy.
+    "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node within the cluster, and this node is also referred to as the master. The master can be replicated for availability and redundancy.
 
-##### <u>Cluster</u>
+##### <u>Kubernetes Cluster</u>
 ![](img/cluster.png) <br /> <br />
 In Kubernetes, nodes pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of a control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
 
@@ -50,7 +50,7 @@ Kubernetes supports multiple virtual clusters backed by the same physical cluste
 A Deployment provides declarative updates for Pods. You declare a desired state for your pods in your Deployment and Kubernetes will manage it for you automatically.
 
 ##### <u>Services</u>
-A Service in Kubernetes defines the policy to be used to access your pods within a cluster.
+A Kubernetes Service object defines a policy for external clients to access an application within a cluster. By default, Docker uses host-private networking, so containers can talk to other containers only if they are on the same machine. In order for Docker containers to communicate across nodes, there must be allocated ports on the machine’s own IP address, which are then forwarded or proxied to the containers. Coordinating port allocations is very difficult to do at scale, and exposes users to cluster-level issues outside of their control. Kubernetes assumes that pods can communicate with other pods, regardless of which host they land on. Kubernetes gives every pod its own cluster-private IP address, through a Kubernetes Service object, so you do not need to explicitly create links between pods or map container ports to host ports. This means that containers within a Pod can all reach each other’s ports on localhost, and all pods in a cluster can see each other without NAT.
 
 ---
 
@@ -60,7 +60,7 @@ All of this information presented here is taken from the official documentation 
 
 ### Overview of kubectl
 
-The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of `kubectl` operations, see [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/).
+The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of `kubectl` operations, see [Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) on kubernetes.io.
 
 For more information on how to install and setup `kubectl` on Linux, Windows or MacOS, see [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on kubernetes.io.
 
@@ -84,7 +84,7 @@ kubectl get po pod1
 * `NAME`: Specifies the name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example `kubectl get pods`.
 
 !!! note "Kubernetes Cheat Sheet"
-    Find more available commands at [Kubernetes Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) on [kubernetes.io](https://kubernetes.io).
+    Find more available commands at [Kubernetes Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) on kubernetes.io.
 
 
 ### Getting to know your cluster:
@@ -95,13 +95,13 @@ In order to communicate with the Kubernetes cluster, `kubectl` looks for a file 
 
 To view your config file:
 
-```
+```markdown
 kubectl config view
 ```
 
 Check that `kubectl` and the config file are properly configured by getting the cluster state.
 
-```
+```markdown
 kubectl cluster-info
 ```
 
@@ -149,7 +149,7 @@ Dashboard is a web-based Kubernetes user interface. You can use Dashboard to dep
 
 Dashboard also provides information on the state of Kubernetes resources in your cluster and on any errors that may have occurred.
 
-Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) on [kubernetes.io](https://kubernetes.io).
+Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) on kubernetes.io.
 
 ### Deploying the Dashboard UI
 The Dashboard UI is not deployed by default. To deploy it, run the following command.
@@ -161,7 +161,7 @@ kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/kubernetes/d
 ### Accessing the Dashboard UI
 You can access Dashboard using `kubectl` from your desktop.
 
-```
+```markdown
 kubectl proxy
 ```
 
@@ -196,7 +196,7 @@ kubectl create -f-
 
 Step by step:
 
-```
+```markdown
 kubectl create -f-
 ```
 
@@ -217,7 +217,7 @@ Press **Enter** and **Ctrl-D**.
 ### Create ClusterRoleBinding
 Let's create the ClusterRoleBinding for the new admin-user. We will apply the `cluster-admin` role to the `admin-user`.
 
-```
+```markdown
 kubectl create -f-
 ```
 Press **Enter**.
@@ -455,7 +455,7 @@ The first step of installing the HPE CSI Driver is creating the **values.yaml** 
 
 Refer to [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for additional parameters.
 
-```
+```markdown
 vi values.yaml
 ```
 Copy the following into the file. Make sure to set the **backendType:** to **nimble** or **primera3par** depending on your array type. Set the **backend:** to the array IP along with the array **username** and **password**.
@@ -522,7 +522,7 @@ If all of the components show in Running state, then the HPE CSI driver for Kube
 
 ### Creating a StorageClass
 
-Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` is similar to a Storage Profile and specifies the characteristics (such as Protection Templates, Performance Policies, etc.) of the volume that we want to create.
+Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies the provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume that we want to create and can be used to differentiate between storage levels and usages. This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements.
 
 Create an **hpe-standard** `StorageClass` based upon the CSP deployed.
 
@@ -597,7 +597,7 @@ hpe-standard (default)   csi.hpe.com   2m
 ```
 
 !!! Note 
-    We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on [kubernetes.io](https://kubernetes.io).
+    We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on kubernetes.io.
 
 ### Creating a PersistentVolumeClaim
 
@@ -804,4 +804,4 @@ Access the admin console at: **http://127.0.0.1/admin** using the **"admin/admin
 
 **Happy Blogging!**
 
-This completes the tutorial of using the HPE CSI Driver with HPE Storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
+This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
