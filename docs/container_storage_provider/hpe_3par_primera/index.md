@@ -4,6 +4,9 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 [TOC]
 
+!!! note
+    For help getting started with deploying the HPE CSI Driver using HPE Primera or 3PAR Storage, check out the [tutorial over at HPE DEV](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
+
 ## Platform requirements
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
