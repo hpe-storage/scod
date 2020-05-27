@@ -177,7 +177,7 @@ You should see something similar to the following:
 !!! Note
     The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
 
-<h2>Create the Admin Service Account</h2>
+### Create the Admin Service Account
 
 To protect your cluster data, Dashboard deploys with a minimal RBAC configuration by default. Currently, Dashboard only supports logging in with a Bearer Token. To create a token for this demo, we will create an admin user.
 
