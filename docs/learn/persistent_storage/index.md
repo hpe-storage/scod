@@ -18,7 +18,7 @@ The nodes in a Kubernetes cluster are the machines (VMs, physical servers, etc) 
 ##### <u>Master</u>
 
 ![](img/master.png) <br /> <br />
-The Kubernetes master is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the kubectl command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
+The Kubernetes master is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the `kubectl` command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
 
 !!! Note
     "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node within the cluster, and this node is also referred to as the master. The master can be replicated for availability and redundancy.
