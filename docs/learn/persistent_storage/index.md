@@ -558,7 +558,7 @@ parameters:
   performancePolicy: "SQL Server"
   description: "Volume from HPE CSI Driver"
   accessProtocol: iscsi
-  limitIops: 76800
+  limitIops: "76800"
   allowOverrides: description,limitIops,performancePolicy
 allowVolumeExpansion: true
 ```
