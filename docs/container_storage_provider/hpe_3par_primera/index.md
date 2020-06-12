@@ -127,6 +127,7 @@ parameters:
   accessProtocol: fc
 ```  
 
+
 ### Pod inline volume parameters (Local Ephemeral Volumes)
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
 
@@ -141,6 +142,17 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
+### Import volume
+In Import volume process, legacy or docker/k8s created volume will be renamed with prefix “pvc-“ and exposed to CSI driver. All previous Access Control Records and Initiator Groups will be stripped from the volume when volume is exposed to HPE CSI Driver.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| accessProtocol     | fc      | The access protocol to use when accessing the persistent volume. |
+| importVol          | Text    | The name of the 3PAR or Primera volume to import. |
+
+!!! important
+    **No other parameters** are required in Storage Class for import volume **except** parameters mentioned in above table.
+
 ## VolumeSnapshotClass parameters
 
 These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
@@ -150,6 +162,15 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
 | read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
+
+### Import snapshot
+In Import snapshot process, legacy or docker/k8s created snapshot will be renamed with prefix “snapshot-“ and exposed to CSI driver. All previous Access Control Records and Initiator Groups will be stripped from the snapshot when snapshot is exposed to HPE CSI Driver.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| accessProtocol     | fc      | The access protocol to use when accessing the persistent volume. |
+| importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
+
 
 ## Support
 
