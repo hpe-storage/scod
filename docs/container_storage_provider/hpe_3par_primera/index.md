@@ -147,7 +147,7 @@ In Import volume process, legacy or docker/k8s created volume will be renamed wi
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| accessProtocol     | fc      | The access protocol to use when accessing the persistent volume. |
+| accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
 | importVol          | Text    | The name of the 3PAR or Primera volume to import. |
 
 !!! important
@@ -163,12 +163,11 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | ----------- | ------  | ----------- |
 | read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
 
-### Import snapshot
+### Import Snapshot
 In Import snapshot process, legacy or docker/k8s created snapshot will be renamed with prefix “snapshot-“ and exposed to CSI driver. All previous Access Control Records and Initiator Groups will be stripped from the snapshot when snapshot is exposed to HPE CSI Driver.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| accessProtocol     | fc      | The access protocol to use when accessing the persistent volume. |
 | importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
 
 
