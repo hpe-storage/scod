@@ -26,6 +26,10 @@ kube-system   hpe-csi-node-vwb5r                    2/2     Running   0         
 kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
 ```
 
+## ReadWriteMany resources
+
+Foo
+
 ## Logging
 
 Log files associated with the HPE CSI Driver logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution for Kubernetes such as Fluentd. Some of the logs on the host are persisted which follow standard logrotate policies.

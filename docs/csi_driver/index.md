@@ -22,11 +22,13 @@ Below is the official table for CSI features we track and deem readily available
 | Feature                                | K8s maturity | Since K8s version | HPE CSI Driver |
 |----------------------------------------|--------------|-------------------|----------------|
 | Dynamic Provisioning                   | GA           | 1.13              | 1.0.0          |
-| Raw Block Volume                       | GA           | 1.18              | Beta           |
+| Raw Block Volume                       | GA           | 1.18              | 1.2.0          |
 | Volume Expansion                       | Beta         | 1.16              | 1.1.0          |
 | PVC Data Source                        | GA           | 1.18              | 1.1.0          |
-| Inline Ephemeral Volumes               | Beta         | 1.16              | Beta           |
+| Inline Ephemeral Volumes               | Beta         | 1.16              | 1.2.0          |
 | Volume Snapshots                       | Beta         | 1.17              | 1.1.0          |
+| Volume Limits                          | GA           | 1.17              | 1.2.0          |
+| Topology                               | GA           | 1.17              | Future         |
 
 Depending on the CSP, it may support a number of different snapshotting, cloning and restoring operations by taking advantage of `StorageClass` parameter overloading. Please see the respective [CSP](../container_storage_provider/index.md) for additional functionality.
 
@@ -41,6 +43,41 @@ These are the combinations HPE has tested and can provide official support servi
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
+
+#### HPE CSI Driver for Kubernetes 1.2.0
+
+Release highlights: Support for raw block volumes and inline ephemeral volumes. ReadWriteMany in tech preview (beta).
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.14-1.18</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.x, 5.1.3.1000-x, 5.1.4.200-x, 5.2.1.x<br />
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.2.0.md>v1.2.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+     TBD
+   </td>
+</table>
 
 #### HPE CSI Driver for Kubernetes 1.1.1
 
@@ -139,7 +176,6 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
 ## Known limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
-* The only `accessModes` supported at this time is `RWO` which means only one `Pod` may have access to one `PVC` and one `PV`.
 * The CSI driver does not support iSCSI CHAP. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
 
 ## Kubernetes feature gates
