@@ -628,7 +628,7 @@ spec:
 Requesting an empty read-only volume might not seem practical. The primary use case is to source existing datasets into immutable applications, using either a backend CSP cloning capability or CSI data management feature such as [snapshots or existing PVCs](#using_csi_snapshots).
 
 !!! note "Good to know"
-    The RWX functionality is currently in beta. More elaborate deployment architectures, documentation and examaples will become available in time for General Availability (GA).
+    The RWX functionality is currently in beta. More elaborate deployment architectures, documentation and examples will become available in time for General Availability (GA).
 
 #### Limitations and considerations for RWX
 
