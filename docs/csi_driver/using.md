@@ -8,7 +8,7 @@ At this point the CSI driver and CSP should be configured. If you used either th
 
 ## PVC access modes
 
-In version 1.2.0 of the HPE CSI Driver for Kubernetes `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) was introduced as a "Tech Preview" (beta). Prior to 1.2.0 only `ReadWriteOnce` (RWO) was possible. RWX is enabled by transparently deploying a NFS server for each RWX Persistent Volume Claim (PVC) that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are therefor RWO but many of the examples applies to both.
+In version 1.2.0 of the HPE CSI Driver for Kubernetes `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) was introduced as a "Tech Preview" (beta). Prior to 1.2.0 only `ReadWriteOnce` (RWO) was possible. RWX is enabled by transparently deploying a NFS server for each RWX Persistent Volume Claim (PVC) that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are therefore RWO but many of the examples applies to both.
 
 | Access Mode   | Abbreviation | Use Case |
 | ------------- | ------------ | -------- |
@@ -143,7 +143,7 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | description               | Text     | 1.0.0        | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
 | nfsResources              | Boolean  | 1.2.0 (beta) | When set to "true", requests against the `StorageClass` will create RWX resources (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
 | nfsNamespace              | Text     | 1.2.0 (beta) | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
-| nfsMointOptions           | Text     | 1.2.0 (beta) | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
+| nfsMountOptions           | Text     | 1.2.0 (beta) | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
 | nfsProvisionerImage       | Text     | 1.2.0 (beta) | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
 | nfsResourceLimitsCpuM     | Text     | 1.2.0 (beta) | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
 | nfsResourceLimitsMemoryMi | Text     | 1.2.0 (beta) | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
@@ -551,7 +551,7 @@ Enabling RWX and ROX access mode for a PVC is straightforward. Create a new `Sto
 
 Any RWO claim made against the `StorageClass` will also create a server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads.
 
-By default, the NFS servers are deployed in the "hpe-csi" `Namespace`. This make it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS servers need to be deployed in the same `Namespace` as the RWX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
+By default, the NFS servers are deployed in the "hpe-nfs" `Namespace`. This make it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS servers need to be deployed in the same `Namespace` as the RWX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
     A comprehenisve tutorial will become available on HPE DEV on how to get started with the RWX functionality using the HPE CSI Driver for Kubernetes.
@@ -628,7 +628,7 @@ spec:
 Requesting an empty read-only volume might not seem practical. The primary use case is to source existing datasets into immutable applications, using either a backend CSP cloning capability or CSI data management feature such as [snapshots or existing PVCs](#using_csi_snapshots).
 
 !!! note "Good to know"
-    The RWX functionality is currently in beta. More elaborate deployment architectures, documentation and examaples will become available in time for Generally Availability (GA).
+    The RWX functionality is currently in beta. More elaborate deployment architectures, documentation and examaples will become available in time for General Availability (GA).
 
 #### Limitations and considerations for RWX
 
@@ -636,7 +636,7 @@ The current hardcoded limit for the RWX functionality is 20 NFS servers per Kube
 
 The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` controls how much CPU and memory it may consume. Tests shows that the NFS server consume about 150MiB at instantiation. These parameters will have defaults ready for GA.
 
-The HPE CSI Driver now also incorporates a node monitor to delete `Pods` that have become unavailable due to `VolumeAttachement` objects being assinged to unaviable nodes. Be default the node monitor only watches RWX server `Deployments`. It may be used for any `Deployment`. See [node monitor](monitor.md) how to use it.
+The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status exhibit `NodeLost` or a node has become unreachable that the `Pod` runs on. Be default the Pod Monitor only watches RWX server `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it.
 
 See [diagnosing ReadWriteMany issues](diagnostics.md#readwritemany_resources) for further NFS server deployment details.
 
