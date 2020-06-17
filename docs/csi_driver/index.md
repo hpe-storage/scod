@@ -46,7 +46,7 @@ These are the combinations HPE has tested and can provide official support servi
 
 #### HPE CSI Driver for Kubernetes 1.2.0
 
-Release highlights: Support for raw block volumes and inline ephemeral volumes. ReadWriteMany in tech preview (beta).
+Release highlights: Support for raw block volumes and inline ephemeral volumes. NFS Server Provisioner in Tech Preview (beta).
 
 <table>
   <tr>
@@ -74,9 +74,7 @@ Release highlights: Support for raw block volumes and inline ephemeral volumes. 
   </tr>
   <tr>
    <th>Blogs</th>
-   <td>
-     TBD
-   </td>
+   <td><a href="https://community.hpe.com/t5/around-the-storage-block/hpe-csi-driver-for-kubernetes-1-2-0-available-now/ba-p/7091977">Around The Storage Block</a>(release), <a href="https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes">HPE DEV</a> (tutorial for raw block and ephemeral inline volumes)</td>
 </table>
 
 #### HPE CSI Driver for Kubernetes 1.1.1

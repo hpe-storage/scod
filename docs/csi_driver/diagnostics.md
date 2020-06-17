@@ -26,9 +26,9 @@ kube-system   hpe-csi-node-vwb5r                    2/2     Running   0         
 kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
 ```
 
-## ReadWriteMany resources
+## NFS Server Provisioner resources
 
-The RWX server consists of a number of Kubernetes resources per RWX PVC. The default `Namespace` where the resource are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
+The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resource are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
 
 | Object                | Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Purpose       |
 | --------------------- | -------------------- | ------------- |
