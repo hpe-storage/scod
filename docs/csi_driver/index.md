@@ -4,7 +4,7 @@ A Container Storage Interface ([CSI](https://github.com/container-storage-interf
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-1.1.0.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-1.2.0.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
