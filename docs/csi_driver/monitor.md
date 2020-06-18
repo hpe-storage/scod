@@ -23,29 +23,42 @@ The parameters that control the "hpe-csi-driver" are the following:
 
 ## Pod inclusion
 
-Enable the Pod Monitor for a workload by labeling the `Pod`. 
+Enable the Pod Monitor for a single replica `Deployment` by labeling the `Pod` (assumes an existing PVC name "my-pvc" exists).
 
 ```
-apiVersion: v1
-kind: Pod
+---
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: my-pod
+  name: my-app
   labels:
-    monitored-by: hpe-csi 
+    app: my-app
 spec:
-  containers:
-  - image: busybox
-    name: busybox
-    command:
-      - "sleep"
-      - "300"
-    volumeMounts:
-    - mountPath: /data
-      name: my-vol
-  volumes:
-  - name: my-vol
-    persistentVolumeClaim:
-      claimName: my-pvc
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        monitored-by: hpe-csi
+        app: my-app
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        command:
+          - "sleep"
+          - "4800"
+        volumeMounts:
+        - mountPath: /data
+          name: my-vol
+      volumes:
+      - name: my-vol
+        persistentVolumeClaim:
+          claimName: my-pvc
 ```
 
 !!! note "Tech Preview"
