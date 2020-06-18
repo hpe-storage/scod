@@ -8,19 +8,19 @@ At this point the CSI driver and CSP should be configured. If you used either th
 
 ## PVC access modes
 
-In version 1.2.0 of the HPE CSI Driver for Kubernetes `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) was introduced as a "Tech Preview" (beta) with the NFS Server Provisioner. Prior to 1.2.0 only `ReadWriteOnce` (RWO) was possible. RWX and ROX is enabled by transparently deploying a NFS server for each RWX/ROX Persistent Volume Claim (PVC) that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are therefore RWO but many of the examples applies to both.
+The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI implementation for block based storage. The CSI driver also supports `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) using a NFS Server Provisioner. It's enabled by transparently deploying a NFS server for each Persistent Volume Claim (PVC) against a `StorageClass` where it's enabled, that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are illustrated as RWO using block based storage, but many of the examples applies in the majority of use cases.
 
 | Access Mode   | Abbreviation | Use Case |
 | ------------- | ------------ | -------- |
-| ReadWriteOnce | RWO          | For high performance `Pods` where access to the PVC is exclusive to one `Pod` at a time. |
+| ReadWriteOnce | RWO          | For high performance `Pods` where access to the PVC is exclusive to one `Pod` at a time. May use either block based storage or the NFS Server Provisioner where connectivity to the data fabric is limited to a few worker nodes in the Kubernetes cluster |
 | ReadWriteMany | RWX          | For shared filesystems where multiple `Pods` in the same `Namespace` need simultaneous access to a PVC. |
 | ReadOnlyMany  | ROX          | Read-only representation of RWX. |
 
-The NFS Server Provisioner is not enabled by default and needs a custom `StorageClass`. The following sections are tailored to help deploy and understand the NFS Server Provisioner capabilities.
+The NFS Server Provisioner is not enabled by the default `StorageClass` and needs a custom `StorageClass`. The following sections are tailored to help understand the NFS Server Provisioner capabilities.
 
-* [Using ReadWriteMany](#using_the_nfs_server_provisioner)
-* [ReadWriteMany `StorageClass` parameters](#base_storageclass_parameters)
-* [Diagnosing ReadWriteMany issues](diagnostics.md#readwritemany_resources)
+* [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
+* [NFS Server Provisioner `StorageClass` parameters](#base_storageclass_parameters)
+* [Diagnosing the NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources)
 
 !!! warning "Caution"
     The NFS Server Provisioner is currently in "Tech Preview" and should be considered beta software for use with <u>**non-production**</u> workloads.
@@ -137,16 +137,16 @@ reclaimPolicy: Delete
 
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
-| Parameter                 | String   | Since        | Description |
-| ------------------------- | -------- | ------------ | ----------- |
-| accessProtocol            | Text     | 1.0.0        | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
-| description               | Text     | 1.0.0        | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
-| nfsResources              | Boolean  | 1.2.0 (beta) | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
-| nfsNamespace              | Text     | 1.2.0 (beta) | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
-| nfsMountOptions           | Text     | 1.2.0 (beta) | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
-| nfsProvisionerImage       | Text     | 1.2.0 (beta) | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceLimitsCpuM     | Text     | 1.2.0 (beta) | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
-| nfsResourceLimitsMemoryMi | Text     | 1.2.0 (beta) | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
+| Parameter                 | String   | Description |
+| ------------------------- | -------- | ----------- |
+| accessProtocol            | Text     | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
+| description               | Text     | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
+| nfsResources              | Boolean  | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
+| nfsNamespace              | Text     | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
+| nfsMountOptions           | Text     | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
+| nfsProvisionerImage       | Text     | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
+| nfsResourceLimitsCpuM     | Text     | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
+| nfsResourceLimitsMemoryMi | Text     | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
 
 !!! note
     All common HPE CSI Driver parameters are optional.
