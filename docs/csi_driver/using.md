@@ -8,7 +8,7 @@ At this point the CSI driver and CSP should be configured. If you used either th
 
 ## PVC access modes
 
-The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI implementation for block based storage. The CSI driver also supports `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) using a NFS Server Provisioner. It's enabled by transparently deploying a NFS server for each Persistent Volume Claim (PVC) against a `StorageClass` where it's enabled, that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are illustrated as RWO using block based storage, but many of the examples applies in the majority of use cases.
+The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI implementation for block based storage. The CSI driver also supports `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) using a NFS Server Provisioner. It's enabled by transparently deploying a NFS server for each Persistent Volume Claim (PVC) against a `StorageClass` where it's enabled, that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are illustrated as RWO using block based storage, but many of the examples apply in the majority of use cases.
 
 | Access Mode   | Abbreviation | Use Case |
 | ------------- | ------------ | -------- |
@@ -294,7 +294,7 @@ my-pod      2/2     Running   0          2m29s
 
 ### Ephemeral inline volume
 
-It's possible to declare a volume "inline" a `Pod` specification. The volume is ephemeral and only persist as long as the `Pod` is running. If the `Pod` gets rescheduled, deleted or upgraded, the volume is deleted and new volume gets provisioned if it gets restarted.
+It's possible to declare a volume "inline" a `Pod` specification. The volume is ephemeral and only persists as long as the `Pod` is running. If the `Pod` gets rescheduled, deleted or upgraded, the volume is deleted and a new volume gets provisioned if it gets restarted.
 
 Ephemeral inline volumes are not associated with a `StorageClass`, hence a `Secret` needs to be provided inline with the volume. 
 
@@ -361,7 +361,7 @@ spec:
          size: "7Gi"
 ```
 
-The parameters used in the examples are the bare minimum required parameters. Any parameters supported by the HPE CSI Driver and backend CSP may used for ephemeral inline volumes. See the [base StorageClass parameters](#base_storageclass_parameters) or the respective CSP being used.
+The parameters used in the examples are the bare minimum required parameters. Any parameters supported by the HPE CSI Driver and backend CSP may be used for ephemeral inline volumes. See the [base StorageClass parameters](#base_storageclass_parameters) or the respective CSP being used.
 
 !!! seealso
     For more elaborate use cases around ephemeral inline volumes, check out the tutorial on HPE DEV: [Using Ephemeral Inline Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
@@ -632,7 +632,7 @@ Any RWO claim made against the `StorageClass` will also create a NFS server `Dep
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
-    A comprehenisve tutorial will become available on HPE DEV on how to get started with the NFS Server Provisioner with the HPE CSI Driver for Kubernetes.
+    A comprehensive tutorial will become available on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes.
 
 Example use of `accessModes`:
 
@@ -678,7 +678,7 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-In the case of declaring a ROX PVC, the requesting `Pod` specification need to request the PVC as read-only. Example:
+In the case of declaring a ROX PVC, the requesting `Pod` specification needs to request the PVC as read-only. Example:
 
 ```
 apiVersion: v1
@@ -712,9 +712,9 @@ Requesting an empty read-only volume might not seem practical. The primary use c
 
 The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests. 
 
-The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` controls how much CPU and memory it may consume. Tests shows that the NFS server consume about 150MiB at instantiation. These parameters will have defaults ready for GA.
+The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consume about 150MiB at instantiation. These parameters will have defaults ready for GA.
 
-The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status exhibit `NodeLost` or a node has become unreachable that the `Pod` runs on. Be default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it.
+The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. Be default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

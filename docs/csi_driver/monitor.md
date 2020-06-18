@@ -2,7 +2,7 @@
 
 The HPE CSI Driver for Kubernetes includes a Kubernetes Pod Monitor. Specifically it looks for `Pods` with the label `monitored-by: hpe-csi` and has `NodeLost` status set on them. This usually occurs if a node becomes unresponsive or partioned due to a network outage. The Pod Monitor will delete the affected `Pod` and associated HPE CSI Driver `VolumeAttachment` to allow Kubernetes to reschedule the workload on a healthy node.
 
-The Pod Monitor is mandatory and automatically applied for the RWX server `Deployment` managed by the HPE CSI Driver. It may be used for any `Pods` on the Kubernetes cluster to perform more graceful automatic recovery than perform a manual intervention to resurrect stuck `Pods`.
+The Pod Monitor is mandatory and automatically applied for the RWX server `Deployment` managed by the HPE CSI Driver. It may be used for any `Pods` on the Kubernetes cluster to perform a more graceful automatic recovery rather than performing a manual intervention to resurrect stuck `Pods`.
 
 ## CSI driver parameters
 

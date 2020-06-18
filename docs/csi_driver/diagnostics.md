@@ -28,7 +28,7 @@ kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0         
 
 ## NFS Server Provisioner resources
 
-The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resource are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
+The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resources are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
 
 | Object                | Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Purpose       |
 | --------------------- | -------------------- | ------------- |
