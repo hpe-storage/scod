@@ -26,6 +26,20 @@ kube-system   hpe-csi-node-vwb5r                    2/2     Running   0         
 kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
 ```
 
+## NFS Server Provisioner resources
+
+The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resources are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
+
+| Object                | Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Purpose       |
+| --------------------- | -------------------- | ------------- |
+| ConfigMap             | hpe-nfs-config       | This `ConfigMap` holds the configuration file for the NFS server. Local tweaks may be wanted. Please see the [config file reference](https://github.com/nfs-ganesha/nfs-ganesha/tree/master/src/config_samples) for more details. |
+| Deployment            | hpe-nfs-&lt;UUID&gt; | The `Deployment` that is running the NFS `Pod`.  |
+| Service               | hpe-nfs-&lt;UUID&gt; | `Pod` `Service` the NFS clients perform mounts against. |
+| PVC                   | hpe-nfs-&lt;UUID&gt; | The RWO claim serving the NFS workload. |
+
+!!! tip
+    The `<UUID>` stems from the user request RWX claim UUID for easy tracking.
+
 ## Logging
 
 Log files associated with the HPE CSI Driver logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution for Kubernetes such as Fluentd. Some of the logs on the host are persisted which follow standard logrotate policies.

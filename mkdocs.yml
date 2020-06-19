@@ -37,6 +37,7 @@ nav:
     - 'Overview': 'csi_driver/index.md'
     - 'Deployment': 'csi_driver/deployment.md'
     - 'Using': 'csi_driver/using.md'
+    - 'Pod Monitor': 'csi_driver/monitor.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
     - 'HPE 3PAR and Primera': 'container_storage_provider/hpe_3par_primera/index.md'
