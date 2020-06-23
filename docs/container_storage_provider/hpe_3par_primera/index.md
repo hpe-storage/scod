@@ -77,10 +77,10 @@ These parameters are used for volume provisioning and supported platforms.
 | --------------------------------- | ------- | ----------- | :--: | :-----: |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
-| cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If this parameter is not specified, CSP autocomputes this value| **X** | **X** | 
+| cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
 | snap_cpg                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
 | compression                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
-| provisioning_type <br />  | tpvv    | Indicates Thin provisioned volume type. If this parameter is not specified, defaults to tpvv | **X** | **X** |
+| provisioning_type <br />  | tpvv    | Indicates Thin provisioned volume type. Default: tpvv | **X** | **X** |
 |                                     | full    | Indicates Full provisioned volume type. | **X** |   |
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
 |                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
