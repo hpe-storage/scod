@@ -143,7 +143,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
     All parameters are **required** for inline ephemeral volumes.
 
 ### Import volume
-During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a StorageClass, will be renamed to match the PersistentVolumeClaim that leverages the StorageClass. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported.
+During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a `StorageClass`, will be renamed to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
@@ -151,7 +151,7 @@ During the import volume process, any legacy (non-container volumes) or existing
 | importVol          | Text    | The name of the 3PAR or Primera volume to import. |
 
 !!! important
-    **No other parameters** are required in StorageClass for import volume **except** parameters mentioned in above table.
+    **No other parameters** are required in `StorageClass` for import volume **except** parameters mentioned in above table.
 
 ## VolumeSnapshotClass parameters
 
@@ -164,7 +164,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
 
 ### Import Snapshot
-During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a StorageClass, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
+During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
