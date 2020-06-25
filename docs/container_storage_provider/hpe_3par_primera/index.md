@@ -151,7 +151,7 @@ During the import volume process, any legacy (non-container volumes) or existing
 | importVol          | Text    | The name of the 3PAR or Primera volume to import. |
 
 !!! important
-    **No other parameters** are required in `StorageClass` for import volume **except** parameters mentioned in above table.
+    **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.
 
 ## VolumeSnapshotClass parameters
 
