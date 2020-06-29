@@ -74,22 +74,14 @@ kind: HPECSIDriver
 metadata:
   name: csi-driver
 spec:
-  crd:
-    nodeInfo:
-      create: false
-  cspName: nimble-csp
-  flavor: kubernetes
-  imagePullPolicy: Always
-  images:
-    csiDriverImage: 'hpestorage/csi-driver:v1.2.0'
-    cspImage: 'hpestorage/nimble-csp:v1.2.0'
+  backendType: nimble
+  imagePullPolicy: IfNotPresent
   logLevel: info
+  disableNodeConformance: false
   secret:
     backend: 192.168.1.1
     create: true
-    name: nimble-secret
     password: admin
-    serviceName: nimble-csp-svc
     servicePort: '8080'
     username: admin
   storageClass:
@@ -109,22 +101,14 @@ kind: HPECSIDriver
 metadata:
   name: csi-driver
 spec:
-  crd:
-    nodeInfo:
-      create: false
-  cspName: primera3par-csp
-  flavor: kubernetes
-  imagePullPolicy: Always
-  images:
-    csiDriverImage: 'hpestorage/csi-driver:v1.2.0'
-    cspImage: 'hpestorage/hpe3parprimera-csp:v1.0.1'
+  backendType: primera3par
+  imagePullPolicy: IfNotPresent
   logLevel: info
+  disableNodeConformance: false
   secret:
-    backend: 10.1.1.1
+    backend: 192.168.1.1
     create: true
-    name: primera3par-secret
     password: 3pardata
-    serviceName: primera3par-csp-svc
     servicePort: '8080'
     username: 3paradm
   storageClass:
@@ -134,9 +118,8 @@ spec:
     name: hpe-standard
     parameters:
       accessProtocol: iscsi
-      fsType: ext4
-      cpg: SSD_r6
-      provisioning_type: tpvv
+      fsType: xfs
+      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
 ```
 
 Create a `HPECSIDriver` with the manifest.
