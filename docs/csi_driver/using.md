@@ -161,6 +161,7 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Using CSI snapshots](#using_csi_snapshots)
 - [Expanding PVCs](#expanding_pvcs)
 - [Using PVC overrides](#using_pvc_overrides)
+- [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
 
 ### Create a PersistentVolumeClaim from a StorageClass
 
@@ -632,7 +633,7 @@ Any RWO claim made against the `StorageClass` will also create a NFS server `Dep
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
-    A comprehensive tutorial will become available on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes.
+    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes.
 
 Example use of `accessModes`:
 
