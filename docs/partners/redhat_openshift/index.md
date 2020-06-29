@@ -16,8 +16,8 @@ Software delivered through the HPE and Red Hat partnership follows a rigorous ce
 
 | Status        | Red Hat OpenShift | HPE CSI Operator | Container Storage Providers |
 | ------------- | ----------------- | ---------------- | --------------------------- |
-| Certified     | 4.2               | 1.1.0            | Nimble, 3PAR and Primera    |
-| Certified     | 4.3               | 1.1.0            | Nimble                      |
+| Certified     | 4.2               | 1.2.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.3               | 1.2.0            | Nimble, 3PAR and Primera    |
 
 Check this table periodically for future releases.
 
