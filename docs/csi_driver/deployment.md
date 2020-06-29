@@ -74,22 +74,14 @@ kind: HPECSIDriver
 metadata:
   name: csi-driver
 spec:
-  crd:
-    nodeInfo:
-      create: false
-  cspName: nimble-csp
-  flavor: kubernetes
-  imagePullPolicy: Always
-  images:
-    csiDriverImage: 'hpestorage/csi-driver:v1.1.0'
-    cspImage: 'hpestorage/nimble-csp:v1.1.0'
+  backendType: nimble
+  imagePullPolicy: IfNotPresent
   logLevel: info
+  disableNodeConformance: false
   secret:
     backend: 192.168.1.1
     create: true
-    name: nimble-secret
     password: admin
-    serviceName: nimble-csp-svc
     servicePort: '8080'
     username: admin
   storageClass:
@@ -109,22 +101,14 @@ kind: HPECSIDriver
 metadata:
   name: csi-driver
 spec:
-  crd:
-    nodeInfo:
-      create: false
-  cspName: primera3par-csp
-  flavor: kubernetes
-  imagePullPolicy: Always
-  images:
-    csiDriverImage: 'hpestorage/csi-driver:v1.1.1'
-    cspImage: 'hpestorage/hpe3parprimera-csp:v1.0.0'
+  backendType: primera3par
+  imagePullPolicy: IfNotPresent
   logLevel: info
+  disableNodeConformance: false
   secret:
-    backend: 10.1.1.1
+    backend: 192.168.1.1
     create: true
-    name: primera3par-secret
     password: 3pardata
-    serviceName: primera3par-csp-svc
     servicePort: '8080'
     username: 3paradm
   storageClass:
@@ -134,9 +118,8 @@ spec:
     name: hpe-standard
     parameters:
       accessProtocol: iscsi
-      fsType: ext4
-      cpg: SSD_r6
-      provisioning_type: tpvv
+      fsType: xfs
+      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
 ```
 
 Create a `HPECSIDriver` with the manifest.
@@ -226,17 +209,17 @@ These object configuration files are common for all versions of Kubernetes.
 Worker node IO settings:
 
 ```markdown 
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-linux-config.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-linux-config.yaml
 ```
 
 Container Storage Provider: 
 
 ```markdown fct_label="HPE Nimble Storage"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/nimble-csp.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/nimble-csp.yaml
 ```
 
 ```markdown fct_label="HPE 3PAR and Primera"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/3par-primera-csp.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/3par-primera-csp.yaml
 ```
 
 !!! important
@@ -248,28 +231,37 @@ kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-csi-k8s-1.13.yaml
 ```
 
+!!! note
+    Latest supported CSI driver version is 1.1.0 for Kubernetes 1.13.
+
 ### Kubernetes 1.14
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-csi-k8s-1.14.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-csi-k8s-1.14.yaml
 ```
 
 ### Kubernetes 1.15
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-csi-k8s-1.15.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-csi-k8s-1.15.yaml
 ```
 
 ### Kubernetes 1.16
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-csi-k8s-1.16.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-csi-k8s-1.16.yaml
 ```
 
 ### Kubernetes 1.17
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.1.0/hpe-csi-k8s-1.17.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-csi-k8s-1.17.yaml
+```
+
+### Kubernetes 1.18
+
+```markdown
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.2.0/hpe-csi-k8s-1.18.yaml
 ```
 
 Depending on which version being deployed, different API objects gets created.
