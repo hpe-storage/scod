@@ -25,6 +25,99 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 !!! warning "Caution"
     The NFS Server Provisioner is currently in "Tech Preview" and should be considered beta software for use with <u>**non-production**</u> workloads.
 
+## Secret Management
+When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` is created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials specified during deployment. 
+
+To view the `Secret` in the `kube-system` (Kubernetes) or `hpe-csi-driver` (OpenShift) namespace:
+
+```markdown fct_label="Kubernetes"
+kubectl -n kube-system get secret/nimble-secret
+NAME                     TYPE                                  DATA      AGE
+nimble-secret            Opaque                                5         149m
+```
+
+```markdown fct_label="OpenShift"
+oc -n hpe-csi-driver get secret/primera3par-secret
+NAME                     TYPE                                  DATA      AGE
+primera3par-secret            Opaque                                5         7m
+```
+
+This `Secret` is used by the CSI provisioner in the `StorageClass` to authenticate to a specific backend for volume provisioning. In order to add a new `Secret` or to manage access to multiple backends, additional `Secrets` will need to be created for each backend.  
+
+!!! Note
+    * Requirements for `Secrets`: <br /> * Each `Secret` name must be unique. <br /> * **servicePort** must be set to **8080**. <br /> * For OpenShift deployments, `namespace` must be set to **hpe-csi-driver**.
+
+To create a new `Secret`, specify the name, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `custom-secret.yaml`.
+
+```markdown 
+apiVersion: v1
+kind: Secret
+metadata:
+  name: <backend_type>-secret-custom # Specify unique secret name
+  namespace: kube-system # Options: kube-system (default) or hpe-csi-driver (OpenShift deployments)
+stringData:
+  serviceName: <backend_type>-csp-svc # Options: nimble-csp-svc or primera3par-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.2
+  username: <username>
+data:
+  # echo -n "admin" | base64
+  password: YWRtaW4=
+```
+
+Create the secret using `kubectl` or `oc`:
+
+```markdown fct_label="Kubernetes"
+kubectl create -f custom-secret.yaml
+```
+
+```markdown fct_label="OpenShift"
+oc create -f custom-secret.yaml
+```
+
+You should now see the `Secret` in the `kube-system` (Kubernetes) or `hpe-csi-driver` (OpenShift) namespace:
+
+```markdown fct_label="Kubernetes"
+kubectl -n kube-system get secret | grep <backend_type>
+<backend_type>-secret-custom                        Opaque                                5      7m29s
+<backend_type>-secret                               Opaque                                5      53d
+```
+
+```markdown fct_label="OpenShift"
+oc -n hpe-csi-driver get secret | grep <backend_type>
+<backend_type>-secret-custom                        Opaque                                5      7m29s
+<backend_type>-secret                               Opaque                                5      53d
+```
+
+### Create a StorageClass with the custom Secret
+
+To use the custom `Secret` created above, create a new `StorageClass` relevant to the backend and relevant `StorageClass` parameters: 
+
+
+```markdown
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-scod-custom
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/controller-expand-secret-name: <backend_type>-custom
+  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: <backend_type>-custom
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: <backend_type>-custom
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: <backend_type>-custom
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-name: <backend_type>-custom
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
+  accessProtocol: iscsi
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+```
+
 ## Enabling CSI snapshots
 
 Support for `VolumeSnapshotClass` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
