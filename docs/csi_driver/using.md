@@ -93,7 +93,6 @@ oc -n hpe-csi-driver get secret | grep <backend_type>
 
 To use the custom `Secret` created above, create a new `StorageClass` relevant to the backend and relevant `StorageClass` parameters: 
 
-
 ```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
