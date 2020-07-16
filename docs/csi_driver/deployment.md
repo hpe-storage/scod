@@ -135,7 +135,7 @@ The CSI driver is now ready for use. Proceed to the [next section to learn about
 When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` is created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials specified during deployment. 
 
 !!! Note
-    Make note of the Kubernetes `namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the `kube-system` namespace. 
+    Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "kube-system" `Namespace`. 
 
 To view the `Secret` in the `kube-system` namespace:
 
@@ -155,9 +155,9 @@ This `Secret` is used by the CSI sidecar in the `StorageClass` to authenticate t
 
 !!! Note "Secret Requirements"
     * Each `Secret` name must be unique.
-    * **servicePort** must be set to **8080**.
+    * **servicePort** should be set to **8080**.
 
-To create a new `Secret`, specify the name, `namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `custom-secret.yaml`.
+To create a new `Secret`, specify the name, `Namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `custom-secret.yaml`.
 
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
