@@ -134,32 +134,36 @@ The CSI driver is now ready for use. Proceed to the [next section to learn about
 
 When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` is created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials specified during deployment. 
 
+!!! Note
+    Make note of the Kubernetes `namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the `kube-system` namespace. 
+
 To view the `Secret` in the `kube-system` namespace:
 
-```markdown fct_label="Nimble"
+```markdown fct_label="HPE Nimble Storage"
 kubectl -n kube-system get secret/nimble-secret
 NAME                     TYPE          DATA      AGE
-nimble-secret            Opaque        5         149m
+nimble-secret            Opaque        5         2m
 ```
 
-```markdown fct_label="Primera"
+```markdown fct_label="HPE Primera"
 kubectl -n kube-system get secret/primera3par-secret
 NAME                     TYPE          DATA      AGE
-primera3par-secret       Opaque        5         56d
+primera3par-secret       Opaque        5         2m
 ```
 
-This `Secret` is used by the CSI provisioner in the `StorageClass` to authenticate to a specific backend for volume provisioning. In order to add a new `Secret` or to manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+This `Secret` is used by the CSI sidecar in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
 
-!!! Note
-    * Requirements for `Secrets`: <br /> * Each `Secret` name must be unique. <br /> * **servicePort** must be set to **8080**. <br /> * For OpenShift deployments, `namespace` will be **hpe-csi-driver**.
+!!! Note "Secret Requirements"
+    * Each `Secret` name must be unique.
+    * **servicePort** must be set to **8080**.
 
-To create a new `Secret`, specify the name, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `foobar-secret.yaml`.
+To create a new `Secret`, specify the name, `namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `custom-secret.yaml`.
 
-```markdown fct_label="Nimble"
+```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
-  name: nimble-custom-secret
+  name: custom-secret
   namespace: kube-system 
 stringData:
   serviceName: nimble-csp-svc
@@ -171,11 +175,11 @@ data:
   password: YWRtaW4=
 ```
 
-```markdown fct_label="Primera"
+```markdown fct_label="HPE Primera"
 apiVersion: v1
 kind: Secret
 metadata:
-  name: primera-custom-secret
+  name: custom-secret
   namespace: kube-system 
 stringData:
   serviceName: primera3par-csp-svc 
@@ -190,71 +194,44 @@ data:
 Create the `Secret` using `kubectl`:
 
 ```markdown 
-kubectl create -f foobar-secret.yaml
+kubectl create -f custom-secret.yaml
 ```
 
-You should now see the `Secret` in the `kube-system` or `hpe-csi-driver` namespace:
+You should now see the `Secret` in the `kube-system` namespace:
 
 ```markdown 
-kubectl -n kube-system get secret/foobar-secret
+kubectl -n kube-system get secret/custom-secret
 NAME                     TYPE          DATA      AGE
-foobar-secret            Opaque        5         7m29s
+custom-secret            Opaque        5         1m
 ```
 
 ### Create a StorageClass with the custom Secret
 
-To use the new `Secret` **foobar-secret**, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
+To use the new `Secret` **custom-secret**, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
 
-```markdown fct_label="Nimble"
+```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: hpe-nimble-custom
+  name: hpe-custom
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: nimble-custom-secret
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: nimble-custom-secret
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: nimble-custom-secret
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: nimble-custom-secret
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: nimble-custom-secret
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
   accessProtocol: iscsi
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
-
-```markdown fct_label="Primera"
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: hpe-primera-custom
-provisioner: csi.hpe.com
-parameters:
-  csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: primera-custom-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: primera-custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: primera-custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: primera-custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: primera-custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
-  accessProtocol: fc
-  provisioning_type: tpvv
-  cpg: SSD_r6
-reclaimPolicy: Delete
-allowVolumeExpansion: true
-```
-
 
 ## Advanced install
 
