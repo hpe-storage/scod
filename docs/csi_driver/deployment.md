@@ -137,7 +137,7 @@ When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret`
 !!! Note
     Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "kube-system" `Namespace`. 
 
-To view the `Secret` in the `kube-system` namespace:
+To view the `Secret` in the "kube-system" `Namespace`:
 
 ```markdown fct_label="HPE Nimble Storage"
 kubectl -n kube-system get secret/nimble-secret
@@ -151,13 +151,13 @@ NAME                     TYPE          DATA      AGE
 primera3par-secret       Opaque        5         2m
 ```
 
-This `Secret` is used by the CSI sidecar in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
 
 !!! Note "Secret Requirements"
     * Each `Secret` name must be unique.
     * **servicePort** should be set to **8080**.
 
-To create a new `Secret`, specify the name, `Namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the `backend` IP address to be used by the CSP and save it as `custom-secret.yaml`.
+To create a new `Secret`, specify the name, `Namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the backend IP address to be used by the CSP and save it as `custom-secret.yaml`.
 
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
@@ -197,7 +197,7 @@ Create the `Secret` using `kubectl`:
 kubectl create -f custom-secret.yaml
 ```
 
-You should now see the `Secret` in the `kube-system` namespace:
+You should now see the `Secret` in the "kube-system" `Namespace`:
 
 ```markdown 
 kubectl -n kube-system get secret/custom-secret
@@ -207,7 +207,7 @@ custom-secret            Opaque        5         1m
 
 ### Create a StorageClass with the custom Secret
 
-To use the new `Secret` **custom-secret**, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
+To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
 
 ```markdown
 apiVersion: storage.k8s.io/v1
