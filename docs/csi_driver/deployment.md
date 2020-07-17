@@ -95,7 +95,7 @@ spec:
       volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
 ```
 
-```markdown fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE Primera and 3PAR"
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
@@ -106,7 +106,7 @@ spec:
   logLevel: info
   disableNodeConformance: false
   secret:
-    backend: 192.168.1.1
+    backend: 10.10.0.1
     create: true
     password: 3pardata
     servicePort: '8080'
@@ -129,6 +129,109 @@ kubectl create -f hpe-csi-operator.yaml
 ```
 
 The CSI driver is now ready for use. Proceed to the [next section to learn about using](using.md) the driver.
+
+## Adding additional backends
+
+When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` is created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials specified during deployment. 
+
+!!! Note
+    Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "kube-system" `Namespace`. 
+
+To view the `Secret` in the "kube-system" `Namespace`:
+
+```markdown fct_label="HPE Nimble Storage"
+kubectl -n kube-system get secret/nimble-secret
+NAME                     TYPE          DATA      AGE
+nimble-secret            Opaque        5         2m
+```
+
+```markdown fct_label="HPE Primera"
+kubectl -n kube-system get secret/primera3par-secret
+NAME                     TYPE          DATA      AGE
+primera3par-secret       Opaque        5         2m
+```
+
+This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+
+!!! Note "Secret Requirements"
+    * Each `Secret` name must be unique.
+    * **servicePort** should be set to **8080**.
+
+To create a new `Secret`, specify the name, `Namespace`, backend username, backend password string (`YWRtaW4=`) encoded to **base64** and the backend IP address to be used by the CSP and save it as `custom-secret.yaml`.
+
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: kube-system 
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.2
+  username: admin
+data:
+  # echo -n "admin" | base64
+  password: YWRtaW4=
+```
+
+```markdown fct_label="HPE Primera"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: kube-system 
+stringData:
+  serviceName: primera3par-csp-svc 
+  servicePort: "8080"
+  backend: 10.10.0.2
+  username: 3paradm
+data:
+  # echo -n "3pardata" | base64
+  password: M3BhcmRhdGE=
+```
+
+Create the `Secret` using `kubectl`:
+
+```markdown 
+kubectl create -f custom-secret.yaml
+```
+
+You should now see the `Secret` in the "kube-system" `Namespace`:
+
+```markdown 
+kubectl -n kube-system get secret/custom-secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         1m
+```
+
+### Create a StorageClass with the custom Secret
+
+To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
+
+```markdown
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-custom
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
+  accessProtocol: iscsi
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+```
 
 ## Advanced install
 
