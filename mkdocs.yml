@@ -72,6 +72,7 @@ nav:
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
     - 'Persistent Storage for Kubernetes': 'learn/persistent_storage/index.md'
+    - 'For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers': 'learn/introduction_to_containers/index.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
   - COMMUNITY:
