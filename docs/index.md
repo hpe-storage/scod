@@ -1,3 +1,8 @@
+!!! error "KubeCon + CloudNativeCon Europe 2020"
+    The HPE primary storage team is participating at KubeCon Europe August 17-20th 2020
+
+    - Visit the primary storage [KubeCon mini site](https://www.hpe.com/us/en/events/kubecon-kubernetes.html) for exclusive content!
+
 ## HPE Storage Container Orchestrator Documentation 
 
 This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage.

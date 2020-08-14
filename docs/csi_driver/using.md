@@ -163,6 +163,9 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Using PVC overrides](#using_pvc_overrides)
 - [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
 
+!!! tip "New to Kubernetes?"
+    There's a basic tutorial of how dynamic provisioning of persistent storage on Kubernetes works in the [Video Gallery](../learn/video_gallery/index.md#dynamic_provisioning_of_persistent_storage_on_kubernetes).
+
 ### Create a PersistentVolumeClaim from a StorageClass
 
 The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
