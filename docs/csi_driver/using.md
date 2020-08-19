@@ -1,5 +1,8 @@
 # Overview
-At this point the CSI driver and CSP should be configured. If you used either the Helm chart or Operator, you most likely have a base `StorageClass` to provision storage from.
+At this point the CSI driver and CSP should be installed and configured.
+
+!!! important
+    Most examples below assumes there's a `Secret` named "hpe-backend" in the "kube-system" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_a_hpe_storage_backend).
 
 [TOC]
 
@@ -48,6 +51,7 @@ kubectl create -f https://raw.githubusercontent.com/kubernetes-csi/external-snap
     The [provisioning](#provisioning_concepts) section contains examples on how to create `VolumeSnapshotClass` and `VolumeSnapshot` objects.
 
 ## Base StorageClass parameters
+
 Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](../container_storage_provider/index.md) for more elaborate examples.
 
 ```markdown fct_label="K8s 1.15+"
@@ -61,19 +65,19 @@ kind: StorageClass
 metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-  name: hpe-storageclass
+  name: hpe-standard
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: <backend>-secret
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
@@ -87,19 +91,19 @@ kind: StorageClass
 metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-  name: hpe-storageclass
+  name: hpe-standard
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/resizer-secret-name: <backend>-secret
+  csi.storage.k8s.io/resizer-secret-name: hpe-backend
   csi.storage.k8s.io/resizer-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
@@ -113,27 +117,25 @@ kind: StorageClass
 metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-  name: hpe-storageclass
+  name: hpe-standard
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: <backend>-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: <backend>-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 ```
 
 !!! important "Important"
-    Replace `<backend>-secret` with a `Secret` relevant to the backend being referenced.<br />
-    • `nimble-secret` for HPE Nimble Storage<br />
-    • `primera3par-secret` for HPE 3PAR and Primera<br />
-    The example `StorageClass` does not work with the `primera3par` CSP version 1.0.0, use the example from [provisioning concepts](#provisioning_concepts) instead.
+    Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
+    The example `StorageClass` does not work with the `primera3par` CSP version 1.0.0, use the example from the [CSP](../container_storage_provider/hpe_3par_primera/index.md#storageclass_example) instead.
 
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
@@ -180,7 +182,7 @@ To get started, create a `StorageClass` API object referencing the CSI driver `S
 
 These examples are for Kubernetes 1.15+
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -188,43 +190,18 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: nimble-secret
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: nimble-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: nimble-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   description: "Volume created by the HPE CSI Driver for Kubernetes"
   accessProtocol: iscsi
-reclaimPolicy: Delete
-allowVolumeExpansion: true
-```
-
-```yaml fct_label="HPE 3PAR and Primera"
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: hpe-scod
-provisioner: csi.hpe.com
-parameters:
-  csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  cpg: FC_r6
-  provisioning_type: tpvv
-  accessProtocol: fc
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
@@ -288,7 +265,7 @@ spec:
 Check if the `Pod` is running successfully.
 
 ```markdown
-kubectl get pod my-pod 
+kubectl get pod my-pod
 NAME        READY   STATUS    RESTARTS   AGE
 my-pod      2/2     Running   0          2m29s
 ```
@@ -300,7 +277,7 @@ my-pod      2/2     Running   0          2m29s
 
 It's possible to declare a volume "inline" a `Pod` specification. The volume is ephemeral and only persists as long as the `Pod` is running. If the `Pod` gets rescheduled, deleted or upgraded, the volume is deleted and a new volume gets provisioned if it gets restarted.
 
-Ephemeral inline volumes are not associated with a `StorageClass`, hence a `Secret` needs to be provided inline with the volume. 
+Ephemeral inline volumes are not associated with a `StorageClass`, hence a `Secret` needs to be provided inline with the volume.
 
 
 !!! warning
@@ -328,7 +305,7 @@ spec:
       csi:
        driver: csi.hpe.com
        nodePublishSecretRef:
-         name: nimble-secret
+         name: hpe-backend
        fsType: ext3
        volumeAttributes:
          csi.storage.k8s.io/ephemeral: "true"
@@ -359,7 +336,7 @@ spec:
        fsType: ext3
        volumeAttributes:
          csi.storage.k8s.io/ephemeral: "true"
-         inline-volume-secret-name: nimble-secret
+         inline-volume-secret-name: hpe-backend
          inline-volume-secret-namespace: kube-system
          accessProtocol: "iscsi"
          size: "7Gi"
@@ -416,16 +393,16 @@ spec:
 
 ### Using CSI snapshots
 
-CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source. 
+CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source.
 
 !!! tip
-    Ensure [CSI snapshots are enabled](#enabling_csi_snapshots). 
+    Ensure [CSI snapshots are enabled](#enabling_csi_snapshots).
 
 Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining additional snapshot parameters.
 
 Kubernetes 1.17+ (CSI snapshots in beta)
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
@@ -436,22 +413,7 @@ driver: csi.hpe.com
 deletionPolicy: Delete
 parameters:
   description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: nimble-secret
-  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
-```
-
-```yaml fct_label="HPE 3PAR and Primera"
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshotClass
-metadata:
-  name: hpe-snapshot
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: csi.hpe.com
-deletionPolicy: Delete
-parameters:
-  description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: primera3par-secret
+  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
   csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
 ```
 
@@ -548,7 +510,7 @@ The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my-pv
 
 The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be overridden in the `StorageClass` by setting the `allowOverrides` parameter:
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -556,44 +518,22 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/provisioner-secret-name: nimble-secret
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: nimble-secret
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
   description: "Volume provisioned by the HPE CSI Driver"
   accessProtocol: iscsi
   allowOverrides: description,accessProtocol
 ```
 
-```yaml fct_label="HPE 3PAR and Primera"
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: my-scod-override
-provisioner: csi.hpe.com
-parameters:
-  csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  cpg: FC_r6
-  provisioning_type: tpvv
-  accessProtocol: iscsi
-  allowOverrides: cpg,provisioning_type
-```
-
 The end-user may now control those parameters (the `StorageClass` provides the default values).
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -601,23 +541,6 @@ metadata:
   annotations:
     csi.hpe.com/description: "This is my custom description"
     csi.hpe.com/accessProtocol: fc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Gi
-  storageClassName: hpe-scod-override
-```
-
-```yaml fct_label="HPE 3PAR and Primera"
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-pvc-override
-  annotations:
-    csi.hpe.com/provisioning_type: full
-    csi.hpe.com/cpg: SSD_r6
 spec:
   accessModes:
     - ReadWriteOnce
@@ -714,7 +637,7 @@ Requesting an empty read-only volume might not seem practical. The primary use c
 
 #### Limitations and considerations for the NFS Server Provisioner
 
-The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests. 
+The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
 
 The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consume about 150MiB at instantiation. These parameters will have defaults ready for GA.
 
