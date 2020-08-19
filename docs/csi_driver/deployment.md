@@ -125,7 +125,7 @@ spec:
 Create a `HPECSIDriver` with the manifest.
 
 ```markdown
-kubectl create -f hpe-backend-operator.yaml
+kubectl create -f hpe-csi-operator.yaml
 ```
 
 The CSI driver is now ready for use. Proceed to the [next section to learn about using](using.md) the driver.
