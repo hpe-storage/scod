@@ -7,10 +7,10 @@ It's recommended to take the courses in order.
 
 | | Audience            |  Course name | Duration (estimated)
 |-| ------------------- | ------------ | ------------
-|1| AE and SA           | [Containers and market opportunity](https://hpe.sabacloud.com/Saba/Web_spf/HPE/common/ledetail/0001132231) | 20 minutes
-|2| AE and SA           | [Introduction to containers](https://hpe.sabacloud.com/Saba/Web_spf/HPE/common/ledetail/0001132232) | 30 minutes
-|3| Technical AE and SA | [Introduction to Docker](https://hpe.sabacloud.com/Saba/Web_spf/HPE/common/ledetail/0001132236) | 45 minutes
-|4| Technical AE and SA | [Introduction to Kubernetes](https://hpe.sabacloud.com/Saba/Web_spf/HPE/common/ledetail/0001133686) | 45 minutes
+|1| AE and SA           | [Containers and market opportunity](https://content.ext.hpe.com/sites/LMS/LMS.html?deeplink=/Saba/Web_spf/HPE/common/ledetail/0001132231) | 20 minutes
+|2| AE and SA           | [Introduction to containers](https://content.ext.hpe.com/sites/LMS/LMS.html?deeplink=/Saba/Web_spf/HPE/common/ledetail/0001132232) | 30 minutes
+|3| Technical AE and SA | [Introduction to Docker](https://content.ext.hpe.com/sites/LMS/LMS.html?deeplink=/Saba/Web_spf/HPE/common/ledetail/0001132236) | 45 minutes
+|4| Technical AE and SA | [Introduction to Kubernetes](https://content.ext.hpe.com/sites/LMS/LMS.html?deeplink=/Saba/Web_spf/HPE/common/ledetail/0001133686) | 45 minutes
 
 !!! important
     All courses require a HPE Passport account, either partner or employee.
