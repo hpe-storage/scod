@@ -65,7 +65,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 ### Provisioning parameters
 
-These parameters are immutable for both volume and clones once created, clones will inherit parent attributes.
+These parameters are immutable for both volumes and clones once created, clones will inherit parent attributes.
 
 | Parameter       | String         | Description |
 | --------------- | -------------- | ----------- |
