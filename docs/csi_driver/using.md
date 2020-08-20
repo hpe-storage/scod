@@ -140,15 +140,20 @@ reclaimPolicy: Delete
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
 | Parameter                 | String   | Description |
-| ------------------------- | -------- | ----------- |
-| accessProtocol            | Text     | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
-| description               | Text     | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
-| nfsResources              | Boolean  | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
-| nfsNamespace              | Text     | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
-| nfsMountOptions           | Text     | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
-| nfsProvisionerImage       | Text     | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceLimitsCpuM     | Text     | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
-| nfsResourceLimitsMemoryMi | Text     | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
+| ------------------------- | -------------- | ----------- |
+| accessProtocol            | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
+| description<sup>1</sup>   | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
+| fsOwner                   | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
+| fsMode                    | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
+| fsCreateOptions           | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
+| nfsResources              | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
+| nfsNamespace              | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
+| nfsMountOptions           | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
+| nfsProvisionerImage       | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
+| nfsResourceLimitsCpuM     | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
+| nfsResourceLimitsMemoryMi | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
+
+<small><sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).</small>
 
 !!! note
     All common HPE CSI Driver parameters are optional.
@@ -163,6 +168,7 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Using CSI snapshots](#using_csi_snapshots)
 - [Expanding PVCs](#expanding_pvcs)
 - [Using PVC overrides](#using_pvc_overrides)
+- [Using volume mutations](#using_volume_mutations)
 - [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
 
 !!! tip "New to Kubernetes?"
@@ -514,7 +520,7 @@ The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageCl
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: my-scod-override
+  name: hpe-scod-override
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
@@ -549,6 +555,58 @@ spec:
       storage: 100Gi
   storageClassName: hpe-scod-override
 ```
+
+### Using volume mutations
+
+The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be mutated by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be mutated in the `StorageClass` by setting the `allowMutations` parameter.
+
+In the `StorageClass`, also make sure that the `csi.storage.k8s.io/controller-expand-secret-name` and `csi.storage.k8s.io/controller-expand-secret-namespace` are set, as those are used by the `csi-extensions` and `csi-volume-mutator` sidecars.
+
+```markdown
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-scod-mutation
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  description: "Volume provisioned by the HPE CSI Driver"
+  allowMutations: description
+```
+
+!!! note
+    The `allowMutations` parameter is a comma separated list of values defined by each of the CSPs parameters, except the `description` parameter, which is common across all CSPs. See the documentation for each [CSP](../container_storage_provider/index.md) on what parameters are mutable.
+
+The end-user may now control those parameters by editing or patching the `PersistentVolumeClaim`.
+
+```markdown
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-mutation
+  annotations:
+    csi.hpe.com/description: "My description needs to change"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: hpe-scod-mutation
+```
+
+!!! tip "Good to know"
+    As the `.spec.csi.volumeAttributes` on the `PersistentVolume` are immutable, the mutations performed on the backend volume are also annotated on the `PersistentVolume` object.
 
 ### Using the NFS Server Provisioner
 
