@@ -365,7 +365,6 @@ kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 !!! important
     The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
-
 After deploying the CSI driver for the particular version of Kubernetes being used below, [add a HPE storage backend](#add_a_hpe_storage_backend).
 
 ### Kubernetes 1.13

@@ -26,6 +26,61 @@ kube-system   hpe-csi-node-vwb5r                    2/2     Running   0         
 kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
 ```
 
+A Custom Resource Definition (CRD) named `hpenodeinfos.storage.hpe.com` holds important network and host initiator information. 
+
+Retrieve list of nodes.
+
+```markdown
+kubectl get hpenodeinfos
+$ kubectl get hpenodeinfos
+NAME               AGE
+tme-lnx-worker1   57m
+tme-lnx-worker3   57m
+tme-lnx-worker2   57m
+tme-lnx-worker4   57m
+```
+
+Inspect a node.
+
+```markdown
+kubectl get hpenodeinfos/tme-lnx-worker1 -o yaml
+apiVersion: storage.hpe.com/v1
+kind: HPENodeInfo
+metadata:
+  creationTimestamp: "2020-08-24T23:50:09Z"
+  generation: 1
+  managedFields:
+  - apiVersion: storage.hpe.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        .: {}
+        f:chap_password: {}
+        f:chap_user: {}
+        f:iqns: {}
+        f:networks: {}
+        f:uuid: {}
+    manager: csi-driver
+    operation: Update
+    time: "2020-08-24T23:50:09Z"
+  name: tme-lnx-worker1
+  resourceVersion: "30337986"
+  selfLink: /apis/storage.hpe.com/v1/hpenodeinfos/tme-lnx-worker1
+  uid: 3984752b-29ac-48de-8ca0-8381532cbf06
+spec:
+  chap_password: RGlkIHlvdSByZWFsbHkgZGVjb2RlIHRoaXM/
+  chap_user: chap-user
+  iqns:
+  - iqn.1994-05.com.redhat:828e7a4eef40
+  networks:
+  - 10.2.2.2/16
+  - 172.16.6.115/24
+  - 172.16.8.115/24
+  - 172.17.0.1/16
+  - 10.1.1.0/12
+  uuid: 0242f811-3995-746d-652d-6c6e78352d77
+```
+
 ## NFS Server Provisioner resources
 
 The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resources are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
