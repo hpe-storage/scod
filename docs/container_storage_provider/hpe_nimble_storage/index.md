@@ -51,14 +51,19 @@ These parameters are mutable between a parent volume and creating a clone from a
 | limitIops                      | Integer | The IOPS limit of the volume. The IOPS limit should be in the range 256 to 4294967294, or -1 for unlimited (default). |
 | limitMbps                      | Integer | The MB/s throughput limit for the volume. |
 | description                    | Text    | Text to be added to the volume's description on the Nimble array. |
-| performancePolicy              | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". |
+| performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". |
 | protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". |
 | folder                         | Text    | The name of the Nimble folder in which to place the volume. |
 | thick                          | Boolean | Indicates that the volume should be thick provisioned. |
-| dedupeEnabled                  | Boolean | Indicates that the volume should enable deduplication. |
+| dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. |
 | syncOnDetach                   | Boolean | Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node. |
 
-<small><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning using the [CSI Volume Mutator](../../csi_driver/using.md#using_volume_mutations)</small>
+<small>
+ Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning.
+ <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
+ <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
+</small>
 
 !!! note
     Performance Policies, Folders and Protection Templates are Nimble specific constructs that can be created on the Nimble array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on [HPE InfoSight](https://infosight.hpe.com).

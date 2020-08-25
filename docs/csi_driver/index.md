@@ -178,7 +178,20 @@ Release highlights: Initial GA release with support for Dynamic Provisioning.
 ## Known limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
-* The CSI driver does not support iSCSI CHAP. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
+
+## iSCSI CHAP considerations
+
+If iSCSI CHAP is being used in the environment, consider the following.
+
+### CSI driver 1.2.1 and below
+
+In version 1.2.1 and below, the CSI driver did not support CHAP natively. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
+
+### CSI driver 1.3.0 and above
+
+CHAP is now an optional part of the initial deployment of the driver with parameters passed to Helm or the Operator. For object definitions, the `CHAP_USER` and `CHAP_PASSWORD` needs to be supplied to the `csi-node-driver`. The CHAP username and secret is picked up in the `hpenodeinfo` Custom Resource Definition (CRD). The CSP is under contract to create the user if it doesn't exist on the backend.
+
+CHAP is a good measure to prevent unauthorized access to iSCSI targets, it does not encrypt data on the wire. CHAP secrets should be at least twelve charcters in length.
 
 ## Kubernetes feature gates
 
