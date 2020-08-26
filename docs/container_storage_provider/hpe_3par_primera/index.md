@@ -13,7 +13,7 @@ Always check the corresponding CSI driver version in [compatibility and support]
 
 |  CSI   |   CSP  | Linux OS | OpenShift | Kubernetes | 3PAR and Primera OS |
 | ------ | ------ | -------- | --------- | ---------- | ------------------- |
-| v1.2.0 | v1.0.1 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2/4.3 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16, 1.17, 1.18 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only) |
+| v1.3.0 | v1.1.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2/4.3 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16, 1.17, 1.18 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only), 4.2.0 |
 
 !!! important
     • Minimum 2 iSCSI IP ports should be in ready state<br />
@@ -84,10 +84,22 @@ These parameters are used for volume provisioning and supported platforms.
 |                                     | full    | Indicates Full provisioned volume type. | **X** |   |
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
 |                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
-| importVol <br /> this is the only option required for importing volume    | Text      | Name of the volume to import via the StorageClass | **X** | **X** |
+| importVol<sup>1</sup> <br /> (this is the only option required for importing volume)   | Text      | Name of the volume to import via the StorageClass | **X** | **X** |
+| importVolAsClone<sup>2</sup> <br /> (this is the only option required for importing volume as a clone)  | Text      | Name of the volume to clone and import via the StorageClass | **X** | **X** |
+| cloneOf<sup>2</sup> <br /> (this is the only option required for cloning `PersistentVolumeClaim`)  | Text      | Name of the `PersistentVolumeClaim` to clone via the StorageClass | **X** | **X** |
+| virtualCopyOf<sup>2</sup> <br /> (this is the only option required for snapshotting a `PersistentVolumeClaim`)  | Text      | Name of the `PersistentVolumeClaim` to snapshot via the StorageClass | **X** | **X** |
+| volumeGroup<sup>2</sup> <br /> (This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the vvset, for purposes of applying the QoS rules.)  | Text      | Name of the vvset which has QoS rules| **X** | **X** |
+
+<small>
+ <br /><sup>1</sup> = Parameter is supported from CSP-1.0.1.
+ <br /><sup>2</sup> = Parameter is supported from CSP-1.1.0.
+</small>
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
+
+!!! Note
+    importVolAsClone, cloneOf and virtualCopyOf operations are independent of snapshot crd availability on kubernetes and it can be performed on any supported version
 
 ### Primera Data Reduction volumes
 
@@ -153,6 +165,47 @@ During the import volume process, any legacy (non-container volumes) or existing
 
 !!! important
     **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.
+
+### Import volume as clone
+During the import volume as clone process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **importVolAsClone** parameter, within a `StorageClass`, will be cloned to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new cloned volume will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
+| importVolAsClone   | Text         | The name of the 3PAR or Primera volume which will be cloned and imported |
+
+!!! important
+    **No other parameters** are required in the `StorageClass` when importing a volume as clone outside of those parameters listed in the table above.
+
+### Cloning Volume
+During the cloning process, any existing `PersistentVolumeClaim` defined in the **cloneOf** parameter within a `StorageClass`, will be cloned and exposed through the HPE CSI Driver and made available to the Kubernetes cluster.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
+| cloneOf            | Text         | The name of existing `PersistentVolumeClaim` to be cloned |
+
+!!! important
+    **No other parameters** are required in the `StorageClass` when cloning of a volume outside of those parameters listed in the table above.
+
+### Snapshotting a volume
+During snapshotting process, any existing `PersistentVolumeClaim` defined in the **virtualCopyOf** parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
+| virtualCopyOf      | Text         | The name of existing `PersistentVolumeClaim` to be snapped |
+
+!!! important
+    **No other parameters** are required in the `StorageClass` when snapping of a volume outside of those parameters listed in the table above.
+
+### Applying QOS Rules (volumeGroup)
+In the HPE 3PAR or Primera Storage system, the QoS rules are applied to a volume group (volumeset in HPE 3PAR or Primera). To apply QoS rules to a `PersistentVolumeClaim`, one has to create a volume set in the HPE 3PAR or Primera, apply QoS rules to that volumeset and use the **volumeGroup** parameter while creating a `PersistentVolumeClaim`.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| volumeGroup      | Text         | Name of the vvset which has QoS rules |
+
 
 ## VolumeSnapshotClass parameters
 
