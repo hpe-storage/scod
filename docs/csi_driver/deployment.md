@@ -194,6 +194,8 @@ Next step involves [creating a default StorageClass](using.md#base_storageclass_
 
 It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple `StorageClass` and `Secret` API objects to represent an environment with multiple systems.
 
+There's a [brief tutorial available](../learn/video_gallery/index.md#managing_multiple_hpe_primary_storage_backends_using_the_hpe_csi_driver) in the Video Gallery that walks through these steps.
+
 !!! Note
     Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "kube-system" `Namespace`.
 

@@ -7,6 +7,9 @@ The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Drive
 
 [TOC]
 
+!!! seealso
+    There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery.
+
 ## Platform requirements
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular release of the driver. If a certain feature is gated against a certain version of NimbleOS it will be called out where applicable.
