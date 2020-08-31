@@ -84,11 +84,11 @@ These parameters are used for volume provisioning and supported platforms.
 |                                     | full    | Indicates Full provisioned volume type. | **X** |   |
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
 |                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
-| importVol   | Text      | Name of the volume to import via the StorageClass | **X** | **X** |
-| importVolAsClone  | Text      | Name of the volume to clone and import via the StorageClass | **X** | **X** |
-| cloneOf  | Text      | Name of the `PersistentVolumeClaim` to clone via the StorageClass | **X** | **X** |
-| virtualCopyOf  | Text      | Name of the `PersistentVolumeClaim` to snapshot via the StorageClass | **X** | **X** |
-| volumeGroup  | Text      | Name of the vvset which has QoS rules| **X** | **X** |
+| importVol   | Text      | Name of the volume to import. | **X** | **X** |
+| importVolAsClone  | Text      | Name of the volume to clone and import. | **X** | **X** |
+| cloneOf  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
+| virtualCopyOf  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
+| volumeGroup  | Text      | Name of the vvset which has QoS rules. | **X** | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -156,8 +156,8 @@ During the import volume process, any legacy (non-container volumes) or existing
 | importVol          | Text    | The name of the 3PAR or Primera volume to import. |
 
 !!! important
-    • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above<br />
-    • Support for `importVol` is available from HPE CSI Driver 1.2.0
+    • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
+    • Support for `importVol` is available from HPE CSI Driver 1.2.0.
 
 ### Cloning parameters
 
@@ -170,9 +170,9 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
 | accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
 
 !!! important
-    • **No other parameters** are required in the `StorageClass` while cloning outside of those parameters listed in the table above<br />
-    • Cloning using above parameters is independent of snapshot crd availability on kubernetes and it can be performed on any supported kubernetes version<br />
-    • Support for `importVolAsClone` and `cloneOf` is available from HPE CSI Driver 1.3.0
+    • **No other parameters** are required in the `StorageClass` while cloning outside of those parameters listed in the table above.<br />
+    • Cloning using above parameters is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
+    • Support for `importVolAsClone` and `cloneOf` is available from HPE CSI Driver 1.3.0.
 
 ### Snapshotting a volume
 During snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster.
@@ -183,9 +183,9 @@ During snapshotting process, any existing `PersistentVolumeClaim` defined in the
 | virtualCopyOf      | Text         | The name of existing `PersistentVolumeClaim` to be snapped |
 
 !!! important
-    • **No other parameters** are required in the `StorageClass` when snapping of a volume outside of those parameters listed in the table above<br />
-    • Snapshotting using `virtualCopyOf` is independent of snapshot crd availability on kubernetes and it can be performed on any supported kubernetes version<br />
-    • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0
+    • **No other parameters** are required in the `StorageClass` when snapshotting a volume outside of those parameters listed in the table above.<br />
+    • Snapshotting using `virtualCopyOf` is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
+    • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0.
 
 ### Applying QOS Rules (volumeGroup)
 In the Primera or HPE 3PAR Storage system, the QoS rules are applied to a volume group (volume set in Primera or HPE 3PAR). To apply QoS rules to a `PersistentVolumeClaim`, one has to create a volume set in the Primera or HPE 3PAR, apply QoS rules to that volume set and use the `volumeGroup` parameter while creating a `PersistentVolumeClaim`.
