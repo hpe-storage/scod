@@ -403,6 +403,7 @@ CSI introduces snapshots as native objects in Kubernetes that allows end-users t
 
 !!! tip
     Ensure [CSI snapshots are enabled](#enabling_csi_snapshots).
+    <br />There's a [tutorial in the Video Gallery](../learn/video_gallery/index.md#using_the_hpe_csi_driver_to_create_csi_snapshots_and_clones) on how to use CSI snapshots and clones.
 
 Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining additional snapshot parameters.
 
