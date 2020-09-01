@@ -88,7 +88,7 @@ These parameters are used for volume provisioning and supported platforms.
 | importVolAsClone  | Text      | Name of the volume to clone and import. | **X** | **X** |
 | cloneOf  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
 | virtualCopyOf  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
-| volumeGroup  | Text      | Name of the vvset which has QoS rules. | **X** | **X** |
+| qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -187,12 +187,12 @@ During snapshotting process, any existing `PersistentVolumeClaim` defined in the
     • Snapshotting using `virtualCopyOf` is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0.
 
-### Applying QOS Rules (volumeGroup)
-In the Primera or HPE 3PAR Storage system, the QoS rules are applied to a volume group (volume set in Primera or HPE 3PAR). To apply QoS rules to a `PersistentVolumeClaim`, one has to create a volume set in the Primera or HPE 3PAR, apply QoS rules to that volume set and use the `volumeGroup` parameter while creating a `PersistentVolumeClaim`.
+### Applying QOS Rules (qosName)
+In the Primera or HPE 3PAR Storage system, the QoS rules are applied to a volume group (volume set in Primera or HPE 3PAR). To apply QoS rules to a `PersistentVolumeClaim`, one has to create a volume set in the Primera or HPE 3PAR, apply QoS rules to that volume set and use the `qosName` parameter while creating a `PersistentVolumeClaim`.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| volumeGroup      | Text         | Name of the volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the volume set, for purposes of applying the QoS rules. |
+| qosName      | Text         | Name of the volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the volume set, for purposes of applying the QoS rules. |
 
 
 ## VolumeSnapshotClass parameters
