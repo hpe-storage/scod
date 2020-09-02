@@ -153,7 +153,7 @@ During the import volume process, any legacy (non-container volumes) or existing
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
 | accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
-| importVol          | Text    | The name of the 3PAR or Primera volume to import. |
+| importVol          | Text    | The name of the HPE Primera or 3PAR volume to import. |
 
 !!! important
     • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
@@ -161,12 +161,12 @@ During the import volume process, any legacy (non-container volumes) or existing
 
 ### Cloning parameters
 
-Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference a Primera or HPE 3PAR volume name to clone and import to Kubernetes.
+Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference a HPE Primera or 3PAR volume name to clone and import to Kubernetes.
 
 | Parameter        | Option  | Description |
 | ---------------- | ------- | ----------- |
 | cloneOf          | Text    | The name of the `PersistentVolumeClaim` to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
-| importVolAsClone | Text    | The name of the Primera or HPE 3PAR volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
+| importVolAsClone | Text    | The name of the HPE Primera or 3PAR volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
 | accessProtocol     | fc or iscsi  | The access protocol to use when accessing the persistent volume. |
 
 !!! important
@@ -188,11 +188,11 @@ During snapshotting process, any existing `PersistentVolumeClaim` defined in the
     • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0.
 
 ### Applying QOS Rules (qosName)
-In the Primera or HPE 3PAR Storage system, the QoS rules are applied to a volume group (volume set in Primera or HPE 3PAR). To apply QoS rules to a `PersistentVolumeClaim`, one has to create a volume set in the Primera or HPE 3PAR, apply QoS rules to that volume set and use the `qosName` parameter while creating a `PersistentVolumeClaim`.
+In the HPE Primera or 3PAR Storage system, the QoS rules are applied to a volume set. To apply QoS rules to a `PersistentVolumeClaim`, create a volume set in the HPE Primera or 3PAR, apply QoS rules to the volume set and set the `qosName` parameter within a `StorageClass` to the name of the HPE Primera or 3PAR volume set.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| qosName      | Text         | Name of the volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the volume set, for purposes of applying the QoS rules. |
+| qosName      | Text         | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the HPE Primera or 3PAR volume set, for purposes of applying the QoS rules. |
 
 
 ## VolumeSnapshotClass parameters
