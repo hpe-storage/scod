@@ -130,9 +130,15 @@ kubectl create -f hpe-csi-operator.yaml
 
 The CSI driver is now ready for use. Proceed to the [next section to learn about using](using.md) the driver.
 
+<<<<<<< HEAD
 ## Add a HPE storage backend
 
 Once the CSI driver is deployed, two additional objects needs to be created to get started with dynamic provisioning of persistent storage, a `Secret` and a `StorageClass`.
+=======
+## Creating a Secret
+
+When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` needs to be created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials. This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+>>>>>>> 851b58d8f3c1d6d6b3fb06ea34b2b69cc7fec6f7
 
 !!! tip
     Naming the `Secret` and `StorageClass` is entirely up to the user, however, to keep up with the examples on SCOD, it's highly recommended to use the names illustrated here.
@@ -141,6 +147,7 @@ Once the CSI driver is deployed, two additional objects needs to be created to g
 
 All parameters are mandatory and described below.
 
+<<<<<<< HEAD
 | Parameter   | Description
 | ----------- | -
 | serviceName | This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes `Service`, such as "nimble-csp-svc" or "primera3par-csp-svc"
@@ -209,6 +216,8 @@ hpe-backend              Opaque        5         2m
 
 This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.
 
+=======
+>>>>>>> 851b58d8f3c1d6d6b3fb06ea34b2b69cc7fec6f7
 !!! Note "Secret Requirements"
     * Each `Secret` name must be unique.
     * **servicePort** should be set to **8080**.
@@ -257,9 +266,15 @@ NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
 
-### Create a StorageClass with the custom Secret
+## Creating a StorageClass 
 
+After creating a `Secret`, create a `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. A `StorageClass` specifies the provisioner to use (the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume to create which can be used to differentiate between storage levels and usages. 
+
+<<<<<<< HEAD
 To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+=======
+This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md). 
+>>>>>>> 851b58d8f3c1d6d6b3fb06ea34b2b69cc7fec6f7
 
 ```markdown fct_label="K8s 1.15+"
 apiVersion: storage.k8s.io/v1
