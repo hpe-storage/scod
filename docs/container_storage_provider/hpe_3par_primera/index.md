@@ -74,7 +74,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 These parameters are used for volume provisioning and supported platforms.
 
 | Parameter                         | Option  | Description | 3PAR | Primera |
-| --------------------------------- | ------- | ----------- | :--: | :-----: |
+| --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
 | cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
@@ -85,6 +85,8 @@ These parameters are used for volume provisioning and supported platforms.
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
 |                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
 | importVol <br /> this is the only option required for importing volume    | Text      | Name of the volume to import via the StorageClass | **X** | **X** |
+| remoteCopyGroup <br /> | Text | Remote copy group name. | **X** | **X** |
+| replicationDevices <br /> | Text <br /> (CRD Name) | Target(secondary) array details. | **X** | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -171,6 +173,29 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | ------------------ | ------- | ----------- |
 | importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
 
+### Peer Persistence
+
+These parameters are applicable only for replication. Both parameters are mandatory. Remote copy group name given in SC if not present on array will be created.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| remoteCopyGroup    | Text    | Remote copy group name. |
+| replicationDevices | Text    | Target(secondary) array details. |
+
+Create replication devices CRD object before using it in SC.
+```yaml
+apiVersion: storage.hpe.com/v1
+kind: HPEReplicationDeviceInfo
+metadata:
+  name: r1
+spec:
+  target_array_details:
+  - targetCpg: FC_r6
+    targetName: CSSOS-SSA05
+    targetSecret: secret-r
+    targetSnapCpg: FC_r6
+    targetSecretNamespace: kube-system
+```
 
 ## Support
 
