@@ -89,8 +89,9 @@ These parameters are used for volume provisioning and supported platforms.
 | cloneOf  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
 | virtualCopyOf  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
 | qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
-| remoteCopyGroup <br /> | Text | Remote copy group name. | **X** | **X** |
-| replicationDevices <br /> | Text <br /> (CRD Name) | Target(secondary) array details. | **X** | **X** |
+| remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on Primera/3PAR array. | **X** | **X** |
+| replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
+| iscsiPortalIps <br /> | Text <br /> | Comma separated list of target portal IPs. | **X** | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -203,9 +204,9 @@ These parameters are applicable only for replication. Both parameters are mandat
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
 | remoteCopyGroup    | Text    | Name of a new or existing remote copy group on Primera/3PAR array. |
-| replicationDevices | Text    | Target(secondary) array details. |
+| replicationDevices | Text    | Indicates name of custom resource of type `hpereplicationdeviceinfos`. |
 
-A Custom Resource Definition (CRD) named `hpereplicationdeviceinfos.storage.hpe.com` holds target array details. This object needs to be used in SC for `replicationDevices`.
+A Custom Resource Definition (CRD) named `hpereplicationdeviceinfos.storage.hpe.com` holds target array details. This object name needs to be used in SC for `replicationDevices`.
 ```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
@@ -223,6 +224,18 @@ spec:
 !!! important
     • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
     • Replication mode is set to sync for peer persistence by default.<br />
+    • Create this CRD object before creating storage class referring this parameter.<br />
+
+### Target Portal IPs
+
+This parameter is applicable when user wants to choose specific iSCSI target portal IP on which iSCSI sessions needs to be established.
+
+| Parameter      | Option  | Description |
+| -------------- | ------- | ----------- |
+| iscsiPortalIps | Text | Comma separated list of target portal IPs. |
+
+!!! note
+    By default, all ready target portal IPs are auto computed and used for iSCSI sessions during a pod mount.
 
 ## VolumeSnapshotClass parameters
 
