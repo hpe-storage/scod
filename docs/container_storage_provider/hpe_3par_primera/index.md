@@ -224,7 +224,7 @@ spec:
 !!! important
     • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
     • Replication mode is set to sync for peer persistence by default.<br />
-    • Create this CRD object before creating storage class referring this parameter.<br />
+    • Create this custom resource object before creating storage class referring this parameter.<br />
 
 ### Target Portal IPs
 
