@@ -216,14 +216,14 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 
 ### Peer Persistence
 
-These parameters are applicable only for replication. Both parameters are mandatory. Remote copy group name given in SC if not present on array will be created.
+These parameters are applicable only for replication. Both parameters are mandatory. Remote copy group name given in SC if not present will be created.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| remoteCopyGroup    | Text    | Remote copy group name. |
+| remoteCopyGroup    | Text    | Name of a new or existing remote copy group on Primera/3PAR array. |
 | replicationDevices | Text    | Target(secondary) array details. |
 
-Create replication devices CRD object before using it in SC.
+A Custom Resource Definition (CRD) named `hpereplicationdeviceinfos.storage.hpe.com` holds target array details. This object needs to be used in SC for `replicationDevices`.
 ```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
@@ -232,11 +232,15 @@ metadata:
 spec:
   target_array_details:
   - targetCpg: FC_r6
+    targetSnapCpg: FC_r6
     targetName: CSSOS-SSA05
     targetSecret: secret-r
-    targetSnapCpg: FC_r6
     targetSecretNamespace: kube-system
 ```
+
+!!! important
+    • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
+    • Replication mode is set to sync for peer persistence by default.<br />
 
 ## Support
 
