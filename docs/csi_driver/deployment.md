@@ -257,9 +257,9 @@ NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
 
-## Creating a StorageClass 
+### Create a StorageClass with the custom Secret
 
-After creating a `Secret`, create a `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. A `StorageClass` specifies the provisioner to use (the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume which can be used to differentiate between storage levels and usages. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
 ```markdown fct_label="K8s 1.15+"
 apiVersion: storage.k8s.io/v1
