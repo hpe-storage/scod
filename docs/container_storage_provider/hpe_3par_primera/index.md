@@ -196,24 +196,6 @@ In the HPE Primera or 3PAR Storage system, the QoS rules are applied to a volume
 | ------------------ | ------- | ----------- |
 | qosName      | Text         | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the HPE Primera or 3PAR volume set, for purposes of applying the QoS rules. |
 
-
-## VolumeSnapshotClass parameters
-
-These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
-
-How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
-
-| Parameter   | String  | Description |
-| ----------- | ------  | ----------- |
-| read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
-
-### Import Snapshot
-During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
-
-| Parameter          | Option  | Description |
-| ------------------ | ------- | ----------- |
-| importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
-
 ### Peer Persistence
 
 These parameters are applicable only for replication. Both parameters are mandatory. Remote copy group name given in SC if not present will be created.
@@ -241,6 +223,23 @@ spec:
 !!! important
     • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
     • Replication mode is set to sync for peer persistence by default.<br />
+
+## VolumeSnapshotClass parameters
+
+These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
+
+How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
+
+| Parameter   | String  | Description |
+| ----------- | ------  | ----------- |
+| read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
+
+### Import Snapshot
+During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
 
 ## Support
 
