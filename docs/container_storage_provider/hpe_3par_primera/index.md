@@ -74,7 +74,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 These parameters are used for volume provisioning and supported platforms.
 
 | Parameter                         | Option  | Description | 3PAR | Primera |
-| --------------------------------- | ------- | ----------- | :--: | :-----: |
+| --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
 | cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
@@ -89,6 +89,9 @@ These parameters are used for volume provisioning and supported platforms.
 | cloneOf  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
 | virtualCopyOf  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
 | qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
+| remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on HPE Primera/3PAR array. | **X** | **X** |
+| replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
+| iscsiPortalIps <br /> | Text <br /> | Comma separated list of HPE Primera/3PAR iSCSI port IPs. | **X** | **X** |
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -194,6 +197,49 @@ In the HPE Primera or 3PAR Storage system, the QoS rules are applied to a volume
 | ------------------ | ------- | ----------- |
 | qosName      | Text         | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the HPE Primera or 3PAR volume set, for purposes of applying the QoS rules. |
 
+### Remote Copy with Peer Persistence synchronous replication
+
+To enable replication within the HPE CSI Driver, the following steps must be completed:
+
+* Create `Secrets` for both primary and target HPE Primera or 3PAR arrays. Refer to [Adding additional backends](../../csi_driver/deployment.md#adding_additional_backends).
+* Create replication custom resource.
+* Create replication enabled `StorageClass`.
+
+For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
+
+A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will used to define the `StorageClass` parameter **replicationDevices**. 
+```yaml
+apiVersion: storage.hpe.com/v1
+kind: HPEReplicationDeviceInfo
+metadata:
+  name: r1
+spec:
+  target_array_details:
+  - targetCpg: <cpg_name>
+    targetSnapCpg: <snapcpg_name> #optional
+    targetName: <target_array_name>
+    targetSecret: <target_secret_name>
+    targetSecretNamespace: kube-system
+```
+
+!!! important
+    • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
+    • Currently, the HPE CSI Driver only supports Remote Copy Peer Persistence mode. Async support will be added in a future release.<br />
+
+These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the HPE Primera or 3PAR array, then a new RCG will be created.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| remoteCopyGroup    | Text    | Name of new or existing remote copy group on the HPE Primera/3PAR array. |
+| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+
+### Target Portal IPs
+
+This parameter allows the ability to specify a subset of HPE Primera/3PAR iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
+
+| Parameter      | Option  | Description |
+| -------------- | ------- | ----------- |
+| iscsiPortalIps |   Text  | Comma separated list of target portal IPs. |
 
 ## VolumeSnapshotClass parameters
 
@@ -211,7 +257,6 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
 | importVol          | Text    | The name of the 3PAR or Primera snapshot to import. |
-
 
 ## Support
 
