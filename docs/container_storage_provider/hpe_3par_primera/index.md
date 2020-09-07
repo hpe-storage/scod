@@ -207,13 +207,6 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
-These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the HPE Primera or 3PAR array, then a new RCG will be created.
-
-| Parameter          | Option  | Description |
-| ------------------ | ------- | ----------- |
-| remoteCopyGroup    | Text    | Name of new or existing remote copy group on the HPE Primera/3PAR array. |
-| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
-
 A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will used to define the `StorageClass` parameter **replicationDevices**. 
 ```yaml
 apiVersion: storage.hpe.com/v1
@@ -232,6 +225,13 @@ spec:
 !!! important
     • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
     • Currently, the HPE CSI Driver only supports Remote Copy Peer Persistence mode. Async support will be added in a future release.<br />
+
+These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the HPE Primera or 3PAR array, then a new RCG will be created.
+
+| Parameter          | Option  | Description |
+| ------------------ | ------- | ----------- |
+| remoteCopyGroup    | Text    | Name of new or existing remote copy group on the HPE Primera/3PAR array. |
+| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 
 ### Target Portal IPs
 
