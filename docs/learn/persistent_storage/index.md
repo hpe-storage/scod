@@ -128,9 +128,9 @@ You should see output similar to below. As you can see, each node has a role **m
 ```markdown
 $ kubectl get nodes
 NAME              STATUS   ROLES    AGE   VERSION
-kube-g1-master1   Ready    master   37d   v1.16.6
-kube-g1-node1     Ready    <none>   37d   v1.16.6
-kube-g1-node2     Ready    <none>   37d   v1.16.6
+kube-g1-master1   Ready    master   37d   v1.18.2
+kube-g1-node1     Ready    <none>   37d   v1.18.2
+kube-g1-node2     Ready    <none>   37d   v1.18.2
 ```
 
 You can list pods.
@@ -337,7 +337,7 @@ We can inspect the pod further using the **kubectl describe** command:
 Name:         first-nginx-pod-5bb4787f8d-7ndj6
 Namespace:    default
 Priority:     0
-Node:         kube-g18-node1/10.90.200.184
+Node:         kube-g1-node1/10.90.200.184
 Start Time:   Mon, 02 Mar 2020 17:09:20 -0600
 Labels:       pod-template-hash=5bb4787f8d
               run=nginx-first-pod
@@ -355,7 +355,7 @@ Containers:
     Port:           <none>
     Host Port:      <none>
     State:          Running
-      Started:      Mon, 02 Mar 2020 17:09:32 -0600
+      Started:      Mon, 20 Aug 2020 17:09:32 -0600
     Ready:          True
     Restart Count:  0
     Environment:    <none>
@@ -377,13 +377,13 @@ Node-Selectors:  <none>
 Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
                  node.kubernetes.io/unreachable:NoExecute for 300s
 Events:
-  Type    Reason     Age        From                     Message
-  ----    ------     ----       ----                     -------
-  Normal  Scheduled  <unknown>  default-scheduler        Successfully assigned default/first-nginx-pod
-  Normal  Pulling    54s        kubelet, kube-g18-node1  Pulling image "nginx"
-  Normal  Pulled     46s        kubelet, kube-g18-node1  Successfully pulled image "nginx"
-  Normal  Created    44s        kubelet, kube-g18-node1  Created container nginx
-  Normal  Started    43s        kubelet, kube-g18-node1  Started container nginx
+  Type    Reason     Age        From                    Message
+  ----    ------     ----       ----                    -------
+  Normal  Scheduled  <unknown>  default-scheduler       Successfully assigned default/first-nginx-pod
+  Normal  Pulling    54s        kubelet, kube-g1-node1  Pulling image "nginx"
+  Normal  Pulled     46s        kubelet, kube-g1-node1  Successfully pulled image "nginx"
+  Normal  Created    44s        kubelet, kube-g1-node1  Created container nginx
+  Normal  Started    43s        kubelet, kube-g1-node1  Started container nginx
 ```
 
 Let's find the IP address of the pod.
@@ -455,37 +455,6 @@ To get started with the deployment, the HPE CSI Driver is deployed using industr
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
-The first step of installing the HPE CSI Driver is creating the **values.yaml** file. These are the bare minimum required parameters for a successful deployment. 
-
-Refer to [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for additional parameters.
-
-```markdown
-vi values.yaml
-```
-Copy the following into the file. Make sure to set the **backendType:** to **nimble** or **primera3par** depending on your array type. Set the **backend:** to the array IP along with the array **username** and **password**.
-
-```markdown fct_label="HPE Nimble Storage"
-# HPE backend storage type (nimble, primera3par)
-backendType: nimble
-secret:
-  backend: 192.168.1.10
-  username: admin
-  password: admin
-```
-
-```markdown fct_label="HPE 3PAR and Primera"
-# HPE backend storage type (nimble, primera3par)
-backendType: primera3par
-secret:
-  backend: 192.168.1.10
-  username: 3paradm
-  password: 3pardata
-```  
-
-Save and Exit.
-
-!!! Important 
-    Deploying the HPE CSI Driver with the HPE 3PAR and Primera CSP currently doesn't support the creation of the default StorageClass in the Helm chart. Make sure to set `create: false` or omit the `StorageClass` section.
 
 ### Installing the chart
 
@@ -498,7 +467,7 @@ helm repo update
 
 Install the latest chart:
 ```markdown
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system -f values.yaml
+helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system
 ```
 
 Wait a few minutes as the deployment finishes.
@@ -519,16 +488,74 @@ kube-system   hpe-csi-node-qt74m                    2/2       Running   0       
 kube-system   primera3par-csp-66f775b555-sfmnp      1/1       Running   0          5m
 ```
 
-!!! Note
-    You will only see either **csp-service** for Nimble Storage CSP or **primera3par-csp** for HPE Primera/3PAR CSP listed. Both CSPs are listed for this example.
+If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Providers have been successfully deployed.
 
-If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Provider has been successfully deployed.
+### Creating a Secret
+
+When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` needs to be created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials. This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+
+!!! Note "Secret Requirements"
+    * Each `Secret` name must be unique.
+    * **servicePort** should be set to **8080**.
+
+Create a new `Secret`, specify the name, `Namespace`, backend username, backend password, and the backend IP address to be used by the CSP.
+
+```markdown
+kubectl create -f-
+```
+
+Copy and paste the following:
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: kube-system 
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.2
+  username: admin
+data:
+  # echo -n "admin" | base64
+  password: YWRtaW4=
+```
+
+```markdown fct_label="HPE Primera"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: kube-system 
+stringData:
+  serviceName: primera3par-csp-svc 
+  servicePort: "8080"
+  backend: 10.10.0.2
+  username: 3paradm
+data:
+  # echo -n "3pardata" | base64
+  password: M3BhcmRhdGE=
+```
+
+Press **Enter** and **Ctrl-D**.
+
+Now let's look at the available StorageClasses.
+
+You should now see the `Secret` in the "kube-system" `Namespace`:
+
+```markdown 
+kubectl -n kube-system get secret/custom-secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         1m
+```
 
 ### Creating a StorageClass
 
-Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies the provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume that we want to create and can be used to differentiate between storage levels and usages. This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements.
+Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies the provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume that we want to create and can be used to differentiate between storage levels and usages. 
 
-Create an **hpe-standard** `StorageClass` based upon the CSP deployed.
+This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements.
+
+Create an **hpe-standard** `StorageClass` based upon the CSP deployed. This `StorageClass` example will use the **custom-secret** we created in the previous step, if you used a different name make sure to modify the `StorageClass` accordingly.
 
 ```markdown
 kubectl create -f-
@@ -545,15 +572,15 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/provisioner-secret-name: nimble-secret
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: nimble-secret
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: nimble-secret
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-expand-secret-name: nimble-secret
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   performancePolicy: "SQL Server"
   description: "Volume from HPE CSI Driver"
@@ -573,17 +600,17 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: ext4
-  csi.storage.k8s.io/provisioner-secret-name: primera3par-secret
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-publish-secret-name: primera3par-secret
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: primera3par-secret
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
-  cpg: NL_r6
+  cpg: SSD_r6
   provisioning_type: tpvv
   accessProtocol: iscsi
   allowOverrides: cpg,provisioning_type
