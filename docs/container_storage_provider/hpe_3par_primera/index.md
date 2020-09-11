@@ -76,7 +76,7 @@ These parameters are used for volume provisioning and supported platforms.
 | Parameter                         | Option  | Description | 3PAR | Primera |
 | --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-|                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** |   |
+|                                     | iscsi   | The access protocol to use when accessing the persistent volume. Requires Primera OS 4.2+ | **X** | **X** |
 | cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
 | snap_cpg                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
 | compression                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
@@ -207,7 +207,7 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
-A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will used to define the `StorageClass` parameter **replicationDevices**. 
+A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. 
 ```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
