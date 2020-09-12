@@ -1,5 +1,5 @@
 # HPE Storage Container Orchestrator Documentation
-This is the source files for [https://scod.hpedev.io](scod.hpedev.io). The reference documentation for all things HPE Storage Container Orchestration integration, including Docker, Kubernetes and their derives.
+This is the source files for [https://scod.hpedev.io](https://scod.hpedev.io). The reference documentation for all things HPE Storage Container Orchestration integration, including Docker, Kubernetes, and their derives.
 
 ![Action: Publish docs via GitHub Pages](https://github.com/hpe-storage/scod/workflows/Publish%20docs%20via%20GitHub%20Pages/badge.svg)
 
@@ -13,7 +13,7 @@ git clone https://github.com/< your username or organization >/scod
 cd scod
 ```
 
-SCOD uses [MkDocs](https://www.mkdocs.org) 1.0.4. Ensure you have Python (with `pip`) preinstalled, then install `mkdocs` along wit the required plugins.
+SCOD uses [MkDocs](https://www.mkdocs.org) 1.0.4. Ensure you have Python (with `pip`) preinstalled, then install `mkdocs` along with the required plugins.
 
 ```
 pip install -r requirements.txt
@@ -32,13 +32,13 @@ All the documentation lives in [docs](docs). Your edits should immediately reloa
 Once edits are done, commit and push your branch (don't forget the sign-off, see [contributing](docs/legal/contributing/index.md)) and submit a [pull request](https://github.com/hpe-storage/scod/pulls) (PR).
 
 # Style guides
-The goal is to try keep content as cohesive as possible. Some old sources may require some refactoring to fit into the MkDocs styles we adopt.
+The goal is to try to keep content as cohesive as possible. Some old sources may require some refactoring to fit into the MkDocs styles we adopt.
 
 ## Embedding objects
 Using external sources such as YouTube and Asciinema is encouraged. Here are a few hints on how to get the best results.
 
 ### YouTube
-Figure out the video ID of the video you want to embed, it's the `v` variable in the URL of the YouTube video. Let's assume the source has a 16:9 aspect ratio. Pay attention to the `width` and `height`, replace the `<VIDEO ID>` string with the video you would like to embed.
+Figure out the video ID of the video you want to embed. It's the `v` variable in the URL of the YouTube video. Let's assume the source has a 16:9 aspect ratio. Pay attention to the `width` and `height`. Replace the `<VIDEO ID>` string with the video you would like to embed.
 
 ```
 <iframe width="696" height="392" src="https://www.youtube.com/embed/<VIDEO ID>" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -74,7 +74,7 @@ There are four different types of blocks that are mapped by the following keywor
 * Purple: `danger`, `error`
 
 ## Fenced code blocks
-All code blocks needs to be labelled by language or style. MkDocs is not very clever to fall back to plain text, if the code block doesn't render properly, use `text` for red text and `markdown` for black text.
+All code blocks need to be labeled by language or style. MkDocs is not very clever to fall back to plain text; if the code block doesn't render properly, use `text` for red text and `markdown` for black text.
 
 Start fenced code blocks like this:
 ```
