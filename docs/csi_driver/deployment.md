@@ -36,7 +36,7 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.
 
 The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running in Kubernetes.
 
-The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-driver-operator). The CSI Operator images are hosted both on docker.io and officially certified containers on Red Hat Ecosystem Catalog.
+The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). The CSI Operator images are hosted both on docker.io and officially certified containers on Red Hat Ecosystem Catalog.
 
 ### Red Hat OpenShift Container Platform
 
@@ -57,13 +57,13 @@ curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releas
 Install the HPE CSI Operator.
 
 ```markdown
-kubectl create -f https://operatorhub.io/install/hpe-csi-driver-operator.yaml
+kubectl create -f https://operatorhub.io/install/hpe-csi-operator.yaml
 ```
 
-The Operator will be installed in `my-hpe-csi-driver-operator` namespace. Watch it come up by inspecting the `ClusterServiceVersion` (CSV).
+The Operator will be installed in `my-hpe-csi-operator` namespace. Watch it come up by inspecting the `ClusterServiceVersion` (CSV).
 
 ```markdown
-kubectl get csv -n my-hpe-csi-driver-operator
+kubectl get csv -n my-hpe-csi-operator
 ```
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to which CSP is being deployed.
