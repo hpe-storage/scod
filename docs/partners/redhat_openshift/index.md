@@ -18,6 +18,7 @@ Software delivered through the HPE and Red Hat partnership follows a rigorous ce
 | ------------- | ----------------- | ---------------- | --------------------------- |
 | Certified     | 4.2               | 1.2.0            | Nimble, 3PAR and Primera    |
 | Certified     | 4.3               | 1.2.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.3, 4.4          | 1.3.0            | Nimble, 3PAR and Primera    |
 
 Check this table periodically for future releases.
 
@@ -39,11 +40,11 @@ Download the SCC to where you have access to `oc` and the OpenShift cluster:
 curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
 ```
 
-Change `my-hpe-csi-driver-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
+Change `my-hpe-csi-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
 
 ```markdown
 oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
-sed -i 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
+sed -i 's/my-hpe-csi-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
 ```
 
 Deploy the SCC:
@@ -99,9 +100,9 @@ spec:
 The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the rollout of the Operator.
 
 ```markdown
-oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
-Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
-deployment "hpe-csi-driver-operator" successfully rolled out
+oc rollout status deploy/hpe-csi-operator -n hpe-csi-driver
+Waiting for deployment "hpe-csi-operator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "hpe-csi-operator" successfully rolled out
 ```
 
 The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
