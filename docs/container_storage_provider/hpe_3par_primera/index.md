@@ -56,8 +56,6 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/resizer-secret-name: primera3par-secret
-  csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   cpg: FC_r6
@@ -126,8 +124,6 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
   csi.storage.k8s.io/node-publish-secret-name: primera3par-secret
   csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/resizer-secret-name: primera3par-secret
-  csi.storage.k8s.io/resizer-secret-namespace: kube-system
   csi.storage.k8s.io/controller-expand-secret-name: primera3par-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   cpg: SSD_r6
