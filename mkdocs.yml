@@ -66,9 +66,9 @@ nav:
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
   - PARTNER ECOSYSTEMS:
+    - 'Rancher Labs': 'partners/rancher_labs/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
-#   - 'Rancher Labs': 'partners/rancher_labs/index.md'
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
     - 'Persistent Storage for Kubernetes': 'learn/persistent_storage/index.md'
