@@ -19,6 +19,14 @@ This tutorial talks about managing multiple `Secrets` and `StorageClasses` to di
 
 Each CSP has its own features and perks, learn about the different platforms right here.
 
+### Using the HPE CSI Driver with HPE Primera
+
+This tutorial showcases a few of the HPE Primera specific features with the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/0AmSU1GDm3M" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=0AmSU1GDm3M)</small>
+
 ### Using the HPE CSI Driver with HPE Nimble Storage
 
 This tutorial showcases a few of the HPE Nimble Storage specific features with the HPE CSI Driver.
@@ -54,6 +62,18 @@ Learn how to use CSI snapshots and clones with the HPE CSI Driver.
 <iframe width="696" height="392" src="https://www.youtube.com/embed/qv-oKxZIqJo" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=qv-oKxZIqJo)</small>
+
+## Partner Ecosystems
+
+Joint solutions with our revered ecosystem partners.
+
+### Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift
+
+This tutorial goes through the steps of installing the HPE CSI Operator on Red Hat OpenShift.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/tBjjGuuOn7Q" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=tBjjGuuOn7Q)</small>
 
 # Watch more
 
