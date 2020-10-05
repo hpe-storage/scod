@@ -6,7 +6,7 @@ Rancher Labs provides a platform to deploy Kubernetes-as-a-service everywhere. H
 
 ## Deployment considerations
 
-Rancher is capable of managing Kubernetes across broad spectrum of managed and BYO clusters. It's important to understand that the HPE CSI Driver for Kubernetes does not support the same amount of combinations Rancher does. Consult the table on [the CSI driver overview page](../../csi_driver/index.md#compatibility_and_support) of the corresponding HPE CSI Driver version what Kubernetes versions and worker node operating systems are supported for that particular version. 
+Rancher is capable of managing Kubernetes across a broad spectrum of managed and BYO clusters. It's important to understand that the HPE CSI Driver for Kubernetes does not support the same amount of combinations Rancher does. Consult the support matrix on [the CSI driver overview page](../../csi_driver/index.md#compatibility_and_support) for the supported combinations of the HPE CSI Driver, Kubernetes and supported node Operating Systems.
 
 ## Rancher 2.4
 
@@ -39,11 +39,11 @@ p-k28xd:hpe-csi-driver   hpe-csi-driver   active    helm3-library   hpe-csi-driv
 ```
 
 !!! note
-    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for supported paramters.
+    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for supported parameters.
 
 #### Web UI install
 
-The web UI install is straigh forward. Illustrated here for completeness.
+The web UI install is straight forward. Illustrated here for completeness.
 
 ![Step 1](img/rke24-ui/step1.png)
 *Login to RKE and click the cluster tab*
@@ -77,7 +77,7 @@ For Rancher Apps to make use of persistent storage from HPE, a supported backend
 
 ### HPE Volume Driver for Kubernetes FlexVolume plugin
 
-Only use the FlexVolume driver for Kubernetes 1.12 and below or with HPE Cloud Volumes up to Kubernetes 1.17. The FlexVolume driver is provided as a Helm v2 chart in the offical Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
+Only use the FlexVolume driver for Kubernetes 1.12 and below or with HPE Cloud Volumes up to Kubernetes 1.17. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
 
 !!! caution
     The FlexVolume driver is being deprecated. Reach out to your HPE representative if you think deploying the FlexVolume driver on your Rancher managed Kubernetes cluster is the correct course of action.
