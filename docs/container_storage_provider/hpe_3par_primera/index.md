@@ -13,7 +13,7 @@ Always check the corresponding CSI driver version in [compatibility and support]
 
 |  CSI   | Linux OS | OpenShift | Kubernetes | 3PAR and Primera OS |
 | ------ | -------- | --------- | ---------- | ------------------- |
-| v1.3.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2/4.3 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16, 1.17, 1.18 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only), 4.2.0 |
+| v1.3.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2/4.3 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.16-1.19 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only), 4.2.0 |
 
 !!! important
     • Minimum 2 iSCSI IP ports should be in ready state<br />
