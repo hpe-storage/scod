@@ -2,7 +2,7 @@
 
 HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.
 
-Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slighty on how you would deploy and use the HPE volume drivers and this page serves as the authoritive source for all things HPE primary storage and Red Hat OpenShift.
+Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE volume drivers and this page serves as the authoritative source for all things HPE primary storage and Red Hat OpenShift.
 
 [TOC]
 
@@ -16,8 +16,9 @@ Software delivered through the HPE and Red Hat partnership follows a rigorous ce
 
 | Status        | Red Hat OpenShift | HPE CSI Operator | Container Storage Providers |
 | ------------- | ----------------- | ---------------- | --------------------------- |
-| Certified     | 4.2               | 1.1.0            | Nimble, 3PAR and Primera    |
-| Certified     | 4.3               | 1.1.0            | Nimble                      |
+| Certified     | 4.2               | 1.2.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.3               | 1.2.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.3, 4.4          | 1.3.0            | Nimble, 3PAR and Primera    |
 
 Check this table periodically for future releases.
 
@@ -29,6 +30,9 @@ Check this table periodically for future releases.
 
 The HPE CSI Operator for Kubernetes needs to be installed through the interfaces provided by Red Hat. Do not follow the instructions found on OperatorHub.io. 
 
+!!! tip
+    There's a tutorial available on YouTube accessible throught the [Video Gallery](../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift.
+
 #### Prerequisites
 
 The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OpenShift, please create the following `SecurityContextConstraints` (SCC) to allow the CSI driver to be running with these privileges.
@@ -39,11 +43,11 @@ Download the SCC to where you have access to `oc` and the OpenShift cluster:
 curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
 ```
 
-Change `my-hpe-csi-driver-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
+Change `my-hpe-csi-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
 
 ```markdown
 oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
-sed -i 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
+sed -i 's/my-hpe-csi-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
 ```
 
 Deploy the SCC:
@@ -58,7 +62,7 @@ securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 
 #### Caveats
 
-At this time of writing (CSI Operator 1.1.0) the default `StorageClass` being shipped with the CSI driver is not very useful for OpenShift as it doesn't allow applications to write in the `PersistentVolumes`. Make sure to deploy a new `StorageClass` with `.parameters.fsMode` set to `"0770"`. This caveat will be removed in subsequent releases.
+At this time of writing (CSI Operator 1.2.0) the default `StorageClass` being shipped with the CSI driver is not very useful for OpenShift as it doesn't allow applications to write in the `PersistentVolumes`. Make sure to deploy a new `StorageClass` with `.parameters.fsMode` set to `"0770"`. This caveat will be removed in subsequent releases.
 
 * Learn how to create a base `StorageClass` in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
@@ -96,12 +100,12 @@ spec:
   sourceNamespace: openshift-marketplace
 ```
 
-The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the rollout of the Operator.
+The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.
 
 ```markdown
-oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
-Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
-deployment "hpe-csi-driver-operator" successfully rolled out
+oc rollout status deploy/hpe-csi-operator -n hpe-csi-driver
+Waiting for deployment "hpe-csi-operator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "hpe-csi-operator" successfully rolled out
 ```
 
 The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
@@ -197,7 +201,7 @@ By navigating to the Developer view, it should now be possible to inspect the CS
 
 #### Additional information
 
-At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be exlored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
+At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
 
 ## OpenShift 3
 

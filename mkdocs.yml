@@ -37,6 +37,7 @@ nav:
     - 'Overview': 'csi_driver/index.md'
     - 'Deployment': 'csi_driver/deployment.md'
     - 'Using': 'csi_driver/using.md'
+    - 'Pod Monitor': 'csi_driver/monitor.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
     - 'HPE 3PAR and Primera': 'container_storage_provider/hpe_3par_primera/index.md'
@@ -65,12 +66,14 @@ nav:
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
   - PARTNER ECOSYSTEMS:
+    - 'Rancher Labs': 'partners/rancher_labs/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
-#   - 'Rancher Labs': 'partners/rancher_labs/index.md'
   - LEARN:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
     - 'Persistent Storage for Kubernetes': 'learn/persistent_storage/index.md'
+    - 'For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers': 'learn/introduction_to_containers/index.md'
+    - 'Video Gallery': 'learn/video_gallery/index.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
 #   - 'External Resources': 'learn/links.md'
   - COMMUNITY:
