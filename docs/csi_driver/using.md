@@ -35,9 +35,9 @@ Support for `VolumeSnapshotClass` is available from Kubernetes 1.17+. The snapsh
 Install snapshot beta CRDs.
 
 ```markdown
-kubectl create -f  https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-2.0/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
-kubectl create -f  https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-2.0/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
-kubectl create -f  https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-2.0/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 ```
 
 Install common snapshot controller.
@@ -422,6 +422,8 @@ parameters:
   description: "Snapshot created by the HPE CSI Driver"
   csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
   csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+  csi.storage.k8s.io/snapshotter-list-secret-name: hpe-backend
+  csi.storage.k8s.io/snapshotter-list-secret-namespace: kube-system
 ```
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
