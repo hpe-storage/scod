@@ -30,21 +30,22 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 
 ## Enabling CSI snapshots
 
-Support for `VolumeSnapshotClass` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
+Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
 
-Install snapshot beta CRDs.
+Install snapshot beta CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-```markdown
-kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
-kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
-kubectl create  -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+```markdown fct_label="HPE CSI Driver v1.3.0"
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout release-2.0
+kubectl apply -f config/crd -f deploy/kubernetes/csi-snapshotter
+
 ```
-
-Install common snapshot controller.
-
-```markdown
-kubectl create -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-2.0/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
-kubectl create -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-2.0/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+```markdown fct_label="HPE CSI Driver v1.4.0-beta"
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout release-3.0
+kubectl apply -f client/config/crd -f deploy/kubernetes/csi-snapshotter
 ```
 
 !!! tip
