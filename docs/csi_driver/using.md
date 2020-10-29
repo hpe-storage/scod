@@ -38,14 +38,14 @@ Install snapshot beta CRDs and common snapshot controller (once per Kubernetes c
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout release-2.0
-kubectl apply -f config/crd -f deploy/kubernetes/csi-snapshotter
-
+kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
+
 ```markdown fct_label="HPE CSI Driver v1.4.0-beta"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout release-3.0
-kubectl apply -f client/config/crd -f deploy/kubernetes/csi-snapshotter
+kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 !!! tip
@@ -410,7 +410,21 @@ Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining 
 
 Kubernetes 1.17+ (CSI snapshots in beta)
 
-```yaml
+```markdown fct_label="HPE CSI Driver v1.3.0"
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshotClass
+metadata:
+  name: hpe-snapshot
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
+driver: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "Snapshot created by the HPE CSI Driver"
+  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
+  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+```
+```markdown fct_label="HPE CSI Driver v1.4.0-beta"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
