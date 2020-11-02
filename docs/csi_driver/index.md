@@ -59,7 +59,7 @@ Release highlights:
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>1.15-1.19<sup>1</sup></td>
+    <td>1.15-1.18<sup>1</sup></td>
   </tr>
   <tr>
     <th>Worker OS</th>
