@@ -17,7 +17,7 @@ As different methods of installation are provided, it might not be too obvious w
 | Vanilla upstream Kubernetes cluster on a supported host OS. | The [Helm chart](#helm) |
 | Red Hat OpenShift 4.x cluster.         | The [certified CSI operator for OpenShift](../partners/redhat_openshift/index.md) |
 | Supported environment with multiple backends. | [Helm chart](#helm) with additional [Secrets](#create_a_secret_with_backend_details) and [StorageClasses](using.md#base_storageclass_parameters) |
-| Ezmeral Container Platform environment. | The [Helm chart](#helm) |
+| HPE Ezmeral Container Platform environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
 
