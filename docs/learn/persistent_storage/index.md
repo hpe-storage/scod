@@ -159,7 +159,7 @@ Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks
 The Dashboard UI is not deployed by default. To deploy it, run the following command.
 
 ```markdown
-kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 ```
 
 ### Accessing the Dashboard UI
