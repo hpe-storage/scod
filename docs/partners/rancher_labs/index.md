@@ -39,7 +39,7 @@ p-k28xd:hpe-csi-driver   hpe-csi-driver   active    helm3-library   hpe-csi-driv
 ```
 
 !!! note
-    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for supported parameters.
+    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) for supported parameters.
 
 #### Web UI install
 
@@ -67,7 +67,7 @@ The web UI install is straight forward. Illustrated here for completeness.
 *After a few moments the driver should be installed. The number of workloads depends on the cluster node count.*
 
 !!! note
-    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver) for supported paramters.
+    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) for supported parameters.
 
 #### Post install steps
 
@@ -77,7 +77,7 @@ For Rancher Apps to make use of persistent storage from HPE, a supported backend
 
 ### HPE Volume Driver for Kubernetes FlexVolume plugin
 
-Only use the FlexVolume driver for Kubernetes 1.12 and below or with HPE Cloud Volumes up to Kubernetes 1.17. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://hub.helm.sh/charts/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
+Only use the FlexVolume driver for Kubernetes 1.12 and below or with HPE Cloud Volumes up to Kubernetes 1.17. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
 
 !!! caution
     The FlexVolume driver is being deprecated. Reach out to your HPE representative if you think deploying the FlexVolume driver on your Rancher managed Kubernetes cluster is the correct course of action.

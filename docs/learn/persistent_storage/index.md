@@ -453,7 +453,7 @@ Once done, press **Ctrl-D** to exit the pod. Use **Ctrl+C** to exit the port-for
 
 To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver.
 
-The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [hub.helm.sh](https://hub.helm.sh/charts/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
+The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
 
 ### Installing the chart
