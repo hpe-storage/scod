@@ -148,18 +148,18 @@ Usage:
 
 ```markdown
 ./hpe-logcollector.sh -h
-Diagnostic Script to collect HPE Storage logs using kubectl
+Collect HPE storage diagnostic logs using kubectl.
 
 Usage:
-     hpe-logcollector.sh [-h|--help][--node-name NODE_NAME][-n|--namespace NAMESPACE][-a|--all]
-Where
--h|--help                  Print the Usage text
---node-name NODE_NAME      where NODE_NAME is kubernetes Node Name needed to collect the
-                           hpe diagnostic logs of the Node
--n|--namespace NAMESPACE   where NAMESPACE is namespace of the pod deployment. default is kube-system
--a|--all                   collect diagnostic logs of all the nodes.If
-                           nothing is specified logs would be collected
-                           from all the nodes
+     hpe-logcollector.sh [-h|--help] [--node-name NODE_NAME] \
+                         [-n|--namespace NAMESPACE] [-a|--all]
+Options:
+-h|--help                  Print this usage text
+--node-name NODE_NAME      Collect logs only for Kubernetes node
+                           NODE_NAME
+-n|--namespace NAMESPACE   Collect logs from HPE CSI deployment in namespace
+                           NAMESPACE (default: kube-system)
+-a|--all                   Collect logs from all nodes (the default)
 ```
 
 ## Tuning
