@@ -41,7 +41,7 @@ Kasten K10 installs in its own namespace using a Helm chart. It also assumes the
 
 ## Snapshots and restores
 
-Kasten K10 provide the user with graphical interface and dashboard to schedule and perform data management operations. There's also an API that can be manipulated with `kubectl` using CRDs.
+Kasten K10 provides the user with a graphical interface and dashboard to schedule and perform data management operations. There's also an API that can be manipulated with `kubectl` using CRDs.
 
 To perform snapshot and restore operations through Kasten K10 using the HPE CSI Driver for Kubernetes, please refer to the Kasten K10 documentation.
 
