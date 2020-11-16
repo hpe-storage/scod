@@ -66,6 +66,7 @@ nav:
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
   - PARTNER ECOSYSTEMS:
+    - 'Kasten by Veeam': 'partners/kasten/index.md'
     - 'Rancher Labs': 'partners/rancher_labs/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'

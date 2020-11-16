@@ -67,6 +67,14 @@ Learn how to use CSI snapshots and clones with the HPE CSI Driver.
 
 Joint solutions with our revered ecosystem partners.
 
+### Get started with Kasten K10 by Veeam and the HPE CSI Driver
+
+This tutorial explains how to deploy the necessary components for Kasten K10 and how to perform snapshots and restores using the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/bTHUlRBUcTM" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=tBjjGuuOn7Q)</small>
+
 ### Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift
 
 This tutorial goes through the steps of installing the HPE CSI Operator on Red Hat OpenShift.
