@@ -5,7 +5,7 @@ Kasten K10 by Veeam is a data management platform designed to run natively on Ku
 HPE and Veeam have a long-standing alliance. Read about the extended partnership with Kasten in this blog post.
 
 !!! tip
-    All the steps below are captured in a tutorial available on YouTube and in the SCOD Video Gallery.
+    All the steps below are captured in a [tutorial available on YouTube](https://www.youtube.com/watch?v=bTHUlRBUcTM) and in the SCOD [Video Gallery](../../learn/video_gallery/index.md#get_started_with_kasten_k10_by_veeam_and_the_hpe_csi_driver).
 
 [TOC]
 
