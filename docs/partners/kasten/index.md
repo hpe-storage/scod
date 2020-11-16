@@ -2,7 +2,7 @@
 
 Kasten K10 by Veeam is a data management platform designed to run natively on Kubernetes to protect applications. K10 integrates seamlessly with the HPE CSI Driver for Kubernetes thanks to the native support for CSI `VolumeSnapshots` and `VolumeSnapshotClasses`.
 
-HPE and Veeam have a long-standing alliance. Read about the extended partnership with Kasten in this blog post.
+HPE and Veeam have a long-standing alliance. Read about the extended partnership with Kasten in [this blog post](https://community.hpe.com/t5/around-the-storage-block/kubernetes-backup-and-recovery-with-hpe-and-kasten-by-veeam/ba-p/7109289).
 
 !!! tip
     All the steps below are captured in a [tutorial available on YouTube](https://www.youtube.com/watch?v=bTHUlRBUcTM) and in the SCOD [Video Gallery](../../learn/video_gallery/index.md#get_started_with_kasten_k10_by_veeam_and_the_hpe_csi_driver).
