@@ -611,9 +611,9 @@ parameters:
   csi.storage.k8s.io/controller-expand-secret-name: custom-secret
   csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
   cpg: SSD_r6
-  provisioning_type: tpvv
+  provisioningType: tpvv
   accessProtocol: iscsi
-  allowOverrides: cpg,provisioning_type
+  allowOverrides: cpg,provisioningType
 allowVolumeExpansion: true
 ```
 
