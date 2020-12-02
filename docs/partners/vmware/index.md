@@ -524,6 +524,7 @@ spec:
         requests:
           storage: 50Gi
 ```
+
 Press **Enter** and **Ctrl-D**.
 
 Verify that the MongoDB application has been deployed. Wait for pods to start running and PVCs to be created for each replica.
