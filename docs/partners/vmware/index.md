@@ -66,9 +66,9 @@ Verify the vVOL datastore is listed under Compatible storage.
 
 Once complete click **Finish**. Repeat this process for any additional Storage Policies you may need.
 
-![Specify name of Storage Policy](img/profile6.png)
+![Click Finish](img/profile7.png)
 
-Now that we have configured a Storage Policy, we can deploy the vSphere CSI Driver.
+Now that we have configured a Storage Policy, we can proceed with the deployment of the vSphere CSI Driver.
 
 #### Install the vSphere Cloud Provider Interface
 
