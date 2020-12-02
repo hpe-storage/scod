@@ -2,7 +2,7 @@ Cloud Native Storage for vSphere
 
 # Overview
 
-Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. CNS is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the new CNS view.
+Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. CNS is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the new CNS UI within vCenter.
 
 CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE Storage (HPE Primera, Nimble Storage, and HPE 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.
 
@@ -13,7 +13,7 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 When considering to use block storage within Kubernetes clusters running on VMware, customers need to evaluate which data protocol (FC or iSCSI) is primarily used within their virtualized enviroment. This will help best determine which CSI Driver can be deployed within your Kubernetes clusters. 
 
 !!! Important
-    Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere CSI Driver to deliver block-based persistent storage to Kubernetes clusters within VMware environments using the Fibre Channel protocol. 
+    Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere CSI Driver to deliver block-based persistent storage from HPE Primera, Nimble Storage or HPE 3PAR arrays to Kubernetes clusters within VMware environments for customers who are using the Fibre Channel protocol. 
     <br><br>
     The HPE CSI Driver for Kubernetes does not support N_Port ID Virtualization (NPIV).
 
@@ -24,7 +24,7 @@ When considering to use block storage within Kubernetes clusters running on VMwa
 
 #### Prerequisites
 
-This guide will cover the configuration of the vSphere CSI Driver. Cloud Native Storage for vSphere uses the VASA provider and Storage Policy Based Management (SPBM) to create First Class disks on supported arrays. 
+This guide will cover the configuration and deployment of the vSphere CSI Driver. Cloud Native Storage for vSphere uses the VASA provider and Storage Policy Based Management (SPBM) to create First Class disks on supported arrays. 
 
 CNS supports VMware vSphere 6.7 U3 and higher.
 
@@ -40,7 +40,7 @@ Refer to the following guides to configure the VASA provider and create a vVOL D
 
 ##### Configuring a VM Storage Policy
 
-Once the vVol Datastore is created, create a VM Storage Policy. From vCenter vSphere Client, click **Menu** and select **Policies and Profiles**.
+Once the vVol Datastore is created, create a VM Storage Policy. From the vSphere Web Client, click **Menu** and select **Policies and Profiles**.
 
 ![Select Policies and Profiles](img/profile1.png)
 
@@ -64,11 +64,11 @@ Verify the vVOL datastore is listed under Compatible storage.
 
 ![Compatible Storage](img/profile6.png)
 
-Once complete click **Finish**. Repeat this process for any additional Storage Policies you may require.
+Once complete click **Finish**. Repeat this process for any additional Storage Policies you may need.
 
 ![Specify name of Storage Policy](img/profile6.png)
 
-Now that we have configure a Storage Policy, we can deploy the vSphere CSI Driver.
+Now that we have configured a Storage Policy, we can deploy the vSphere CSI Driver.
 
 #### Install the vSphere Cloud Provider Interface
 
@@ -257,15 +257,15 @@ Taints:             <none>
 
 Remove the **/etc/kubernetes/vsphere.conf** file.
 
-#### Install vSphere Container Storage Interface (CSI) Driver
+Now that the CPI is installed, we can proceed with deploying the vSphere CSI Driver.
 
-Now that the CPI is installed, we can proceed with deploying the vSphere CSI Driver.  
+#### Install vSphere Container Storage Interface (CSI) Driver
 
 The following has been adapted from the vSphere CSI Driver installation guide. Refer to [https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html](https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html) for additional information on how to deploy the vSphere CSI Driver.
 
 ##### Create a configuration file with vSphere credentials
 
-Since we are connecting to block storage provided by Primera, Nimble Storage or 3PAR we will create a configuration file for block volumes.
+Since we are connecting to block storage provided from an HPE Primera, Nimble Storage or 3PAR array, we will create a configuration file for block volumes.
 
 Create **csi-vsphere.conf** file.
 
@@ -289,7 +289,7 @@ datacenters = "<vCenter datacenter>"
 
 ##### Create a Kubernetes Secret for vSphere credentials
 
-Create a Kubernetes ``Secret` that will contain configuration details to connect to your vSphere environment.
+Create a Kubernetes ``Secret` that will contain the configuration details to connect to your vSphere environment.
 
 ```markdown
 kubectl create secret generic vsphere-config-secret --from-file=csi-vsphere.conf -n kube-system
@@ -303,7 +303,7 @@ NAME                    TYPE     DATA   AGE
 vsphere-config-secret   Opaque   1      43s
 ```
 
-For security purposes, it is advised to remove this configuration file.
+For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
 ```markdown
 rm csi-vsphere.conf
@@ -319,13 +319,13 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 
 ##### Deploy the vSphere CSI Driver
 
-vSphere CSI Controller deployment:
+vSphere CSI Controller `Deployment`:
 
 ```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.0/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
 ```
 
-vSphere CSI node Daemonset:
+vSphere CSI node `Daemonset`:
 
 ```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.0/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
@@ -333,14 +333,18 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 
 ##### Verify the vSphere CSI Driver deployment
 
-To verify that the CSI driver has been successfully deployed, you should observe that there is one instance of the `vsphere-csi-controller` running on the master node and that an instance of the `vsphere-csi-node` is running on each of the worker nodes.
+To verify that the vSphere CSI driver has been successfully deployed, the `vsphere-csi-controller` deployment should be in ready state and an instance of the `vsphere-csi-node` running on each of the worker nodes.
 
+```markdown
 kubectl get deployment -n kube-system
 NAME                          READY   AGE
 vsphere-csi-controller        1/1     2m58s
-$ kubectl get daemonsets vsphere-csi-node -n kube-system
+
+kubectl get daemonsets vsphere-csi-node -n kube-system
 NAME               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
-vsphere-csi-node   4         4         4       4            4           <none>          3m51s
+vsphere-csi-node   2         2         2       2            2           <none>          3m51s
+```
+
 
 Verify that the vSphere **csidrivers** `CustomResourceDefinition` has been registered with Kubernetes.
 
@@ -388,6 +392,8 @@ In this example, we will be deploying a stateful MongoDB application with 3 repl
 
 ##### Create a StorageClass
 
+Create the `StorageClass` that will be used for the MongoDB deployment. We will use the Storage Policy created earlier as an example. Make sure to change the Storage Policy name to match your setup.
+
 ```markdown
 kubectl create -f- 
 ```
@@ -402,7 +408,7 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.vsphere.vmware.com
 parameters:
-  storagepolicyname: "<Storage Policy name>"
+  storagepolicyname: "primera-default-profile"
   fstype: ext4
 ```
 
@@ -411,7 +417,7 @@ Press **Enter** and **Ctrl-D**.
 Inspect the `StorageClass` to verify it was created successfully.
 
 ```markdown
-kubectl get storageclass sc-mongodb
+kubectl get sc sc-mongodb
 ```
 
 ##### Create and Deploy a MongoDB StatefulSet
@@ -423,7 +429,7 @@ openssl rand -base64 756 > mongo_key.txt
 chmod 400 mongo_key.txt
 ```
 
-Next create the MongoDB keyfile `Secret`:
+Next create the MongoDB keyfile `Secret`.
 ```markdown
 kubectl create secret generic shared-bootstrap-data --from-file=internal-auth-mongodb-keyfile=mongo_key.txt
 secret/shared-bootstrap-data created
@@ -528,7 +534,7 @@ NAME     READY   AGE
 mongod   3/3     96s
 ```
 
-Inspect the pods and PersistentVolumeClaims
+Inspect the pods and PersistentVolumeClaims.
 
 ```markdown
 kubectl get pods,pvc
@@ -543,7 +549,7 @@ mongodb-persistent-storage-mongod-1   Bound    pvc-a3755dbe-210d-4c7b-8ac1-bb060
 mongodb-persistent-storage-mongod-2   Bound    pvc-22bab0f4-8240-48c1-91b1-3495d038533e   50Gi       RWO            sc-mongodb      2m
 ```
 
-To interact with the Mongo replica set, you can connect to the first node:
+To interact with the Mongo replica set, you can connect to the first node.
 
 ```markdown
 kubectl exec -it mongod-0 -c mongod-container bash
@@ -568,8 +574,8 @@ Questions? Try the support group
 
 Verify that the volumes are now visible within the Cloud Native Storage interface. 
 
-Log into the vSphere Web Client, click on Datacenter, then the Monitor tab. Choose Cloud Native Storage and highlight Container Volumes. From here we can see the persistent volumes that were created as part of our StatefulSet. These should match the `kubectl get pvc` output from earlier. You can also monitor their storage policy compliance status.
+Log into the vSphere Web Client, click on Datacenter, then the Monitor tab. Expand Cloud Native Storage and highlight Container Volumes. From here, we can see the persistent volumes that were created as part of our MongoDB deployment. These should match the `kubectl get pvc` output from earlier. You can also monitor their storage policy compliance status.
 
 ![Container Volumes](img/container_volumes.png)
 
-This conclude the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI Driver) are deployed and working correctly. 
+This concludes the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI Driver) are deployed and working correctly. 
