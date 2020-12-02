@@ -573,9 +573,11 @@ Questions? Try the support group
 
 ##### Verify Cloud Native Storage in vSphere
 
-Verify that the volumes are now visible within the Cloud Native Storage interface. 
+Verify that the volumes are now visible within the Cloud Native Storage interface by logging into the vSphere Web Client.
 
-Log into the vSphere Web Client, click on Datacenter, then the Monitor tab. Expand Cloud Native Storage and highlight Container Volumes. From here, we can see the persistent volumes that were created as part of our MongoDB deployment. These should match the `kubectl get pvc` output from earlier. You can also monitor their storage policy compliance status.
+Click on **Datacenter**, then the **Monitor** tab. Expand **Cloud Native Storage** and highlight **Container Volumes**. 
+
+From here, we can see the persistent volumes that were created as part of our MongoDB deployment. These should match the `kubectl get pvc` output from earlier. You can also monitor their storage policy compliance status.
 
 ![Container Volumes](img/container_volumes.png)
 
