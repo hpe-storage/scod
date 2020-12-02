@@ -4,7 +4,7 @@ Cloud Native Storage for vSphere
 
 Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. CNS is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the new CNS UI within vCenter.
 
-CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE Storage (HPE Primera, Nimble Storage, and HPE 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.
+CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE Storage (HPE Primera, Nimble Storage, Nimble Storage dHCI, and HPE 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.
 
 [TOC]
 
