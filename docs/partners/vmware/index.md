@@ -392,7 +392,7 @@ This is an example MongoDB chart using a StatefulSet.
 
 ```markdown
 helm install mongodb \
-    --set architecture=replicaset,replicaSetName=mongod,replicaCount=3,auth.rootPassword=secretpassword,auth.username=my-user,auth.password=my-password,auth.database=my-database,persistence.storageClass=default-primera-storageclass,persistence.size=50Gi \
+    --set architecture=replicaset,replicaSetName=mongod,replicaCount=3,auth.rootPassword=secretpassword,auth.username=my-user,auth.password=my-password,auth.database=my-database,persistence.storageClass=primera-default-sc,persistence.size=50Gi \
     bitnami/mongodb
 ```
 
@@ -411,10 +411,10 @@ mongod-0   1/1     Running   0          90s
 mongod-1   1/1     Running   0          71s
 mongod-2   1/1     Running   0          44s
 
-NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-datadir-mongodb-0   Bound    pvc-fd3994fb-a5fb-460b-ab17-608a71cdc337   50Gi       RWO            sc-mongodb     13m
-datadir-mongodb-1   Bound    pvc-a3755dbe-210d-4c7b-8ac1-bb0607a2c537   50Gi       RWO            sc-mongodb     13m
-datadir-mongodb-2   Bound    pvc-22bab0f4-8240-48c1-91b1-3495d038533e   50Gi       RWO            sc-mongodb     13m
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS         AGE
+datadir-mongodb-0   Bound    pvc-fd3994fb-a5fb-460b-ab17-608a71cdc337   50Gi       RWO            primera-default-sc   13m
+datadir-mongodb-1   Bound    pvc-a3755dbe-210d-4c7b-8ac1-bb0607a2c537   50Gi       RWO            primera-default-sc   13m
+datadir-mongodb-2   Bound    pvc-22bab0f4-8240-48c1-91b1-3495d038533e   50Gi       RWO            primera-default-sc   13m
 ```
 
 To interact with the Mongo replica set, you can connect to the StatefulSet.
