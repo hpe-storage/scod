@@ -13,8 +13,8 @@ HPE and Veeam have a long-standing alliance. Read about the extended partnership
 
 The cluster needs to be running Kubernetes 1.17 or later and have the CSI snapshot beta `CustomResourceDefinitions` (CRDs) and the CSI snapshot-controller deployed. Follow the guides available on SCOD to:
 
-- [Enable CSI snapshots](../../csi_driver/using.html#enabling_csi_snapshots)
-- [Using CSI snapshots](../../csi_driver/using.html#using_csi_snapshots)
+- [Enable CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots)
+- [Using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots)
 
 !!! note
     The rest of this guide assumes a default `VolumeSnapshotClass` and `VolumeSnapshots` are functional on the cluster.

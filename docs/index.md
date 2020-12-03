@@ -1,3 +1,4 @@
+<!--
 !!! error "KubeCon + CloudNativeCon North America 2020 Virtual"
     The HPE primary storage team is participating at KubeCon November 17-20th 2020
 
@@ -5,6 +6,7 @@
     - Attend the KubeCon tutorial: "[Introduction to Using the Container Storage Interface (CSI) Primitives](https://kccncna20.sched.com/event/ekFc)" presented by HPE.
     - Find us in the #HPE channel on the [official Slack community of CNCF](https://cloud-native.slack.com).
 
+-->
 ## HPE Storage Container Orchestrator Documentation 
 
 This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage.
