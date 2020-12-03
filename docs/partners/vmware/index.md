@@ -36,7 +36,7 @@ Refer to the following guides to configure the VASA provider and create a vVol D
 
 | Storage Array | Guide |
 | ------ | ------ |
-| HPE Primera | [VMware vVOLs with HPE Primera Storage](https://support.hpe.com/hpesc/public/docDisplay?docId=a00101451en_us)  |
+| HPE Primera | [VMware vVols with HPE Primera Storage](https://support.hpe.com/hpesc/public/docDisplay?docId=a00101451en_us)  |
 | HPE Nimble Storage & <br /> HPE Nimble Storage dHCI | [Working with VMware Virtual Volumes](https://infosight.hpe.com/InfoSight/media/cms/active/public/pubs_VMware_Integration_Guide_NOS_50x.whz/ddd1480379576971.html) |
 | HPE 3PAR | [Implementing VMware Virtual Volumes on HPE 3PAR StoreServ](https://h20195.www2.hpe.com/v2/getpdf.aspx/4AA5-6907ENW.pdf) |
 
@@ -301,7 +301,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 
 ##### Verify the vSphere CSI Driver deployment
 
-To verify that the vSphere CSI driver has been successfully deployed, the `vsphere-csi-controller` deployment should be in ready state and an instance of the `vsphere-csi-node` running on each of the worker nodes.
+Verify that the vSphere CSI driver has been successfully deployed using `kubectl rollout status`.
 
 ```markdown
 kubectl rollout status deployment/vsphere-csi-controller -n kube-system
