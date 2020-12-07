@@ -85,7 +85,7 @@ Now that we have configured a Storage Policy, we can proceed with the deployment
 
 This is adapted from the following tutorial, please read over to understand all of the vSphere, firewall and guest OS requirements.
 
-[Deploying a Kubernetes Cluster on vSphere with CSI and CPI](https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html)
+* [Deploying a Kubernetes Cluster on vSphere with CSI and CPI](https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html)
 
 !!! Note
     The following is a simplified single-site configuration to demonstrate how to deploy the vSphere CPI and CSI Driver. Make sure to adapt the configuration to match your environment and needs.
@@ -205,13 +205,13 @@ Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedu
 There are 3 manifests that must be deployed to install the vSphere Cloud Provider Interface (CPI). The following example applies the RBAC roles and the RBAC bindings to your Kubernetes cluster. It also deploys the Cloud Controller Manager in a DaemonSet.
 
 ```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-roles.yaml
 clusterrole.rbac.authorization.k8s.io/system:cloud-controller-manager created
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
 clusterrolebinding.rbac.authorization.k8s.io/system:cloud-controller-manager created
 
-kubectl apply -f https://github.com/kubernetes/cloud-provider-vsphere/raw/master/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
 serviceaccount/cloud-controller-manager created
 daemonset.extensions/vsphere-cloud-controller-manager created
 service/vsphere-cloud-controller-manager created
@@ -238,7 +238,9 @@ Now that the CPI is installed, we can proceed with deploying the vSphere CSI Dri
 
 #### Install vSphere Container Storage Interface (CSI) Driver
 
-The following has been adapted from the vSphere CSI Driver installation guide. Refer to [https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html](https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html) for additional information on how to deploy the vSphere CSI Driver.
+The following has been adapted from the vSphere CSI Driver installation guide. Refer to the official documentation for additional information on how to deploy the vSphere CSI Driver.
+
+* [vSphere CSI Driver - Installation](https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html)
 
 ##### Create a configuration file with vSphere credentials
 
@@ -281,23 +283,38 @@ For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
 Create the `ClusterRoles`, `ServiceAccounts` and `ClusterRoleBindings` needed for the installation of the vSphere CSI Driver
 
-```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.0/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
+```markdown fct_label="vSphere 6.7 U3"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/rbac/vsphere-csi-controller-rbac.yaml
+```
+
+```markdown fct_label="vSphere 7.0"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
 ```
 
 ##### Deploy the vSphere CSI Driver
 
 vSphere CSI Controller `Deployment`:
 
-```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.0/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
+```markdown fct_label="vSphere 6.7 U3"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-controller-deployment.yaml
 ```
+
+```markdown fct_label="vSphere 7.0"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
+```
+
+
 
 vSphere CSI node `Daemonset`:
 
-```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.0/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
+```markdown fct_label="vSphere 6.7 U3"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
+
+```markdown fct_label="vSphere 7.0"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
+```
+
 
 ##### Verify the vSphere CSI Driver deployment
 
@@ -388,11 +405,17 @@ In this example, we will be deploying a stateful MongoDB application with 3 repl
 
 ##### Create and Deploy a MongoDB Helm chart
 
-This is an example MongoDB chart using a StatefulSet.
+This is an example MongoDB chart using a StatefulSet. The default volume size is **8Gi**, if you want to change that use `--set persistence.size=50Gi`.
 
 ```markdown
 helm install mongodb \
-    --set architecture=replicaset,replicaSetName=mongod,replicaCount=3,auth.rootPassword=secretpassword,auth.username=my-user,auth.password=my-password,auth.database=my-database,persistence.storageClass=primera-default-sc,persistence.size=50Gi \
+    --set architecture=replicaset \
+    --set replicaSetName=mongod \
+    --set replicaCount=3 \
+    --set auth.rootPassword=secretpassword \
+    --set auth.username=my-user \
+    --set auth.password=my-password \
+    --set auth.database=my-database \
     bitnami/mongodb
 ```
 
@@ -402,7 +425,7 @@ Verify that the MongoDB application has been deployed. Wait for pods to start ru
 kubectl rollout status sts/mongodb
 ```
 
-Inspect the pods and PersistentVolumeClaims.
+Inspect the `Pods` and `PersistentVolumeClaims`.
 
 ```markdown
 kubectl get pods,pvc
@@ -422,18 +445,9 @@ To interact with the Mongo replica set, you can connect to the StatefulSet.
 ```markdown
 kubectl exec -it sts/mongod bash
 
-root@mongod-0:/# df -h
-Filesystem                           Size  Used Avail Use% Mounted on
-overlay                               50G  9.9G   41G  20% /
-tmpfs                                 64M     0   64M   0% /dev
-tmpfs                                3.9G     0  3.9G   0% /sys/fs/cgroup
-/dev/mapper/mpathb                    50G  335M   50G   1% /bitnami/mongodb
-/dev/mapper/cl_centos7template-root   50G  9.9G   41G  20% /etc/hosts
-shm                                   64M     0   64M   0% /dev/shm
-tmpfs                                3.9G   12K  3.9G   1% /run/secrets/kubernetes.io/serviceaccount
-tmpfs                                3.9G     0  3.9G   0% /proc/acpi
-tmpfs                                3.9G     0  3.9G   0% /proc/scsi
-tmpfs                                3.9G     0  3.9G   0% /sys/firmware
+root@mongod-0:/# df -h /bitnami/mongodb
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb         49G  374M   47G   1% /bitnami/mongodb
 ```
 
 We can see that the vSphere CSI driver has successfully provisioned and mounted the persistent volume to **/bitnami/mongodb**.
