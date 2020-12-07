@@ -206,26 +206,16 @@ There are 3 manifests that must be deployed to install the vSphere Cloud Provi
 
 ```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-roles.yaml
-clusterrole.rbac.authorization.k8s.io/system:cloud-controller-manager created
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
-clusterrolebinding.rbac.authorization.k8s.io/system:cloud-controller-manager created
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
-serviceaccount/cloud-controller-manager created
-daemonset.extensions/vsphere-cloud-controller-manager created
-service/vsphere-cloud-controller-manager created
 ```
 
 ##### Verify that the CPI has been successfully deployed
 
 Verify `vsphere-cloud-controller-manager` is running.
 
-```markdown
-kubectl rollout status ds/vsphere-cloud-controller-manager -n kube-system
-```
-
-The output is similar to this:
 ```markdown
 kubectl rollout status ds/vsphere-cloud-controller-manager -n kube-system
 daemon set "vsphere-cloud-controller-manager" successfully rolled out
@@ -263,7 +253,7 @@ datacenters = "<vCenter datacenter>"
 
 ##### Create a Kubernetes Secret for vSphere credentials
 
-Create a Kubernetes ``Secret` that will contain the configuration details to connect to your vSphere environment.
+Create a Kubernetes `Secret` that will contain the configuration details to connect to your vSphere environment.
 
 ```markdown
 kubectl create secret generic vsphere-config-secret --from-file=csi-vsphere.conf -n kube-system
@@ -279,37 +269,21 @@ vsphere-config-secret   Opaque   1      43s
 
 For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
-##### Create Roles, ServiceAccounts and ClusterRoleBindings for the vSphere CSI Driver
-
-Create the `ClusterRoles`, `ServiceAccounts` and `ClusterRoleBindings` needed for the installation of the vSphere CSI Driver
+##### Create RBAC, vSphere CSI Controller `Deployment` and vSphere CSI node `DaemonSet`
 
 ```markdown fct_label="vSphere 6.7 U3"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-```
 
-```markdown fct_label="vSphere 7.0"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-```
-
-##### Deploy the vSphere CSI Driver
-
-vSphere CSI Controller `Deployment`:
-
-```markdown fct_label="vSphere 6.7 U3"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-```
 
-```markdown fct_label="vSphere 7.0"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-```
-
-vSphere CSI node `Daemonset`:
-
-```markdown fct_label="vSphere 6.7 U3"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
 
 ```markdown fct_label="vSphere 7.0"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
+
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
 
