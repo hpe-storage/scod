@@ -303,8 +303,6 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
 ```
 
-
-
 vSphere CSI node `Daemonset`:
 
 ```markdown fct_label="vSphere 6.7 U3"
@@ -314,7 +312,6 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 ```markdown fct_label="vSphere 7.0"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
-
 
 ##### Verify the vSphere CSI Driver deployment
 
