@@ -13,11 +13,11 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 When considering to use block storage within Kubernetes clusters running on VMware, customers need to evaluate which data protocol (FC or iSCSI) is primarily used within their virtualized environment. This will help best determine which CSI driver can be deployed within your Kubernetes clusters. 
 
 !!! Important
-    Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere CSI Driver to deliver block-based persistent storage from HPE Primera, Nimble Storage, Nimble Storage dHCI or 3PAR arrays to Kubernetes clusters within VMware environments for customers who are using the Fibre Channel protocol. 
+    Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere CSI driver to deliver block-based persistent storage from HPE Primera, Nimble Storage, Nimble Storage dHCI or 3PAR arrays to Kubernetes clusters within VMware environments for customers who are using the Fibre Channel protocol. 
     <br /><br />
     The HPE CSI Driver for Kubernetes does not support N_Port ID Virtualization (NPIV).
 
-|  Protocol   | HPE CSI Driver | vSphere CSI Driver | 
+|  Protocol   | HPE CSI Driver for Kubernetes | vSphere CSI driver | 
 | ------ | :--------: | :---------: | 
 | FC | **Not** supported | Supported* |
 | iSCSI | Supported | Supported* |
@@ -26,7 +26,7 @@ When considering to use block storage within Kubernetes clusters running on VMwa
 
 #### Prerequisites
 
-This guide will cover the configuration and deployment of the vSphere CSI Driver. Cloud Native Storage for vSphere uses the VASA provider and Storage Policy Based Management (SPBM) to create First Class Disks on supported arrays. 
+This guide will cover the configuration and deployment of the vSphere CSI driver. Cloud Native Storage for vSphere uses the VASA provider and Storage Policy Based Management (SPBM) to create First Class Disks on supported arrays. 
 
 CNS supports VMware vSphere 6.7 U3 and higher.
 
@@ -79,7 +79,7 @@ Verify everything looks correct and click **FINISH**. Repeat this process for an
 
 ![Click Finish](img/profile7.png)
 
-Now that we have configured a Storage Policy, we can proceed with the deployment of the vSphere CSI Driver.
+Now that we have configured a Storage Policy, we can proceed with the deployment of the vSphere CSI driver.
 
 #### Install the vSphere Cloud Provider Interface (CPI)
 
@@ -88,7 +88,7 @@ This is adapted from the following tutorial, please read over to understand all 
 * [Deploying a Kubernetes Cluster on vSphere with CSI and CPI](https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html)
 
 !!! Note
-    The following is a simplified single-site configuration to demonstrate how to deploy the vSphere CPI and CSI Driver. Make sure to adapt the configuration to match your environment and needs.
+    The following is a simplified single-site configuration to demonstrate how to deploy the vSphere CPI and CSI drivers. Make sure to adapt the configuration to match your environment and needs.
 
 ##### Create a CPI ConfigMap
 
@@ -202,13 +202,12 @@ Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedu
 ```
 
 ##### Deploy the CPI manifests
+
 There are 3 manifests that must be deployed to install the vSphere Cloud Provider Interface (CPI). The following example applies the RBAC roles and the RBAC bindings to your Kubernetes cluster. It also deploys the Cloud Controller Manager in a DaemonSet.
 
 ```markdown
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-roles.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
 ```
 
@@ -224,13 +223,13 @@ daemon set "vsphere-cloud-controller-manager" successfully rolled out
 !!! Note
     If you happen to make an error with the **vsphere.conf**, simply delete the CPI components and the `ConfigMap`, make any necessary edits to the **vsphere.conf** file, and reapply the steps above.
 
-Now that the CPI is installed, we can proceed with deploying the vSphere CSI Driver.
+Now that the CPI is installed, we can proceed with deploying the vSphere CSI driver.
 
-#### Install vSphere Container Storage Interface (CSI) Driver
+#### Install the vSphere Container Storage Interface (CSI) driver
 
-The following has been adapted from the vSphere CSI Driver installation guide. Refer to the official documentation for additional information on how to deploy the vSphere CSI Driver.
+The following has been adapted from the vSphere CSI driver installation guide. Refer to the official documentation for additional information on how to deploy the vSphere CSI driver.
 
-* [vSphere CSI Driver - Installation](https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html)
+* [vSphere CSI driver - Installation](https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html)
 
 ##### Create a configuration file with vSphere credentials
 
@@ -273,21 +272,17 @@ For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
 ```markdown fct_label="vSphere 6.7 U3"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
 
 ```markdown fct_label="vSphere 7.0"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
 ```
 
-##### Verify the vSphere CSI Driver deployment
+##### Verify the vSphere CSI driver deployment
 
 Verify that the vSphere CSI driver has been successfully deployed using `kubectl rollout status`.
 
@@ -338,7 +333,6 @@ Events:  <none>
 ```
 
 Also verify that the vSphere CSINodes `CustomResourceDefinition` has been created.
-
 ```markdown
 kubectl get csinodes -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.drivers[].name}{"\n"}{end}'
 master1 csi.vsphere.vmware.com
@@ -346,7 +340,7 @@ node1   csi.vsphere.vmware.com
 node2   csi.vsphere.vmware.com
 ```
 
-If there are no errors, the vSphere CSI Driver has been successfully deployed.
+If there are no errors, the vSphere CSI driver has been successfully deployed.
 
 ##### Create a StorageClass
 
@@ -368,11 +362,11 @@ parameters:
   fstype: xfs
 ```
 
-### Validate the vSphere CSI Driver
+### Validate
 
-With the vSphere CSI Driver deployed and a `StorageClass` available, lets run through some tests to verify it is working correctly.
+With the vSphere CSI driver deployed and a `StorageClass` available, lets run through some tests to verify it is working correctly.
 
-In this example, we will be deploying a stateful MongoDB application with 3 replicas. The persistent volumes deployed by the vSphere CSI Driver will be created using the VM Storage Policy and placed on a compatible vVol datastore.
+In this example, we will be deploying a stateful MongoDB application with 3 replicas. The persistent volumes deployed by the vSphere CSI driver will be created using the VM Storage Policy and placed on a compatible vVol datastore.
 
 ##### Create and Deploy a MongoDB Helm chart
 
@@ -433,4 +427,4 @@ From here, we can see the persistent volumes that were created as part of our Mo
 
 ![Container Volumes](img/container_volumes.png)
 
-This concludes the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI Driver) are deployed and working correctly. 
+This concludes the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI drivers) are deployed and working correctly. 
