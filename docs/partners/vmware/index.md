@@ -1,6 +1,4 @@
-Cloud Native Storage for vSphere
-
-# Overview
+# Cloud Native Storage for vSphere
 
 Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. CNS is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the new CNS UI within vCenter.
 
