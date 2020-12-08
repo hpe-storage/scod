@@ -47,7 +47,7 @@ Change `my-hpe-csi-operator` to the name of the project (e.g. `hpe-csi-driver` b
 
 ```markdown
 oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
-sed -i 's/my-hpe-csi-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
+sed -i'' -e 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
 ```
 
 Deploy the SCC:
