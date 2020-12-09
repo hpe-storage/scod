@@ -49,10 +49,10 @@ The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift.
 
 Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
 
-As an example, we'll deploy version `0.14.1` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself while is the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
+As an example, we'll deploy version `0.17.0` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself with the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
 
 ```markdown
-curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/0.14.1/install.sh | bash -s 0.14.1
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.17.0/install.sh | bash -s v0.17.0
 ```
 
 Install the HPE CSI Operator.
@@ -69,58 +69,18 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to which CSP is being deployed.
 
-```markdown fct_label="HPE Nimble Storage"
+```markdown
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
   name: csi-driver
 spec:
-  backendType: nimble
-  imagePullPolicy: IfNotPresent
-  logLevel: info
   disableNodeConformance: false
-  secret:
-    backend: 192.168.1.1
-    create: true
-    password: admin
-    servicePort: '8080'
-    username: admin
-  storageClass:
-    allowVolumeExpansion: true
-    create: true
-    defaultClass: false
-    name: hpe-standard
-    parameters:
-      accessProtocol: iscsi
-      fsType: xfs
-      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
-```
-
-```markdown fct_label="HPE Primera and 3PAR"
-apiVersion: storage.hpe.com/v1
-kind: HPECSIDriver
-metadata:
-  name: csi-driver
-spec:
-  backendType: primera3par
   imagePullPolicy: IfNotPresent
+  iscsi:
+    chapPassword: ""
+    chapUser: ""
   logLevel: info
-  disableNodeConformance: false
-  secret:
-    backend: 10.10.0.1
-    create: true
-    password: 3pardata
-    servicePort: '8080'
-    username: 3paradm
-  storageClass:
-    allowVolumeExpansion: true
-    create: true
-    defaultClass: false
-    name: hpe-standard
-    parameters:
-      accessProtocol: iscsi
-      fsType: xfs
-      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
 ```
 
 Create a `HPECSIDriver` with the manifest.
@@ -129,7 +89,7 @@ Create a `HPECSIDriver` with the manifest.
 kubectl create -f hpe-csi-operator.yaml
 ```
 
-The CSI driver is now ready for use. Proceed to the [next section to learn about using](using.md) the driver.
+The CSI driver is now ready for use. Proceed to the next section to learn about [adding a HPE storage backend](#add_a_hpe_storage_backend).
 
 ## Add a HPE storage backend
 
