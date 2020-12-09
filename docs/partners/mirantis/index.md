@@ -22,7 +22,7 @@ Client Version: v1.19.4
 Server Version: v1.18.10-mirantis-1
 ```
 
-In this particular example, Kubernetes 1.18 is being used and the procedures for 1.18 needs to be followed accordingly in this step-by-step procedure highlighted in the [advanced install](../../csi_driver/deployment.md#common) section of the deployment documentation.
+In this particular example, Kubernetes 1.18 is being used. Follow the steps for 1.18 highlighted within the [advanced install](../../csi_driver/deployment.md#common) section of the deployment documentation.
 
 - **Step 1** → Install the Linux node IO settings `ConfigMap`.
 - **Step 2** → Determine which backend being used (Nimble or Primera/3PAR) and deploy the corresponding CSP manifest.
