@@ -28,7 +28,7 @@ In this particular example, Kubernetes 1.18 is being used. Follow the steps for 
 - **Step 2** → Determine which backend being used (Nimble or Primera/3PAR) and deploy the corresponding CSP manifest.
 - **Step 3** → Deploy the HPE CSI Driver manifests for the Kubernetes version being used.
 
-Next steps would involve adding a [supported HPE backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend) and [creating a `StorageClass`](../../csi_driver/using.md#base_storageclass_parameters).
+Next, add a [supported HPE backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend) and [create a `StorageClass`](../../csi_driver/using.md#base_storageclass_parameters).
 
 Learn more about using the CSI objects in [the comprehensive overview](../../csi_driver/using.md). Also make sure to familiarize yourself with the particular features and capabilities of the backend being used.
 
