@@ -20,6 +20,7 @@ As different methods of installation are provided, it might not be too obvious w
 | HPE Ezmeral Container Platform environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
+| Non-semantic version in `kubectl version` <br /> i.e `v1.17.2-myversion-1` | The [advanced install](#advanced_install) |
 
 !!! error "Undecided?"
     If it's not clear what you should use for your environment, the Helm chart is most likely the correct answer.
