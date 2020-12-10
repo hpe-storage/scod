@@ -150,7 +150,7 @@ By navigating to the Developer view, it should now be possible to inspect the CS
 
 ![Operator Topology](img/webcon-7.png)
 
-The CSI driver is now ready for use. Next, a [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
+The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
 #### Additional information
 
