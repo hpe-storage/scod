@@ -62,7 +62,7 @@ securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 
 #### Caveats
 
-At this time of writing (CSI Operator 1.2.0) the default `StorageClass` being shipped with the CSI driver is not very useful for OpenShift as it doesn't allow applications to write in the `PersistentVolumes`. Make sure to deploy a new `StorageClass` with `.parameters.fsMode` set to `"0770"`. This caveat will be removed in subsequent releases.
+Make sure to deploy `StorageClasses` with `.parameters.fsMode` set to `"0770"`, otherwise `Pods` won't be able to write data in the `PersistentVolumes`.
 
 * Learn how to create a base `StorageClass` in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
@@ -74,7 +74,7 @@ It's assumed the SCC has been applied to the project and have `kube:admin` privi
 
 First, an `OperatorGroup` needs to be created.
 
-```yaml
+```markdown
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
@@ -87,7 +87,7 @@ spec:
 
 Next, create a `Subscription` to the Operator.
 
-```yaml
+```markdown
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
@@ -110,62 +110,20 @@ deployment "hpe-csi-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
 
-```markdown fct_label="HPE Nimble Storage"
+```markdown
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
   name: csi-driver
   namespace: hpe-csi-driver
 spec:
-  backendType: nimble
-  imagePullPolicy: Always
+  disableNodeConformance: false
+  imagePullPolicy: IfNotPresent
+  iscsi:
+    chapPassword: ""
+    chapUser: ""
   logLevel: info
-  secret:
-    backend: 192.168.1.1
-    create: true
-    password: admin
-    servicePort: '8080'
-    username: admin
-  storageClass:
-    allowVolumeExpansion: true
-    create: true
-    defaultClass: false
-    name: hpe-standard
-    parameters:
-      accessProtocol: iscsi
-      fsType: xfs
-      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
 ```
-
-```markdown fct_label="HPE 3PAR and Primera"
-apiVersion: storage.hpe.com/v1
-kind: HPECSIDriver
-metadata:
-  name: csi-driver
-  namespace: hpe-csi-driver
-spec:
-  backendType: primera3par
-  imagePullPolicy: Always
-  logLevel: info
-  secret:
-    backend: 10.10.10.1
-    create: true
-    password: 3pardata
-    servicePort: '8080'
-    username: 3paradm
-  storageClass:
-    allowVolumeExpansion: true
-    create: true
-    defaultClass: false
-    name: hpe-standard
-    parameters:
-      accessProtocol: iscsi
-      fsType: xfs
-      volumeDescription: Volume created by the HPE CSI Driver for Kubernetes
-```
-
-!!! note
-    As noted in the [caveats](#caveats), the installed `StorageClass` is not very useful for OpenShift. Create a new base `StorageClass` by following the steps in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
 #### OpenShift web console
 
@@ -186,18 +144,13 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 ![Create a new instance](img/webcon-5.png)
 *Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
 
-![Supply parameters](img/webcon-6.png)
-*Configure the instance with the desired values<sup>!</sup>.*
-
-!!! note "Values"
-    The required parameters are `.spec.backendType`, `.spec.secret.backend` and the credentials for the backend (`.spec.secret.username` and `.spec.secret.password`).
+* In the next 'Create HPECSIDriver' pane, click 'Create'
 
 By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
 
 ![Operator Topology](img/webcon-7.png)
 
-!!! note
-    As noted in the [caveats](#caveats), the installed `StorageClass` is not very useful for OpenShift. Create a new base `StorageClass` by following the steps in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
+The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
 #### Additional information
 
