@@ -74,6 +74,7 @@ apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
   name: csi-driver
+  namespace: my-hpe-csi-operator
 spec:
   disableNodeConformance: false
   imagePullPolicy: IfNotPresent
