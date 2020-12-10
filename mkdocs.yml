@@ -76,6 +76,7 @@ nav:
     - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
     - 'Persistent Storage for Kubernetes': 'learn/persistent_storage/index.md'
     - 'For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers': 'learn/introduction_to_containers/index.md'
+    - 'Introduction to CSI Primitives': 'learn/csi_primitives/index.md'
     - 'Video Gallery': 'learn/video_gallery/index.md'
     - 'Interactive CSI Workshop': 'learn/csi_workshop/index.md'
 #   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
