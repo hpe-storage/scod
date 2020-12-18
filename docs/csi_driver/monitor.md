@@ -25,7 +25,7 @@ The parameters that control the "hpe-csi-driver" are the following:
 
 Enable the Pod Monitor for a single replica `Deployment` by labeling the `Pod` (assumes an existing PVC name "my-pvc" exists).
 
-```
+```markdown
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -60,6 +60,3 @@ spec:
         persistentVolumeClaim:
           claimName: my-pvc
 ```
-
-!!! note "Tech Preview"
-    The Pod Monitor is currently in beta and should only be used for testing on non-production workloads.
