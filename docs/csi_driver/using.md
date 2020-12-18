@@ -25,9 +25,6 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 * [NFS Server Provisioner `StorageClass` parameters](#base_storageclass_parameters)
 * [Diagnosing the NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources)
 
-!!! warning "Caution"
-    The NFS Server Provisioner is currently in "Tech Preview" and should be considered beta software for use with <u>**non-production**</u> workloads.
-
 ## Enabling CSI snapshots
 
 Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
@@ -637,7 +634,8 @@ By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namesp
 
 Example use of `accessModes`:
 
-``` fct_label="ReadWriteOnce"
+```markdown fct_label="ReadWriteOnce"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -651,7 +649,8 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-``` fct_label="ReadWriteMany"
+```markdown fct_label="ReadWriteMany"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -665,7 +664,8 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-``` fct_label="ReadOnlyMany"
+```markdown fct_label="ReadOnlyMany"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -681,7 +681,8 @@ spec:
 
 In the case of declaring a ROX PVC, the requesting `Pod` specification needs to request the PVC as read-only. Example:
 
-```
+```markdown
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -706,14 +707,11 @@ spec:
 
 Requesting an empty read-only volume might not seem practical. The primary use case is to source existing datasets into immutable applications, using either a backend CSP cloning capability or CSI data management feature such as [snapshots or existing PVCs](#using_csi_snapshots).
 
-!!! note "Good to know"
-    The NFS Server Provisioner is currently in beta. More elaborate deployment architectures, documentation and examples will become available in time for General Availability (GA).
-
 #### Limitations and considerations for the NFS Server Provisioner
 
 The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
 
-The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consume about 150MiB at instantiation. These parameters will have defaults ready for GA.
+The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation.
 
 The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. Be default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it.
 
