@@ -164,6 +164,8 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Ephemeral inline volume](#ephemeral_inline_volume)
 - [Raw block volume](#raw_block_volume)
 - [Using CSI snapshots](#using_csi_snapshots)
+- [Volume Groups](#volume_groups)
+- [Snapshot Groups](#snapshot_groups)
 - [Expanding PVCs](#expanding_pvcs)
 - [Using PVC overrides](#using_pvc_overrides)
 - [Using volume mutations](#using_volume_mutations)
@@ -511,6 +513,105 @@ Again, the size in `.spec.resources.requests.storage` must match the source `Per
 
 !!! seealso "Learn more"
     For a more comprehensive tutorial on how to use snapshots and clones with CSI on Kubernetes 1.17, see [HPE CSI Driver for Kubernetes: Snapshots, Clones and Volume Expansion](https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion) on HPE DEV.
+
+### Volume Groups
+
+`PersistentVolumeClaims` created in a particular `Namespace` from the same storage backend may be grouped together in a `VolumeGroup`. A `VolumeGroup` is what may be known as a "consistency group" in other storage infrastructure systems. This allows certain attributes to be managed on a abstract group and attributes then applies to all member volumes in the group instead of managing each volume individually. One such aspect is creating snapshots with referential integrity between volumes or setting a performance attribute that would have accounting made on the logical group rather than the individual volume.
+
+Before grouping `PeristentVolumeClaims` there needs to be a `VolumeGroupClass` created. It needs to reference a `Secret` that corresponds to the same backend the `PersistentVolumeClaims` were created on. A `VolumeGroupClass` is a cluster resource that needs administrative privileges to create.
+
+```markdown
+---
+apiVersion: storage.hpe.com/v1
+kind: VolumeGroupClass
+metadata:
+  name: my-volume-group-class
+provisioner: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "HPE CSI Driver for Kubernetes Volume Group"
+  csi.hpe.com/volume-group-provisioner-secret-name: hpe-backend
+  csi.hpe.com/volume-group-provisioner-secret-namespace: hpe-storage
+```
+
+!!! note
+    The `VolumeGroupClass` `.parameters` may contain CSP specifc parameters. Check the documentation of the [Container Storage Provider](../container_storage_provider) being used.
+
+Once the `VolumeGroupClass` is in place, users may create `VolumeGroups`. The `VolumeGroups` are just like `PersistentVolumeClaims` part of a `Namespace` and both resources need to be in the same `Namespace` for the grouping to be successful.
+
+```markdown
+---
+apiVersion: storage.hpe.com/v1
+kind: VolumeGroup
+metadata:
+  name: my-volume-group
+spec:
+  volumeGroupClassName: my-volume-group-class
+```
+
+Depending on the CSP being used, the `VolumeGroup` may reference an object that corresponds to the Kubernetes API object. It's not until users annotates their `PersistentVolumeClaims` the `VolumeGroup` gets populated.
+
+Adding a `PersistentVolumeClaim` to a `VolumeGroup`:
+
+```markdown
+kubectl annotate pvc/my-pvc csi.hpe.com/volume-group=my-volume-group
+```
+
+Removing a `PersistentVolumeClaim` from a `VolumeGroup`:
+
+```markdown
+kubectl annotate pvc/my-pvc csi.hpe.com/volume-group-
+```
+
+!!! tip
+    While adding the `PersistentVolumeClaim` to the `VolumeGroup` is instant, removal require one reconciliation loop and might not immediately be reflected on the `VolumeGroup` object.
+
+### Snapshot Groups
+
+Being able to create snapshots of the `VolumeGroup` require the CSI external-snapshotter to be [installed](#enabling_csi_snapshots) and also require a `VolumeSnapshotClass` [configured](#using_csi_snapshots) using the same storage backend as the `VolumeGroup`. Once those pieces are in place, a `SnapshotGroupClass` needs to be created. `SnapshotGroupClasses` are cluster objects created by an administrator.
+
+```markdown
+---
+apiVersion: storage.hpe.com/v1
+kind: SnapshotGroupClass
+metadata:
+  name: my-snapshot-group-class
+snapshotter: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  csi.hpe.com/snapshot-group-snapshotter-secret-name: hpe-backend
+  csi.hpe.com/snapshot-group-snapshotter-secret-namespace: hpe-storage
+```
+
+Creating a `SnapshotGroup` is later performed using the `VolumeGroup` as a source while referencing a `SnapshotGroupClass` and a `VolumeSnapshotClass`.
+
+```markdown
+---
+apiVersion: storage.hpe.com/v1
+kind: SnapshotGroup
+metadata:
+  name: my-snapshot-group-1
+spec:
+  source:
+    kind: VolumeGroup
+    apiGroup: storage.hpe.com
+    name: my-volume-group
+  snapshotGroupClassName: my-snapshot-group-class
+  volumeSnapshotClassName: hpe-snapshot
+```
+
+Once the `SnapshotGroup` has been successfully created, the individual `VolumeSnapshots` are now available in the `Namespace`.
+
+List `VolumeSnapshots`:
+
+```markdown
+kubectl get volumesnapshots
+```
+
+If no `VolumeSnapshots` are being enumerated, check the [diagnostics](diagnostics.md#volume_and_snapshot_groups) on how to check the component logs and such.
+
+!!! tip "New feature!"
+    Volume Groups and Snapshot Groups got introduced in HPE CSI Driver for Kubernetes 1.4.0.
 
 ### Expanding PVCs
 
