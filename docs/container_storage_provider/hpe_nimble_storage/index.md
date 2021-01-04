@@ -35,6 +35,7 @@ A `StorageClass` is used to provision or clone an HPE Nimble Storage-backed pers
 - [Cloning parameters](#cloning_parameters)
 - [Import parameters](#import_parameters)
 - [VolumeSnapshotClass parameters](#volumesnapshotclass_parameters)
+- [VolumeGroupClass parameters](#volumesnapshotclass_parameters)
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
@@ -63,7 +64,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning.
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with `[VolumeGroupClasses](#volumegroupclass_parameters)`.
  <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
  <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
 </small>
@@ -129,3 +130,15 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | description | Text    | Text to be added to the snapshot's description on the Nimble array. |
 | writable    | Boolean | Indicates if the snapshot is writable on the Nimble array. |
 | online      | Boolean | Indicates if the snapshot is set to online on the Nimble array.|
+
+## VolumeGroupClass parameters
+
+If basic data protection is required and performed on the Nimble array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
+
+| Parameter          | String  | Description |
+| ------------------ | ------- | ----------- |
+| description        | Text    | Text to be added to the volume collection description on the Nimble array. |
+| protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". |
+
+!!! tip "New feature"
+    `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver.

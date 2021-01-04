@@ -95,6 +95,15 @@ The NFS Server Provisioner consists of a number of Kubernetes resources per PVC.
 !!! tip
     The `<UUID>` stems from the user request RWX claim UUID for easy tracking.
 
+## Volume and Snapshot Groups
+
+If there's issues with `VolumeSnapshots` not being created when performing `SnapshotGroup` snapshots, checking the logs of the "csi-volume-group-provisioner" and "csi-volume-group-snapshotter" in the "hpe-csi-controller" `Deployment`.
+
+```markdown
+kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-provisioner
+kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-snapshotter
+```
+
 ## Logging
 
 Log files associated with the HPE CSI Driver logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution for Kubernetes such as Fluentd. Some of the logs on the host are persisted which follow standard logrotate policies.
