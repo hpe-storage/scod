@@ -129,8 +129,7 @@ You should see output similar to below. As you can see, each node has a role **m
 $ kubectl get nodes
 NAME              STATUS   ROLES    AGE   VERSION
 kube-g1-master1   Ready    master   37d   v1.18.2
-kube-g1-node1     Ready    <none>   37d   v1.18.2
-kube-g1-node2     Ready    <none>   37d   v1.18.2
+...
 ```
 
 You can list pods.
@@ -143,153 +142,9 @@ kubectl get pods
     Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the `default` namespace. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the `default` namespace. Depending on the type of application and your user access level, applications can be deployed within one or more namespaces. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the namespace it was deployed under and use the `-n <namespace>` flag to view objects in other namespaces.
 
 
-Now that you have familiarized yourself with your cluster, let's configure the Kubernetes dashboard.
-
 ---
 
-## Lab 2: Install K8s dashboard
-
-Dashboard is a web-based Kubernetes user interface. You can use Dashboard to deploy containerized applications to a Kubernetes cluster, troubleshoot your containerized application, and manage the cluster resources. You can use Dashboard to get an overview of applications running on your cluster, as well as for creating or modifying individual Kubernetes resources (such as Deployments, Jobs, DaemonSets, etc). For example, you can scale a Deployment, initiate a rolling update, restart a pod or deploy new applications using a deploy wizard.
-
-Dashboard also provides information on the state of Kubernetes resources in your cluster and on any errors that may have occurred.
-
-Please refer to [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) on kubernetes.io.
-
-### Deploying the Dashboard UI
-The Dashboard UI is not deployed by default. To deploy it, run the following command.
-
-```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
-```
-
-### Accessing the Dashboard UI
-You can access Dashboard using `kubectl` from your desktop.
-
-```markdown
-kubectl proxy
-```
-
-Open a web browser, copy the following URL to access the Dashboard.
-
-```markdown
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
-```
-You should see something similar to the following:
-
-![](img/dashboard.png)
-
-!!! Note
-    The Dashboard UI can only be accessed from the machine where the command is executed. See `kubectl proxy --help` for more options.
-
-### Create the Admin Service Account
-
-To protect your cluster data, Dashboard deploys with a minimal RBAC configuration by default. Currently, Dashboard only supports logging in with a Bearer Token. To create a token for this demo, we will create an admin user.
-
-!!! warning
-    The admin user created in the tutorial will have administrative privileges and is for educational purposes only.
-
-Open a second terminal, if you don't have one open already. 
-
-The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
-
-```markdown
-kubectl create -f-
-< paste the YAML >
-^D (CTRL + D)
-```
-
-Step by step:
-
-```markdown
-kubectl create -f-
-```
-
-Press **Enter**.
-
-Copy the code below into the terminal.
-
-```markdown
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: admin-user
-  namespace: kube-system
-```
-
-Press **Enter** and **Ctrl-D**.
-
-### Create ClusterRoleBinding
-Let's create the ClusterRoleBinding for the new admin-user. We will apply the `cluster-admin` role to the `admin-user`.
-
-```markdown
-kubectl create -f-
-```
-Press **Enter**.
-
-Copy the code below into the terminal.
-
-```markdown
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: admin-user
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kube-system
-```  
-Press **Enter** and **Ctrl-D**.
-
-### Get Token
-
-Now we are ready to get the token from the admin-user in order to log into the dashboard. Run the following command:
-
-```markdown
-kubectl -n kube-system get secret | grep admin-user
-```
-
-It will return something similar to: `admin-user-token-n7jx9`.
-
-Now run.
-
-```markdown
-kubectl -n kube-system describe secret admin-user-token-n7jx9
-```
-
-Copy the token value.
-
-```markdown
-Name:         admin-user-token-n7jx9
-Namespace:    kube-system
-Labels:       <none>
-Annotations:  kubernetes.io/service-account.name: admin-user
-              kubernetes.io/service-account.uid: 7e9a4b56-e692-496a-8767-965076a282a4
-
-Type:  kubernetes.io/service-account-token
-
-Data
-====
-namespace:  11 bytes
-token:      <your token will be shown here>
-ca.crt:     1025 bytes
-```
-
-Switch back over to your browser and paste the **token** into the dashboard and **Click - Sign In**. From here, you can see the health of your cluster as well as inspect various objects (Pods, StorageClass, Persistent Volume Claims) and manage the cluster resources.
-
-You should see something similar to the following: 
-<br />
-
-![](img/dashboard_success.png)
-
-<br />
-
----
-
-## Lab 3: Deploy your first pod
+## Lab 2: Deploy your first pod (Stateless)
 
 A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
 
@@ -449,25 +304,26 @@ Once done, press **Ctrl-D** to exit the pod. Use **Ctrl+C** to exit the port-for
 
 ---
 
-## Lab 4: Install the CSI driver
+## Lab 3: Install the HPE CSI Driver for Kubernetes
 
 To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver.
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
 
-### Installing the chart
+### Installing the Helm chart
 
-To install the chart with the name hpe-csi, add the HPE CSI Driver for Kubernetes helm repo.
+To install the chart with the name `hpe-csi`, add the HPE CSI Driver for Kubernetes helm repo.
 
 ```markdown
-helm repo add hpe https://hpe-storage.github.io/co-deployments
+helm repo add hpe-storage https://hpe-storage.github.io/co-deployments
 helm repo update
 ```
 
 Install the latest chart:
 ```markdown
-helm install hpe-csi hpe/hpe-csi-driver --namespace kube-system
+kubectl create ns hpe-storage
+helm install my-hpe-csi-driver hpe/hpe-csi-driver -n hpe-storage
 ```
 
 Wait a few minutes as the deployment finishes.
@@ -482,10 +338,10 @@ The output is similar to this:
 ```markdown
 $ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY     STATUS    RESTARTS   AGE
-kube-system   csp-service-5df8679cf7-m4jcw          1/1       Running   0          5m
-kube-system   hpe-csi-controller-84d8569476-9pk74   5/5       Running   0          5m
-kube-system   hpe-csi-node-qt74m                    2/2       Running   0          5m
-kube-system   primera3par-csp-66f775b555-sfmnp      1/1       Running   0          5m
+hpe-storage   csp-service-5df8679cf7-m4jcw          1/1       Running   0          5m
+hpe-storage   hpe-csi-controller-84d8569476-9pk74   5/5       Running   0          5m
+hpe-storage   hpe-csi-node-qt74m                    2/2       Running   0          5m
+hpe-storage   primera3par-csp-66f775b555-sfmnp      1/1       Running   0          5m
 ```
 
 If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Providers have been successfully deployed.
@@ -510,7 +366,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: custom-secret
-  namespace: kube-system 
+  namespace: hpe-storage 
 stringData:
   serviceName: nimble-csp-svc
   servicePort: "8080"
@@ -526,7 +382,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: custom-secret
-  namespace: kube-system 
+  namespace: hpe-storage 
 stringData:
   serviceName: primera3par-csp-svc 
   servicePort: "8080"
@@ -541,10 +397,10 @@ Press **Enter** and **Ctrl-D**.
 
 Now let's look at the available StorageClasses.
 
-You should now see the `Secret` in the "kube-system" `Namespace`:
+You should now see the `Secret` in the "hpe-storage" `Namespace`:
 
 ```markdown 
-kubectl -n kube-system get secret/custom-secret
+kubectl -n hpe-storage get secret/custom-secret
 NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
@@ -573,15 +429,15 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-expand-secret-name: custom-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   performancePolicy: "SQL Server"
   description: "Volume from HPE CSI Driver"
   accessProtocol: iscsi
@@ -601,15 +457,15 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: ext4
   csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storagem
   csi.storage.k8s.io/controller-publish-secret-name: custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-expand-secret-name: custom-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   cpg: SSD_r6
   provisioningType: tpvv
   accessProtocol: iscsi
@@ -629,6 +485,11 @@ hpe-standard (default)   csi.hpe.com   2m
 
 !!! Note 
     We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on kubernetes.io.
+
+
+## Lab 4: Creating a Persistent Volume using HPE Storage 
+
+With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available we can now provision a persistent volume.
 
 ### Creating a PersistentVolumeClaim
 
@@ -741,7 +602,7 @@ At this point, we have validated the deployment of the HPE CSI Driver and are re
 
 ---
 
-## Lab 5: Deploying Wordpress
+## Lab 5: Deploying a Stateful Application using HPE Storage (Wordpress)
 
 To begin, we will be using the **hpe-standard** `StorageClass` we created previously. If you don't have **hpe-standard** available, please refer to [StorageClass](#creating_a_storageclass) for instructions on creating a `StorageClass`.
 
@@ -803,7 +664,7 @@ bitnami/wordpress       9.2.1           5.4.0           Web publishing platform 
 Deploy Wordpress by setting `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
 
 ```markdown
-helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false
+helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false 
 ```
 
 Check to verify that Wordpress and MariaDB were deployed and are in the **Running** state. This may take a few minutes.
