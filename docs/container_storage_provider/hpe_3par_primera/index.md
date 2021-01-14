@@ -69,23 +69,21 @@ All parameters enumerated reflects the current version and may contain unannounc
 
 ### Common provisioning parameters
 
-These parameters are mutable between a parent volume and creating a clone from a snapshot.
-
 | Parameter                         | Option  | Description | 3PAR | Primera |
 | --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. Requires Primera OS 4.2+ | **X** | **X** |
-| cpg <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
-| snapCpg                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
-| compression                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
+| cpg<sup>1</sup> <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to 3PAR or Primera array.| **X** | **X** | 
+| snapCpg<sup>1</sup>                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
+| compression<sup>1</sup>                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
 | provisioningType<sup>1</sup> <br />  | tpvv    | Indicates Thin provisioned volume type. Default: tpvv | **X** | **X** |
 |                                     | full    | Indicates Full provisioned volume type. | **X** |   |
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
 |                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
 | importVol   | Text      | Name of the volume to import. | **X** | **X** |
 | importVolAsClone  | Text      | Name of the volume to clone and import. | **X** | **X** |
-| cloneOf<sup>1</sup>  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
-| virtualCopyOf<sup>1</sup>  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
+| cloneOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
+| virtualCopyOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
 | qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
 | remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on HPE Primera/3PAR array. | **X** | **X** |
 | replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
@@ -93,7 +91,8 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. Volumes with snapshots/clones can't be modified.
+ <br /><sup>1</sup> = Parameters that are editable after provisioning.
+ <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
 </small>
 
 !!! Important
@@ -166,7 +165,7 @@ During the import volume process, any legacy (non-container volumes) or existing
 
 ### Cloning parameters
 
-Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference a HPE Primera or 3PAR volume name to clone and import to Kubernetes.
+Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference a HPE Primera or 3PAR volume name to clone and import to Kubernetes. Volumes with clones are immutable once created.
 
 | Parameter        | Option  | Description |
 | ---------------- | ------- | ----------- |
@@ -181,7 +180,7 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
 
 ### Volume Snapshot parameters
 
-During snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster.
+During snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster. Volumes with snapshots are immutable once created.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
@@ -202,12 +201,12 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 * Create replication enabled `StorageClass`.
 
 !!! important
-    Due to limitations of the HPE Primera/3PAR API, the **auto-synchronize** policy for replicated volumes is not available. Due to this, any automatically create remote copy groups (RCG) through the HPE CSI Driver will require a manual recovery and restore once both HPE Primera or 3PAR systems are online and both Remote Copy links are **up**. This will be addressed in an upcoming patch.
+    Due to a limitation within the HPE Primera/3PAR WSAPI, the **auto-synchronize** policy for replicated volumes is not available. Due to this, any automatically create remote copy groups (RCG) through the HPE CSI Driver will require a manual recovery and restore once both HPE Primera or 3PAR systems are online and both Remote Copy links are **up**. This will be addressed in an upcoming release of the HPE Primera and 3PAR WSAPI.
     <br /><br />
     For more information on **Auto synchronize**: <br />
     • "Remote Copy group policies" in [HPE Primera OS: Configuring data replicationusing Remote Copy over IP](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088914en_us).<br />
     • "How Remote Copy recovers synchronous Remote Copy groups following replication link failure" in [Disaster-Tolerant Solutions with HPE 3PAR Remote Copy](https://h20195.www2.hpe.com/v2/GetPDF.aspx/4AA3-8318ENW.pdf).<br />
-    <br /><br />**Workaround:**<br /> It is recommended to pre-create the remote copy group with "Auto Synchronize" and "Auto Recover" enabled using either the SSMC or with the CLI using: `setrcopygroup pol auto_failover,auto_synchronize <group_name>`. Set the `remoteCopyGroup` parameter to the existing remote copy group name.
+    <br /><br />**Workaround:**<br /> It is recommended to **pre-create** the remote copy group with "Auto Synchronize" and "Auto Recover" enabled using either the SSMC or with the CLI using: `setrcopygroup pol auto_failover,auto_synchronize <group_name>`. Set the `remoteCopyGroup` parameter to the existing remote copy group name.
 
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
@@ -237,7 +236,7 @@ These parameters are applicable only for replication. Both parameters are mandat
 | remoteCopyGroup    | Text    | Name of new or existing remote copy group on the HPE Primera/3PAR array. |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 
-### iSCSI Target Portal IPs
+### iSCSI Target Portal IP parameter
 
 This parameter allows the ability to specify a subset of HPE Primera/3PAR iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
 
@@ -245,9 +244,9 @@ This parameter allows the ability to specify a subset of HPE Primera/3PAR iSCSI 
 | -------------- | ------- | ----------- |
 | iscsiPortalIps |   Text  | Comma separated list of target portal IPs. |
 
-### VolumeSnapshotClass parameters
+### VolumeSnapshotClass parameter
 
-These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
+These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
 
 How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
 
@@ -255,7 +254,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | ----------- | ------  | ----------- |
 | read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
 
-### Import Snapshot parameters
+### Import Snapshot parameter
 
 During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
 
@@ -263,7 +262,7 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | ------------------ | ------- | ----------- |
 | importVol          | Text    | The name of the Primera or 3PAR snapshot to import. |
 
-### QoS StorageClass parameters
+### QoS StorageClass parameter
 
 In the HPE Primera or 3PAR Storage system, the QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing HPE Primera or 3PAR volume set.
 

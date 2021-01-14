@@ -93,7 +93,9 @@ Let's run through some simple `kubectl` commands to get familiar with your clust
 
 In order to communicate with the Kubernetes cluster, `kubectl` looks for a file named config in the `$HOME/.kube` directory. You can specify other `kubeconfig` files by setting the `KUBECONFIG` environment variable or by setting the `--kubeconfig` flag.
 
-To view your config file:
+You will need to request the `kubeconfig` file from your cluster administrator and copy the file to your local `$HOME/.kube/` directory. You may need to create this directory.
+
+Once you have the `kubeconfig` file, you can view the config file:
 
 ```markdown
 kubectl config view
@@ -128,7 +130,7 @@ You should see output similar to below. As you can see, each node has a role **m
 ```markdown
 $ kubectl get nodes
 NAME              STATUS   ROLES    AGE   VERSION
-kube-g1-master1   Ready    master   37d   v1.18.2
+kube-g1-master1   Ready    master   37d   v1.20.1
 ...
 ```
 
@@ -183,81 +185,83 @@ We can now see the pod running.
 
 ```markdown
 kubectl get pods
-NAME                               READY   STATUS    RESTARTS   AGE
-first-nginx-pod-5bb4787f8d-7ndj6   1/1     Running   0          6m39s
+NAME                             READY   STATUS    RESTARTS   AGE
+first-nginx-pod-8d7bb985-kql7t   1/1     Running   0          10s
 ```
 
 We can inspect the pod further using the **kubectl describe** command:
 ```markdown
-Name:         first-nginx-pod-5bb4787f8d-7ndj6
+[root@yoda ~]# k describe pod first-nginx-pod-8d7bb985-kql7t 
+Name:         first-nginx-pod-8d7bb985-kql7t
 Namespace:    default
 Priority:     0
-Node:         kube-g1-node1/10.90.200.184
-Start Time:   Mon, 02 Mar 2020 17:09:20 -0600
-Labels:       pod-template-hash=5bb4787f8d
+Node:         kube-group1/10.10.10.11
+Start Time:   Wed, 13 Jan 2021 14:31:07 -0700
+Labels:       pod-template-hash=8d7bb985
               run=nginx-first-pod
-Annotations:  <none>
+Annotations:  cni.projectcalico.org/podIP: 192.168.55.68/32
+              cni.projectcalico.org/podIPs: 192.168.55.68/32
 Status:       Running
-IP:           10.233.82.7
+IP:           192.168.55.68
 IPs:
-  IP:           10.233.82.7
-Controlled By:  ReplicaSet/first-nginx-pod-5bb4787f8d
+  IP:           192.168.55.68
+Controlled By:  ReplicaSet/first-nginx-pod-8d7bb985
 Containers:
   nginx:
-    Container ID:   docker://a0938f10d28cb0395b0c2c324ef0c74ecdcdc63e556863c53ee7a88d56d
+    Container ID:   containerd://aece6579cc1b3ddcad9ce9e8ba6994699807602c3124df20e9129868787ec893
     Image:          nginx
-    Image ID:       docker-pullable://nginx@sha256:380eb808e2a3b0a15037efefcabc5b4e03d666d03
+    Image ID:       docker.io/library/nginx@sha256:10b8cc432d56da8b61b070f4c7d2543a9ed17c2b23010b43af434fd40e2ca4aa
     Port:           <none>
     Host Port:      <none>
     State:          Running
-      Started:      Mon, 20 Aug 2020 17:09:32 -0600
+      Started:      Wed, 13 Jan 2021 14:31:15 -0700
     Ready:          True
     Restart Count:  0
     Environment:    <none>
     Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-m2vbl (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-xzgwz (ro)
 Conditions:
   Type              Status
-  Initialized       True
-  Ready             True
-  ContainersReady   True
-  PodScheduled      True
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
 Volumes:
-  default-token-m2vbl:
+  default-token-xzgwz:
     Type:        Secret (a volume populated by a Secret)
-    SecretName:  default-token-m2vbl
+    SecretName:  default-token-xzgwz
     Optional:    false
 QoS Class:       BestEffort
 Node-Selectors:  <none>
-Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
-                 node.kubernetes.io/unreachable:NoExecute for 300s
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
 Events:
-  Type    Reason     Age        From                    Message
-  ----    ------     ----       ----                    -------
-  Normal  Scheduled  <unknown>  default-scheduler       Successfully assigned default/first-nginx-pod
-  Normal  Pulling    54s        kubelet, kube-g1-node1  Pulling image "nginx"
-  Normal  Pulled     46s        kubelet, kube-g1-node1  Successfully pulled image "nginx"
-  Normal  Created    44s        kubelet, kube-g1-node1  Created container nginx
-  Normal  Started    43s        kubelet, kube-g1-node1  Started container nginx
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  80s   default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-kql7t to yoda
+  Normal  Pulling    79s   kubelet            Pulling image "nginx"
+  Normal  Pulled     74s   kubelet            Successfully pulled image "nginx" in 5.378619409s
+  Normal  Created    72s   kubelet            Created container nginx
+  Normal  Started    72s   kubelet            Started container nginx
 ```
 
 Let's find the IP address of the pod.
 
 ```markdown
-kubectl get pod first-nginx-pod-5bb4787f8d-7ndj6 -o=jsonpath='{.status.podIP}'
+kubectl get pod <pod_name> -o=jsonpath='{.status.podIP}'
 ```
 
 The output should be similar to the following.
 ```markdown
-$ kubectl get pod first-nginx-pod-5bb4787f8d-7ndj6 -o=jsonpath='{.status.podIP}'
-10.233.82.7
+$ kubectl get pod first-nginx-pod-8d7bb985-kql7t -o=jsonpath='{.status.podIP}'
+192.168.55.68
 
 ```
 
-This IP address (10.233.82.7) is only accessible from within the cluster, so let's use `port-forward` to expose the `pod` port temporarily outside the cluster.
+This IP address (192.168.55.68) is only accessible from within the cluster, so let's use `port-forward` to expose the `pod` port temporarily outside the cluster.
 
 ```markdown
-kubectl port-forward first-nginx-pod-5bb4787f8d-7ndj6 80:80
+kubectl port-forward first-nginx-pod-8d7bb985-kql7t 80:80
 Forwarding from 127.0.0.1:80 -> 8080
 Forwarding from [::1]:80 -> 8080
 ```
@@ -271,7 +275,7 @@ Finally, we can open a browser and go to **http://127.0.0.1** and should see the
 
 You have successfully deployed your first Kubernetes pod. 
 
-With the pod running, we can log in and explore the pod. If you don't already, open another shell and run:
+With the pod running, we can log in and explore the pod. If you don't have another terminal open already, open another terminal and run:
 
 ```markdown
 kubectl exec -it <pod_name> /bin/bash
@@ -280,7 +284,7 @@ kubectl exec -it <pod_name> /bin/bash
 You can explore the pod and run various commands. Some commands might not be available within the pod. Why would that be?
 
 ```markdown
-root@first-nginx-pod-5bb4787f8d-7ndj6:/# df -h
+root@first-nginx-pod-8d7bb985-kql7t:/# df -h
 Filesystem               Size  Used Avail Use% Mounted on
 overlay                   46G  8.0G   38G  18% /
 tmpfs                     64M     0   64M   0% /dev
@@ -299,6 +303,8 @@ Or modify the webpage:
 ```markdown
 echo Hello from Kubernetes Storage > /usr/share/nginx/html/index.html
 ```
+
+If we switch back over to the browser and refresh the page (http://127.0.0.1), you should see your changes.
 
 Once done, press **Ctrl-D** to exit the pod. Use **Ctrl+C** to exit the port-forwarding.
 
