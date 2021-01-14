@@ -113,9 +113,8 @@ The output is similar to this:
 
 ```markdown
 $ kubectl cluster-info
-Kubernetes master is running at https://10.90.200.11:6443
-coredns is running at https://10.90.200.11:6443/api/v1/namespaces/kube-system/services/coredns:dns/proxy
-kubernetes-dashboard is running at https://10.90.200.11:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+Kubernetes control plane is running at https://192.168.1.50:6443
+KubeDNS is running at https://192.168.1.50:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
@@ -129,8 +128,8 @@ You should see output similar to below. As you can see, each node has a role **m
 
 ```markdown
 $ kubectl get nodes
-NAME              STATUS   ROLES    AGE   VERSION
-kube-g1-master1   Ready    master   37d   v1.20.1
+NAME          STATUS   ROLES                  AGE     VERSION
+kube-group1   Ready    control-plane,master   2d18h   v1.20.1
 ...
 ```
 
@@ -141,7 +140,7 @@ kubectl get pods
 ```
 
 !!! note "Quiz"
-    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the `default` namespace. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the `default` namespace. Depending on the type of application and your user access level, applications can be deployed within one or more namespaces. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the namespace it was deployed under and use the `-n <namespace>` flag to view objects in other namespaces.
+    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the `default` namespace. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the `default` namespace. Depending on the type of application and your user access level, applications can be deployed within one or more namespaces. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other namespaces.
 
 
 ---
@@ -150,14 +149,16 @@ kubectl get pods
 
 A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
 
+The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
+
+```markdown
+kubectl create -f-
+< paste the YAML >
+^D (CTRL + D)
+```
+
 Let's create a simple **nginx** webserver.
 
-```
-kubectl create -f-
-```
-Press **Enter**.
-
-Copy and paste the following:
 ```markdown
 apiVersion: apps/v1
 kind: Deployment
@@ -179,7 +180,6 @@ spec:
       - image: nginx
         name: nginx
 ```        
-Press **Enter** and **Ctrl-D**. 
 
 We can now see the pod running.
 
@@ -191,11 +191,11 @@ first-nginx-pod-8d7bb985-kql7t   1/1     Running   0          10s
 
 We can inspect the pod further using the **kubectl describe** command:
 ```markdown
-[root@yoda ~]# k describe pod first-nginx-pod-8d7bb985-kql7t 
+$ kubectl describe pod first-nginx-pod-8d7bb985-kql7t 
 Name:         first-nginx-pod-8d7bb985-kql7t
 Namespace:    default
 Priority:     0
-Node:         kube-group1/10.10.10.11
+Node:         kube-group1/192.168.1.50
 Start Time:   Wed, 13 Jan 2021 14:31:07 -0700
 Labels:       pod-template-hash=8d7bb985
               run=nginx-first-pod
@@ -238,7 +238,7 @@ Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
 Events:
   Type    Reason     Age   From               Message
   ----    ------     ----  ----               -------
-  Normal  Scheduled  80s   default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-kql7t to yoda
+  Normal  Scheduled  80s   default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-kql7t to kube-group1
   Normal  Pulling    79s   kubelet            Pulling image "nginx"
   Normal  Pulled     74s   kubelet            Successfully pulled image "nginx" in 5.378619409s
   Normal  Created    72s   kubelet            Created container nginx
@@ -275,7 +275,7 @@ Finally, we can open a browser and go to **http://127.0.0.1** and should see the
 
 You have successfully deployed your first Kubernetes pod. 
 
-With the pod running, we can log in and explore the pod. If you don't have another terminal open already, open another terminal and run:
+With the pod running, we can log in and explore the pod. If you don't have another terminal open already, open another terminalgi and run:
 
 ```markdown
 kubectl exec -it <pod_name> /bin/bash
@@ -312,7 +312,7 @@ Once done, press **Ctrl-D** to exit the pod. Use **Ctrl+C** to exit the port-for
 
 ## Lab 3: Install the HPE CSI Driver for Kubernetes
 
-To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver.
+To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver for Kubernetes.
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
@@ -343,30 +343,34 @@ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-c
 The output is similar to this:
 ```markdown
 $ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
-NAMESPACE     NAME                                  READY     STATUS    RESTARTS   AGE
-hpe-storage   csp-service-5df8679cf7-m4jcw          1/1       Running   0          5m
-hpe-storage   hpe-csi-controller-84d8569476-9pk74   5/5       Running   0          5m
-hpe-storage   hpe-csi-node-qt74m                    2/2       Running   0          5m
-hpe-storage   primera3par-csp-66f775b555-sfmnp      1/1       Running   0          5m
+NAME                                  READY   STATUS    RESTARTS   AGE
+hpe-csi-controller-66fc6544f8-mnllq   9/9     Running   0          77s
+hpe-csi-node-gqjnq                    2/2     Running   0          77s
+nimble-csp-5d4c9fc5b6-sxqmm           1/1     Running   0          77s
+primera3par-csp-94b9c4978-4xv86       1/1     Running   0          77s
 ```
 
-If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Providers have been successfully deployed.
+If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Providers (CSP) for Nimble, Primera or 3PAR have been successfully deployed.
 
 ### Creating a Secret
 
-When the HPE CSI Driver is deployed using the Helm chart or Operator, a `Secret` needs to be created based upon the backend type (**nimble** or **primera3par** ), backend IP, and credentials. This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend.  
+Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI Driver to communicate to the HPE Nimble, Primera or 3PAR systems. This `Secret`, which contains the storage system IP and credentials, is used by the CSI sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
 
 !!! Note "Secret Requirements"
     * Each `Secret` name must be unique.
     * **servicePort** should be set to **8080**.
 
-Create a new `Secret`, specify the name, `Namespace`, backend username, backend password, and the backend IP address to be used by the CSP.
+
+The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
 
 ```markdown
 kubectl create -f-
+< paste the YAML >
+^D (CTRL + D)
 ```
 
-Copy and paste the following:
+Create a new `Secret`, specify the name of the `Secret`, the `Namespace` where the CSI driver was deployed, the system IP, username, password to be used by the CSP.
+
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
@@ -399,10 +403,6 @@ data:
   password: M3BhcmRhdGE=
 ```
 
-Press **Enter** and **Ctrl-D**.
-
-Now let's look at the available StorageClasses.
-
 You should now see the `Secret` in the "hpe-storage" `Namespace`:
 
 ```markdown 
@@ -413,17 +413,12 @@ custom-secret            Opaque        5         1m
 
 ### Creating a StorageClass
 
-Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies the provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) of the volume that we want to create and can be used to differentiate between storage levels and usages. 
+Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies which storage provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) for the volumes that we want to create which can be used to differentiate between storage levels and usages. 
 
 This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements.
 
-Create an **hpe-standard** `StorageClass` based upon the CSP deployed. This `StorageClass` example will use the **custom-secret** we created in the previous step, if you used a different name make sure to modify the `StorageClass` accordingly.
+We will start by creating a `StorageClass` called **hpe-standard**. We will use the **custom-secret** we created in the previous step as well as specify the `namespace` where the CSI driver was deployed, if you used a different name make sure to modify the `StorageClass` accordingly.
 
-```markdown
-kubectl create -f-
-```
-
-Copy and paste the following:
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -461,9 +456,9 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.hpe.com
 parameters:
-  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storagem
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: custom-secret
   csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: custom-secret
@@ -479,12 +474,10 @@ parameters:
 allowVolumeExpansion: true
 ```
 
-Press **Enter** and **Ctrl-D**.
-
 Now let's look at the available StorageClasses.
 
 ```markdown
-$ kubectl get sc
+kubectl get sc
 NAME                     PROVISIONER   AGE
 hpe-standard (default)   csi.hpe.com   2m
 ```
@@ -499,13 +492,8 @@ With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available w
 
 ### Creating a PersistentVolumeClaim
 
-With a `StorageClass` available, we can create a `PVC` to request an amount of storage for our application.
+With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`(PVC).
 
-```markdown
-kubectl create -f-
-```
-
-Copy and paste the following:
 ```markdown
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -518,7 +506,6 @@ spec:
     requests:
       storage: 50Gi
 ```
-Press **Enter** and **Ctrl-D**.
 
 !!! Note
     We can use `storageClassName` to override the default `StorageClass` with another available `StorageClass`.
@@ -595,7 +582,7 @@ Source:
 Events:                <none>
 ```
 
-With the `describe` command, you can see the volume parameters applied to the volume.
+With the `describe` command, you can see the volume parameters applied to the volume, in this case Nimble specific parameters.
 
 Let's recap what we have learned.
 

@@ -11,9 +11,9 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
 
-|  CSI   | Linux OS | OpenShift | Kubernetes | 3PAR and Primera OS |
-| ------ | -------- | --------- | ---------- | ------------------- |
-| v1.4.0 | - CentOS: 7.7 <br /> - RHEL: 7.6, 7.7 / RHCOS | OpenShift 4.2/4.3 with RHEL 7.6 or 7.7 or RHCOS as worker nodes| K8s 1.17-1.20 | - 3PAR OS: 3.3.1 (FC & iSCSI) <br /> - Primera OS: 4.0.0, 4.1.0 (FC only), 4.2.0 |
+|  CSI   | Transport Protocols | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Linux OS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  | Red Hat OpenShift/SUSE CaaSP | &nbsp; &nbsp; &nbsp; Kubernetes &nbsp; &nbsp; &nbsp; | 3PAR and Primera OS |
+| ------ | ------------------- |-------- | --------- | ---------- | ------------------- |
+| v1.4.0 | iSCSI & FC | - CentOS: 7.6+, 8.1 <br /> - RHEL: 7.6+, 8.1 <br /> - RHCOS | - OpenShift 4.4, 4.6 <br /> - SUSE CaaSP 4.2 | - K8s 1.17-1.20 <br /> - Google Anthos GKE 1.4 | - 3PAR OS: 3.3.1+ <br /> - Primera OS: 4.0+ |
 
 !!! important
     • Minimum 2 iSCSI IP ports should be in ready state<br />
