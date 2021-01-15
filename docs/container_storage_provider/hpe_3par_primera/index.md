@@ -9,19 +9,16 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for .
 
-|  CSI   | Transport Protocols | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Linux OS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  | Red Hat OpenShift/SUSE CaaSP | &nbsp; &nbsp; &nbsp; Kubernetes &nbsp; &nbsp; &nbsp; | 3PAR and Primera OS |
-| ------ | ------------------- |-------- | --------- | ---------- | ------------------- |
-| v1.4.0 | iSCSI & FC | - CentOS: 7.6+, 8.1 <br /> - RHEL: 7.6+, 8.1 <br /> - RHCOS | - OpenShift 4.4, 4.6 <br /> - SUSE CaaSP 4.2 | - K8s 1.17-1.20 <br /> - Google Anthos GKE 1.4 | - 3PAR OS: 3.3.1+ <br /> - Primera OS: 4.0+ |
 
-!!! important
-    • Minimum 2 iSCSI IP ports should be in ready state<br />
-    • FC array should be in ready state and zoned with initiator hosts<br />
-    • FC supported only on Bare metal and Fabric SAN
+|  CSI   | Transport Protocols | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Host OS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; Container Orchestrator &nbsp; &nbsp; | 3PAR and Primera OS |
+| ------ | ------------------- |-------- | --------- | ------------------- |
+| v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.19-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 <br /> Google Anthos GKE 1.4| 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
 
-### SPOCK
-Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for HPE storage products for specific platform details (requires a HPE Passport account).
+Refer to Hewlett Packard Enterprise Single Point of Connectivity Knowledge (SPOCK) for latest support matrix for the HPE 3PAR and Primera Container Storage Provider for specific platform details (requires a HPE Passport account).
 
 * [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 * [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
@@ -270,6 +267,16 @@ In the HPE Primera or 3PAR Storage system, the QoS rules are applied to a volume
 | ------------------ | ------- | ----------- |
 | qosName      | Text         | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the HPE Primera or 3PAR volume set, for purposes of applying the QoS rules. |
 
+### SnapshotGroupClass parameters
+
+These parameters are for `SnapshotGroupClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
+
+How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on in [using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots).
+
+| Parameter   | String  | Description |
+| ----------- | ------  | ----------- |
+| read_only   | Boolean | Indicates if the snapshot is writable on the 3PAR or Primera array. |
+
 ### VolumeGroupClass QoS parameters
 
 In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynamically using the QoS parameters for the `VolumeGroupClass`. The following parameters are available for a `VolumeGroup` on the HPE Primera or 3PAR Storage system. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
@@ -277,11 +284,11 @@ In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynam
 | Parameter          | String  | Description |
 | ------------------ | ------- | ----------- |
 | priority        | Text    | QoS priority. Example values: "low", "normal", "high"|
-| ioMinGoal        | Text    | I/O-per-second minimum goal. Example values: "300" |
-| ioMaxLimit        | Text    | I/O-per-second maximum limit. Example values: "10000" |
+| ioMinGoal        | Text    | IOPS minimum goal. Example values: "300" |
+| ioMaxLimit        | Text    | IOPS maximum limit. Example values: "10000" |
 | bwMinGoalKb        | Text    | Bandwidth minimum goal in kilobytes per second. Example values: "300" |
 | latencyGoal        | Text    | Bandwidth maximum limit in kilobytes per second. Example values: "30000" |
-| domain        | Text    | The 3PAR/Primera domain, with which the volume group and related objects are associated with. Example values: "testdomain" |
+| domain        | Text    | The 3PAR/Primera Virtual Domain, with which the volume group and related objects are associated with. Example values: "testdomain" |
 
 ### Support
 

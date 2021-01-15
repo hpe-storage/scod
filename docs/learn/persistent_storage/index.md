@@ -319,7 +319,7 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Arti
 
 ### Installing the Helm chart
 
-To install the chart with the name `hpe-csi`, add the HPE CSI Driver for Kubernetes helm repo.
+To install the chart with the name `hpe-csi`, add the HPE CSI Driver for Kubernetes Helm repo.
 
 ```markdown
 helm repo add hpe-storage https://hpe-storage.github.io/co-deployments
@@ -329,7 +329,7 @@ helm repo update
 Install the latest chart:
 ```markdown
 kubectl create ns hpe-storage
-helm install my-hpe-csi-driver hpe/hpe-csi-driver -n hpe-storage
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 ```
 
 Wait a few minutes as the deployment finishes.
@@ -350,7 +350,7 @@ nimble-csp-5d4c9fc5b6-sxqmm           1/1     Running   0          77s
 primera3par-csp-94b9c4978-4xv86       1/1     Running   0          77s
 ```
 
-If all of the components show in Running state, then the HPE CSI driver for Kubernetes and the corresponding Container Storage Providers (CSP) for Nimble, Primera or 3PAR have been successfully deployed.
+If all of the components show in Running state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for Nimble, Primera or 3PAR have been successfully deployed.
 
 ### Creating a Secret
 
