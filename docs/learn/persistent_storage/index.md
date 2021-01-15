@@ -690,3 +690,40 @@ Access the admin console at: **http://127.0.0.1/admin** using the **"admin/admin
 **Happy Blogging!**
 
 This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
+
+## Cleanup
+
+As others will be using this lab at a later time, we can clean up the objects that were deployed during this lab exercise. 
+
+!!! Note
+    These steps may take a few minutes to complete. Please be patient and don't cancel out the process.
+
+Remove Wordpress & Nginx deployments. 
+
+```
+helm uninstall my-wordpress && kubectl delete all --all
+```
+
+Delete the `PersistentVolumeClaims` and related objects.
+
+```
+kubectl delete pvc --all && kubectl delete sc --all
+```
+
+Remove the HPE CSI Driver for Kubernetes. 
+
+```
+helm uninstall my-hpe-csi-driver -n hpe-storage
+```
+
+It takes a couple minutes to cleanup the objects from the CSI driver. You can check the status:
+
+```
+watch kubectl get all -n hpe-storage
+```
+
+Once everything is removed, **Ctrl+C** to exit and finally you can remove the `namespace`.
+
+```
+kubectl delete ns hpe-storage
+```

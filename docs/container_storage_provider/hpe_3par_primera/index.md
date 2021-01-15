@@ -12,7 +12,7 @@ The HPE 3PAR and Primera Container Storage Provider integrates as part of the [H
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) and [SPOCK](#spock) for .
 
 
-|  CSI   | Transport Protocols | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Host OS &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; Container Orchestrator &nbsp; &nbsp; | 3PAR and Primera OS |
+|  CSI   | Protocols | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Host OS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp; Container Orchestrator &nbsp;&nbsp; | 3PAR and Primera OS |
 | ------ | ------------------- |-------- | --------- | ------------------- |
 | v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.19-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 <br /> Google Anthos GKE 1.4| 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
@@ -283,12 +283,13 @@ In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynam
 
 | Parameter          | String  | Description |
 | ------------------ | ------- | ----------- |
-| priority        | Text    | QoS priority. Example values: "low", "normal", "high"|
-| ioMinGoal        | Text    | IOPS minimum goal. Example values: "300" |
-| ioMaxLimit        | Text    | IOPS maximum limit. Example values: "10000" |
-| bwMinGoalKb        | Text    | Bandwidth minimum goal in kilobytes per second. Example values: "300" |
-| latencyGoal        | Text    | Bandwidth maximum limit in kilobytes per second. Example values: "30000" |
-| domain        | Text    | The 3PAR/Primera Virtual Domain, with which the volume group and related objects are associated with. Example values: "testdomain" |
+| priority        | Text    |  The priority level for the target volume set. Example: "low", "normal", "high"|
+| ioMinGoal        | Text    | IOPS minimum goal for the target volume set. Example: "300" |
+| ioMaxLimit        | Text    | IOPS maximum limit for the target volume set. Example: "10000" |
+| bwMinGoalKb        | Text    | Bandwidth minimum goal in kilobytes per second for the target volume set. Example: "300" |
+| bwMaxLimitKb        | Text    | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
+| latencyGoal        | Text    | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
+| domain        | Text    | The 3PAR/Primera Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
 
 ### Support
 
