@@ -20,7 +20,6 @@ As different methods of installation are provided, it might not be too obvious w
 | HPE Ezmeral Container Platform environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
-| Non-semantic version in `kubectl version` <br /> i.e `v1.17.2-myversion-1` | The [advanced install](#advanced_install) |
 
 !!! error "Undecided?"
     If it's not clear what you should use for your environment, the Helm chart is most likely the correct answer.
@@ -118,7 +117,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: hpe-backend
-  namespace: kube-system
+  namespace: hpe-storage
 stringData:
   serviceName: nimble-csp-svc
   servicePort: "8080"
@@ -132,7 +131,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: hpe-backend
-  namespace: kube-system
+  namespace: hpe-storage
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
@@ -159,12 +158,12 @@ It's not uncommon to have multiple HPE primary storage systems within the same e
 There's a [brief tutorial available](../learn/video_gallery/index.md#managing_multiple_hpe_primary_storage_backends_using_the_hpe_csi_driver) in the Video Gallery that walks through these steps.
 
 !!! Note
-    Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "kube-system" `Namespace`.
+    Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "hpe-storage" `Namespace`.
 
-To view the current `Secrets` in the "kube-system" `Namespace` (assuming default names):
+To view the current `Secrets` in the "hpe-storage" `Namespace` (assuming default names):
 
 ```markdown
-kubectl -n kube-system get secret/hpe-backend
+kubectl -n hpe-storage get secret/hpe-backend
 NAME                     TYPE          DATA      AGE
 hpe-backend              Opaque        5         2m
 ```
@@ -182,7 +181,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: custom-secret
-  namespace: kube-system
+  namespace: hpe-storage
 stringData:
   serviceName: nimble-csp-svc
   servicePort: "8080"
@@ -196,7 +195,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: custom-secret
-  namespace: kube-system
+  namespace: hpe-storage
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
@@ -211,10 +210,10 @@ Create the `Secret` using `kubectl`:
 kubectl create -f custom-secret.yaml
 ```
 
-You should now see the `Secret` in the "kube-system" `Namespace`:
+You should now see the `Secret` in the "hpe-storage" `Namespace`:
 
 ```markdown
-kubectl -n kube-system get secret/custom-secret
+kubectl -n hpe-storage get secret/custom-secret
 NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
@@ -232,15 +231,15 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/controller-expand-secret-name: custom-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -255,38 +254,18 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/resizer-secret-name: custom-secret
-  csi.storage.k8s.io/resizer-secret-namespace: kube-system
+  csi.storage.k8s.io/resizer-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
-```
-
-```markdown fct_label="K8s 1.13"
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: hpe-custom
-provisioner: csi.hpe.com
-parameters:
-  csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: custom-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: custom-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: custom-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  description: "Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes"
-reclaimPolicy: Delete
 ```
 
 !!! note
@@ -372,6 +351,5 @@ Older versions of the HPE CSI Driver for Kubernetes are kept here for reference.
 
 !!! note
     Latest supported CSI driver version is 1.1.0 for Kubernetes 1.13.
-
 
 Depending on which version being deployed, different API objects gets created.

@@ -2,7 +2,7 @@
 At this point the CSI driver and CSP should be installed and configured.
 
 !!! important
-    Most examples below assumes there's a `Secret` named "hpe-backend" in the "kube-system" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_a_hpe_storage_backend).
+    Most examples below assumes there's a `Secret` named "hpe-backend" in the "hpe-storage" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_a_hpe_storage_backend).
 
 [TOC]
 
@@ -31,6 +31,9 @@ Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kube
 
 Install snapshot beta CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+!!! caution "Important"
+    While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snappshotter 3.0 and only support the "beta" CSI snapshot APIs.
+
 ```markdown fct_label="HPE CSI Driver v1.3.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -38,7 +41,7 @@ git checkout release-2.0
 kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
-```markdown fct_label="HPE CSI Driver v1.4.0-beta"
+```markdown fct_label="HPE CSI Driver v1.4.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout release-3.0
@@ -68,15 +71,15 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
@@ -94,41 +97,19 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/resizer-secret-name: hpe-backend
-  csi.storage.k8s.io/resizer-secret-namespace: kube-system
+  csi.storage.k8s.io/resizer-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by the HPE CSI Driver for Kubernetes"
 reclaimPolicy: Delete
 # Required to allow volume expansion
 allowVolumeExpansion: true
-```
-
-```markdown fct_label="K8s 1.13"
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-  name: hpe-standard
-provisioner: csi.hpe.com
-parameters:
-  csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
-  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
-  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
-  description: "Volume created by the HPE CSI Driver for Kubernetes"
-reclaimPolicy: Delete
 ```
 
 !!! important "Important"
@@ -197,15 +178,15 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-expand-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by the HPE CSI Driver for Kubernetes"
   accessProtocol: iscsi
 reclaimPolicy: Delete
@@ -343,7 +324,7 @@ spec:
        volumeAttributes:
          csi.storage.k8s.io/ephemeral: "true"
          inline-volume-secret-name: hpe-backend
-         inline-volume-secret-namespace: kube-system
+         inline-volume-secret-namespace: hpe-storage
          accessProtocol: "iscsi"
          size: "7Gi"
 ```
@@ -421,7 +402,7 @@ deletionPolicy: Delete
 parameters:
   description: "Snapshot created by the HPE CSI Driver"
   csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
 ```
 ```markdown fct_label="HPE CSI Driver v1.4.0-beta"
 apiVersion: snapshot.storage.k8s.io/v1beta1
@@ -435,9 +416,9 @@ deletionPolicy: Delete
 parameters:
   description: "Snapshot created by the HPE CSI Driver"
   csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-secret-namespace: kube-system
+  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
   csi.storage.k8s.io/snapshotter-list-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-list-secret-namespace: kube-system
+  csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
 ```
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
@@ -517,6 +498,9 @@ Again, the size in `.spec.resources.requests.storage` must match the source `Per
 ### Volume Groups
 
 `PersistentVolumeClaims` created in a particular `Namespace` from the same storage backend may be grouped together in a `VolumeGroup`. A `VolumeGroup` is what may be known as a "consistency group" in other storage infrastructure systems. This allows certain attributes to be managed on a abstract group and attributes then applies to all member volumes in the group instead of managing each volume individually. One such aspect is creating snapshots with referential integrity between volumes or setting a performance attribute that would have accounting made on the logical group rather than the individual volume.
+
+!!! tip
+    A tutorial on how to use `VolumeGroups` and `SnapshotGroups` is available in the [Video Gallery](../learn/video_gallery/index.md#synchronize_volume_snapshots_for_distributed_workloads).
 
 Before grouping `PeristentVolumeClaims` there needs to be a `VolumeGroupClass` created. It needs to reference a `Secret` that corresponds to the same backend the `PersistentVolumeClaims` were created on. A `VolumeGroupClass` is a cluster resource that needs administrative privileges to create.
 
@@ -641,13 +625,13 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   description: "Volume provisioned by the HPE CSI Driver"
   accessProtocol: iscsi
   allowOverrides: description,accessProtocol
@@ -687,13 +671,13 @@ provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
-  csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/controller-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-stage-secret-name: hpe-backend
-  csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
-  csi.storage.k8s.io/node-publish-secret-namespace: kube-system
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
   description: "Volume provisioned by the HPE CSI Driver"
   allowMutations: description
 ```
@@ -731,7 +715,7 @@ Any RWO claim made against the `StorageClass` will also create a NFS server `Dep
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
-    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes.
+    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
 
 Example use of `accessModes`:
 

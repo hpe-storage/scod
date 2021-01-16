@@ -9,21 +9,21 @@ Once the CSI driver has been deployed either through object configuration files,
 ```markdown fct_label="HPE Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-kube-system   hpe-csi-controller-7d9cd6b855-zzmd9   5/5     Running   0          15s
-kube-system   hpe-csi-node-dk5t4                    2/2     Running   0          15s
-kube-system   hpe-csi-node-pwq2d                    2/2     Running   0          15s
-kube-system   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
+hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   5/5     Running   0          15s
+hpe-storage   hpe-csi-node-dk5t4                    2/2     Running   0          15s
+hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0          15s
+hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
 ```
 
 ```markdown fct_label="HPE 3PAR and Primera"
 kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-kube-system   hpe-csi-controller-7d9cd6b855-fqppd   5/5     Running   0          14s
-kube-system   hpe-csi-node-86kh6                    2/2     Running   0          14s
-kube-system   hpe-csi-node-k8p4p                    2/2     Running   0          14s
-kube-system   hpe-csi-node-r2mg8                    2/2     Running   0          14s
-kube-system   hpe-csi-node-vwb5r                    2/2     Running   0          14s
-kube-system   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
+hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   5/5     Running   0          14s
+hpe-storage   hpe-csi-node-86kh6                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-k8p4p                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-r2mg8                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-vwb5r                    2/2     Running   0          14s
+hpe-storage   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
 ```
 
 A Custom Resource Definition (CRD) named `hpenodeinfos.storage.hpe.com` holds important network and host initiator information. 
@@ -112,11 +112,11 @@ Log files associated with the HPE CSI Driver logs data to the standard output st
 
 Node driver
 ```
-kubectl logs -f  daemonset.apps/hpe-csi-node  hpe-csi-driver -n kube-system
+kubectl logs -f  daemonset.apps/hpe-csi-node  hpe-csi-driver -n hpe-storage
 ```
 Controller driver
 ```
-kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n kube-system
+kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
 ```
 
 !!! tip
@@ -137,11 +137,11 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 CSP logs can be accessed from their respective services.
 
 ```markdown fct_label="HPE Nimble Storage"
-kubectl logs -f svc/nimble-csp-svc -n kube-system
+kubectl logs -f svc/nimble-csp-svc -n hpe-storage
 ```
 
 ```markdown fct_label="HPE 3PAR and Primera"
-kubectl logs -f svc/primera3par-csp-svc -n kube-system
+kubectl logs -f svc/primera3par-csp-svc -n hpe-storage
 ```
 
 ### Log collector
@@ -177,7 +177,7 @@ HPE provides a set of well tested defaults for the CSI driver and all the suppor
 
 ### Data path configuration
 
-The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n kube-system` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
+The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n hpe-storage` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
 
 !!! important
     HPE provide a set of general purpose default values for the IO paths, tuning is only required if prescribed by HPE.

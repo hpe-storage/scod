@@ -4,7 +4,7 @@ A Container Storage Interface ([CSI](https://github.com/container-storage-interf
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-1.3.0.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-1.4.0.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
@@ -19,20 +19,25 @@ CSI gradually mature features and capabilities in the specification at the pace 
 
 Below is the official table for CSI features we track and deem readily available for use after we've officially tested and validated it in the [platform matrix](#compatibility_and_support).
 
-| Feature                                | K8s maturity | Since K8s version | HPE CSI Driver |
-|----------------------------------------|--------------|-------------------|----------------|
-| Dynamic Provisioning                   | GA           | 1.13              | 1.0.0          |
-| Raw Block Volume                       | GA           | 1.18              | 1.2.0          |
-| Volume Expansion                       | Beta         | 1.16              | 1.1.0          |
-| PVC Data Source                        | GA           | 1.18              | 1.1.0          |
-| Inline Ephemeral Volumes               | Beta         | 1.16              | 1.2.0          |
-| Volume Snapshots                       | Beta         | 1.17              | 1.1.0          |
-| Volume Limits                          | GA           | 1.17              | 1.2.0          |
-| Volume Mutator<sup>1</sup>             | N/A          | N/A               | 1.3.0          |
-| Generic Ephemeral Volumes              | Alpha        | 1.19              | 1.3.0          |
-| Topology                               | GA           | 1.17              | Future         |
+| Feature                                | K8s maturity      | Since K8s version | HPE CSI Driver |
+|----------------------------------------|-------------------|-------------------|----------------|
+| Dynamic Provisioning                   | GA                | 1.13              | 1.0.0          |
+| Raw Block Volume                       | GA                | 1.18              | 1.2.0          |
+| Volume Expansion                       | Beta              | 1.16              | 1.1.0          |
+| PVC Data Source                        | GA                | 1.18              | 1.1.0          |
+| Inline Ephemeral Volumes               | Beta              | 1.16              | 1.2.0          |
+| Volume Snapshots                       | GA                | 1.20              | 1.1.0          |
+| Volume Limits                          | GA                | 1.17              | 1.2.0          |
+| Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
+| Volume Groups<sup>1</sup>              | N/A               | 1.17              | 1.4.0          |
+| Snapshot Groups<sup>1</sup>            | N/A               | 1.17              | 1.4.0          |
+| Generic Ephemeral Volumes              | Alpha<sup>2</sup> | 1.19              | 1.3.0          |
+| Topology                               | GA                | 1.17              | Future         |
 
-<small><sup>1</sup> = HPE CSI Driver for Kubernetes specific feature. CSP support may vary.</small>
+<small>
+ <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
+ <sup>2</sup> = Alpha features are enabled by [Kubernetes feature gates](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) and are not formally supported by HPE.
+</small>
 
 Depending on the CSP, it may support a number of different snapshotting, cloning and restoring operations by taking advantage of `StorageClass` parameter overloading. Please see the respective [CSP](../container_storage_provider/index.md) for additional functionality.
 

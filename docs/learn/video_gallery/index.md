@@ -63,6 +63,22 @@ Learn how to use CSI snapshots and clones with the HPE CSI Driver.
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=qv-oKxZIqJo)</small>
 
+### Synchronize Volume Snapshots for Distributed Workloads
+
+Explore how to take advantage of the HPE CSI Driver exclusive features `VolumeGroups` and `SnapshotGroups`.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/zUj-bJ_KqHU" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=zUj-bJ_KqHU)</small>
+
+### Multi-Writer Workloads using the NFS Server Provisioner
+
+Run multi-writer (RWX and ROX) workloads on block storage (RWO) using the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/bIJUm27Zg1M" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=bIJUm27Zg1M)</small>
+
 ## Partner Ecosystems
 
 Joint solutions with our revered ecosystem partners.
