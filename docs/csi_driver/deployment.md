@@ -352,4 +352,4 @@ Older versions of the HPE CSI Driver for Kubernetes are kept here for reference.
 !!! note
     Latest supported CSI driver version is 1.1.0 for Kubernetes 1.13.
 
-Depending on which version being deployed, different API objects gets created.
+Depending on which version is being deployed, different API objects gets created.
