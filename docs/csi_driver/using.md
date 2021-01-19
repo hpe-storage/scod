@@ -32,7 +32,7 @@ Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kube
 Install snapshot beta CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
 !!! caution "Important"
-    While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snappshotter 3.0 and only support the "beta" CSI snapshot APIs.
+    While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snapshotter 3.0 and only support the "beta" CSI snapshot APIs.
 
 ```markdown fct_label="HPE CSI Driver v1.3.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter

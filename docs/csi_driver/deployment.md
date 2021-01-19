@@ -269,7 +269,7 @@ allowVolumeExpansion: true
 ```
 
 !!! note
-    Don't forget to call out the `StorageClass` explictly when creating `PVCs` from non-default `StorageClasses`.
+    Don't forget to call out the `StorageClass` explicitly when creating `PVCs` from non-default `StorageClasses`.
 
 Next, [Create a PersistentVolumeClaim from a StorageClass](using.md#create_a_persistentvolumeclaim_from_a_storageclass).
 

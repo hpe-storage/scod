@@ -56,7 +56,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 | limitMbps                      | Integer | The MB/s throughput limit for the volume between 1 and 4294967294, or -1 for unlimited (default).|
 | description                    | Text    | Text to be added to the volume's description on the Nimble array. Empty string by default. |
 | performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". Defaults to the "default" performance policy. |
-| protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". |
+| protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". |
 | folder                         | Text    | The name of the Nimble folder in which to place the volume. Defaults to the root of the "default" pool. |
 | thick                          | Boolean | Indicates that the volume should be thick provisioned. Defaults to "false" |
 | dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. Defaults to "true" when available. |
@@ -126,7 +126,7 @@ If basic data protection is required and performed on the Nimble array, `VolumeG
 | Parameter          | String  | Description |
 | ------------------ | ------- | ----------- |
 | description        | Text    | Text to be added to the volume collection description on the Nimble array. Empty by default. |
-| protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". Empty by default, meaning no array snapshots are performed on the `VolumeGroups`. |
+| protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". Empty by default, meaning no array snapshots are performed on the `VolumeGroups`. |
 
 !!! tip "New feature"
     `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver. Learn more in the [Using section](../../csi_driver/using.md#volume_groups).

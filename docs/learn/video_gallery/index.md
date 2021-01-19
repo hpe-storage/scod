@@ -65,7 +65,7 @@ Learn how to use CSI snapshots and clones with the HPE CSI Driver.
 
 ### Synchronize Volume Snapshots for Distributed Workloads
 
-Explore how to take advantage of the HPE CSI Driver exclusive features `VolumeGroups` and `SnapshotGroups`.
+Explore how to take advantage of the HPE CSI Driver's exclusive features `VolumeGroups` and `SnapshotGroups`.
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/zUj-bJ_KqHU" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
