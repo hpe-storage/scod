@@ -51,16 +51,16 @@ These parameters are mutable between a parent volume and creating a clone from a
 | Parameter                      | String  | Description |
 | ------------------------------ | ------- | ----------- |
 | accessProtocol<sup>1</sup>     | Text    | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Defaults to "iscsi" when unspecified. |
-| destroyOnDelete                | Boolean | Indicates the backing Nimble volume (including snapshots) should be destroyed when the PVC is deleted. |
+| destroyOnDelete                | Boolean | Indicates the backing Nimble volume (including snapshots) should be destroyed when the PVC is deleted. Defaults to "false" which means volumes needs to be pruned manually. |
 | limitIops                      | Integer | The IOPS limit of the volume. The IOPS limit should be in the range 256 to 4294967294, or -1 for unlimited (default). |
-| limitMbps                      | Integer | The MB/s throughput limit for the volume. |
-| description                    | Text    | Text to be added to the volume's description on the Nimble array. |
-| performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". |
-| protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". |
-| folder                         | Text    | The name of the Nimble folder in which to place the volume. |
-| thick                          | Boolean | Indicates that the volume should be thick provisioned. |
-| dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. |
-| syncOnDetach                   | Boolean | Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node. |
+| limitMbps                      | Integer | The MB/s throughput limit for the volume between 1 and 4294967294, or -1 for unlimited (default).|
+| description                    | Text    | Text to be added to the volume's description on the Nimble array. Empty string by default. |
+| performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". Defaults to the "default" performance policy. |
+| protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". |
+| folder                         | Text    | The name of the Nimble folder in which to place the volume. Defaults to the root of the "default" pool. |
+| thick                          | Boolean | Indicates that the volume should be thick provisioned. Defaults to "false" |
+| dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. Defaults to "true" when available. |
+| syncOnDetach                   | Boolean | Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node. Defaults to "false". |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
@@ -78,8 +78,8 @@ These parameters are immutable for both volumes and clones once created, clones 
 
 | Parameter       | String         | Description |
 | --------------- | -------------- | ----------- |
-| encrypted       | Boolean        | Indicates that the volume should be encrypted. |
-| pool            | Text           | The name of the pool in which to place the volume. |
+| encrypted       | Boolean        | Indicates that the volume should be encrypted. Defaults to "false". |
+| pool            | Text           | The name of the pool in which to place the volume. Defaults to the "default" pool. |
 
 ### Pod inline volume parameters (Local Ephemeral Volumes)
 
@@ -119,6 +119,18 @@ Importing volumes to Kubernetes requires the source Nimble volume to be offline.
 | reverseReplication | Boolean | Reverses the replication direction so that writes to the Nimble volume are replicated back to the group where it was replicated from. |
 | forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
 
+## VolumeGroupClass parameters
+
+If basic data protection is required and performed on the Nimble array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
+
+| Parameter          | String  | Description |
+| ------------------ | ------- | ----------- |
+| description        | Text    | Text to be added to the volume collection description on the Nimble array. Empty by default. |
+| protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". Empty by default, meaning no array snapshots are performed on the `VolumeGroups`. |
+
+!!! tip "New feature"
+    `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver. Learn more in the [Using section](../../csi_driver/using.md#volume_groups).
+
 ## VolumeSnapshotClass parameters
 
 These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
@@ -128,17 +140,5 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
 | description | Text    | Text to be added to the snapshot's description on the Nimble array. |
-| writable    | Boolean | Indicates if the snapshot is writable on the Nimble array. |
-| online      | Boolean | Indicates if the snapshot is set to online on the Nimble array.|
-
-## VolumeGroupClass parameters
-
-If basic data protection is required and performed on the Nimble array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
-
-| Parameter          | String  | Description |
-| ------------------ | ------- | ----------- |
-| description        | Text    | Text to be added to the volume collection description on the Nimble array. |
-| protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily". |
-
-!!! tip "New feature"
-    `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver.
+| writable    | Boolean | Indicates if the snapshot is writable on the Nimble array. Defaults to "false". |
+| online      | Boolean | Indicates if the snapshot is set to online on the Nimble array. Defaults to "false". |
