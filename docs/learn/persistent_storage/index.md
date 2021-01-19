@@ -44,7 +44,7 @@ A Pod is the basic execution unit of a Kubernetes application–the smallest and
 
 ##### <u>Namespaces</u>
 ![](img/namespaces.png) <br /> <br />
-Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects. Namespaces are a way to divide cluster resources between multiple users.
+Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called `Namespaces`. `Namespaces` are intended for use in environments with many users spread across multiple teams, or projects. `Namespaces` are a way to divide cluster resources between multiple users.
 
 ##### <u>Deployments</u>
 A Deployment provides declarative updates for Pods. You declare a desired state for your pods in your Deployment and Kubernetes will manage it for you automatically.
@@ -140,7 +140,7 @@ kubectl get pods
 ```
 
 !!! note "Quiz"
-    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the `default` namespace. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the `default` namespace. Depending on the type of application and your user access level, applications can be deployed within one or more namespaces. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other namespaces.
+    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the default `Namespace`. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the default `Namespace`. Depending on the type of application and your user access level, applications can be deployed within one or more `Namespaces`. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `Namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other `Namespaces`.
 
 
 ---
@@ -157,7 +157,7 @@ kubectl create -f-
 ^D (CTRL + D)
 ```
 
-Let's create a simple **nginx** webserver.
+Let's create a simple **NGINX** webserver.
 
 ```markdown
 apiVersion: apps/v1
@@ -595,11 +595,11 @@ At this point, we have validated the deployment of the HPE CSI Driver and are re
 
 ---
 
-## Lab 5: Deploying a Stateful Application using HPE Storage (Wordpress)
+## Lab 5: Deploying a Stateful Application using HPE Storage (WordPress)
 
 To begin, we will be using the **hpe-standard** `StorageClass` we created previously. If you don't have **hpe-standard** available, please refer to [StorageClass](#creating_a_storageclass) for instructions on creating a `StorageClass`.
 
-Create a `PersistentVolumeClaim` for MariaDB for use by Wordpress. This object creates a `PersistentVolume` as defined, make sure to reference the correct `.spec.storageClassName`.
+Create a `PersistentVolumeClaim` for MariaDB for use by WordPress. This object creates a `PersistentVolume` as defined, make sure to reference the correct `.spec.storageClassName`.
 
 ```markdown
 kind: PersistentVolumeClaim
@@ -615,7 +615,7 @@ spec:
   storageClassName: hpe-standard
 ```
 
-Next let's make another for the Wordpress application.
+Next let's make another for the WordPress application.
 
 ```markdown
 apiVersion: v1
@@ -642,9 +642,9 @@ my-wordpress                  Bound     pvc-ff6dc8fd-2b14-4726-b608-be8b27485603
 
 The above output means that the HPE CSI Driver successfully provisioned a new volume based upon the **hpe-standard** `StorageClass`. The volume is not attached to any node yet. It will only be attached to a node once a scheduled workload requests the `PersistentVolumeClaim`. 
 
-Now, let's use Helm to deploy Wordpress using the `PVC` created previously. When Wordpress is deployed, the volumes will be attached, formatted and mounted.
+Now, let's use Helm to deploy WordPress using the `PVC` created previously. When WordPress is deployed, the volumes will be attached, formatted and mounted.
 
-The first step is to add the Wordpress chart.
+The first step is to add the WordPress chart.
 
 ```markdown
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -654,13 +654,13 @@ NAME                    CHART VERSION   APP VERSION     DESCRIPTION
 bitnami/wordpress       9.2.1           5.4.0           Web publishing platform for building blogs and ...
 ```
 
-Deploy Wordpress by setting `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
+Deploy WordPress by setting `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
 
 ```markdown
 helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false 
 ```
 
-Check to verify that Wordpress and MariaDB were deployed and are in the **Running** state. This may take a few minutes.
+Check to verify that WordPress and MariaDB were deployed and are in the **Running** state. This may take a few minutes.
 
 ```markdown
 kubectl get pods
@@ -669,7 +669,7 @@ my-wordpress-69b7976c85-9mfjv   1/1       Running   0          2m
 my-wordpress-mariadb-0          1/1       Running   0          2m
 ```
 
-Finally let's take a look at the Wordpress site. You can use `kubectl port-forward` to access the Wordpress application from within the Kubernetes cluster to verify everything is working correctly.
+Finally let's take a look at the WordPress site. You can use `kubectl port-forward` to access the WordPress application from within the Kubernetes cluster to verify everything is working correctly.
 
 ```markdown
 kubectl port-forward svc/my-wordpress 80:80
@@ -698,7 +698,7 @@ As others will be using this lab at a later time, we can clean up the objects th
 !!! Note
     These steps may take a few minutes to complete. Please be patient and don't cancel out the process.
 
-Remove Wordpress & Nginx deployments. 
+Remove WordPress & NGINX deployments.
 
 ```
 helm uninstall my-wordpress && kubectl delete all --all
@@ -722,7 +722,7 @@ It takes a couple minutes to cleanup the objects from the CSI driver. You can ch
 watch kubectl get all -n hpe-storage
 ```
 
-Once everything is removed, **Ctrl+C** to exit and finally you can remove the `namespace`.
+Once everything is removed, **Ctrl+C** to exit and finally you can remove the `Namespace`.
 
 ```
 kubectl delete ns hpe-storage
