@@ -34,18 +34,18 @@ Install snapshot beta CRDs and common snapshot controller (once per Kubernetes c
 !!! caution "Important"
     While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snapshotter 3.0 and only support the "beta" CSI snapshot APIs.
 
-```markdown fct_label="HPE CSI Driver v1.3.0"
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout release-2.0
-kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
-```
-
 ```markdown fct_label="HPE CSI Driver v1.4.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
+```
+
+```markdown fct_label="HPE CSI Driver v1.3.0"
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout release-2.0
+kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 !!! tip
