@@ -20,6 +20,7 @@ As different methods of installation are provided, it might not be too obvious w
 | HPE Ezmeral Container Platform environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
+| Supported platform in an air-gapped environment | The [Helm chart](#helm) using the air-gapped procedure |
 
 !!! error "Undecided?"
     If it's not clear what you should use for your environment, the Helm chart is most likely the correct answer.
@@ -31,6 +32,55 @@ As different methods of installation are provided, it might not be too obvious w
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). The chart only supports Helm 3 from version 1.3.0 of the HPE CSI Driver. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the CSI driver using Helm.
 
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
+
+### Helm for air-gapped environments
+
+In the event of deploying the HPE CSI Driver in a secure air-gapped environment, Helm is the recommended method. For sake of completeness, it's also possible to follow the [advanced install](#advanced_install) procedures and replace "quay.io" in the deployment manifests with the internal private registry location.
+
+Establish a working directory on a bastion Linux host that has HTTP access to the Internet, the private registry and the Kubernetes cluster where the CSI driver needs to be installed. The bastion host is assumed to have the `docker`, `helm` and `curl` command installed. It's also assumed throughout that the user executing `docker` has logged in to the private registry and that pulling images from the private registry is allowed anonymously by the Kubernetes compute nodes.
+
+!!! note
+    Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.
+
+Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver 1.4.0 on Kubernetes 1.20. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
+
+```text
+mkdir hpe-csi-driver
+cd hpe-csi-driver
+export MY_REGISTRY=registry.enterprise.example.com
+export MY_CSI_DRIVER=1.4.0
+export MY_K8S=1.20
+```
+
+Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
+
+```text
+curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/hpe-csi-k8s-${MY_K8S}.yaml \
+        https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
+        https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
+| grep image: | awk '{print $2}' | sort | uniq > images
+```
+
+The above command should not output anything. A list of images should be in the file "images".
+
+Pull, tag and push the images to the private registry.
+
+```text
+cat images | xargs -n 1 docker pull
+awk '{ print $1" "$1 }' images | sed "s/ quay.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -e "s/quay.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+```
+
+!!! tip
+    Depending on what kind of private registry being used, the base repositories `hpe-storage` and `k8scsi` might need to be created and given write access to the user pushing the images.
+
+Next, install the chart as normal with the additional `registry` parameter. This is an example, please refer to the Helm [chart documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver##installing-the-chart) on ArtifactHub.
+
+```text
+helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
+kubectl create ns hpe-storage
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version ${MY_CSI_DRIVER} --set registry=${MY_REGISTRY}
+```
 
 ## Operator
 
@@ -81,6 +131,7 @@ spec:
     chapPassword: ""
     chapUser: ""
   logLevel: info
+  registry: quay.io
 ```
 
 Create a `HPECSIDriver` with the manifest.
