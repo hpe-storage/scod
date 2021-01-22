@@ -19,7 +19,9 @@ This tutorial talks about managing multiple `Secrets` and `StorageClasses` to di
 
 Each CSP has its own features and perks, learn about the different platforms right here.
 
-### Using the HPE CSI Driver with HPE Primera
+### HPE Primera 
+
+#### Using the HPE CSI Driver with HPE Primera
 
 This tutorial showcases a few of the HPE Primera specific features with the HPE CSI Driver.
 
@@ -27,7 +29,17 @@ This tutorial showcases a few of the HPE Primera specific features with the HPE 
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=0AmSU1GDm3M)</small>
 
-### Using the HPE CSI Driver with HPE Nimble Storage
+#### Configuring HPE Primera Peer Persistence with the HPE CSI Operator for Kubernetes on Red Hat OpenShift
+
+Learn how to configure HPE Primera Peer Persistence using the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/1b9OuadpBfA" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=1b9OuadpBfA)</small>
+
+### HPE Nimble Storage
+
+#### Using the HPE CSI Driver with HPE Nimble Storage
 
 This tutorial showcases a few of the HPE Nimble Storage specific features with the HPE CSI Driver.
 
@@ -78,14 +90,6 @@ Run multi-writer (RWX and ROX) workloads on block storage (RWO) using the HPE CS
 <iframe width="696" height="392" src="https://www.youtube.com/embed/bIJUm27Zg1M" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=bIJUm27Zg1M)</small>
-
-### Configuring HPE Primera Peer Persistence with the HPE CSI Operator for Kubernetes on Red Hat OpenShift
-
-Learn how to configure HPE Primera Peer Persistence using the HPE CSI Driver.
-
-<iframe width="696" height="392" src="https://www.youtube.com/embed/1b9OuadpBfA" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<small>[Watch on YouTube](https://www.youtube.com/watch?v=1b9OuadpBfA)</small>
 
 ## Partner Ecosystems
 
