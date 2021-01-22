@@ -79,6 +79,14 @@ Run multi-writer (RWX and ROX) workloads on block storage (RWO) using the HPE CS
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=bIJUm27Zg1M)</small>
 
+### Configuring HPE Primera Peer Persistence with the HPE CSI Operator for Kubernetes on Red Hat OpenShift
+
+Learn how to configure HPE Primera Peer Persistence using the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/1b9OuadpBfA" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=1b9OuadpBfA)</small>
+
 ## Partner Ecosystems
 
 Joint solutions with our revered ecosystem partners.
