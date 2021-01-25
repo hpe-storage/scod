@@ -1,5 +1,6 @@
-# Overview
+<img src="img/redhat-certified.png" align="right" width="160" hspace="20" vspace="20" />
 
+# Overview
 HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.
 
 Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE volume drivers and this page serves as the authoritative source for all things HPE primary storage and Red Hat OpenShift.
@@ -14,11 +15,13 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 Software delivered through the HPE and Red Hat partnership follows a rigorous certification process and only qualify what's listed in the following table.
 
-| Status        | Red Hat OpenShift | HPE CSI Operator | Container Storage Providers |
-| ------------- | ----------------- | ---------------- | --------------------------- |
-| Certified     | 4.2               | 1.2.0            | Nimble, 3PAR and Primera    |
-| Certified     | 4.3               | 1.2.0            | Nimble, 3PAR and Primera    |
-| Certified     | 4.3, 4.4          | 1.3.0            | Nimble, 3PAR and Primera    |
+| Status        | Red Hat OpenShift                | HPE CSI Operator | Container Storage Providers |
+| ------------- | -------------------------------- | ---------------- | --------------------------- |
+| Certified     | 4.2<sup>1</sup>, 4.3<sup>1</sup> | 1.2.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.3<sup>1</sup>, 4.4             | 1.3.0            | Nimble, 3PAR and Primera    |
+| Certified     | 4.4, 4.6                         | 1.4.0            | Nimble, 3PAR and Primera    |
+
+<small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small>
 
 Check this table periodically for future releases.
 

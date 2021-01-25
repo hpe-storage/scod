@@ -338,22 +338,23 @@ The following example walks through deployment of the **latest** CSI driver.
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 ### Common
+
 These object configuration files are common for all versions of Kubernetes.
 
 Worker node IO settings:
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/hpe-linux-config.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-linux-config.yaml
 ```
 
 Container Storage Provider:
 
 ```markdown fct_label="HPE Nimble Storage"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/nimble-csp.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/nimble-csp.yaml
 ```
 
 ```markdown fct_label="HPE 3PAR and Primera"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/3par-primera-csp.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/3par-primera-csp.yaml
 ```
 
 !!! important
@@ -361,33 +362,47 @@ kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 
 After deploying the CSI driver for the particular version of Kubernetes being used below, [add a HPE storage backend](#add_a_hpe_storage_backend).
 
+### Kubernetes 1.20
+
+```markdown
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.20.yaml
+```
+
+### Kubernetes 1.19
+
+```markdown
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.19.yaml
+```
+
 ### Kubernetes 1.18
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/hpe-csi-k8s-1.18.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.18.yaml
 ```
 
 ### Kubernetes 1.17
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/hpe-csi-k8s-1.17.yaml
-```
-
-### Kubernetes 1.16
-
-```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/hpe-csi-k8s-1.16.yaml
-```
-
-### Kubernetes 1.15
-
-```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.3.0/hpe-csi-k8s-1.15.yaml
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
 ```
 
 ## Legacy versions
 
 Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
+
+### Kubernetes 1.16
+
+* Object definitons for [HPE CSI Driver for Kubernetes v1.3.0](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver/v1.3.0)
+
+!!! note
+    Latest supported CSI driver version is 1.3.0 for Kubernetes 1.16.
+
+### Kubernetes 1.15
+
+* Object definitons for [HPE CSI Driver for Kubernetes v1.3.0](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver/v1.3.0)
+
+!!! note
+    Latest supported CSI driver version is 1.3.0 for Kubernetes 1.15.
 
 ### Kubernetes 1.14
 

@@ -53,6 +53,52 @@ These are the combinations HPE has tested and can provide official support servi
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
 
+#### HPE CSI Driver for Kubernetes 1.4.0
+
+Release highlights:
+
+* Kubernetes CSI Sidecars: Volume Group Provisioner and Volume Group Snapshotter
+* NFS Server Provisioner GA
+* HPE Primera Remote Copy Peer Persistence support
+* Air-gap support for the Helm chart
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.17-1.20</td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.7 & 8.1, RHCOS 4.4 & 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP1
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.0-x, 5.1.4.200-x, 5.2.1.0-x, 5.3.0.0-x, 5.3.1.0-x, 5.3.2.0-x<br />
+      3PAR OS 3.3.1+<br />
+      Primera OS 4.0+<br />
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.4.0.md>v1.4.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-v1-4-0-with-expanded-ecosystem-and/ba-p/7118180">HPE CSI Driver for Kubernetes v1.4.0 now available!</a> (release blog) <br />
+    <a href="https://developer.hpe.com/blog/7mBn6Yj89Wcg6VN6lzMO/synchronized-volume-snapshots-for-distributed-workloads-on-kubernetes">Synchronized Volume Snapshots for Distributed Workloads on Kubernetes</a> (tutorial)
+   </td>
+ </tr>
+</table>
+ 
+<small>
+ <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+</small>
+
 #### HPE CSI Driver for Kubernetes 1.3.0
 
 Release highlights:
@@ -92,6 +138,7 @@ Release highlights:
     <a href="https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on">HPE DEV</a> (Remote copy peer persistence tutorial)<br/>
     <a href="https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe">HPE DEV</a> (Introducing the volume mutator)<br/>
    </td>
+ </tr>
 </table>
 
 <small>
@@ -134,39 +181,7 @@ Release highlights: Support for raw block volumes and inline ephemeral volumes. 
        <a href="https://community.hpe.com/t5/around-the-storage-block/tech-preview-network-file-system-server-provisioner-for-hpe-csi/ba-p/7092948">Around The Storage Block</a> (NFS Server Provisioner)<br/>
        <a href="https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri">HPE DEV</a> (tutorial for NFS)
    </td>
-</table>
-
-#### HPE CSI Driver for Kubernetes 1.1.1
-
-Release highlights: Support for HPE 3PAR and Primera Container Storage Provider.
-
-<table>
-  <tr>
-    <th>Kubernetes</th>
-    <td>1.13-1.17</td>
-  </tr>
-  <tr>
-    <th>Worker OS</th>
-    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
-  </tr>
-  <tr>
-    <th>Data protocol</th>
-    <td>Fibre Channel, iSCSI </td>
-  </tr>
-  <tr>
-    <th>Platforms</th>
-    <td>
-      NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x<br/>
-      3PAR OS 3.3.1<br/>
-      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
-    </td>
-  <tr>
-    <th>Release notes</th>
-    <td>N/A</td>
-  </tr>
-  <tr>
-   <th>Blogs</th>
-   <td><a href="https://community.hpe.com/t5/hpe-storage-tech-insiders/hpe-csi-driver-for-kubernetes-1-1-1-and-hpe-3par-and-hpe-primera/ba-p/7086675">HPE Storage Tech Insiders</a> (release), <a href="https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-">HPE DEV</a> (tutorial for "primera3par" CSP)
+ </tr>
 </table>
 
 #### Release archive
