@@ -341,6 +341,12 @@ Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 These object configuration files are common for all versions of Kubernetes.
 
+All components below are deployed in the "hpe-storage" `Namespace`.
+
+```markdown
+kubectl create ns hpe-storage
+```
+
 Worker node IO settings:
 
 ```markdown

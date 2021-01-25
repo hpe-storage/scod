@@ -65,7 +65,7 @@ Release highlights:
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>1.17-1.20</td>
+    <td>1.17-1.20<sup>1</sup></td>
   </tr>
   <tr>
     <th>Worker&nbsp;OS</th>
@@ -78,7 +78,7 @@ Release highlights:
   <tr>
     <th>Platforms</th>
     <td>
-      NimbleOS 5.0.10.0-x, 5.1.4.200-x, 5.2.1.0-x, 5.3.0.0-x, 5.3.1.0-x, 5.3.2.0-x<br />
+      NimbleOS 5.0.10.0-x, 5.1.4.200-x, 5.2.1.0-x, 5.3.0.0-x, 5.3.1.0-x<br />
       3PAR OS 3.3.1+<br />
       Primera OS 4.0+<br />
     </td>
