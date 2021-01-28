@@ -660,8 +660,6 @@ spec:
 
 The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be mutated by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be mutated in the `StorageClass` by setting the `allowMutations` parameter.
 
-In the `StorageClass`, also make sure that the `csi.storage.k8s.io/controller-provisioner-secret-name` and `csi.storage.k8s.io/controller-provisioner-secret-namespace` are set, as those are used by the `csi-extensions` and `csi-volume-mutator` sidecars.
-
 ```markdown
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
