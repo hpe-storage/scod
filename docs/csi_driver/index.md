@@ -193,6 +193,7 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 ## Known limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
+* When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI is the only supported data protocol for the HPE CSI Driver.
 
 ## iSCSI CHAP considerations
 
