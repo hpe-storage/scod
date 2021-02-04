@@ -64,7 +64,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with `[VolumeGroupClasses](#volumegroupclass_parameters)`.
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#volumegroupclass_parameters).
  <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
  <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
 </small>
