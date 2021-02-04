@@ -390,21 +390,7 @@ Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining 
 
 Kubernetes 1.17+ (CSI snapshots in beta)
 
-```markdown fct_label="HPE CSI Driver v1.3.0"
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshotClass
-metadata:
-  name: hpe-snapshot
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: csi.hpe.com
-deletionPolicy: Delete
-parameters:
-  description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
-```
-```markdown fct_label="HPE CSI Driver v1.4.0-beta"
+```markdown fct_label="HPE CSI Driver v1.4.0"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
@@ -419,6 +405,21 @@ parameters:
   csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
   csi.storage.k8s.io/snapshotter-list-secret-name: hpe-backend
   csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
+```
+
+```markdown fct_label="HPE CSI Driver v1.3.0"
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshotClass
+metadata:
+  name: hpe-snapshot
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
+driver: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "Snapshot created by the HPE CSI Driver"
+  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
+  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
 ```
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
