@@ -3,7 +3,7 @@
 The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important Nimble array setup requirements.
 
 !!! caution "Important"
-    For a successful deployment, it's important to understand the Nimble platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (worker host OS and Kubernetes versions) and the CSP.
+    For a successful deployment, it's important to understand the Nimble platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (compute node OS and Kubernetes versions) and the CSP.
 
 [TOC]
 
@@ -20,6 +20,9 @@ Always check the corresponding CSI driver version in [compatibility and support]
 ### Setting up the Nimble array
 
 How to deploy an HPE Nimble Storage array is beyond the scope of this document. Please refer to [HPE InfoSight](https://infosight.hpe.com) for further reading.
+
+!!! error "Important"
+    The HPE Nimble Storage Linux Toolkit (NLT) is **not** compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on control plane nodes if they use iSCSI or FC storage from a HPE Nimble Storage array.
 
 #### Single tenant deployment
 
