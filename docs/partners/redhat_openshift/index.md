@@ -126,6 +126,7 @@ spec:
     chapPassword: ""
     chapUser: ""
   logLevel: info
+  registry: "quay.io"
 ```
 
 #### OpenShift web console
