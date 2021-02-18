@@ -106,9 +106,9 @@ spec:
 The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.
 
 ```markdown
-oc rollout status deploy/hpe-csi-operator -n hpe-csi-driver
-Waiting for deployment "hpe-csi-operator" rollout to finish: 0 of 1 updated replicas are available...
-deployment "hpe-csi-operator" successfully rolled out
+oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
+Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
+deployment "hpe-csi-driver-operator" successfully rolled out
 ```
 
 The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
