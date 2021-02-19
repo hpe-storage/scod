@@ -88,11 +88,33 @@ This is adapted from the following tutorial, please read over to understand all 
 !!! Note
     The following is a simplified single-site configuration to demonstrate how to deploy the vSphere CPI and CSI drivers. Make sure to adapt the configuration to match your environment and needs.
 
+##### Check for ProviderID
+
+Check if `ProviderID` is already configured on your cluster.
+
+```markdown
+kubectl describe nodes | grep "ProviderID"
+```
+
+If this command returns empty, then proceed with configuring the vSphere Cloud Provider.
+
+If the `ProviderID` is set, then you can proceed directly to installing the [vSphere CSI Driver](#install_the_vsphere_container_storage_interface_csi_driver).
+
+```markdown
+$ kubectl describe nodes | grep "ProviderID"
+ProviderID:                   vsphere://4238c1a1-e72f-74bf-db48-0d9f4da3e9c9
+ProviderID:                   vsphere://4238ede5-50e1-29b6-1337-be8746a5016c
+ProviderID:                   vsphere://4238c6dc-3806-ce36-fd14-5eefe830b227
+```
+
 ##### Create a CPI ConfigMap
 
 Create a `vsphere.conf` file. 
 
-Make sure to set the vCenter server IP and vCenter datacenter object name to match your environment. For example, here we have the `tenant-k8s` configured with the vCenter IP `192.168.1.30` and the vCenter datacenter object `Houston-DC`.
+!!! Note
+    The `vsphere.conf` is a hardcoded filename used by the vSphere Cloud Provider. Do not change it otherwise the Cloud Provider will not deploy correctly.
+
+Set the vCenter server FQDN or IP and vSphere datacenter object name to match your environment. 
 
 Copy and paste the following.
 ```markdown
@@ -108,9 +130,9 @@ global:
 # vcenter section
 vcenter:
   tenant-k8s:
-    server: 192.168.1.30
+    server: <vCenter fqdn or ip>
     datacenters:
-      - Houston-DC
+      - <vCenter datacenter name>
 ```
 
 Create the `ConfigMap` from the `vsphere.conf` file.
@@ -137,8 +159,8 @@ metadata:
   name: cpi-global-secret
   namespace: kube-system
 stringData:
-  192.168.1.30.username: "administrator@vsphere.local"
-  192.168.1.30.password: "VMware1!"
+  <vcenter fqdn or ip>.username: "administrator@vsphere.local"
+  <vcenter fqdn or ip>.password: "VMware1!"
 ```
 
 Inspect the `Secret` to verify it was created successfully.
@@ -158,8 +180,8 @@ Type:  Opaque
 
 Data
 ====
-192.168.1.30.password:  8 bytes
-192.168.1.30.username:  27 bytes
+vcenter.example.com.password:  8 bytes
+vcenter.example.com.username:  27 bytes
 ```
 
 ##### Check that all nodes are tainted
@@ -171,10 +193,10 @@ To find your node names, run the following command.
 ```markdown
 kubectl get nodes
 
-NAME      STATUS   ROLES    AGE   VERSION
-master1   Ready    master   11d   v1.19.4
-node1     Ready    <none>   11d   v1.19.4
-node2     Ready    <none>   11d   v1.19.4
+NAME    STATUS   ROLES                  AGE   VERSION
+cp1     Ready    control-plane,master   46m   v1.20.1
+node1   Ready    <none>                 44m   v1.20.1
+node2   Ready    <none>                 44m   v1.20.1
 ```
 
 To create the taint, run the following command for each node in your cluster. 
@@ -191,7 +213,7 @@ kubectl describe nodes | egrep "Taints:|Name:"
 
 The output is similar to this:
 ```markdown
-Name:               master1
+Name:               cp1
 Taints:             node-role.kubernetes.io/master:NoSchedule
 Name:               node1
 Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
@@ -204,9 +226,9 @@ Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedu
 There are 3 manifests that must be deployed to install the vSphere Cloud Provider Interface (CPI). The following example applies the RBAC roles and the RBAC bindings to your Kubernetes cluster. It also deploys the Cloud Controller Manager in a DaemonSet.
 
 ```markdown
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-roles.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/v1.2.1/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
+kubectl apply -f https://github.com/kubernetes/cloud-provider-vsphere/raw/master/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
 ```
 
 ##### Verify that the CPI has been successfully deployed
@@ -266,18 +288,28 @@ vsphere-config-secret   Opaque   1      43s
 
 For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
+
+
 ##### Create RBAC, vSphere CSI Controller `Deployment` and vSphere CSI node `DaemonSet`
 
+Check the official [vSphere CSI Driver Github repo](https://github.com/kubernetes-sigs/vsphere-csi-driver) for the latest version.
+
 ```markdown fct_label="vSphere 6.7 U3"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-67u3/vanilla/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/rbac/vsphere-csi-controller-rbac.yaml
 ```
 
 ```markdown fct_label="vSphere 7.0"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/rbac/vsphere-csi-controller-rbac.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-controller-deployment.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.0.1/vsphere-7.0/vanilla/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/rbac/vsphere-csi-controller-rbac.yaml
+```
+
+```markdown fct_label="vSphere 7.0U1"
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/rbac/vsphere-csi-controller-rbac.yaml
 ```
 
 ##### Verify the vSphere CSI driver deployment
@@ -333,7 +365,7 @@ Events:  <none>
 Also verify that the vSphere CSINodes `CustomResourceDefinition` has been created.
 ```markdown
 kubectl get csinodes -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.drivers[].name}{"\n"}{end}'
-master1 csi.vsphere.vmware.com
+cp1     csi.vsphere.vmware.com
 node1   csi.vsphere.vmware.com
 node2   csi.vsphere.vmware.com
 ```
@@ -357,7 +389,6 @@ metadata:
 provisioner: csi.vsphere.vmware.com
 parameters:
   storagepolicyname: "primera-default-profile"
-  fstype: xfs
 ```
 
 ### Validate
