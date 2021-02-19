@@ -83,6 +83,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 | qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
 | remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on HPE Primera/3PAR array. | **X** | **X** |
 | replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
+| allowBatchReplicatedVolumeCreation <br /> | Boolean <br />  | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
 | oneRcgPerPvc <br /> | Boolean <br /> | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
 | iscsiPortalIps <br /> | Text <br /> | Comma separated list of HPE Primera/3PAR iSCSI port IPs. | **X** | **X** |
 
