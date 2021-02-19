@@ -159,7 +159,7 @@ metadata:
   name: cpi-global-secret
   namespace: kube-system
 stringData:
-  <vcenter fqdn or ip>.username: "administrator@vsphere.local"
+  <vcenter fqdn or ip>.username: "Administrator@vsphere.local"
   <vcenter fqdn or ip>.password: "VMware1!"
 ```
 
