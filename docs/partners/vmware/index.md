@@ -93,7 +93,7 @@ This is adapted from the following tutorial, please read over to understand all 
 Check if `ProviderID` is already configured on your cluster.
 
 ```markdown
-kubectl describe nodes | grep "ProviderID"
+kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{"\n"}{end}'
 ```
 
 If this command returns empty, then proceed with configuring the vSphere Cloud Provider.
@@ -101,10 +101,10 @@ If this command returns empty, then proceed with configuring the vSphere Cloud P
 If the `ProviderID` is set, then you can proceed directly to installing the [vSphere CSI Driver](#install_the_vsphere_container_storage_interface_csi_driver).
 
 ```markdown
-$ kubectl describe nodes | grep "ProviderID"
-ProviderID:                   vsphere://4238c1a1-e72f-74bf-db48-0d9f4da3e9c9
-ProviderID:                   vsphere://4238ede5-50e1-29b6-1337-be8746a5016c
-ProviderID:                   vsphere://4238c6dc-3806-ce36-fd14-5eefe830b227
+$ kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{"\n"}{end}'
+vsphere://4238c1a1-e72f-74bf-db48-0d9f4da3e9c9
+vsphere://4238ede5-50e1-29b6-1337-be8746a5016c
+vsphere://4238c6dc-3806-ce36-fd14-5eefe830b227
 ```
 
 ##### Create a CPI ConfigMap
@@ -130,9 +130,9 @@ global:
 # vcenter section
 vcenter:
   tenant-k8s:
-    server: <vCenter fqdn or ip>
+    server: <vCenter FQDN or IP>
     datacenters:
-      - <vCenter datacenter name>
+      - <vCenter Datacenter name>
 ```
 
 Create the `ConfigMap` from the `vsphere.conf` file.
@@ -159,8 +159,8 @@ metadata:
   name: cpi-global-secret
   namespace: kube-system
 stringData:
-  <vcenter fqdn or ip>.username: "Administrator@vsphere.local"
-  <vcenter fqdn or ip>.password: "VMware1!"
+  <vCenter FQDN or IP>.username: "Administrator@vsphere.local"
+  <vCenter FQDN or IP>.password: "VMware1!"
 ```
 
 Inspect the `Secret` to verify it was created successfully.
