@@ -150,7 +150,7 @@ kubectl create -f-
 ^D (CTRL + D)
 ```
 
-Next create the CPI `Secret`.
+Next create the CPI `Secret`. 
 
 ```markdown
 apiVersion: v1
@@ -162,6 +162,8 @@ stringData:
   <vCenter FQDN or IP>.username: "Administrator@vsphere.local"
   <vCenter FQDN or IP>.password: "VMware1!"
 ```
+!!! Note
+    The username and password within the `Secret` are case-sensitive.
 
 Inspect the `Secret` to verify it was created successfully.
 
