@@ -22,8 +22,9 @@ Always check the corresponding CSI driver version in [compatibility and support]
 
 Additional hyperscaler support and BYO capabilities may become available in a future release of the CSP.
 
-!!! tip
-    The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
+### Instance metadata
+
+Kubernetes compute nodes will need to have access to the cloud provider's metadata services. This varies by cloud provider and is taken care of automatically by the HPE Cloud Volume CSP. The provided values may be overridden in the `StorageClass`, see [common parameters](#common_parameters_for_provisioning_and_cloning) for more information.
 
 ### Available regions
 
@@ -40,13 +41,13 @@ Consider this table a snapshot of a particular moment in time and consult with t
 !!! note
     In other regions where HPE Cloud Volumes provide services, such as us-west-1, but cloud providers has no managed Kubernetes service; BYO Kubernetes is the only available option when it becomes available as a supported feature of the CSP.
 
-### Limitations
+## Limitations
 
 Consult the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for generic limitations and requirements. CSI and CSP specific limitations with HPE Cloud Volumes Block is listed below.
 
 - The Volume Group Provisioner and Volume Group Snapshotter sidecars are currently not implemented in the HPE Cloud Volumes CSP.
 - The base CSI driver parameter `description` is ignored by the CSP.
-- In some cases, your a "regionID" needs to be supplied in the `StorageClass` and in conjunction with Ephemeral Inline Volumes. Your "regionID" may only be found in the APIs. Join us on [Slack](https://slack.hpedev.io/) if you're hitting this isssue (it can be found in the CSP logs).
+- In some cases, your a "regionID" needs to be supplied in the `StorageClass` and in conjunction with Ephemeral Inline Volumes. Your "regionID" may only be found in the APIs. Join us on [Slack](https://slack.hpedev.io/) if you're hitting this isssue (it can be seen in the CSP logs).
 
 ## StorageClass parameters
 
@@ -62,19 +63,22 @@ A `StorageClass` is used to provision or clone an HPE Cloud Volumes Block-backed
 Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
 
 !!! note
-    These are optional parameters unless specified.
+    All parameters are optional unless documented as mandatory for a particular use case.
 
 ### Common parameters for provisioning and cloning
 
 These parameters are mutable between a parent volume and creating a clone from a snapshot.
 
-| Parameter                      | String  | Description |
-| ------------------------------ | ------- | ----------- |
-| destroyOnDelete                | Boolean | Indicates the backing Cloud Volume (including snapshots) should be destroyed when the PVC is deleted. Defaults to "false" which means volumes needs to be pruned manually in the Cloud Volume service. |
-| limitIops                      | Integer | The IOPS limit of the volume. The IOPS limit should be in the range 300 (default) to 20000. |
-| performancePolicy<sup>1</sup>  | Text    | The name of the performance policy to assign to the volume. Available performance policies: "Exchange", "Oracle", "SharePoint", "SQL", "Windows File Server". Defaults to "Other Workloads". |
-| schedule                       | Text    | Snapshot schedule to assign to the volumes. Available schedules: "hourly", "daily", "twicedaily", "weekly", "monthly", "none". Defaults to "daily". |
-| retentionPolicy                | Integer | Retention policy to assign to the `schedule`. The parameter must be paired properly with the `schedule`. <br /><br /><ul><li>hourly: 6, 12, 24<li>daily: 3, 7, 14<li>twicedaily: 4, 8, 14<li>weekly: 2, 4, 8<li>monthly: 3, 6, 12</ul>Defaults to "3" paired with the "daily" `retentionPolicy`.
+| Parameter                       | String  | Description |
+| ------------------------------- | ------- | ----------- |
+| destroyOnDelete                 | Boolean | Indicates the backing Cloud Volume (including snapshots) should be destroyed when the PVC is deleted. Defaults to "false" which means volumes needs to be pruned manually in the Cloud Volume service. |
+| limitIops                       | Integer | The IOPS limit of the volume. The IOPS limit should be in the range 300 (default) to 20000. |
+| performancePolicy<sup>1</sup>   | Text    | The name of the performance policy to assign to the volume. Available performance policies: "Exchange", "Oracle", "SharePoint", "SQL", "Windows File Server". Defaults to "Other Workloads". |
+| schedule                        | Text    | Snapshot schedule to assign to the volumes. Available schedules: "hourly", "daily", "twicedaily", "weekly", "monthly", "none". Defaults to "daily". |
+| retentionPolicy                 | Integer | Retention policy to assign to the `schedule`. The parameter must be paired properly with the `schedule`. <br /><br /><ul><li>hourly: 6, 12, 24<li>daily: 3, 7, 14<li>twicedaily: 4, 8, 14<li>weekly: 2, 4, 8<li>monthly: 3, 6, 12</ul>Defaults to "3" paired with the "daily" `retentionPolicy`.
+| privateCloud<sup>1</sup>        | Text    | Override the compute instance provided VPC/VNET. |
+| existingCloudSubnet<sup>1</sup> | Text    | Override the compute instance provided subnet. |
+| automatedConnection<sup>1</sup> | Boolean | Override the HPE Cloud Volumes configured setting for connection automation. |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
