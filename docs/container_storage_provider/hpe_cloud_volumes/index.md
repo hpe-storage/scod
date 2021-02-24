@@ -47,7 +47,10 @@ Consult the [compatibility and support](../../csi_driver/index.md#compatibility_
 
 - The Volume Group Provisioner and Volume Group Snapshotter sidecars are currently not implemented in the HPE Cloud Volumes CSP.
 - The base CSI driver parameter `description` is ignored by the CSP.
-- In some cases, your a "regionID" needs to be supplied in the `StorageClass` and in conjunction with Ephemeral Inline Volumes. Your "regionID" may only be found in the APIs. Join us on [Slack](https://slack.hpedev.io/) if you're hitting this isssue (it can be seen in the CSP logs).
+- In some cases, your a "regionID" needs to be supplied in the `StorageClass` and in conjunction with Ephemeral Inline Volumes. Your "regionID" may only be found in the APIs. Join us on [Slack](https://slack.hpedev.io/) if you're hitting this issue (it can be seen in the CSP logs).
+
+!!! tip
+    While not a limitation in itself, iSCSI CHAP is mandatory with HPE Cloud Volumes but does not need any CSI driver configuration, the CHAP credentials are queried through the REST APIs from the HPE Cloud Volumes account session and applied automatically during runtime.
 
 ## StorageClass parameters
 
