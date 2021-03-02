@@ -7,7 +7,7 @@ Welcome to the Video Gallery. This is a collection of current YouTube assets tha
 
 How to manage the components that surrounds driver deployment.
 
-### Managing multiple HPE Storage backends using the HPE CSI Driver
+### Managing multiple HPE storage backends using the HPE CSI Driver
 
 This tutorial talks about managing multiple `Secrets` and `StorageClasses` to distinguish different backends.
 
@@ -121,7 +121,7 @@ This tutorial goes through the steps of installing the HPE CSI Operator on Red H
 
 ### Using HPE Primera and HPE Nimble Storage with the VMware Tanzu and vSphere CSI Driver
 
-This tutorial shows how to use HPE Storage with VMware Tanzu as well as how to configure the vSphere CSI Driver for Kubernetes clusters running on VMware leveraging HPE Storage.
+This tutorial shows how to use HPE storage with VMware Tanzu as well as how to configure the vSphere CSI Driver for Kubernetes clusters running on VMware leveraging HPE storage.
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/iC5taH0wLs0" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

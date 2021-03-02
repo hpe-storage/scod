@@ -5,9 +5,9 @@ Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to K
 CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage Profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE primary storage (HPE Primera, Nimble Storage, Nimble Storage dHCI, and 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.
 
 !!! tip
-    Check out the tutorial available on YouTube in the [Video Gallery](../../learn/video_gallery/index.html#using_hpe_primera_and_hpe_nimble_storage_with_the_vmware_tanzu_and_vsphere_csi_driver) on how to configure and use HPE Cloud Native Storage for vSphere. 
+    Check out the tutorial available on YouTube in the [Video Gallery](../../learn/video_gallery/index.md#using_hpe_primera_and_hpe_nimble_storage_with_the_vmware_tanzu_and_vsphere_csi_driver) on how to configure and use HPE storage with Cloud Native Storage for vSphere. 
     
-    Watch the video in its entirety or skip to [configuring Tanzu with HPE Storage](https://www.youtube.com/watch?t=191&v=iC5taH0wLs0) or [configuring the vSphere CSI Driver with HPE Storage](https://www.youtube.com/watch?t=520&v=iC5taH0wLs0).
+    Watch the video in its entirety or skip to [configuring Tanzu with HPE storage](https://www.youtube.com/watch?t=191&v=iC5taH0wLs0) or [configuring the vSphere CSI Driver with HPE storage](https://www.youtube.com/watch?t=520&v=iC5taH0wLs0).
 
 [TOC]
 
