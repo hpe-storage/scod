@@ -8,9 +8,15 @@ Rancher Labs provides a platform to deploy Kubernetes-as-a-service everywhere. H
 
 Rancher is capable of managing Kubernetes across a broad spectrum of managed and BYO clusters. It's important to understand that the HPE CSI Driver for Kubernetes does not support the same amount of combinations Rancher does. Consult the support matrix on [the CSI driver overview page](../../csi_driver/index.md#compatibility_and_support) for the supported combinations of the HPE CSI Driver, Kubernetes and supported node Operating Systems.
 
-## Rancher 2.4
+## Supported versions
 
 Rancher uses Helm to deploy and manage partner software. The concept of a Helm repository in Rancher is organized as a "catalog". The HPE CSI Driver for Kubernetes and the HPE Volume Driver for Kubernetes FlexVolume plugin are both partner solutions present in the official Rancher Catalog.
+
+| Rancher release | Install methods                   | Recommended CSI/FlexVolume driver |
+| --------------- | --------------------------------- | --------------------------------- |
+| 2.3             | Cluster Manager                   | latest                            |
+| 2.4             | Cluster Manager                   | latest                            |
+| 2.5             | Cluster Manager, Cluster Explorer | latest                            |
 
 !!! tip
     Learn more about Catalogs, Helm Charts and Apps in the [Rancher documentation](https://rancher.com/docs/rancher/v2.x/en/catalog/).
@@ -18,6 +24,9 @@ Rancher uses Helm to deploy and manage partner software. The concept of a Helm r
 ### HPE CSI Driver for Kubernetes
 
 The HPE CSI Driver is part of the official Helm v3 library in Rancher. The CSI driver is deployed on managed Kubernetes clusters like any ordinary "App" in Rancher. You may use either the [Rancher CLI](https://rancher.com/docs/rancher/v2.x/en/cli/) or the web UI to deploy the CSI driver.
+
+!!! note
+    In Rancher 2.5 an "Apps & Marketplace" component was introduced in the new "Cluster Explorer" interface. This is the new interface moving forward. Upcoming releases of the HPE CSI Driver for Kubernetes will only support installation via "Cluster Explorer".
 
 #### Rancher CLI install
 
@@ -41,37 +50,26 @@ p-k28xd:hpe-csi-driver   hpe-csi-driver   active    helm3-library   hpe-csi-driv
 !!! note
     This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) for supported parameters.
 
-#### Web UI install
+#### Rancher Cluster Explorer
 
-The web UI install is straight forward. Illustrated here for completeness.
+In Rancher 2.5 and newer, the "Apps & Marketplace" in the "Cluster Explorer" may be used to install the HPE CSI Driver. This is recommended for new installs.
 
-![Step 1](img/rke24-ui/step1.png)
-*Login to RKE and click the cluster tab*
+![](img/cluster_explorer.png)
+<small>Rancher Cluster Explorer</small>
 
-![Step 2](img/rke24-ui/step2.png)
-*Select which managed cluster and project the driver should be installed to*
+#### Rancher Cluster Manager
 
-![Step 3](img/rke24-ui/step3.png)
-*Select "Apps"*
+In Rancher 2.5 and earlier, the "Apps" interface is the default method of installing the HPE CSI Driver.
 
-![Step 4](img/rke24-ui/step4.png)
-*Select "Launch"*
-
-![Step 5](img/rke24-ui/step5.png)
-*Pick "hpe-csi-driver"*
-
-![Step 6](img/rke24-ui/step6.png)
-*Scroll past the manifest unless any parameters needs changing, hit "Launch"*
-
-![Step 7](img/rke24-ui/step7.png)
-*After a few moments the driver should be installed. The number of workloads depends on the cluster node count.*
+![](img/cluster_manager.png)
+<small>Rancher Cluster Manager</small>
 
 !!! note
-    This is installs the driver with the default parameters which is the most common deployment option. Please see the official Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) for supported parameters.
+    Installing the CSI driver with default parameters (simply hit "Launch" in the UIs) is the most common deployment option. Please see the official Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) for supported parameters.
 
 #### Post install steps
 
-For Rancher Apps to make use of persistent storage from HPE, a supported backend needs to be configured. This procedure is generic regardless of Kubernetes distribution being used.
+For Rancher Apps to make use of persistent storage from HPE, a supported backend needs to be configured along with a `StorageClass`. These procedures are generic regardless of Kubernetes distribution being used.
 
 - Go ahead and [add a HPE storage backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend)
 
