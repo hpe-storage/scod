@@ -661,6 +661,9 @@ spec:
 
 The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be mutated by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be mutated in the `StorageClass` by setting the `allowMutations` parameter.
 
+!!! tip
+    There's a tutorial available on YouTube accessible through the [Video Gallery](../../learn/video_gallery/index.html#adapt_stateful_workloads_dynamically_with_the_hpe_csi_driver_for_kubernetes) on how to use volume mutations to adapt stateful workloads with the HPE CSI Driver.
+
 !!! caution "Important"
     In order to mutate a `StorageClass` parameter it needs to have a default value set in the `StorageClass`. In the example below we'll allow mutatating "description". If the parameter "description" isn't set when the volume was provisioned, no subsequent mutations are allowed.
 
