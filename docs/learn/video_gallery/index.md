@@ -7,7 +7,7 @@ Welcome to the Video Gallery. This is a collection of current YouTube assets tha
 
 How to manage the components that surrounds driver deployment.
 
-### Managing multiple HPE primary storage backends using the HPE CSI Driver
+### Managing multiple HPE storage backends using the HPE CSI Driver
 
 This tutorial talks about managing multiple `Secrets` and `StorageClasses` to distinguish different backends.
 
@@ -91,6 +91,14 @@ Run multi-writer (RWX and ROX) workloads on block storage (RWO) using the HPE CS
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=bIJUm27Zg1M)</small>
 
+### Adapt stateful workloads dynamically with the HPE CSI Driver for Kubernetes
+
+Learn how to use volume mutations to adapt stateful workloads with the HPE CSI Driver.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/Eytrh3DvwAY" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=Eytrh3DvwAY)</small>
+
 ## Partner Ecosystems
 
 Joint solutions with our revered ecosystem partners.
@@ -110,6 +118,15 @@ This tutorial goes through the steps of installing the HPE CSI Operator on Red H
 <iframe width="696" height="392" src="https://www.youtube.com/embed/tBjjGuuOn7Q" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=tBjjGuuOn7Q)</small>
+
+### Using HPE Primera and HPE Nimble Storage with the VMware Tanzu and vSphere CSI Driver
+
+This tutorial shows how to use HPE storage with VMware Tanzu as well as how to configure the vSphere CSI Driver for Kubernetes clusters running on VMware leveraging HPE storage.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/iC5taH0wLs0" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=iC5taH0wLs0)</small>
+
 
 # Watch more
 
