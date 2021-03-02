@@ -1,6 +1,6 @@
 # Introduction
 
-The HPE Cloud Volumes CSP integrates seamlessly with with the HPE Cloud Volumes Block service in the public cloud. The CSP abstracts the data management capabilities of the storage service for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important HPE Cloud Volumes Block configuration details.
+The HPE Cloud Volumes CSP integrates seamlessly with the HPE Cloud Volumes Block service in the public cloud. The CSP abstracts the data management capabilities of the storage service for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important HPE Cloud Volumes Block configuration details.
 
 !!! important 
     The HPE Cloud Volumes CSP is currently in **beta** and available as a Tech Preview on Amazon EKS only. Please see the [1.5.0-beta Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/1.5.0-beta).
