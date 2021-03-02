@@ -93,6 +93,8 @@ Run multi-writer (RWX and ROX) workloads on block storage (RWO) using the HPE CS
 
 ### Adapt stateful workloads dynamically with the HPE CSI Driver for Kubernetes
 
+Learn how to use volume mutations to adapt stateful workloads with the HPE CSI Driver.
+
 <iframe width="696" height="392" src="https://www.youtube.com/embed/Eytrh3DvwAY" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=Eytrh3DvwAY)</small>
@@ -118,6 +120,8 @@ This tutorial goes through the steps of installing the HPE CSI Operator on Red H
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=tBjjGuuOn7Q)</small>
 
 ### Using HPE Primera and HPE Nimble Storage with the VMware Tanzu and vSphere CSI Driver
+
+This tutorial shows how to use HPE Storage with VMware Tanzu as well as how to configure the vSphere CSI Driver for Kubernetes clusters running on VMware leveraging HPE Storage.
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/iC5taH0wLs0" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
