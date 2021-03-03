@@ -8,7 +8,7 @@ The HPE Cloud Volumes CSP integrates seamlessly with the HPE Cloud Volumes Block
 [TOC]
 
 !!! seealso
-    There's a Tech Preview available in the [Video Gallery](../../learn/video_gallery/index.md#FIXME) on how to get started with the HPE Cloud Volumes CSP with the HPE CSI Driver. FIXME
+    There's a Tech Preview available in the [Video Gallery](../../learn/video_gallery/index.md#tech_preview_hybrid_cloud_kubernetes_using_hpe_cloud_volumes) on how to get started with the HPE Cloud Volumes CSP with the HPE CSI Driver.
 
 ## Cloud requirements
 
