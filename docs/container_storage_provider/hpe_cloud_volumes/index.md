@@ -1,6 +1,6 @@
 # Introduction
 
-The HPE Cloud Volumes CSP integrates seamlessly with the HPE Cloud Volumes Block service in the public cloud. The CSP abstracts the data management capabilities of the storage service for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important HPE Cloud Volumes Block configuration details.
+The HPE Cloud Volumes CSP integrates seamlessly with the HPE Cloud Volumes Block service in the public cloud. The CSP abstracts the data management capabilities of the storage service for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important HPE Cloud Volumes Block configuration details.
 
 !!! important 
     The HPE Cloud Volumes CSP is currently in **beta** and available as a Tech Preview on Amazon EKS only. Please see the [1.5.0-beta Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/1.5.0-beta).
@@ -50,7 +50,7 @@ Consult the [compatibility and support](../../csi_driver/index.md#compatibility_
 - In some cases, your a "regionID" needs to be supplied in the `StorageClass` and in conjunction with Ephemeral Inline Volumes. Your "regionID" may only be found in the APIs. Join us on [Slack](https://slack.hpedev.io/) if you're hitting this issue (it can be seen in the CSP logs).
 
 !!! tip
-    While not a limitation in itself, iSCSI CHAP is mandatory with HPE Cloud Volumes but does not need any CSI driver configuration, the CHAP credentials are queried through the REST APIs from the HPE Cloud Volumes account session and applied automatically during runtime.
+    While not a limitation, iSCSI CHAP is mandatory with HPE Cloud Volumes but does not need to be configured within the CSI driver. The CHAP credentials are queried through the REST APIs from the HPE Cloud Volumes account session and applied automatically during runtime.
 
 ## StorageClass parameters
 
@@ -81,7 +81,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 | retentionPolicy                 | Integer | Retention policy to assign to the `schedule`. The parameter must be paired properly with the `schedule`. <br /><br /><ul><li>hourly: 6, 12, 24<li>daily: 3, 7, 14<li>twicedaily: 4, 8, 14<li>weekly: 2, 4, 8<li>monthly: 3, 6, 12</ul>Defaults to "3" paired with the "daily" `retentionPolicy`.
 | privateCloud<sup>1</sup>        | Text    | Override the compute instance provided VPC/VNET. |
 | existingCloudSubnet<sup>1</sup> | Text    | Override the compute instance provided subnet. |
-| automatedConnection<sup>1</sup> | Boolean | Override the HPE Cloud Volumes configured setting for connection automation. |
+| automatedConnection<sup>1</sup> | Boolean | Override the HPE Cloud Volumes configured setting for connection automation. Connections between HPE Cloud Volumes and the desired VPC/VNET needs to be provisioned manually if set to "false". |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
