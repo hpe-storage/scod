@@ -54,7 +54,7 @@ The **Add cluster** page appears.
 
 ![](img/commvault4.png)
 
-In the **API server endpoint** box, enter the *API server endpoint URL. This can be found using `kubectl config view` under `server: https://<control_plane_load_balancer_ip>:<port>`.
+In the **API server endpoint** box, enter the API server endpoint URL. This can be found using `kubectl config view` under `server: https://<control_plane_load_balancer_ip>:<port>`.
 
 ![](img/commvault5.png)
 
