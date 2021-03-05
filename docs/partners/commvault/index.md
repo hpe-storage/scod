@@ -66,25 +66,25 @@ In this example, we will cover how to create a Kubernetes service account within
 
 The official guide is available here: [Creating a Service Account for Kubernetes Authentication](https://documentation.commvault.com/11.22/essential/129223_creating_service_account_for_kubernetes_authentication.html)
 
-- Create a Kubernetes service account (for example, commvault-svc).
+- Create a Kubernetes service account (for example, cvbackup).
 
 ```markdown
-kubectl create serviceaccount commvault-svc
+kubectl create serviceaccount cvbackup
 ``` 
 
 - To ensure that the service account has sufficient privileges to perform data protection operations, add the service account to the `default-sa-crb` cluster role binding.
 
 ```markdown
-kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:commvault-svc
+kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:cvbackup
 ```
 
 - Extract the service account token required to configure your Kubernetes cluster for data protection.
 
 ```markdown
-kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='commvault-svc')].data.token}"|base64 --decode
+kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='cvbackup')].data.token}"|base64 --decode
 ```
 
-- Use the Kubernetes service account **commvault-svc**, and the token for authentication to your Kubernetes cluster by pasting them into the appropriate fields.
+- Use the Kubernetes service account **cvbackup**, and the token for authentication to your Kubernetes cluster by pasting them into the appropriate fields.
 
 Click **Save**.
 
