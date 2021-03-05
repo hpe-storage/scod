@@ -66,6 +66,7 @@ nav:
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
   - PARTNER ECOSYSTEMS:
+    - 'Commvault': "partners/commvault/index.md"
     - 'Kasten by Veeam': 'partners/kasten/index.md'
     - 'Mirantis': 'partners/mirantis/index.md'
     - 'Rancher Labs': 'partners/rancher_labs/index.md'
