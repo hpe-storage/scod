@@ -34,6 +34,9 @@ The FlexVolume driver supports multiple backends that are based on a "container 
 * Microsoft Azure AKS 1.12/1.13
 * US regions only
 
+!!! important
+    HPE Cloud Volumes was introduced in HPE CSI Driver for Kubernetes v1.5.0. Make sure to check if your cloud is supported by the [CSI driver](../../csi_driver) first.
+
 ## Deploying to Kubernetes
 The recommended way to deploy and manage the HPE Volume Driver for Kubernetes FlexVolume Plugin is to use Helm. Please see the [co-deployments](https://github.com/hpe-storage/co-deployments) repository for further information.
 

@@ -157,11 +157,25 @@ All parameters are mandatory and described below.
 | ----------- | -
 | serviceName | This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes `Service`, such as "nimble-csp-svc" or "primera3par-csp-svc"
 | servicePort | This is port the `serviceName` is listening to.
-| backend     | This is the management hostname or IP address of the actual backend storage system, such as a Nimble or 3PAR array.
+| backend     | This is the management hostname or IP address of the actual backend storage system, such as a Nimble or Primera array. When using HPE Cloud Volumes, this is the API endpoint of the Cloud Volume service.
 | username    | Backend storage system username with the correct privileges to perform storage management.
 | password    | Backend storage system password.
 
 Example:
+
+```markdown fct_label="HPE Cloud Volumes"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: cv-csp-svc
+  servicePort: "8080"
+  backend: prod.cloudvolumes.hpe.com
+  username: ClientID
+  password: ActiveAPIToken
+```
 
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
@@ -355,11 +369,15 @@ kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 
 Container Storage Provider:
 
+```markdown fct_label="HPE Cloud Volumes"
+kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/edge/cv-csp.yaml
+```
+
 ```markdown fct_label="HPE Nimble Storage"
 kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/nimble-csp.yaml
 ```
 
-```markdown fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE Primera and 3PAR"
 kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/3par-primera-csp.yaml
 ```
 
