@@ -4,53 +4,44 @@ This is a free learning resource from HPE which walks you through various exerci
 
 [TOC]
 
-## Kubernetes 101
+![](img/kubernetes_cluster.png) <br /> <br />
 
-### The basics
+##### <u>Kubernetes cluster</u>
 
-The first thing we need to do is to understand the various components of Kubernetes.
+In Kubernetes, nodes within a cluster pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of control plane and worker nodes that allow you to run your containerized workloads.
+
+##### <u>Control plane</u>
+
+The Kubernetes control plane is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the `kubectl` command-line interface, you’re communicating with your cluster’s Kubernetes API services running on the control plane. Control plane refers to a collection of processes managing the cluster state. 
 
 ##### <u>Nodes</u>
 
-![](img/node.png) <br /> <br />
-The nodes in a Kubernetes cluster are the machines (VMs, physical servers, etc) that run your applications and cloud workflows. The Kubernetes master controls each node; you’ll rarely interact with nodes directly.
-
-##### <u>Master</u>
-
-![](img/master.png) <br /> <br />
-The Kubernetes master is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the `kubectl` command-line interface, you’re communicating with your cluster’s Kubernetes master nodes.
-
-!!! Note
-    "Master” refers to a collection of processes managing the cluster state. Typically all these processes run on a single node within the cluster, and this node is also referred to as the master. The master can be replicated for availability and redundancy.
-
-##### <u>Kubernetes Cluster</u>
-![](img/cluster.png) <br /> <br />
-In Kubernetes, nodes pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of a control plane, master and worker nodes, and physical machines that allow you to run your container workloads on.
+Kubernetes runs your workload by placing containers into `Pods` to run on **Nodes**. A node may be a virtual or physical machine, depending on the cluster. Each node is managed by the control plane and contains the services necessary to run `Pods`.
 
 ##### <u>Persistent Volumes</u>
-![](img/persistent_volumes.png) <br /> <br />
+
 <p>Because programs running on your cluster aren’t guaranteed to run on a specific node, data can’t be saved to any arbitrary place in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be. </p>
-To store data permanently, Kubernetes uses Persistent Volumes. Local, external storage via SAN arrays, or cloud drives can be attached to the cluster as a Persistent Volume.
+To store data permanently, Kubernetes uses a `PersistentVolume`. Local, external storage via SAN arrays, or cloud drives can be attached to the cluster as a `PersistentVolume`.
 
 <h3> Kubernetes Objects </h3>
 
 ##### <u>Containers</u>
-![](img/container.png)  <br /> <br />
+
 Programs running on Kubernetes are packaged as containers which can run on Linux or Windows. A container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
 
 ##### <u>Pods</u>
-![](img/pod.png) <br /> <br />
-A Pod is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.
+
+A `Pod` is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A `Pod` encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.
 
 ##### <u>Namespaces</u>
 ![](img/namespaces.png) <br /> <br />
 Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called `Namespaces`. `Namespaces` are intended for use in environments with many users spread across multiple teams, or projects. `Namespaces` are a way to divide cluster resources between multiple users.
 
 ##### <u>Deployments</u>
-A Deployment provides declarative updates for Pods. You declare a desired state for your pods in your Deployment and Kubernetes will manage it for you automatically.
+A `Deployment` provides declarative updates for `Pods`. You declare a desired state for your `Pods` in your `Deployment` and Kubernetes will manage it for you automatically.
 
 ##### <u>Services</u>
-A Kubernetes Service object defines a policy for external clients to access an application within a cluster. By default, Docker uses host-private networking, so containers can talk to other containers only if they are on the same machine. In order for Docker containers to communicate across nodes, there must be allocated ports on the machine’s own IP address, which are then forwarded or proxied to the containers. Coordinating port allocations is very difficult to do at scale, and exposes users to cluster-level issues outside of their control. Kubernetes assumes that pods can communicate with other pods, regardless of which host they land on. Kubernetes gives every pod its own cluster-private IP address, through a Kubernetes Service object, so you do not need to explicitly create links between pods or map container ports to host ports. This means that containers within a Pod can all reach each other’s ports on localhost, and all pods in a cluster can see each other without NAT.
+A Kubernetes Service object defines a policy for external clients to access an application within a cluster. By default, the container runtime uses host-private networking, so containers can talk to other containers only if they are on the same machine. In order for containers to communicate across nodes, there must be allocated ports on the machine’s own IP address, which are then forwarded or proxied to the containers. Coordinating port allocations is very difficult to do at scale, and exposes users to cluster-level issues outside of their control. Kubernetes assumes that `Pods` can communicate with other `Pods`, regardless of which host they land on. Kubernetes gives every `Pod` its own cluster-private IP address, through a Kubernetes Service object, so you do not need to explicitly create links between `Pods` or map container ports to host ports. This means that containers within a `Pod` can all reach each other’s ports on localhost, and all `Pods` in a cluster can see each other without NAT.
 
 ---
 
@@ -157,14 +148,14 @@ kubectl get pods
 ```
 
 !!! note "Quiz"
-    Did you see any pods listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any pods listed, it is because there are no pods deployed within the "default" `Namespace`. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, **NAMESPACES**. In our case, we are working in the "default" `Namespace`. Depending on the type of application and your user access level, applications can be deployed within one or more `Namespaces`. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `Namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other `Namespaces`.
+    Did you see any `Pods` listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any `Pods` listed, it is because there are no `Pods` deployed within the "default" `Namespace`. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, `NAMESPACES`. In our case, we are working in the "default" `Namespace`. Depending on the type of application and your user access level, applications can be deployed within one or more `Namespaces`. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `Namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other `Namespaces`.
 
 
 ---
 
-## Lab 2: Deploy your first pod (Stateless)
+## Lab 2: Deploy your first Pod (Stateless)
 
-A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
+A `Pod` is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a `Pod` are scheduled on the same node.
 
 Here is a sample NGINX webserver deployment.
 
@@ -193,10 +184,10 @@ spec:
 Deploy the NGINX example above.
 
 ```markdown
-kubectl create -f https://hpedev.scod.io/learn/persistent_storage/yaml/nginx-stateless-deployment.yaml
+kubectl create -f https://scod.hpedev.io/learn/persistent_storage/yaml/nginx-stateless-deployment.yaml
 ```
 
-We can see the `Deployment` was successfully created and the NGINX pod is running.
+We can see the `Deployment` was successfully created and the NGINX `Pod` is running.
 
 ```markdown
 $ kubectl get deployments.apps
@@ -300,13 +291,13 @@ Finally, open a browser and go to **http://127.0.0.1** and you should see the fo
 
 You have successfully deployed your first Kubernetes pod. 
 
-With the pod running, we can also log in and explore the pod. Open a **second** terminal, while keeping the first terminal with `port-forward` active, and run:
+With the `Pod` running, we can also log in and explore the `Pod`. Open a **second** terminal, while keeping the first terminal with `port-forward` active, and run:
 
 ```markdown
 kubectl exec -it <pod_name> /bin/bash
 ```
 
-You can explore the pod and run various commands. Some commands might not be available within the pod. Why would that be?
+You can explore the `Pod` and run various commands. Some commands might not be available within the `Pod`. Why would that be?
 
 ```markdown
 root@first-nginx-pod-8d7bb985-kql7t:/# df -h
@@ -361,7 +352,7 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 
 Wait a few minutes as the deployment finishes.
 
-Verify that everything is up and running correctly with the listing out the pods.
+Verify that everything is up and running correctly with the listing out the `Pods`.
 
 ```markdown
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
@@ -545,7 +536,7 @@ spec:
 
 Create the `PersistentVolumeClaim`.
 ```markdown
-kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/my-pvc.yaml
 ```
 
 We can see the **my-pvc** `PersistentVolumeClaim` was created.
@@ -714,7 +705,7 @@ Access the admin console at: **http://127.0.0.1/admin** using the **"admin/admin
 
 This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
 
-## Cleanup
+## Cleanup (Optional)
 
 As others will be using this lab at a later time, we can clean up the objects that were deployed during this lab exercise. 
 
