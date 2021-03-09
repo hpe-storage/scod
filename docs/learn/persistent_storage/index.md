@@ -75,17 +75,34 @@ where `command`, `TYPE`, `NAME`, and `flags` are:
 
 * `TYPE`: Specifies the resource type. Resource types are case-insensitive and you can specify the singular, plural, or abbreviated forms. For example, the following commands produce the same output:
 
+* `NAME`: Specifies the name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example `kubectl get pods`.
+
+Get object example command: 
 ```markdown
-kubectl get pod pod1
-kubectl get pods pod1
-kubectl get po pod1
+kubectl get nodes
+kubectl get node <node_name>
 ```
 
-* `NAME`: Specifies the name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example `kubectl get pods`.
+Describe object example command:
+```markdown
+kubectl describe node <node_name>
+```
+
+Create object example command
+```markdown
+kubectl create -f <file_name or URL>
+```
+
+The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
+
+```markdown
+kubectl create -f- (press Enter)
+< paste the YAML >
+(CTRL-D for Linux) or (^D for Mac users)
+```
 
 !!! note "Kubernetes Cheat Sheet"
     Find more available commands at [Kubernetes Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/) on kubernetes.io.
-
 
 ### Getting to know your cluster:
 
@@ -109,7 +126,7 @@ kubectl cluster-info
 
 If you see a URL response, `kubectl` is correctly configured to access your cluster.
 
-The output is similar to this:
+The output is **similar** to this:
 
 ```markdown
 $ kubectl cluster-info
@@ -124,7 +141,7 @@ Now let's look at the nodes within our cluster.
 ```markdown
 kubectl get nodes
 ```
-You should see output similar to below. As you can see, each node has a role **master** or as **worker** nodes (&lt;none&gt;).
+You should see output similar to below. As you can see, each node has a role **control-plane** or as **worker** nodes (&lt;none&gt;).
 
 ```markdown
 $ kubectl get nodes
@@ -149,15 +166,7 @@ kubectl get pods
 
 A pod is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a pod are scheduled on the same node.
 
-The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
-
-```markdown
-kubectl create -f-
-< paste the YAML >
-^D (CTRL + D)
-```
-
-Let's create a simple **NGINX** webserver.
+Here is a sample NGINX webserver deployment.
 
 ```markdown
 apiVersion: apps/v1
@@ -181,17 +190,39 @@ spec:
         name: nginx
 ```        
 
-We can now see the pod running.
+Deploy the NGINX example above.
 
 ```markdown
-kubectl get pods
+kubectl create -f https://hpedev.scod.io/learn/persistent_storage/yaml/nginx-stateless-deployment.yaml
+```
+
+We can see the `Deployment` was successfully created and the NGINX pod is running.
+
+```markdown
+$ kubectl get deployments.apps
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+first-nginx-pod   1/1     1            1           38s
+
+$ kubectl get pods
 NAME                             READY   STATUS    RESTARTS   AGE
 first-nginx-pod-8d7bb985-kql7t   1/1     Running   0          10s
 ```
 
-We can inspect the pod further using the **kubectl describe** command:
+!!! Important
+    In a `Deployment`, a `Pod` name is generated using the `Deployment` name and then a randomized hash (i.e. `first-nginx-pod-8d7bb985-kql7t`) to ensure that each `Pod` has a unique name. During this lab exercise, make sure to reference the correct object names that are generated in each exercise.
+
+We can inspect the `pod` further using the **kubectl describe** command. 
+
+!!! Note
+    You can use tab completion to help with Kubernetes commands and objects. Start typing the first few letters of the command or Kubernetes object (i.e `pod`) name and hit **TAB** and it should autofill the name.
+
 ```markdown
-$ kubectl describe pod first-nginx-pod-8d7bb985-kql7t 
+kubectl describe pod <pod_name> 
+```
+
+The output should be similar to this. Note, the `pod` name will be unique to your deployment.
+```markdown
+kubectl describe pod first-nginx-pod-8d7bb985-kql7t
 Name:         first-nginx-pod-8d7bb985-kql7t
 Namespace:    default
 Priority:     0
@@ -245,21 +276,15 @@ Events:
   Normal  Started    72s   kubelet            Started container nginx
 ```
 
-Let's find the IP address of the pod.
+Looking under the "Events" section is a great place to start when checking for issues or errors during `pod` creation.
+
+At this stage, the NGINX application is only accessible from within the cluster. Use `kubectl port-forward` to expose the `pod` temporarily outside of the cluster to your workstation.
 
 ```markdown
-kubectl get pod <pod_name> -o=jsonpath='{.status.podIP}'
+kubectl port-forward <pod_name> 80:80
 ```
 
-The output should be similar to the following.
-```markdown
-$ kubectl get pod first-nginx-pod-8d7bb985-kql7t -o=jsonpath='{.status.podIP}'
-192.168.55.68
-
-```
-
-This IP address (192.168.55.68) is only accessible from within the cluster, so let's use `port-forward` to expose the `pod` port temporarily outside the cluster.
-
+The output should be similar to this:
 ```markdown
 kubectl port-forward first-nginx-pod-8d7bb985-kql7t 80:80
 Forwarding from 127.0.0.1:80 -> 8080
@@ -267,15 +292,15 @@ Forwarding from [::1]:80 -> 8080
 ```
 
 !!! NOTE
-    If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80). `port-forward` is meant for temporarily exposing an application outside of a Kubernetes cluster. For a more permanent solution, look into Ingress Controllers.
+    If you have something already running locally on port 80, modify the `port-forward` to an unused port (i.e. 5000:80). `Port-forward` is meant for temporarily exposing an application outside of a Kubernetes cluster. For a more permanent solution, look into Ingress Controllers.
 
-Finally, we can open a browser and go to **http://127.0.0.1** and should see the following.
+Finally, open a browser and go to **http://127.0.0.1** and you should see the following.
 
 ![](img/welcome-nginx.png)
 
 You have successfully deployed your first Kubernetes pod. 
 
-With the pod running, we can log in and explore the pod. If you don't have another terminal open already, open another terminalgi and run:
+With the pod running, we can also log in and explore the pod. Open a **second** terminal, while keeping the first terminal with `port-forward` active, and run:
 
 ```markdown
 kubectl exec -it <pod_name> /bin/bash
@@ -298,15 +323,15 @@ tmpfs                    1.9G     0  1.9G   0% /sys/firmware
 
 ```
 
-Or modify the webpage:
+While inside the container, you can also modify the webpage.
 
 ```markdown
-echo Hello from Kubernetes Storage > /usr/share/nginx/html/index.html
+echo "<h1>Hello from the HPE Storage Hands on Labs</h1>" > /usr/share/nginx/html/index.html
 ```
 
-If we switch back over to the browser and refresh the page (http://127.0.0.1), you should see your changes.
+Now switch back over to the browser and refresh the page (http://127.0.0.1), you should see the changes.
 
-Once done, press **Ctrl-D** to exit the pod. Use **Ctrl+C** to exit the port-forwarding.
+Once done, type **exit** to logout of the NGINX container and close that terminal. In your original terminal, use **Ctrl+C** to exit the port-forwarding. 
 
 ---
 
@@ -316,6 +341,8 @@ To get started with the deployment, the HPE CSI Driver is deployed using industr
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
+!!! Note
+    [Helm](https://helm.sh) is the package manager for Kubernetes. Software is delivered in a format called a "chart". Helm is a [standalone CLI](https://helm.sh/docs/intro/install/) that interacts with the Kubernetes API server using your `KUBECONFIG` file.
 
 ### Installing the Helm chart
 
@@ -350,44 +377,18 @@ nimble-csp-5d4c9fc5b6-sxqmm           1/1     Running   0          77s
 primera3par-csp-94b9c4978-4xv86       1/1     Running   0          77s
 ```
 
-If all of the components show in Running state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for Nimble, Primera or 3PAR have been successfully deployed.
+If all of the components show in "Running" state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera, Nimble Storage, and 3PAR have been successfully deployed.
+
+!!! Important
+    With the HPE CSI Driver deployed, the rest of this guide is designed to demonstrate the usage of the CSI driver with HPE Primera or Nimble Storage. You will need to choose which storage system (HPE Primera or Nimble Storage) to use for the rest of the exercises. While the HPE CSI Driver supports connectivity to multiple backends, configurating multiple backends is outside of the scope of this lab guide.
 
 ### Creating a Secret
 
-Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI Driver to communicate to the HPE Nimble, Primera or 3PAR systems. This `Secret`, which contains the storage system IP and credentials, is used by the CSI sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
+Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI driver to communicate to the HPE Primera, Nimble Storage, or 3PAR systems. This `Secret`, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
 
-!!! Note "Secret Requirements"
-    * Each `Secret` name must be unique.
-    * **servicePort** should be set to **8080**.
-
-
-The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
+Here is an example `Secret`.
 
 ```markdown
-kubectl create -f-
-< paste the YAML >
-^D (CTRL + D)
-```
-
-Create a new `Secret`, specify the name of the `Secret`, the `Namespace` where the CSI driver was deployed, the system IP, username, password to be used by the CSP.
-
-```markdown fct_label="HPE Nimble Storage"
-apiVersion: v1
-kind: Secret
-metadata:
-  name: custom-secret
-  namespace: hpe-storage 
-stringData:
-  serviceName: nimble-csp-svc
-  servicePort: "8080"
-  backend: 192.168.1.2
-  username: admin
-data:
-  # echo -n "admin" | base64
-  password: YWRtaW4=
-```
-
-```markdown fct_label="HPE Primera"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -397,13 +398,31 @@ stringData:
   serviceName: primera3par-csp-svc 
   servicePort: "8080"
   backend: 10.10.0.2
-  username: 3paradm
-data:
-  # echo -n "3pardata" | base64
-  password: M3BhcmRhdGE=
+  username: <user>
+  password: <password>
 ```
 
-You should now see the `Secret` in the "hpe-storage" `Namespace`:
+Download and modify, using the text editor of your choice, the `Secret` file with the **backend** IP per your environment.
+
+```markdown fct_label="Nimble Storage"
+wget http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-secret.yaml
+```
+
+```markdown fct_label="HPE Primera"
+wget http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
+```
+
+Save the file and create the `Secret` within the cluster.
+
+```markdown fct_label="Nimble Storage"
+kubectl create -f nimble-secret.yaml
+```
+
+```markdown fct_label="HPE Primera"
+kubectl create -f primera-secret.yaml
+```
+
+The `Secret` should now be available in the "hpe-storage" `Namespace`:
 
 ```markdown 
 kubectl -n hpe-storage get secret/custom-secret
@@ -411,13 +430,17 @@ NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
 
+If you made a mistake when creating the `Secret`, simply delete the object (`kubectl -n hpe-storage delete secret/custom-secret`) and repeat the steps above.
+
 ### Creating a StorageClass
 
-Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` specifies which storage provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) for the volumes that we want to create which can be used to differentiate between storage levels and usages. 
+Now we will create a `StorageClass` that will be used in the following exercises. A `StorageClass` (SC) specifies which storage provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) for the volumes that we want to create which can be used to differentiate between storage levels and usages. 
 
 This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple `StorageClasses` allowing users to create storage claims tailored for their specific application requirements.
 
-We will start by creating a `StorageClass` called **hpe-standard**. We will use the **custom-secret** we created in the previous step as well as specify the `namespace` where the CSI driver was deployed, if you used a different name make sure to modify the `StorageClass` accordingly.
+We will start by creating a `StorageClass` called **hpe-standard**. We will use the **custom-secret** created in the previous step and specify the **hpe-storage** `namespace` where the CSI driver was deployed.
+
+Here is an example `StorageClasses` for HPE Primera and Nimble Storage systems and some of the available volume parameters that can be defined. See the respective [CSP](../../container_storage_provider/index.md) for more elaborate examples.
 
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
@@ -474,7 +497,16 @@ parameters:
 allowVolumeExpansion: true
 ```
 
-Now let's look at the available StorageClasses.
+Create the `StorageClass` within the cluster
+```markdown fct_label="Nimble Storage"
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-storageclass.yaml
+```
+
+```markdown fct_label="Primera"
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/primera-storageclass.yaml
+```
+
+We can verify the `StorageClass` is now available.
 
 ```markdown
 kubectl get sc
@@ -483,16 +515,17 @@ hpe-standard (default)   csi.hpe.com   2m
 ```
 
 !!! Note 
-    We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on kubernetes.io.
+    You can create multiple `StorageClasses` to match the storage requirements of your applications. We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. There can only be one **default** `StorageClass` per cluster, for any additional `StorageClasses` set this to **false**. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on kubernetes.io. 
 
+---
 
 ## Lab 4: Creating a Persistent Volume using HPE Storage 
 
-With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available we can now provision a persistent volume.
+With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available, we can now provision persistent volumes.
 
 ### Creating a PersistentVolumeClaim
 
-With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`(PVC).
+With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`(PVC). Here is a sample `PVC`.
 
 ```markdown
 apiVersion: v1
@@ -508,21 +541,30 @@ spec:
 ```
 
 !!! Note
-    We can use `storageClassName` to override the default `StorageClass` with another available `StorageClass`.
+    We don't have a `StorageClass` explicitly defined within this `PVC` therefore it will use the default `StorageClass`. You can use `storageClassName` to override the default `StorageClass` with another available `StorageClass` available to the cluster.
 
-We can see the **my-pvc** `PersistentVolumeClaim` created.
+Create the `PersistentVolumeClaim`.
+```markdown
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
+```
 
+We can see the **my-pvc** `PersistentVolumeClaim` was created.
 ```markdown
 kubectl get pvc
 NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
 ```
 
-We can inspect the `PVC` further for additional information.
+!!! Note
+    The `Persistent Volume` name is a randomly generated name by Kubernetes. For consistent naming for your stateful applications, check out [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) deployment model. These names can be used to track the volume back to the storage system. It is important to note that HPE Primera has a 30 character limit on volume names therefore the name will be truncated. For example: `pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8` will be truncated to `pvc-70d5caf8-7558-40e6-a8b7-77d` on an HPE Primera system.
+
+We can inspect the `PVC` further for additional information including event logs for troubleshooting.
 
 ```markdown
 kubectl describe pvc my-pvc
 ```
+
+Check the **Events** section to see if there were any issues during creation.
 
 The output is similar to this:
 ```markdown
@@ -544,7 +586,7 @@ Mounted By:    <none>
 Events:        <none>
 ```
 
-We can also inspect the volume in a similar manner.
+We can also inspect the `PersistentVolume` (PV) in a similar manner. Note, the volume name will be unique to your deployment.
 
 ```markdown
 kubectl describe pv <volume_name>
@@ -582,7 +624,10 @@ Source:
 Events:                <none>
 ```
 
-With the `describe` command, you can see the volume parameters applied to the volume, in this case Nimble specific parameters.
+With the `describe` command, you can see the volume parameters used to create this volume. In this case, Nimble Storage parameters `performancePolicy`, `limitIops`, etc.
+
+!!! Important
+    If the PVC is stuck in **Pending** state, double check the `Secret` and `Namespace` are correct within the `StorageClass`(sc) and that the volume parameters are valid. If necessary delete the object (sc or pvc) (`kubectl delete <object_type> <object_name>`) and repeat the steps above.
 
 Let's recap what we have learned.
 
@@ -597,54 +642,34 @@ At this point, we have validated the deployment of the HPE CSI Driver and are re
 
 ## Lab 5: Deploying a Stateful Application using HPE Storage (WordPress)
 
-To begin, we will be using the **hpe-standard** `StorageClass` we created previously. If you don't have **hpe-standard** available, please refer to [StorageClass](#creating_a_storageclass) for instructions on creating a `StorageClass`.
+To begin, we will create two `PersistentVolumes` for the WordPress application using the default **hpe-standard** `StorageClass` we created previously. If you don't have the **hpe-standard** `StorageClass` available, please refer to the [StorageClass](#creating_a_storageclass) section for instructions on creating a `StorageClass`.
 
-Create a `PersistentVolumeClaim` for MariaDB for use by WordPress. This object creates a `PersistentVolume` as defined, make sure to reference the correct `.spec.storageClassName`.
+Create a `PersistentVolumeClaim` for the MariaDB database that will used by WordPress.
 
 ```markdown
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: data-my-wordpress-mariadb-0
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Gi
-  storageClassName: hpe-standard
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/wordpress-mariadb-pvc.yaml
 ```
 
-Next let's make another for the WordPress application.
+Next let's make another volume for the WordPress application.
 
 ```markdown
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: my-wordpress
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: hpe-standard
+kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/my-wordpress-pvc.yaml
 ```
 
-Let's again verify the `PersistentVolume` were created successfully.
+Now verify the `PersistentVolumes` were created successfully. The output should be similar to the following. Note, the volume names will be unique to your deployment.
 
 ```markdown
-kubectl get pv
+kubectl get pvc
 NAME                          STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 data-my-wordpress-mariadb-0   Bound     pvc-1abdb7d7-374e-45b3-8fa1-534131ec7ec6   50Gi       RWO            hpe-standard   1m
 my-wordpress                  Bound     pvc-ff6dc8fd-2b14-4726-b608-be8b27485603   20Gi       RWO            hpe-standard   1m
 ```
 
-The above output means that the HPE CSI Driver successfully provisioned a new volume based upon the **hpe-standard** `StorageClass`. The volume is not attached to any node yet. It will only be attached to a node once a scheduled workload requests the `PersistentVolumeClaim`. 
+The above output means that the HPE CSI Driver has successfully provisioned two volumes based upon the default **hpe-standard** `StorageClass`. At this stage, the volumes are not attached (exported) to any nodes yet. They will only be attached (exported) to a node once a scheduled workload requests the `PersistentVolumeClaims`. 
 
-Now, let's use Helm to deploy WordPress using the `PVC` created previously. When WordPress is deployed, the volumes will be attached, formatted and mounted.
+We will use Helm again to deploy WordPress using the `PersistentVolumeClaims` we just created. When WordPress is deployed, the volumes will be attached, formatted and mounted.
 
-The first step is to add the WordPress chart.
+The first step is to add the WordPress chart to Helm.
 
 ```markdown
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -654,13 +679,13 @@ NAME                    CHART VERSION   APP VERSION     DESCRIPTION
 bitnami/wordpress       9.2.1           5.4.0           Web publishing platform for building blogs and ...
 ```
 
-Deploy WordPress by setting `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
+Next, deploy WordPress by setting the deployment parameter `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
 
 ```markdown
 helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false 
 ```
 
-Check to verify that WordPress and MariaDB were deployed and are in the **Running** state. This may take a few minutes.
+Check to verify that WordPress and MariaDB were deployed and are in the **Running** state. This may take a few minutes. 
 
 ```markdown
 kubectl get pods
@@ -669,12 +694,10 @@ my-wordpress-69b7976c85-9mfjv   1/1       Running   0          2m
 my-wordpress-mariadb-0          1/1       Running   0          2m
 ```
 
-Finally let's take a look at the WordPress site. You can use `kubectl port-forward` to access the WordPress application from within the Kubernetes cluster to verify everything is working correctly.
+Finally take a look at the WordPress site. Again, we can use `kubectl port-forward` to access the WordPress application and verify everything is working correctly.
 
 ```markdown
 kubectl port-forward svc/my-wordpress 80:80
-Forwarding from 127.0.0.1:80 -> 8080
-Forwarding from [::1]:80 -> 8080
 ```
 
 !!! NOTE
@@ -682,7 +705,7 @@ Forwarding from [::1]:80 -> 8080
 
 Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**.
 
-Access the admin console at: **http://127.0.0.1/admin** using the **"admin/adminpassword"** used to deploy the Helm Chart. 
+Access the admin console at: **http://127.0.0.1/admin** using the **"admin/adminpassword"** we specified when deploying the Helm Chart. 
 
 ![](img/wordpress.png)
 
