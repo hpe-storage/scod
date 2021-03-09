@@ -572,7 +572,7 @@ hpe-standard (default)   csi.hpe.com   2m
 
 With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available, we can now provision persistent volumes.
 
-- A `PersistentVolumeClaim` (PVC) is a request for storage by a user. Claims can request storage of a specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany or ReadWriteMany).
+- A `PersistentVolumeClaim` (PVC) is a request for storage by a user. Claims can request storage of a specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany or ReadWriteMany). The `accessMode` will be dependent on the type of storage system and the application requirements. Block storage like HPE Primera and Nimble Storage, provision volumes using `ReadWriteOnce` access mode where the volume can only be mounted to a single node within the cluster at a time. Any applications running on that node can access that volume. Applications deployed across multiple nodes within a cluster that require shared access (`ReadWriteMany`) to the same `PersistentVolume` will need to use NFS or a distribute storage system such as MapR, Gluster or Ceph.
 
 - A `PersistentVolume` (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using `Storage Classes`.
 
