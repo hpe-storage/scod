@@ -371,7 +371,9 @@ Back in your browser, refresh the page (http://127.0.0.1) and you should the web
 
 Back in the terminal, use **Ctrl+C** to exit the port-forwarding and once ready, type **clear** to refresh your terminal.
 
-The NGINX application has reverted back to default because we didn't store the modifications we made to a location that would persist beyond the life of the container. There are many applications where persistence isn't critical (i.e. Google uses stateless containers for your browser web searches) as they perform computations that are either stored into an external database or passed to subsequent processes.  As mission-critical workloads move into Kubernetes, the need for stateful containers is increasingly important. The following exercises will go through how to provide persistent storage to applications using the HPE CSI Driver for Kubernetes backed by HPE Primera or Nimble Storage.
+The NGINX application has reverted back to default because we didn't store the modifications we made to a location that would persist beyond the life of the container. There are many applications where persistence isn't critical (i.e. Google uses stateless containers for your browser web searches) as they perform computations that are either stored into an external database or passed to subsequent processes. 
+
+As mission-critical workloads move into Kubernetes, the need for stateful containers is increasingly important. The following exercises will go through how to provision persistent storage to applications using the HPE CSI Driver for Kubernetes backed by HPE Primera or Nimble Storage.
 
 ---
 
