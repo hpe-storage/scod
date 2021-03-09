@@ -211,16 +211,16 @@ first-nginx-pod-8d7bb985-kql7t   1/1     Running   0          10s
 !!! Important
     In a `Deployment`, a `Pod` name is generated using the `Deployment` name and then a randomized hash (i.e. `first-nginx-pod-8d7bb985-kql7t`) to ensure that each `Pod` has a unique name. During this lab exercise, make sure to reference the correct object names that are generated in each exercise.
 
-We can inspect the `pod` further using the **kubectl describe** command. 
+We can inspect the `Pod` further using the **kubectl describe** command. 
 
 !!! Note
-    You can use tab completion to help with Kubernetes commands and objects. Start typing the first few letters of the command or Kubernetes object (i.e `pod`) name and hit **TAB** and it should autofill the name.
+    You can use tab completion to help with Kubernetes commands and objects. Start typing the first few letters of the command or Kubernetes object (i.e `Pod`) name and hit **TAB** and it should autofill the name.
 
 ```markdown
 kubectl describe pod <pod_name> 
 ```
 
-The output should be similar to this. Note, the `pod` name will be unique to your deployment.
+The output should be similar to this. Note, the `Pod` name will be unique to your deployment.
 ```markdown
 kubectl describe pod first-nginx-pod-8d7bb985-kql7t
 Name:         first-nginx-pod-8d7bb985-kql7t
@@ -276,9 +276,9 @@ Events:
   Normal  Started    72s   kubelet            Started container nginx
 ```
 
-Looking under the "Events" section is a great place to start when checking for issues or errors during `pod` creation.
+Looking under the "Events" section is a great place to start when checking for issues or errors during `Pod` creation.
 
-At this stage, the NGINX application is only accessible from within the cluster. Use `kubectl port-forward` to expose the `pod` temporarily outside of the cluster to your workstation.
+At this stage, the NGINX application is only accessible from within the cluster. Use `kubectl port-forward` to expose the `Pod` temporarily outside of the cluster to your workstation.
 
 ```markdown
 kubectl port-forward <pod_name> 80:80
