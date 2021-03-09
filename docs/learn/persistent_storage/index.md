@@ -1,6 +1,6 @@
 # Overview
 
-This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using HPE Nimble Storage, HPE Primera or HPE 3PAR storage systems. This guide is by no means a comprehensive overview of the capabilities of Kubernetes but rather a getting started guide for individuals who wants to learn how to use Kubernetes with persistent storage.
+This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using HPE Nimble Storage and HPE Primera storage systems. This guide is by no means a comprehensive overview of the capabilities of Kubernetes but rather a getting started guide for individuals who wants to learn how to use Kubernetes with persistent storage.
 
 [TOC]
 
@@ -99,6 +99,16 @@ kubectl create -f- (press Enter)
 
 Let's run through some simple `kubectl` commands to get familiar with your cluster.
 
+First we need to open a terminal window, the following commands can be run from a Windows, Linux or Mac. In this guide, we will be using the Window Subsystem for Linux (WSL) which allows us to have a Linux terminal within Windows.
+
+To start a WSL terminal session, click the CentOS icon in the Windows taskbar.
+
+![](img/wsl_terminal.png)
+
+It will open a terminal window. We will be working within this terminal through out this lab.
+
+![](img/wsl_terminal2.png)
+
 In order to communicate with the Kubernetes cluster, `kubectl` looks for a file named config in the `$HOME/.kube` directory. You can specify other `kubeconfig` files by setting the `KUBECONFIG` environment variable or by setting the `--kubeconfig` flag.
 
 You will need to request the `kubeconfig` file from your cluster administrator and copy the file to your local `$HOME/.kube/` directory. You may need to create this directory.
@@ -151,11 +161,13 @@ kubectl get pods
     Did you see any `Pods` listed when you ran `kubectl get pods`?  **Why?** <br /> <br /> If you don't see any `Pods` listed, it is because there are no `Pods` deployed within the "default" `Namespace`. Now run, `kubectl get pods --all-namespaces`. **Does it look any different?** <br /> <br /> Pay attention to the first column, `NAMESPACES`. In our case, we are working in the "default" `Namespace`. Depending on the type of application and your user access level, applications can be deployed within one or more `Namespaces`. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the `Namespace` it was deployed under and use the `-n <namespace>` flag to view objects in other `Namespaces`.
 
 
+Once complete, type "Clear" to clear your terminal window.
+
 ---
 
 ## Lab 2: Deploy your first Pod (Stateless)
 
-A `Pod` is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a `Pod` are scheduled on the same node.
+A `Pod` is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a `Pod` are scheduled on the same node. In our first demo we will deploy a stateless application that has no persistent storage attached. Without persistent storage, any modifications done to the application will be lost if that application is stopped or deleted.
 
 Here is a sample NGINX webserver deployment.
 
@@ -181,13 +193,20 @@ spec:
         name: nginx
 ```        
 
-Deploy the NGINX example above.
+Open a WSL terminal session, if you don't have one open already.
+
+![](img/wsl_terminal.png)
+
+At the prompt, we will start by deploying the NGINX example above, by running:
 
 ```markdown
 kubectl create -f https://scod.hpedev.io/learn/persistent_storage/yaml/nginx-stateless-deployment.yaml
 ```
 
 We can see the `Deployment` was successfully created and the NGINX `Pod` is running.
+
+!!! Note
+    The `Pod` names will be unique to your deployment.
 
 ```markdown
 $ kubectl get deployments.apps
@@ -291,7 +310,13 @@ Finally, open a browser and go to **http://127.0.0.1** and you should see the fo
 
 You have successfully deployed your first Kubernetes pod. 
 
-With the `Pod` running, we can also log in and explore the `Pod`. Open a **second** terminal, while keeping the first terminal with `port-forward` active, and run:
+With the `Pod` running, you can log in and explore the `Pod`. 
+
+To do this, open a **second** terminal, by clicking on the WSL terminal icon again. The first terminal should have `kubectl port-forward` still running.
+
+![](img/wsl_terminal.png)
+
+Run:
 
 ```markdown
 kubectl exec -it <pod_name> /bin/bash
@@ -320,15 +345,39 @@ While inside the container, you can also modify the webpage.
 echo "<h1>Hello from the HPE Storage Hands on Labs</h1>" > /usr/share/nginx/html/index.html
 ```
 
-Now switch back over to the browser and refresh the page (http://127.0.0.1), you should see the changes.
+Now switch back over to the browser and refresh the page (http://127.0.0.1), you should see the updated changes to the webpage.
 
-Once done, type **exit** to logout of the NGINX container and close that terminal. In your original terminal, use **Ctrl+C** to exit the port-forwarding. 
+Once ready, switch back over to your second terminal, type **exit** to logout of the NGINX container and close that terminal. Back in your original terminal, use **Ctrl+C** to exit the port-forwarding.
+
+Since this is a stateless application, we will now demonstrate what happens if the NGINX `Pod` is lost. 
+
+To do this, simply delete the `Pod`.
+
+```markdown
+kubectl delete pod <pod_name>
+```
+
+Now run `kubectl get pods` to see that a new NGINX `Pod` has been created.
+
+Lets use `kubectl port-forward` again to look at the NGINX application.
+
+```markdown
+kubectl port-forward <new_pod_name> 80:80
+```
+
+Back in your browser, refresh the page (http://127.0.0.1) and you should the webpage has reverted back to its default state.
+
+![](img/welcome-nginx.png)
+
+Back in the terminal, use **Ctrl+C** to exit the port-forwarding and once ready, type **clear** to refresh your terminal.
+
+The NGINX application has reverted back to default because we didn't store the modifications we made to a location that would persist beyond the life of the container. There are many applications where persistence isn't critical (i.e. Google uses stateless containers for your browser web searches) as they perform computations that are either stored into an external database or passed to subsequent processes.  As mission-critical workloads move into Kubernetes, the need for stateful containers is increasingly important. The following exercises will go through how to provide persistent storage to applications using the HPE CSI Driver for Kubernetes backed by HPE Primera or Nimble Storage.
 
 ---
 
 ## Lab 3: Install the HPE CSI Driver for Kubernetes
 
-To get started with the deployment, the HPE CSI Driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver for Kubernetes.
+To get started with the deployment of the HPE CSI Driver for Kbuernetes, the CSI driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver for Kubernetes.
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
@@ -337,14 +386,18 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Arti
 
 ### Installing the Helm chart
 
-To install the chart with the name `hpe-csi`, add the HPE CSI Driver for Kubernetes Helm repo.
+Open a WSL terminal session, if you don't have one open already.
+
+![](img/wsl_terminal.png)
+
+To install the chart with the name `my-hpe-csi-driver`, add the HPE CSI Driver for Kubernetes Helm repo.
 
 ```markdown
 helm repo add hpe-storage https://hpe-storage.github.io/co-deployments
 helm repo update
 ```
 
-Install the latest chart:
+Install the latest chart.
 ```markdown
 kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
@@ -352,13 +405,17 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 
 Wait a few minutes as the deployment finishes.
 
-Verify that everything is up and running correctly with the listing out the `Pods`.
+Verify that everything is up and running correctly by listing out the `Pods`.
 
 ```markdown
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 ```
 
-The output is similar to this:
+The output is **similar** to this:
+
+!!! Note
+    The `Pod` names will be unique to your deployment.
+
 ```markdown
 $ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAME                                  READY   STATUS    RESTARTS   AGE
@@ -368,14 +425,14 @@ nimble-csp-5d4c9fc5b6-sxqmm           1/1     Running   0          77s
 primera3par-csp-94b9c4978-4xv86       1/1     Running   0          77s
 ```
 
-If all of the components show in "Running" state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera, Nimble Storage, and 3PAR have been successfully deployed.
+If all of the components show in "Running" state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera and Nimble Storage have been successfully deployed.
 
 !!! Important
     With the HPE CSI Driver deployed, the rest of this guide is designed to demonstrate the usage of the CSI driver with HPE Primera or Nimble Storage. You will need to choose which storage system (HPE Primera or Nimble Storage) to use for the rest of the exercises. While the HPE CSI Driver supports connectivity to multiple backends, configurating multiple backends is outside of the scope of this lab guide.
 
 ### Creating a Secret
 
-Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI driver to communicate to the HPE Primera, Nimble Storage, or 3PAR systems. This `Secret`, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
+Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI driver to communicate to the HPE Primera or Nimble Storage. This `Secret`, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
 
 Here is an example `Secret`.
 
@@ -461,7 +518,7 @@ parameters:
 allowVolumeExpansion: true
 ```
 
-```markdown fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE Primera"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -514,9 +571,13 @@ hpe-standard (default)   csi.hpe.com   2m
 
 With the HPE CSI Driver for Kubernetes deployed and a `StorageClass` available, we can now provision persistent volumes.
 
+- A `PersistentVolumeClaim` (PVC) is a request for storage by a user. Claims can request storage of a specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany or ReadWriteMany).
+
+- A `PersistentVolume` (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using `Storage Classes`.
+
 ### Creating a PersistentVolumeClaim
 
-With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`(PVC). Here is a sample `PVC`.
+With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`. Here is a sample `PVC`.
 
 ```markdown
 apiVersion: v1
@@ -532,7 +593,7 @@ spec:
 ```
 
 !!! Note
-    We don't have a `StorageClass` explicitly defined within this `PVC` therefore it will use the default `StorageClass`. You can use `storageClassName` to override the default `StorageClass` with another available `StorageClass` available to the cluster.
+    We don't have a `StorageClass` (SC) explicitly defined within this `PVC` therefore it will use the default `StorageClass`. You can use `spec.storageClassName` to override the default `SC` with another one available to the cluster.
 
 Create the `PersistentVolumeClaim`.
 ```markdown
@@ -678,6 +739,9 @@ helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=C
 
 Check to verify that WordPress and MariaDB were deployed and are in the **Running** state. This may take a few minutes. 
 
+!!! Note
+    The `Pod` names will be unique to your deployment.
+
 ```markdown
 kubectl get pods
 NAME                            READY     STATUS    RESTARTS   AGE
@@ -702,6 +766,8 @@ Access the admin console at: **http://127.0.0.1/admin** using the **"admin/admin
 
 
 **Happy Blogging!**
+
+With the WordPress application using persistent storage for the database and the application data, in the event of a crash of the WordPress application, the `PVC` will be remounted to the new `Pod`.
 
 This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
 
