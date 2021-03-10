@@ -296,4 +296,4 @@ In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynam
 
 ### Support
 
-Please refer to the HPE 3PAR and Primera Container Storage Provider [support statement](../../legal/support/index.md#hpe_3par_and_primera_container_storage_provider_support).
+Please refer to the HPE 3PAR and Primera Container Storage Provider [support statement](../../legal/support/index.md#hpe_primera_and_hpe_3par_container_storage_provider_support).
