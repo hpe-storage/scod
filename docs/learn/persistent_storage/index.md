@@ -765,10 +765,56 @@ Access the admin console at: **http://127.0.0.1/admin** using the **"admin/admin
 
 ![](img/wordpress.png)
 
+Create a new blog post so you have data stored in the WordPress application.
 
 **Happy Blogging!**
 
+Once ready, hit "**Ctrl+C**" in your terminal to stop the `port-forward`.
+
+Verify the Wordpress application is using the **my-wordpress** and **data-my-wordpress-mariadb-0** `PersistentVolumeClaims`.
+
+```markdown
+kubectl get pods -o=jsonpath='{.items[*].spec.volumes[*].persistentVolumeClaim.claimName}'
+```
+
 With the WordPress application using persistent storage for the database and the application data, in the event of a crash of the WordPress application, the `PVC` will be remounted to the new `Pod`.
+
+Delete the WordPress `Pod`.
+
+```markdown
+kubectl delete pod <my-wordpress_pod_name>
+```
+
+For example.
+
+```markdown
+$ kubectl delete pod my-wordpress-69b7976c85-9mfjv
+pod "my-wordpress-69b7976c85-9mfjv" deleted
+```
+
+Now if run `kubectl get pods` and you should see the MariaDB `Pod` recreating itself with a new name. This may take a few minutes.
+
+Output should be similar to the following as the WordPress container is recreating.
+
+```markdown
+$ kubectl get pods
+NAME                             READY   STATUS              RESTARTS   AGE
+my-wordpress-mariadb-0           1/1     Running             1          10m
+my-wordpress-7856df6756-m2nw8    0/1     ContainerCreating   0          33s
+```
+
+Once the WordPress `Pod` is in `Ready` state, we can verify that the Wordpress application is still using the **my-wordpress** and **data-my-wordpress-mariadb-0** `PersistentVolumeClaims`.
+
+```markdown
+kubectl get pods -o=jsonpath='{.items[*].spec.volumes[*].persistentVolumeClaim.claimName}'
+```
+
+And finally, run `kubectl port-forward` again to see the changes made to the WordPress application survived deleting the application `Pod`.
+
+```markdown
+kubectl port-forward svc/my-wordpress 80:80
+```
+Open a browser on your workstation to **http://127.0.0.1** and you should see your WordPress site running.
 
 This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
 
@@ -781,30 +827,30 @@ As others will be using this lab at a later time, we can clean up the objects th
 
 Remove WordPress & NGINX deployments.
 
-```
+```markdown
 helm uninstall my-wordpress && kubectl delete all --all
 ```
 
 Delete the `PersistentVolumeClaims` and related objects.
 
-```
+```markdown
 kubectl delete pvc --all && kubectl delete sc --all
 ```
 
 Remove the HPE CSI Driver for Kubernetes. 
 
-```
+```markdown
 helm uninstall my-hpe-csi-driver -n hpe-storage
 ```
 
 It takes a couple minutes to cleanup the objects from the CSI driver. You can check the status:
 
-```
+```markdown
 watch kubectl get all -n hpe-storage
 ```
 
 Once everything is removed, **Ctrl+C** to exit and finally you can remove the `Namespace`.
 
-```
+```markdown
 kubectl delete ns hpe-storage
 ```
