@@ -32,7 +32,8 @@ The CSP requires access to a user with either `poweruser` or the `administrator`
 
 Consult the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for supported NimbleOS versions. CSI and CSP specific limitations with Nimble are listed below.
 
-- Striped volumes on grouped HPE Nimble Storage arrays are not supported by the HPE CSI Driver for Kubernetes.
+- Striped volumes on grouped HPE Nimble Storage arrays are not supported by the CSI driver.
+- The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.
 
 ## StorageClass parameters
 
