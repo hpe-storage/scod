@@ -11,6 +11,37 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 
 [TOC]
 
+### Feature Comparison
+
+!!! Important
+    Volume parameters available to the vSphere CSI Driver will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088903en_us) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://psnow.ext.hpe.com/doc/a00044881enw) for list of available features. <br /> <br />For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective [CSP](../../container_storage_provider/index.md). <br /><br /> **Support for the vSphere CSI Driver is provided by VMware.**
+
+| Feature                                         | HPE CSI Driver | vSphere CSI Driver |
+| ----------------------------------------------- | -------------- | ------------------ |
+| CNS UI Support                                  | No             | Yes                |
+| Dynamic Block Provisioning (RWO Access Mode)    | Yes            | Yes (vVOL)         |
+| Dynamic File Provisioning (RWM/ROX Access Mode) | Yes            | Yes (vSan Only)    |
+| Volume Snapshots (CSI)                          | Yes            | No                 |
+| Volume Cloning from VolumeSnapshot (CSI)        | Yes            | No                 |
+| Volume Cloning from PVC (CSI)                   | Yes            | No                 |
+| Volume Expansion (CSI)                          | Yes            | Yes (offline only) |
+| Raw Block Volume (CSI)                          | Yes            | No                 |
+| Generic Ephemeral Volumes (CSI)                 | Yes            | Yes                |
+| Inline Ephemeral Volumes (CSI)                  | Yes            | No                 |
+| Topology (CSI)                                  | Future         | Yes                |
+| Volume Encryption                               | Future         | Yes (via VMcrypt)<sup>2</sup> |
+| Volume Mutator<sup>1</sup>                      | Yes            | No                 |
+| Volume Groups<sup>1</sup>                       | Yes            | No                 |
+| Snapshot Groups<sup>1</sup>                     | Yes            | No                 |
+| Peer Persistence Replication                    | Yes            | No                 |
+
+<small>
+ <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
+ <sup>2</sup> = [Understanding VMcrypt Encryption](https://kb.vmware.com/s/article/2148947)
+</small>
+
+Please refer to [vSphere CSI Driver - Supported Features Matrix](https://vsphere-csi-driver.sigs.k8s.io/supported_features_matrix.html) for the most up to date information.
+
 ### Deployment
 
 When considering to use block storage within Kubernetes clusters running on VMware, customers need to evaluate which data protocol (FC or iSCSI) is primarily used within their virtualized environment. This will help best determine which CSI driver can be deployed within your Kubernetes clusters. 
