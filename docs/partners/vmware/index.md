@@ -13,8 +13,7 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 
 ### Feature Comparison
 
-!!! Important
-    Volume parameters available to the vSphere CSI Driver will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088903en_us) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://psnow.ext.hpe.com/doc/a00044881enw) for list of available features. <br /> <br /> For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective [CSP](../../container_storage_provider/index.md). <br /> <br /> **Support for the vSphere CSI Driver is provided by VMware.**
+Volume parameters available to the vSphere CSI Driver will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088903en_us) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://psnow.ext.hpe.com/doc/a00044881enw) for list of available features. <br /> <br /> For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective [CSP](../../container_storage_provider/index.md).
 
 | Feature                                         | HPE CSI Driver | vSphere CSI Driver |
 | ----------------------------------------------- | -------------- | ------------------ |
@@ -28,19 +27,22 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 | Raw Block Volume (CSI)                          | Yes            | No                 |
 | Generic Ephemeral Volumes (CSI)                 | Yes            | Yes                |
 | Inline Ephemeral Volumes (CSI)                  | Yes            | No                 |
-| Topology (CSI)                                  | Future         | Yes                |
+| Topology (CSI)                                  | Future         | Yes (beta)               |
+| Volume Health (CSI)                             | Future         | Yes (Tanzu only)   | 
 | Volume Encryption                               | Future         | Yes (via VMcrypt)<sup>2</sup> |
 | Volume Mutator<sup>1</sup>                      | Yes            | No                 |
 | Volume Groups<sup>1</sup>                       | Yes            | No                 |
 | Snapshot Groups<sup>1</sup>                     | Yes            | No                 |
-| Peer Persistence Replication                    | Yes            | No                 |
+| Peer Persistence Replication<sup>3</sup>        | Yes            | No                 |
+| HPE Cloud Volumes                               | Yes            | No                 |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
- <sup>2</sup> = [Understanding VMcrypt Encryption](https://kb.vmware.com/s/article/2148947)
+ <sup>2</sup> = [Understanding VMcrypt Encryption](https://kb.vmware.com/s/article/2148947)<br />
+ <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Primera and 3PAR storage systems.
 </small>
 
-Please refer to [vSphere CSI Driver - Supported Features Matrix](https://vsphere-csi-driver.sigs.k8s.io/supported_features_matrix.html) for the most up to date information.
+Please refer to [vSphere CSI Driver - Supported Features Matrix](https://vsphere-csi-driver.sigs.k8s.io/supported_features_matrix.html) for the most up-to-date information.
 
 ### Deployment
 
@@ -495,3 +497,9 @@ From here, we can see the persistent volumes that were created as part of our Mo
 ![Container Volumes](img/container_volumes.png)
 
 This concludes the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI drivers) are deployed and working correctly. 
+
+### Support
+
+VMware provides enterprise grade support for the vSphere CSI driver. Please use [VMware Support Services](https://www.vmware.com/support/file-sr.html) to file a customer support ticket to engage the VMware global support team.
+
+For support information on the HPE CSI Driver for Kubernetes, visit [Support](../../legal/support/index.md). For support with other HPE related technologies, visit the [Hewlett Packard Enterprise Support Center](https://support.hpe.com/).
