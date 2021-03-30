@@ -17,7 +17,7 @@ Volume parameters available to the vSphere CSI Driver will be dependent upon opt
 
 | Feature                                         | HPE CSI Driver | vSphere CSI Driver |
 | ----------------------------------------------- | -------------- | ------------------ |
-| CNS UI Support                                  | No             | Yes                |
+| vCenter Cloud Native Storage (CNS) UI Support   | No             | Yes                |
 | Dynamic Block Provisioning (RWO Access Mode)    | Yes            | Yes (vVOL)         |
 | Dynamic File Provisioning (RWM/ROX Access Mode) | Yes            | Yes (vSan Only)    |
 | Volume Snapshots (CSI)                          | Yes            | No                 |
@@ -29,12 +29,11 @@ Volume parameters available to the vSphere CSI Driver will be dependent upon opt
 | Inline Ephemeral Volumes (CSI)                  | Yes            | No                 |
 | Topology (CSI)                                  | Future         | Yes (beta)               |
 | Volume Health (CSI)                             | Future         | Yes (Tanzu only)   | 
-| Volume Encryption                               | Future         | Yes (via VMcrypt)<sup>2</sup> |
+| Volume Encryption                               | Future         | Yes (via VMcrypt<sup>2</sup>) |
 | Volume Mutator<sup>1</sup>                      | Yes            | No                 |
 | Volume Groups<sup>1</sup>                       | Yes            | No                 |
 | Snapshot Groups<sup>1</sup>                     | Yes            | No                 |
 | Peer Persistence Replication<sup>3</sup>        | Yes            | No                 |
-| HPE Cloud Volumes                               | Yes            | No                 |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
