@@ -122,6 +122,7 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | ------------------------- | -------------- | ----------- |
 | accessProtocol            | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
 | description<sup>1</sup>   | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
+| csi.storage.k8s.io/fstype | Text           | Filesystem to format new volumes with. XFS is preferred, ext3, ext4 and btrfs is supported. Defaults to "ext4" if omitted. |
 | fsOwner                   | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
 | fsMode                    | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
 | fsCreateOptions           | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
