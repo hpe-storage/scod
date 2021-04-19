@@ -72,9 +72,38 @@ Make sure to deploy `StorageClasses` with `.parameters.fsMode` set to `"0770"`, 
 
 * Learn how to create a base `StorageClass` in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
 
+
+
+#### OpenShift web console
+
+Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
+
+![Search for HPE](img/webcon-1.png)
+*Search for 'HPE' in the search field.*
+
+![Select the Operator and click Install](img/webcon-2.png)
+*Select the HPE CSI Operator and click 'Install'.*
+
+![Select subscribe](img/webcon-3.png)
+*In the next pane, click 'Subscribe'.*
+
+![Operator installed](img/webcon-4.png)
+*The HPE CSI Operator is now installed.*
+
+![Create a new instance](img/webcon-5.png)
+*Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
+
+* In the next 'Create HPECSIDriver' pane, click 'Create'
+
+By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
+
+![Operator Topology](img/webcon-7.png)
+
+The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
+
 #### OpenShift CLI
 
-This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [next section](#openshift_web_console).
+This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [previous section](#openshift_web_console).
 
 It's assumed the SCC has been applied to the project and have `kube:admin` privileges. As an example, we'll deploy to the `hpe-csi-driver` project as described in previous steps.
 
@@ -131,31 +160,6 @@ spec:
   logLevel: info
   registry: "quay.io"
 ```
-
-#### OpenShift web console
-
-Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
-
-![Search for HPE](img/webcon-1.png)
-*Search for 'HPE' in the search field.*
-
-![Select the Operator and click Install](img/webcon-2.png)
-*Select the HPE CSI Operator and click 'Install'.*
-
-![Select subscribe](img/webcon-3.png)
-*In the next pane, click 'Subscribe'.*
-
-![Operator installed](img/webcon-4.png)
-*The HPE CSI Operator is now installed.*
-
-![Create a new instance](img/webcon-5.png)
-*Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
-
-* In the next 'Create HPECSIDriver' pane, click 'Create'
-
-By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
-
-![Operator Topology](img/webcon-7.png)
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
