@@ -32,11 +32,16 @@ Check this table periodically for future releases.
     Other combinations may work but will not be supported.  
     Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
 
-### OpenShift security model
+### Security model
 
-By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification. Modifying container security to work with OpenShift is outside the scope of this document.
+By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification. 
+
+Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
 
 For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.6/authentication/managing-security-context-constraints.html).
+
+!!! note
+    If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsmode: 0770` parameter to the `StorageClass`.
 
 ### Deployment
 
@@ -166,7 +171,3 @@ The CSI driver is now ready for use. Next, an [HPE storage backend needs to be a
 #### Additional information
 
 At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
-
-## OpenShift 3
-
-Customers still using OpenShift 3 may use any of the [legacy FlexVolume drivers](../../flexvolume_driver) for managing persistent storage.
