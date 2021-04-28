@@ -32,12 +32,23 @@ Check this table periodically for future releases.
     Other combinations may work but will not be supported.  
     Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
 
+### Security model
+
+By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification. 
+
+Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
+
+For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.6/authentication/managing-security-context-constraints.html).
+
+!!! note
+    If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsmode: 0770` parameter to the `StorageClass`.
+
 ### Deployment
 
 The HPE CSI Operator for Kubernetes needs to be installed through the interfaces provided by Red Hat. Do not follow the instructions found on OperatorHub.io. 
 
 !!! tip
-    There's a tutorial available on YouTube accessible through the [Video Gallery](../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift.
+    There's a tutorial available on YouTube accessible through the [Video Gallery](../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift. 
 
 #### Prerequisites
 
@@ -66,15 +77,38 @@ securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 !!! important
     Make note of the project name as it's needed for the Operator deployment in the next steps.
 
-#### Caveats
+#### OpenShift web console
 
-Make sure to deploy `StorageClasses` with `.parameters.fsMode` set to `"0770"`, otherwise `Pods` won't be able to write data in the `PersistentVolumes`.
+Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
 
-* Learn how to create a base `StorageClass` in [using the CSI driver](../../csi_driver/using.md#base_storageclass_parameters).
+![Search for HPE](img/webcon-1.png)
+*Search for 'HPE' in the search field.*
+
+![Select the Operator and click Install](img/webcon-2.png)
+*Select the HPE CSI Operator and click 'Install'.*
+
+![Select subscribe](img/webcon-3.png)
+*In the next pane, click 'Subscribe'.*
+
+![Operator installed](img/webcon-4.png)
+*The HPE CSI Operator is now installed.*
+
+![Create a new instance](img/webcon-5.png)
+*Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
+
+* In the next 'Create HPECSIDriver' pane, click 'Create'
+
+By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
+
+![Operator Topology](img/webcon-7.png)
+
+The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
+
+See [Caveats](#caveats) below for information on creating `StorageClasses` in Red Hat OpenShift.
 
 #### OpenShift CLI
 
-This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [next section](#openshift_web_console).
+This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [previous section](#openshift_web_console).
 
 It's assumed the SCC has been applied to the project and have `kube:admin` privileges. As an example, we'll deploy to the `hpe-csi-driver` project as described in previous steps.
 
@@ -132,37 +166,8 @@ spec:
   registry: "quay.io"
 ```
 
-#### OpenShift web console
-
-Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
-
-![Search for HPE](img/webcon-1.png)
-*Search for 'HPE' in the search field.*
-
-![Select the Operator and click Install](img/webcon-2.png)
-*Select the HPE CSI Operator and click 'Install'.*
-
-![Select subscribe](img/webcon-3.png)
-*In the next pane, click 'Subscribe'.*
-
-![Operator installed](img/webcon-4.png)
-*The HPE CSI Operator is now installed.*
-
-![Create a new instance](img/webcon-5.png)
-*Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
-
-* In the next 'Create HPECSIDriver' pane, click 'Create'
-
-By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
-
-![Operator Topology](img/webcon-7.png)
-
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_a_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
 #### Additional information
 
 At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
-
-## OpenShift 3
-
-Customers still using OpenShift 3 may use any of the [legacy FlexVolume drivers](../../flexvolume_driver) for managing persistent storage.
