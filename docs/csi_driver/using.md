@@ -804,7 +804,7 @@ The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per
 
 The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation.
 
-The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. Be default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it.
+The HPE CSI Driver now also incorporates a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. Be default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

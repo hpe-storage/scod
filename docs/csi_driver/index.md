@@ -195,6 +195,8 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
 * When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI is the only supported data protocol for the HPE CSI Driver when using block storage.
 * Ephemeral, transient or non-persistent Kubernetes nodes are not supported unless the `/etc/hpe-storage` directory persists across node upgrades or reboots. The path is relocatable using a custom Helm chart or deployment manifest by altering the `mountPath` parameter for the directory.
+* The CSI driver support a fixed number of volumes per node. Inspect the current limitation by running `kubectl get csinodes -o yaml` and inspect `.spec.drivers.allocatable` for "csi.hpe.com".
+* The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](../container_storage_provider/index.md) have known limitations listed separately.
 
 ## iSCSI CHAP considerations
 
