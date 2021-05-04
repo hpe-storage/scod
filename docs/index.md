@@ -7,6 +7,12 @@
     - Find us in the #HPE channel on the [official Slack community of CNCF](https://cloud-native.slack.com).
 
 -->
+!!! error "Welcome to the world: HPE Alletra"
+    A new paradigm in storage management has entered the market. The next HPE CSI Driver for Kubernetes will fully support HPE Alletra 6000 and 9000.
+
+    - Read the [Press Release](https://www.hpe.com/us/en/newsroom/press-release/2021/05/hewlett-packard-enterprise-expands-hpe-greenlake-with-breakthrough-storage-as-a-service-business-transformation.html)
+    - Watch the recorded broadcast: [Unleash the Power Data](https://www.hpe.com/us/en/discover-more-network/events/unleashdata.html)
+
 ## HPE Storage Container Orchestrator Documentation 
 
 This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage.
