@@ -30,6 +30,8 @@ plugins:
       redirect_maps:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
+        'container_storage_provider/hpe_nimble_storage/index.md': 'container_storage_provider/hpe_alletra_6000/index.md'
+        'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_9000/index.md'
 nav:
   - WELCOME:
     - 'Get started!': 'welcome/index.md'
@@ -40,24 +42,8 @@ nav:
     - 'Pod Monitor': 'csi_driver/monitor.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
-    - 'HPE Cloud Volumes': 'container_storage_provider/hpe_cloud_volumes/index.md'
-    - 'HPE Primera and 3PAR': 'container_storage_provider/hpe_3par_primera/index.md'
-    - 'HPE Nimble Storage': 'container_storage_provider/hpe_nimble_storage/index.md'
-# - HPE CONTAINER PLATFORM:
-#   - 'Overview': 'hcp/overview.md'
-#   - 'Configure': 'hcp/configure.md'
-# - MANAGED KUBERNETES:
-#   - 'Amazon Elastic Kubernetes Engine': 'managed/amazon_elastic_kubernetes_service/index.md'
-#   - 'Azure Kubernetes Service': 'managed/azure_kubernetes_service/index.md'
-#   - 'Google Kubernetes Engine': 'managed/google_kubernetes_engine/index.md'
-  - LEGACY FLEXVOLUME DRIVER:
-    - 'Container Provider: Nimble and CV': 'flexvolume_driver/container_provider/index.md'
-    - 'Ansible installer for 3PAR/Primera': 'flexvolume_driver/hpe_3par_primera_installer/index.md'
-    - 'History: Dory and Doryd ': 'flexvolume_driver/dory/index.md'
-  - DOCKER VOLUME PLUGINS:
-#    - 'HPE 3PAR and Primera': 'docker_volume_plugins/hpe_3par_primera/index.md'
-    - 'HPE Cloud Volumes': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
-    - 'HPE Nimble Storage': 'docker_volume_plugins/hpe_nimble_storage/index.md'
+    - 'HPE Alletra 6000 and Nimble': 'container_storage_provider/hpe_alletra_6000/index.md'
+    - 'HPE Alletra 9000 and Primera': 'container_storage_provider/hpe_alletra_9000/index.md'
 # - WORKLOAD BLUEPRINTS:
 #   - 'Running MongoDB on HPE Storage': 'workloads/mongodb/index.md'
 #   - 'Hybrid Cloud CI/CD pipelines': 'workloads/mongodb/hybrid_cloud_cicd.md'
@@ -80,13 +66,10 @@ nav:
     - 'Introduction to CSI Primitives': 'learn/csi_primitives/index.md'
     - 'Video Gallery': 'learn/video_gallery/index.md'
     - 'Interactive CSI Workshop': 'learn/csi_workshop/index.md'
-#   - 'Using Docker Volume plugins': 'learn/docker_volume_plugins.md'
-#   - 'External Resources': 'learn/links.md'
   - COMMUNITY:
     - 'HPE Developer Community': 'https://developer.hpe.com'
     - 'Sign up to HPE DEV on Slack': 'https://slack.hpedev.io'
     - 'Got feedback?': 'https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD'
-#   - 'Blogs': 'community/blogs/index.md'
   - EXTERNAL LINKS:
     - 'SCOD on GitHub': 'https://github.com/hpe-storage/scod'
     - 'HPE Storage on GitHub': 'https://github.com/hpe-storage'
@@ -95,3 +78,5 @@ nav:
     - 'Contributing': 'legal/contributing/index.md'
     - 'Support': 'legal/support/index.md'
     - 'License': 'legal/license/index.md'
+  - LEGACY DRIVERS AND PLUGINS:
+    - 'Docker, FlexVolume and CSPs': 'legacy/index.md'

@@ -1,3 +1,6 @@
+!!! error "Expired content"
+    The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.
+
 # Overview
 The HPE 3PAR and Primera Volume Plug-in for Docker leverages Ansible to deploy the 3PAR/Primera driver for Kubernetes in order to provide scalable and persistent storage for stateful applications. 
 

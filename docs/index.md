@@ -9,7 +9,7 @@
 -->
 ## HPE Storage Container Orchestrator Documentation 
 
-This is an umbrella documentation project for all Kubernetes and Docker integrations for HPE primary storage tailored for IT Ops, developers and partners. Including HPE 3PAR and Primera, HPE Cloud Volumes and HPE Nimble Storage.
+This is an umbrella documentation project for all Kubernetes integrations for HPE primary storage tailored for IT Ops, developers and partners. The documentation supports HPE Alletra 6000 including Nimble Storage and HPE Alletra 9000 including Primera and 3PAR with the HPE CSI Driver for Kubernetes with neighboring ecosystems.
 
 Use the navigation on the left-hand side to explore the different topics. Feel free to contribute to this project but please read the [contributing guidelines](legal/contributing/index.md).
 

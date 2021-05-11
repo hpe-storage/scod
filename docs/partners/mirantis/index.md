@@ -32,8 +32,7 @@ Next, add a [supported HPE backend](../../csi_driver/deployment.md#add_a_hpe_sto
 
 Learn more about using the CSI objects in [the comprehensive overview](../../csi_driver/using.md). Also make sure to familiarize yourself with the particular features and capabilities of the backend being used.
 
-- [HPE Nimble Storage](../../container_storage_provider/hpe_nimble_storage/index.md)
-- [HPE Primera and 3PAR](../../container_storage_provider/hpe_3par_primera/index.md)
+- [Container Storage Providers](../../container_storage_provider/index.md)
 
 ## Docker Swarm
 

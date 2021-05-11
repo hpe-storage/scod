@@ -114,7 +114,6 @@ allowVolumeExpansion: true
 
 !!! important "Important"
     Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
-    The example `StorageClass` does not work with the `primera3par` CSP version 1.0.0, use the example from the [CSP](../container_storage_provider/hpe_3par_primera/index.md#storageclass_example) instead.
 
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
