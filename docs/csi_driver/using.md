@@ -29,23 +29,30 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 
 Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
 
-Install snapshot beta CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
+Install snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-!!! caution "Important"
-    While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snapshotter 3.0 and only support the "beta" CSI snapshot APIs.
+```markdown fct_label="HPE CSI Driver v2.0.0-beta"
 
-```markdown fct_label="HPE CSI Driver v1.4.0"
+Kubernetes 1.20+
+
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout release-4.1
+kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
+
+Kubernetes 1.17 - 1.19
+
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
-```markdown fct_label="HPE CSI Driver v1.3.0"
+```markdown fct_label="HPE CSI Driver v1.4.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-2.0
-kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
+git checkout release-3.0
+kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 !!! tip
