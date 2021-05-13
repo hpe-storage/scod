@@ -17,7 +17,7 @@ The following has been tested and validated for HPE CSI driver version with HPE 
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
 
-Also refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for for specific platform details (requires a HPE Passport account) of the CSP.
+Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires a HPE Passport account) of the CSP.
 
 * [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 * [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
