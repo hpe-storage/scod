@@ -29,43 +29,13 @@ Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific pla
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
 
-## StorageClass example
-
-A `StorageClass` is used to provision an HPE Alletra, Primera or 3PAR Storage-backed persistent volume. Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional `StorageClass` examples like CSI snapshots and clones. 
-
-Here is an example of a `StorageClass` using the HPE Alletra and Primera and 3PAR CSP. Please see [common parameters](#common_parameters_for_provisioning) for additional parameter options.
-
-```markdown
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: default-primera-storageclass
-provisioner: csi.hpe.com
-allowVolumeExpansion: true
-parameters:
-  csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/provisioner-secret-name: default-primera-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
-  csi.storage.k8s.io/controller-publish-secret-name: default-primera-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
-  csi.storage.k8s.io/node-stage-secret-name: default-primera-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
-  csi.storage.k8s.io/node-publish-secret-name: default-primera-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
-  csi.storage.k8s.io/controller-expand-secret-name: default-primera-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
-  cpg: SSD_r6
-  provisioningType: tpvv
-  accessProtocol: iscsi
-```
-
 ## StorageClass parameters
 
 All parameters enumerated reflects the current version and may contain unannounced features and capabilities. 
 
 ### Common provisioning parameters
 
-| Parameter                         | Option  | Description | 3PAR | HPE Alletra 9000 & Primera |
+| Parameter                         | Option  | Description | 3PAR | HPE Alletra 9000 and Primera |
 | --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** | **X** |
@@ -92,6 +62,8 @@ All parameters enumerated reflects the current version and may contain unannounc
  <br /><sup>1</sup> = Parameters that are editable after provisioning.
  <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
 </small>
+
+Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional `StorageClass` examples like CSI snapshots and clones. 
 
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
@@ -270,4 +242,4 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 
 ### Support
 
-Please refer to the HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider [support statement](../../legal/support/index.md#hpe_primera_and_hpe_3par_container_storage_provider_support).
+Please refer to the HPE Alletra 9000 and Primera and 3PAR Storage CSP [support statement](../../legal/support/index.md#hpe_primera_and_hpe_3par_container_storage_provider_support).
