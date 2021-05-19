@@ -16,7 +16,7 @@ This software is supported by HPE when used with HPE Nimble Storage arrays on va
 
 ### HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider support
 
-Limited to the HPE Alletra 9000 and Primera and 3PAR Storage CSP only, best effort support is available for HPE Alletra 9000 and Primera and 3PAR Storage supported by the CSP and bundled with All Inclusive software with an active HPE Pointnext support agreement.
+Limited to the HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) only. Best effort support is available for the CSP for HPE Alletra 9000, Primera and 3PAR Storage with All-inclusive Single or Multi-System software and an active HPE Pointnext support agreement. Since HPE Pointnext support for the CSP is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
 
 | HPE Alletra 9000, Primera and 3PAR Hardware Contract Type | Phone Number |
 | --------------------------------------------------------- | ------------ |
