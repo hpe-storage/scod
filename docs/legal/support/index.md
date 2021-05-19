@@ -14,12 +14,12 @@ This is software is supported with a valid HPE Cloud Volumes Customer Subscripti
 
 This software is supported by HPE when used with HPE Nimble Storage arrays on valid support contracts. Please send an email to [support@nimblestorage.com](mailto:support@nimblestorage.com) to get started with any issue you might need assistance with. Engage with your HPE representative for other means on how to get in touch with Nimble support directly.
 
-### HPE Primera and HPE 3PAR Container Storage Provider support
+### HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider support
 
-Limited to the HPE Primera and 3PAR Container Storage Provider only, best effort support is available for HPE Primera and 3PAR controllers supported by the HPE Primera and 3PAR Container Storage Provider and bundled with All Inclusive software with an active HPE Pointnext support agreement. Since the HPE Pointnext support for the HPE Primera and 3PAR Container Storage Provider is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply to the HPE Primera and 3PAR Container Storage Provider. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
+Limited to the HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) only. Best effort support is available for the CSP for HPE Alletra 9000, Primera and 3PAR Storage with All-inclusive Single or Multi-System software and an active HPE Pointnext support agreement. Since HPE Pointnext support for the CSP is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
 
-| HPE Primera and 3PAR Hardware Contract Type | Phone Number |
-| ------------------------------------------- | ------------ |
-| **Warranty and Foundation Care**            | 800-633-3600 |
-| **Proactive Care (PC)**                     | 866-211-5211 |
-| **Datacenter Care (DC)**                    | 888-751-2149 |
+| HPE Alletra 9000, Primera and 3PAR Hardware Contract Type | Phone Number |
+| --------------------------------------------------------- | ------------ |
+| **Warranty and Foundation Care**                          | 800-633-3600 |
+| **Proactive Care (PC)**                                   | 866-211-5211 |
+| **Datacenter Care (DC)**                                  | 888-751-2149 |
