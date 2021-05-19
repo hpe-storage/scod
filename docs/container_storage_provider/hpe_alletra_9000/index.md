@@ -39,7 +39,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 | --------------------------------- | ------- | ----------- | ---- | ------- |
 | accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
 |                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-| cpg<sup>1</sup> <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the HPE Alletra 9000, Primera or 3PAR array.| **X** | **X** | 
+| cpg<sup>1</sup> <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array.| **X** | **X** | 
 | snapCpg<sup>1</sup>                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
 | compression<sup>1</sup>                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
 | provisioningType<sup>1</sup> <br />  | tpvv    | Indicates Thin provisioned volume type. Default: tpvv | **X** | **X** |
@@ -51,11 +51,11 @@ All parameters enumerated reflects the current version and may contain unannounc
 | cloneOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
 | virtualCopyOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
 | qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
-| remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on the HPE Alletra 9000, Primera or 3PAR array. | **X** | **X** |
+| remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on the array. | **X** | **X** |
 | replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
 | allowBatchReplicatedVolumeCreation <br /> | Boolean <br />  | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
 | oneRcgPerPvc <br /> | Boolean <br /> | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
-| iscsiPortalIps <br /> | Text <br /> | Comma separated list of HPE Alletra 9000, Primera or 3PAR iSCSI port IPs. | **X** | **X** |
+| iscsiPortalIps <br /> | Text <br /> | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
@@ -101,7 +101,7 @@ During the import volume process, any legacy (non-container volumes) or existing
 | Parameter      | Option      | Description |
 | -------------- | ----------- | ----------- |
 | accessProtocol | fc or iscsi | The access protocol to use when accessing the persistent volume. |
-| importVol      | Text        | The name of the HPE Alletra 9000, Primera or 3PAR volume to import. |
+| importVol      | Text        | The name of the array volume to import. |
 
 !!! important
     • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
@@ -109,12 +109,12 @@ During the import volume process, any legacy (non-container volumes) or existing
 
 ### Cloning parameters
 
-Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference an HPE Alletra 9000, Primera or 3PAR volume name to clone and import into the Kubernetes cluster. Volumes with clones are immutable once created.
+Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference an array volume name to clone and import into the Kubernetes cluster. Volumes with clones are immutable once created.
 
 | Parameter        | Option      | Description |
 | ---------------- | ----------- | ----------- |
 | cloneOf          | Text        | The name of the `PersistentVolumeClaim` to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
-| importVolAsClone | Text        | The name of the HPE Alletra 9000, Primera or 3PAR volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
+| importVolAsClone | Text        | The name of the array volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
 | accessProtocol   | fc or iscsi | The access protocol to use when accessing the persistent volume. |
 
 !!! important
@@ -140,7 +140,7 @@ During snapshotting process, any existing `PersistentVolumeClaim` defined in the
 
 To enable replication within the HPE CSI Driver, the following steps must be completed:
 
-* Create `Secrets` for both primary and target HPE Alletra 9000, Primera and 3PAR arrays. Refer to [Adding additional backends](../../csi_driver/deployment.md#adding_additional_backends).
+* Create `Secrets` for both primary and target arrays. Refer to [Adding additional backends](../../csi_driver/deployment.md#adding_additional_backends).
 * Create replication custom resource.
 * Create replication enabled `StorageClass`.
 
@@ -173,18 +173,18 @@ spec:
     • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
     • Currently, the HPE CSI Driver only supports Remote Copy Peer Persistence mode. Async support will be added in a future release.<br />
 
-These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the HPE Alletra 9000, Primera or 3PAR array, then a new RCG will be created.
+These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the array, then a new RCG will be created.
 
 | Parameter          | Option  | Description |
 | ---------------------------------- | ------- | ----------- |
-| remoteCopyGroup                    | Text    | Name of new or existing remote copy group on the HPE Alletra 9000, Primera or 3PAR array. |
+| remoteCopyGroup                    | Text    | Name of new or existing remote copy group on the array. |
 | replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. (Optional) <br /> During this process, the remote copy group is stopped and started once. |
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
 
 ### iSCSI Target Portal IP parameter
 
-This parameter allows the ability to specify a subset of HPE Alletra 9000, Primera or 3PAR iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
+This parameter allows the ability to specify a subset of the array iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
 
 | Parameter      | Option | Description |
 | -------------- | ------ | ----------- |
@@ -198,7 +198,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 
 | Parameter | String  | Description |
 | --------- | ------  | ----------- |
-| read_only | Boolean | Indicates if the snapshot is writable on the HPE Alletra 9000, Primera or 3PAR array. |
+| read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
 ### Import Snapshot parameter
 
@@ -206,15 +206,15 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 
 | Parameter | Option | Description |
 | --------- | ------ | ----------- |
-| importVol | Text   | The name of the HPE Alletra 9000, Primera or 3PAR snapshot to import. |
+| importVol | Text   | The name of the array snapshot to import. |
 
 ### QoS StorageClass parameter
 
-In the HPE Alletra 9000, Primera and 3PAR Storage system, QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing HPE Alletra 9000, Primera or 3PAR volume set.
+In the array, QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing array volume set.
 
 | Parameter | Option | Description |
 | --------- | ------ | ----------- |
-| qosName   | Text   | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the HPE Alletra 9000, Primera or 3PAR volume set, for purposes of applying the QoS rules. |
+| qosName   | Text   | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the array volume set, for purposes of applying the QoS rules. |
 
 ### SnapshotGroupClass parameters
 
@@ -224,11 +224,11 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 
 | Parameter | String  | Description |
 | --------- | ------- | ----------- |
-| read_only | Boolean | Indicates if the snapshot is writable on the HPE Alletra 9000, Primera or 3PAR Storage system. |
+| read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
 ### VolumeGroupClass QoS parameters
 
-In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be created dynamically using the QoS parameters for the `VolumeGroupClass`. The following parameters are available for a `VolumeGroup` on the HPE Alletra 9000, Primera or 3PAR Storage system. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
+In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be created dynamically using the QoS parameters for the `VolumeGroupClass`. The following parameters are available for a `VolumeGroup` on the array. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
 | Parameter    | String | Description |
 | ------------ | ------ | ----------- |
@@ -238,7 +238,7 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | bwMinGoalKb  | Text   | Bandwidth minimum goal in kilobytes per second for the target volume set. Example: "300" |
 | bwMaxLimitKb | Text   | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | latencyGoal  | Text   | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
-| domain       | Text   | The HPE Alletra 9000, Primera or 3PAR Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
+| domain       | Text   | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
 
 ### Support
 
