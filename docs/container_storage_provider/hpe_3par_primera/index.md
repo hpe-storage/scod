@@ -86,6 +86,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 | allowBatchReplicatedVolumeCreation <br /> | Boolean <br />  | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
 | oneRcgPerPvc <br /> | Boolean <br /> | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
 | iscsiPortalIps <br /> | Text <br /> | Comma separated list of HPE Primera/3PAR iSCSI port IPs. | **X** | **X** |
+| fcPortsList <br /> | Text <br /> | Comma separated list of HPE Primera/3PAR fc ports. | **X** | **X** |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
@@ -244,6 +245,14 @@ This parameter allows the ability to specify a subset of HPE Primera/3PAR iSCSI 
 | -------------- | ------- | ----------- |
 | iscsiPortalIps |   Text  | Comma separated list of target portal IPs. |
 
+### FCPortsList  parameter
+
+This parameter allows the ability to specify a subset of HPE Primera/3PAR fc ports to create vluns. By default, the HPE CSI Driver uses all available fc ports.
+
+| Parameter      | Option  | Description |
+| -------------- | ------- | ----------- |
+| fcPortsList    |   Text  | Comma separated list of fc ports. |
+
 ### VolumeSnapshotClass parameter
 
 These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
@@ -293,6 +302,17 @@ In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynam
 | bwMaxLimitKb        | Text    | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | latencyGoal        | Text    | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 | domain        | Text    | The 3PAR/Primera Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
+
+
+### VolumeEncryption parameters
+
+In the HPE CSI Driver 2.0.0, provides encrypted volume support. This type of encryption is on-the fly encrytion rather than encryption at rest (supported by 3PAR array natively).
+
+| Parameter           | String  | Description |
+| ------------------ | ------- | ----------- |
+| hostEncryption        | Boolean    | Flag to set encryption on volume. Example: "true/false" |
+| hostencryptionSecretName        | Text    | SecretName for the encryption.Example: "enc-sec" |
+| hostEncryptionSecretNameSpace   | Text    | SecretNamespace for the encryption. Example: kube-system |
 
 ### Support
 
