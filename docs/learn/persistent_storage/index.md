@@ -450,8 +450,8 @@ stringData:
   username: <user>
   password: <password>
 ```
-
-Download and modify, using the text editor of your choice, the `Secret` file with the **backend** IP per your environment.
+!!! Important
+    **Download** and **Edit** the `Secret` file with the **backend IP per your lab environment** using the text editor of your choice.  
 
 ```markdown fct_label="Nimble Storage"
 wget http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-secret.yaml
@@ -460,6 +460,9 @@ wget http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-secret.yaml
 ```markdown fct_label="HPE Primera"
 wget http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
 ```
+
+!!! Note
+    If you do not edit the `Secret`, the CSI Driver will fail to create volumes on the array and you will have to delete and recreate the `Secret` with the proper information.
 
 Save the file and create the `Secret` within the cluster.
 
