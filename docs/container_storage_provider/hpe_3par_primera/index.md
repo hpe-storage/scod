@@ -251,7 +251,10 @@ This parameter allows the ability to specify a subset of HPE Primera/3PAR fc por
 
 | Parameter      | Option  | Description |
 | -------------- | ------- | ----------- |
-| fcPortsList    |   Text  | Comma separated list of fc ports. |
+| fcPortsList    |   Text  | Comma separated list of fc ports n:s:p. |
+
+!!! important
+    • Support for `fcPortsList` is available from HPE CSI Driver 2.0.0.
 
 ### VolumeSnapshotClass parameter
 
@@ -302,17 +305,6 @@ In the HPE CSI Driver 1.4.0, a volume set with QoS settings can be created dynam
 | bwMaxLimitKb        | Text    | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | latencyGoal        | Text    | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 | domain        | Text    | The 3PAR/Primera Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
-
-
-### VolumeEncryption parameters
-
-In the HPE CSI Driver 2.0.0, provides encrypted volume support. This type of encryption is on-the fly encrytion rather than encryption at rest (supported by 3PAR array natively).
-
-| Parameter           | String  | Description |
-| ------------------ | ------- | ----------- |
-| hostEncryption        | Boolean    | Flag to set encryption on volume. Example: "true/false" |
-| hostencryptionSecretName        | Text    | SecretName for the encryption.Example: "enc-sec" |
-| hostEncryptionSecretNameSpace   | Text    | SecretNamespace for the encryption. Example: kube-system |
 
 ### Support
 
