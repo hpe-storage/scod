@@ -4,7 +4,7 @@ The HPE CSI Driver is deployed by using industry standard means, either a Helm c
 
 [TOC]
 
-## Delivery vehicles
+## Delivery Vehicles
 
 As different methods of installation are provided, it might not be too obvious which delivery vehicle is the right one.
 
@@ -33,7 +33,7 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Arti
 
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
 
-### Helm for air-gapped environments
+### Helm for Air-gapped Environments
 
 In the event of deploying the HPE CSI Driver in a secure air-gapped environment, Helm is the recommended method. For sake of completeness, it's also possible to follow the [advanced install](#advanced_install) procedures and replace "quay.io" in the deployment manifests with the internal private registry location.
 
@@ -94,7 +94,7 @@ The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift.
 
 - See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section
 
-### Upstream Kubernetes and others
+### Upstream Kubernetes and Others
 
 Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
 
@@ -142,14 +142,14 @@ kubectl create -f hpe-csi-operator.yaml
 
 The CSI driver is now ready for use. Proceed to the next section to learn about [adding a HPE storage backend](#add_a_hpe_storage_backend).
 
-## Add a HPE storage backend
+## Add an HPE Storage Backend
 
 Once the CSI driver is deployed, two additional objects needs to be created to get started with dynamic provisioning of persistent storage, a `Secret` and a `StorageClass`.
 
 !!! tip
     Naming the `Secret` and `StorageClass` is entirely up to the user, however, to keep up with the examples on SCOD, it's highly recommended to use the names illustrated here.
 
-### Secret parameters
+### Secret Parameters
 
 All parameters are mandatory and described below.
 
@@ -216,7 +216,7 @@ kubectl create -f secret.yaml
 
 Next step involves [creating a default StorageClass](using.md#base_storageclass_parameters).
 
-## Adding additional backends
+## Configuring Additional Storage Backends
 
 It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple `StorageClass` and `Secret` API objects to represent an environment with multiple systems.
 
@@ -283,7 +283,7 @@ NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
 
-### Create a StorageClass with the custom Secret
+### Create a StorageClass with the Custom Secret
 
 To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
@@ -338,7 +338,7 @@ allowVolumeExpansion: true
 
 Next, [Create a PersistentVolumeClaim from a StorageClass](using.md#create_a_persistentvolumeclaim_from_a_storageclass).
 
-## Advanced install
+## Advanced Install
 
 This guide is primarily written to accommodate a highly manual installation on upstream Kubernetes or partner OEMs engaged with HPE to bundle the HPE CSI Driver in a custom distribution. Installation steps may vary for different vendors and flavors of Kubernetes.
 
@@ -347,7 +347,7 @@ The following example walks through deployment of the **latest** CSI driver.
 !!! caution "Critical"
     It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the [Helm chart](deployment.md#helm) or [Operator](deployment.md#operator).
 
-### Manual CSI driver install
+### Manual CSI Driver Install
 
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
@@ -410,7 +410,7 @@ kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
 ```
 
-## Legacy versions
+## Legacy Versions
 
 Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
 

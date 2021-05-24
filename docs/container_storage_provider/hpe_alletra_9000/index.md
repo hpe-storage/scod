@@ -7,7 +7,7 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 !!! note
     For help getting started with deploying the HPE CSI Driver using HPE Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE DEV](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
 
-## Platform requirements
+## Platform Requirements
 
 The following has been tested and validated for HPE CSI driver version with HPE Alletra 9000, HPE Primera and 3PAR. Always check the corresponding CSI driver version in the[compatibility and support](../../csi_driver/index.md#compatibility_and_support) table.
 
@@ -25,15 +25,15 @@ Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific pla
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
-### User role requirements
+### User Role Requirements
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
 
-## StorageClass parameters
+## StorageClass Parameters
 
 All parameters enumerated reflects the current version and may contain unannounced features and capabilities. 
 
-### Common provisioning parameters
+### Common Provisioning Parameters
 
 | Parameter                         | Option  | Description | 3PAR | HPE Alletra 9000 and Primera |
 | --------------------------------- | ------- | ----------- | ---- | ------- |
@@ -68,7 +68,7 @@ Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclas
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
 
-### HPE Alletra 9000 and Primera Data Reduction volume parameters
+### HPE Alletra 9000 and Primera Data Reduction Volumes
 
 These parameters are used to create HPE Alletra 9000 and Primera Data Reduction (Thinly Provisioned with Deduplication/Compression enabled) volumes. Please see [Common Parameters](#common_parameters_for_provisioning) for more details.
 
@@ -79,7 +79,7 @@ These parameters are used to create HPE Alletra 9000 and Primera Data Reduction 
 | snapCpg          | Text   | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
 | provisioningType | reduce | **Required** |
 
-### Pod inline volume parameters (Local Ephemeral Volumes)
+### Ephemeral Inline Volumes
 
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
 
@@ -94,7 +94,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
-### Import volume parameters
+### Import Volumes
 
 During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a `StorageClass`, will be renamed to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported.
 
@@ -107,7 +107,7 @@ During the import volume process, any legacy (non-container volumes) or existing
     • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
     • Support for `importVol` is available from HPE CSI Driver 1.2.0+.
 
-### Cloning parameters
+### Clone Volumes
 
 Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference an array volume name to clone and import into the Kubernetes cluster. Volumes with clones are immutable once created.
 
@@ -122,7 +122,7 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
     • Cloning using above parameters is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `importVolAsClone` and `cloneOf` is available from HPE CSI Driver 1.3.0+.
 
-### Volume Snapshot parameters
+### Volume Snapshots
 
 During snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster. Volumes with snapshots are immutable once created.
 
@@ -136,7 +136,7 @@ During snapshotting process, any existing `PersistentVolumeClaim` defined in the
     • Snapshotting using `virtualCopyOf` is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0+.
 
-### Remote Copy with Peer Persistence synchronous replication parameters
+### Remote Copy with Peer Persistence Synchronous Replication
 
 To enable replication within the HPE CSI Driver, the following steps must be completed:
 
@@ -182,7 +182,7 @@ These parameters are applicable only for replication. Both parameters are mandat
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. (Optional) <br /> During this process, the remote copy group is stopped and started once. |
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
 
-### iSCSI Target Portal IP parameter
+### iSCSI Target Portal IP
 
 This parameter allows the ability to specify a subset of the array iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
 
@@ -190,7 +190,7 @@ This parameter allows the ability to specify a subset of the array iSCSI ports f
 | -------------- | ------ | ----------- |
 | iscsiPortalIps | Text   | Comma separated list of target portal IPs. |
 
-### VolumeSnapshotClass parameter
+### VolumeSnapshotClass
 
 These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
 
@@ -200,7 +200,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | --------- | ------  | ----------- |
 | read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
-### Import Snapshot parameter
+### Import Snapshot
 
 During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
 
@@ -208,7 +208,7 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | --------- | ------ | ----------- |
 | importVol | Text   | The name of the array snapshot to import. |
 
-### QoS StorageClass parameter
+### QoS StorageClass 
 
 In the array, QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing array volume set.
 
@@ -216,7 +216,7 @@ In the array, QoS rules are applied to a volume set. To use an existing volume s
 | --------- | ------ | ----------- |
 | qosName   | Text   | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the array volume set, for purposes of applying the QoS rules. |
 
-### SnapshotGroupClass parameters
+### SnapshotGroupClass
 
 These parameters are for `SnapshotGroupClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
 
@@ -226,7 +226,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | --------- | ------- | ----------- |
 | read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
-### VolumeGroupClass QoS parameters
+### VolumeGroupClass QoS
 
 In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be created dynamically using the QoS parameters for the `VolumeGroupClass`. The following parameters are available for a `VolumeGroup` on the array. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
@@ -239,6 +239,14 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | bwMaxLimitKb | Text   | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | latencyGoal  | Text   | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 | domain       | Text   | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
+
+### FCPortsList
+
+This parameter allows the ability to specify a subset of array FC ports to create vluns. By default, the HPE CSI Driver uses all available FC ports.
+
+| Parameter   | Option | Description |
+| ----------- | ------ | ----------- |
+| fcPortsList | Text   | Comma separated list of fc ports. |
 
 ### Support
 

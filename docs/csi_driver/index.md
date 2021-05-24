@@ -13,7 +13,7 @@ The CSI driver architecture allows a complete separation of concerns between ups
 
 [TOC]
 
-## Features and capabilities
+## Features and Capabilities
 
 CSI gradually mature features and capabilities in the specification at the pace of the community. HPE keep a close watch on differentiating features the primary storage family of products may be suitable for implementing in CSI and Kubernetes. HPE experiment early and often. That's why it's sometimes possible to observe a certain feature being available in the CSI driver although it hasn't been announced or isn't documented.
 
@@ -46,7 +46,7 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 !!! tip
     Familiarize yourself with the basic requirements below for running the CSI driver on your Kubernetes cluster. It's then highly recommended to continue installing the CSI driver with either a [Helm chart](deployment.md#helm) or an [Operator](deployment.md#operator).
 
-## Compatibility and support
+## Compatibility and Support
 
 These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each [Container Storage Provider](../container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
 
@@ -184,13 +184,13 @@ Release highlights: Support for raw block volumes and inline ephemeral volumes. 
  </tr>
 </table>
 
-#### Release archive
+#### Release Archive
 
 HPE currently supports up to three minor releases of the HPE CSI Driver for Kubernetes.
 
 * [Unsupported releases](archive.md)
 
-## Known limitations
+## Known Limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
 * When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI is the only supported data protocol for the HPE CSI Driver when using block storage.
@@ -198,21 +198,21 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 * The CSI driver support a fixed number of volumes per node. Inspect the current limitation by running `kubectl get csinodes -o yaml` and inspect `.spec.drivers.allocatable` for "csi.hpe.com". The "count" element contains how many volumes the node can attach from the HPE CSI Driver (default is 100).
 * The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](../container_storage_provider/index.md) have known limitations listed separately.
 
-## iSCSI CHAP considerations
+## iSCSI CHAP Considerations
 
 If iSCSI CHAP is being used in the environment, consider the following.
 
-### CSI driver 1.2.1 and below
-
-In version 1.2.1 and below, the CSI driver did not support CHAP natively. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
-
-### CSI driver 1.3.0 and above
+### CSI driver 1.3.0 and Above
 
 CHAP is now an optional part of the initial deployment of the driver with parameters passed to Helm or the Operator. For object definitions, the `CHAP_USER` and `CHAP_PASSWORD` needs to be supplied to the `csi-node-driver`. The CHAP username and secret is picked up in the `hpenodeinfo` Custom Resource Definition (CRD). The CSP is under contract to create the user if it doesn't exist on the backend.
 
 CHAP is a good measure to prevent unauthorized access to iSCSI targets, it does not encrypt data on the wire. CHAP secrets should be at least twelve charcters in length.
 
-## Kubernetes feature gates
+### CSI driver 1.2.1 and Below
+
+In version 1.2.1 and below, the CSI driver did not support CHAP natively. CHAP must be enabled manually on the worker nodes before deploying the CSI driver on the cluster. This also needs to be applied to new worker nodes before they join the cluster.
+
+## Kubernetes Feature Gates
 
 Different features mature at different rates. Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs.
 
