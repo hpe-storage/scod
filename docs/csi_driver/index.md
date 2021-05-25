@@ -80,9 +80,11 @@ Release highlights:
   <tr>
     <th>Platforms</th>
     <td>
-      NimbleOS 5.0.x, 5.3.x, 6.0.x<br />
-      3PAR OS 3.3.1, 3.3.2<br />
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.3.0<br />
+      Nimble OS 5.0.10.x,  5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
       Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x<br />
+      3PAR OS 3.3.1, 3.3.2
     </td>
   <tr>
     <th>Release&nbsp;notes</th>
