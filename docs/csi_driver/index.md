@@ -4,7 +4,7 @@ A Container Storage Interface ([CSI](https://github.com/container-storage-interf
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-1.4.0.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-2.0.0.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
@@ -22,17 +22,20 @@ Below is the official table for CSI features we track and deem readily available
 | Feature                                | K8s maturity      | Since K8s version | HPE CSI Driver |
 |----------------------------------------|-------------------|-------------------|----------------|
 | Dynamic Provisioning                   | GA                | 1.13              | 1.0.0          |
-| Raw Block Volume                       | GA                | 1.18              | 1.2.0          |
 | Volume Expansion                       | Beta              | 1.16              | 1.1.0          |
-| PVC Data Source                        | GA                | 1.18              | 1.1.0          |
-| Inline Ephemeral Volumes               | Beta              | 1.16              | 1.2.0          |
 | Volume Snapshots                       | GA                | 1.20              | 1.1.0          |
+| PVC Data Source                        | GA                | 1.18              | 1.1.0          |
+| Raw Block Volume                       | GA                | 1.18              | 1.2.0          |
+| Inline Ephemeral Volumes               | Beta              | 1.16              | 1.2.0          |
 | Volume Limits                          | GA                | 1.17              | 1.2.0          |
 | Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
+| Generic Ephemeral Volumes              | Beta              | 1.21              | 1.3.0          |
 | Volume Groups<sup>1</sup>              | N/A               | 1.17              | 1.4.0          |
 | Snapshot Groups<sup>1</sup>            | N/A               | 1.17              | 1.4.0          |
-| Generic Ephemeral Volumes              | Alpha<sup>2</sup> | 1.19              | 1.3.0          |
+| NFS Server Provisioner<sup>1</sup>     | N/A               | 1.17              | 1.4.0          |
+| Volume Encryption<sup>1</sup>          | N/A               | 1.18              | 2.0.0          |
 | Topology                               | GA                | 1.17              | Future         |
+| Volume Health                          | Alpha             | 1.21              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
@@ -41,7 +44,7 @@ Below is the official table for CSI features we track and deem readily available
 
 Depending on the CSP, it may support a number of different snapshotting, cloning and restoring operations by taking advantage of `StorageClass` parameter overloading. Please see the respective [CSP](../container_storage_provider/index.md) for additional functionality.
 
-Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to find availability of beta and alpha features. HPE provide limited support on non-GA CSI features. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/csi-driver/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera`, `#hpe-cloud-volumes` and `#Kubernetes`, sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com).
+Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to find availability of beta and alpha features. HPE provide limited support on non-GA CSI features. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/csi-driver/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#NimbleStorage`, `#3par-primera` and `#Kubernetes`, sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com).
 
 !!! tip
     Familiarize yourself with the basic requirements below for running the CSI driver on your Kubernetes cluster. It's then highly recommended to continue installing the CSI driver with either a [Helm chart](deployment.md#helm) or an [Operator](deployment.md#operator).
@@ -51,7 +54,55 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each [Container Storage Provider](../container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
 
 !!! note
-    For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md).
+    For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md), do note that the FlexVolume drivers are being deprecated.
+
+#### HPE CSI Driver for Kubernetes 2.0.0
+
+Release highlights:
+
+* Support for HPE Alletra 6000 and 9000
+* Host-based volume encryption
+* Multitenancy for HPE Alletra 6000 and Nimble Storage 
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.18-1.21<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.x, 5.3.x, 6.0.x<br />
+      3PAR OS 3.3.1, 3.3.2<br />
+      Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x<br />
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.0.0.md>v2.0.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+   <!-- FIXME
+    <a href="https://">One</a><br />
+    <a href="https://">Two</a><br />
+    <a href="https://">Three</a>
+   -->
+   </td>
+ </tr>
+</table>
+ 
+<small>
+ <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+</small>
 
 #### HPE CSI Driver for Kubernetes 1.4.0
 
@@ -145,44 +196,6 @@ Release highlights:
  <sup>1</sup> = For HPE Ezmeral Container Platform and Rancher; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.<br />
  <sup>2</sup> = Only FC is supported on Primera OS prior to 4.2.0.
 </small>
-
-#### HPE CSI Driver for Kubernetes 1.2.0
-
-Release highlights: Support for raw block volumes and inline ephemeral volumes. NFS Server Provisioner in Tech Preview (beta).
-
-<table>
-  <tr>
-    <th>Kubernetes</th>
-    <td>1.14-1.18</td>
-  </tr>
-  <tr>
-    <th>Worker OS</th>
-    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
-  </tr>
-  <tr>
-    <th>Data protocol</th>
-    <td>Fibre Channel, iSCSI </td>
-  </tr>
-  <tr>
-    <th>Platforms</th>
-    <td>
-      NimbleOS 5.0.10.x, 5.1.3.1000-x, 5.1.4.200-x, 5.2.1.x<br />
-      3PAR OS 3.3.1<br/>
-      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
-    </td>
-  <tr>
-    <th>Release notes</th>
-    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.2.0.md>v1.2.0</a> on GitHub</td>
-  </tr>
-  <tr>
-   <th>Blogs</th>
-   <td><a href="https://community.hpe.com/t5/around-the-storage-block/hpe-csi-driver-for-kubernetes-1-2-0-available-now/ba-p/7091977">Around The Storage Block</a> (release)<br/>
-       <a href="https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes">HPE DEV</a> (tutorial for raw block and inline volumes)<br/>
-       <a href="https://community.hpe.com/t5/around-the-storage-block/tech-preview-network-file-system-server-provisioner-for-hpe-csi/ba-p/7092948">Around The Storage Block</a> (NFS Server Provisioner)<br/>
-       <a href="https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri">HPE DEV</a> (tutorial for NFS)
-   </td>
- </tr>
-</table>
 
 #### Release archive
 

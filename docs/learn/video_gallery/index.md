@@ -47,16 +47,6 @@ This tutorial showcases a few of the HPE Nimble Storage specific features with t
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=RAttunxAnrY)</small>
 
-### HPE Cloud Volumes
-
-#### Tech Preview: Hybrid Cloud Kubernetes using HPE Cloud Volumes
-
-This screencast showcases the HPE Cloud Volumes public beta and discusses hybrid cloud Kubernetes.
-
-<iframe width="696" height="392" src="https://www.youtube.com/embed/Nz1tzDEVzKY" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<small>[Watch on YouTube](https://www.youtube.com/watch?v=Nz1tzDEVzKY)</small>
-
 ## Provisioning
 
 The provisioning topic covers provisioning of storage resources on container orchestrators, such as volumes, snapshots and clones.

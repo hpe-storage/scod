@@ -6,16 +6,7 @@ It's recommended to familiarize yourself with inspecting workloads on Kubernetes
 
 Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
-```markdown fct_label="HPE Cloud Volumes"
-kubectl get pods --all-namespaces -l 'app in (cv-csp, hpe-csi-node, hpe-csi-controller)'
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-hpe-storage   cv-csp-66988c97cd-7cst5               1/1     Running   0          21s
-hpe-storage   hpe-csi-controller-7b5bc47fbf-h6dwq   9/9     Running   0          21s
-hpe-storage   hpe-csi-node-7s77p                    2/2     Running   0          21s 
-hpe-storage   hpe-csi-node-vlfb9                    2/2     Running   0          21s
-```
-
-```markdown fct_label="HPE Nimble Storage"
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
@@ -24,7 +15,7 @@ hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0         
 hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
 ```
 
-```markdown fct_label="HPE Primera and 3PAR"
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
@@ -145,15 +136,11 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 
 CSP logs can be accessed from their respective services.
 
-```markdown fct_label="HPE Cloud Volumes"
-kubectl logs -f svc/cv-csp-svc -n hpe-storage
-```
-
-```markdown fct_label="HPE Nimble Storage"
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl logs -f svc/nimble-csp-svc -n hpe-storage
 ```
 
-```markdown fct_label="HPE 3PAR and Primera"
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl logs -f svc/primera3par-csp-svc -n hpe-storage
 ```
 
