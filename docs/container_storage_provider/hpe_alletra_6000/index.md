@@ -1,6 +1,6 @@
 # Introduction
 
-The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important array setup requirements.
+The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important array setup requirements.
 
 !!! caution "Important"
     For a successful deployment, it's important to understand the array platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (compute node OS and Kubernetes versions) and the CSP.
@@ -12,7 +12,7 @@ The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for K
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required array Operating System ("OS") version for a particular release of the driver. If a certain feature is gated against a certain version of NimbleOS or AlletraOS it will be called out where applicable.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required array Operating System ("OS") version for a particular release of the driver. If a certain feature is gated against a certain version of the array OS it will be called out where applicable.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
@@ -33,14 +33,14 @@ The CSP requires access to a user with either `poweruser` or the `administrator`
 
 #### Multitenant deployment
 
-In AlletraOS and NimbleOS 6.0.0+ it's possible to create separate tenants using the `tenantadmin` CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.
+In array OS 6.0.0 and newer it's possible to create separate tenants using the `tenantadmin` CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.
 
 No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
 
 Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes from the array into Kubernetes from folders the tenant isn't a user of.
 
 <!-- FIXME
-- Visit the AlletraOS or NimbleOS admin guide on HPE InfoSight to learn more about how to use the `tenantadmin` CLI
+- Visit the array admin guide on HPE InfoSight to learn more about how to use the `tenantadmin` CLI
 
 !!! seealso
     An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [FIXME](https://foo).
