@@ -36,10 +36,10 @@ git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 
 # Kubernetes 1.20 and newer
-git checkout v4.0.0
+git checkout tags/v4.0.0 -b release-4.0
 
 # Kubernetes 1.18 and 1.19
-git checkout v3.0.3
+git checkout tags/v3.0.3 -b release-3.0
 
 # All versions
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
@@ -49,7 +49,7 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout v3.0.3
+git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
@@ -57,7 +57,7 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout v3.0.3
+git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
