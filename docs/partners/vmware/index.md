@@ -29,7 +29,7 @@ Volume parameters available to the vSphere CSI Driver will be dependent upon opt
 | Inline Ephemeral Volumes (CSI)                  | Yes            | No                 |
 | Topology (CSI)                                  | Future         | Yes (beta)         |
 | Volume Health (CSI)                             | Future         | Yes (Tanzu only)   | 
-| Volume Encryption                               | Future         | Yes (via VMcrypt<sup>2</sup>) |
+| Volume Encryption                               | Yes            | Yes (via VMcrypt<sup>2</sup>) |
 | Volume Mutator<sup>1</sup>                      | Yes            | No                 |
 | Volume Groups<sup>1</sup>                       | Yes            | No                 |
 | Snapshot Groups<sup>1</sup>                     | Yes            | No                 |

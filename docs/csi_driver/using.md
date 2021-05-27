@@ -32,10 +32,16 @@ Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kube
 Install snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
 ```markdown fct_label="HPE CSI Driver v2.0.0"
-# Kubernetes 1.20 and newer
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-4.0
+
+# Kubernetes 1.20 and newer
+git checkout v4.0.0
+
+# Kubernetes 1.18 and 1.19
+git checkout v3.0.3
+
+# All versions
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
@@ -43,7 +49,7 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-3.0
+git checkout v3.0.3
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
@@ -51,7 +57,7 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-2.0
+git checkout v3.0.3
 kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
