@@ -36,11 +36,7 @@ Learn more about using the CSI objects in [the comprehensive overview](../../csi
 
 ## Docker Swarm
 
-Some HPE storage backends have Docker Volume Plugins capable of supporting Docker Swarm workloads.
-
-- [HPE Nimble Storage with Linux workers](../../docker_volume_plugins/hpe_nimble_storage/index.md)
-- [HPE Nimble Storage with Windows workers](https://infosight.hpe.com/org/urn%3Ainfosight%3A605d9baf-c394-4882-9742-a44bd8678cad/resources/nimble/software/Integration%20Kits/HPE%20Nimble%20Storage%20Volume%20Plugin%20for%20Docker%20Windows%20Containers) (link require HPE InfoSight login)
-- [HPE Cloud Volumes with Linux workers](../../docker_volume_plugins/hpe_cloud_volumes/index.md)
+Provisioning Docker Volumes for Docker Swarm workloads from a HPE primary storage backend is deprecated.
 
 ## Limitations
 
