@@ -37,7 +37,7 @@ In array OS 6.0.0 and newer it's possible to create separate tenants using the `
 
 No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
 
-Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes from the array into Kubernetes from folders the tenant isn't a user of.
+Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of.
 
 <!-- FIXME
 - Visit the array admin guide on HPE InfoSight to learn more about how to use the `tenantadmin` CLI
@@ -55,7 +55,7 @@ Consult the [compatibility and support](../../csi_driver/index.md#compatibility_
 
 ## StorageClass parameters
 
-A `StorageClass` is used to provision or clone a persistent volume. It can also be used to import an existing volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
+A `StorageClass` is used to provision or clone a persistent volume. It can also be used to import an existing volume or clone a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
 
 - [Common parameters for provisioning and cloning](#common_parameters_for_provisioning_and_cloning)
 - [Provisioning parameters](#provisioning_parameters)
