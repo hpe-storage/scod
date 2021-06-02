@@ -11,11 +11,13 @@
 
 This is an umbrella documentation project for the HPE CSI Driver for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra 6000, Alletra 9000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and partners.
 
+![HPE CSI Driver for Kubernetes](img/csi-driver-overview.png)
+
 Use the navigation on the left-hand side to explore the different topics. Feel free to contribute to this project but please read the [contributing guidelines](legal/contributing/index.md).
 
 Use the navigation to the left. Not sure what you're looking for? → [Get started](welcome)!
 
-<div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg" alt="A screaming monkey with a pink mohawk aka The Gremlin"></div>
+<!-- div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg" alt="A screaming monkey with a pink mohawk aka The Gremlin"></div-->
 
 !!! note "Did you know?"
     SCOD is "docs" in reverse?

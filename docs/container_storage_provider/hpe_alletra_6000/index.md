@@ -1,43 +1,61 @@
 # Introduction
 
-The HPE Nimble Storage CSP is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day two operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important Nimble array setup requirements.
+The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important array setup requirements.
 
 !!! caution "Important"
-    For a successful deployment, it's important to understand the Nimble platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (compute node OS and Kubernetes versions) and the CSP.
+    For a successful deployment, it's important to understand the array platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (compute node OS and Kubernetes versions) and the CSP.
 
 [TOC]
 
 !!! seealso
-    There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery.
+    There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery. It also applies broadly to HPE Alletra 6000.
 
 ## Platform requirements
 
-Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required NimbleOS version for a particular release of the driver. If a certain feature is gated against a certain version of NimbleOS it will be called out where applicable.
+Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required array Operating System ("OS") version for a particular release of the driver. If a certain feature is gated against a certain version of the array OS it will be called out where applicable.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
-### Setting up the Nimble array
+### Setting up the array
 
-How to deploy an HPE Nimble Storage array is beyond the scope of this document. Please refer to [HPE InfoSight](https://infosight.hpe.com) for further reading.
+How to deploy an HPE storage array is beyond the scope of this document. Please refer to [HPE InfoSight](https://infosight.hpe.com) for further reading.
 
 !!! error "Important"
-    The HPE Nimble Storage Linux Toolkit (NLT) is **not** compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on control plane nodes if they use iSCSI or FC storage from a HPE Nimble Storage array.
+    The HPE Nimble Storage Linux Toolkit (NLT) is **not** compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on Kubernetes control plane nodes if they use iSCSI or FC storage from the array.
 
 #### Single tenant deployment
 
 The CSP requires access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
 
+!!! tip
+    It's highly recommended to deploy a multitenant setup.
+
+#### Multitenant deployment
+
+In array OS 6.0.0 and newer it's possible to create separate tenants using the `tenantadmin` CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.
+
+No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
+
+Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of.
+
+<!-- FIXME
+- Visit the array admin guide on HPE InfoSight to learn more about how to use the `tenantadmin` CLI
+
+!!! seealso
+    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [FIXME](https://foo).
+-->
+
 ### Limitations
 
-Consult the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for supported NimbleOS versions. CSI and CSP specific limitations with Nimble are listed below.
+Consult the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for supported array OS versions. CSI and CSP specific limitations are listed below.
 
-- Striped volumes on grouped HPE Nimble Storage arrays are not supported by the CSI driver.
+- Striped volumes on grouped arrays are not supported by the CSI driver.
 - The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.
 
 ## StorageClass parameters
 
-A `StorageClass` is used to provision or clone an HPE Nimble Storage-backed persistent volume. It can also be used to import an existing HPE Nimble Storage volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
+A `StorageClass` is used to provision or clone a persistent volume. It can also be used to import an existing volume or clone a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
 
 - [Common parameters for provisioning and cloning](#common_parameters_for_provisioning_and_cloning)
 - [Provisioning parameters](#provisioning_parameters)
@@ -64,10 +82,10 @@ These parameters are mutable between a parent volume and creating a clone from a
 | destroyOnDelete                | Boolean | Indicates the backing Nimble volume (including snapshots) should be destroyed when the PVC is deleted. Defaults to "false" which means volumes needs to be pruned manually. |
 | limitIops                      | Integer | The IOPS limit of the volume. The IOPS limit should be in the range 256 to 4294967294, or -1 for unlimited (default). |
 | limitMbps                      | Integer | The MB/s throughput limit for the volume between 1 and 4294967294, or -1 for unlimited (default).|
-| description                    | Text    | Text to be added to the volume's description on the Nimble array. Empty string by default. |
+| description                    | Text    | Text to be added to the volume's description on the array. Empty string by default. |
 | performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". Defaults to the "default" performance policy. |
 | protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". |
-| folder                         | Text    | The name of the Nimble folder in which to place the volume. Defaults to the root of the "default" pool. |
+| folder                         | Text    | The name of the folder in which to place the volume. Defaults to the root of the "default" pool. |
 | thick                          | Boolean | Indicates that the volume should be thick provisioned. Defaults to "false" |
 | dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. Defaults to "true" when available. |
 | syncOnDetach                   | Boolean | Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node. Defaults to "false". |
@@ -80,7 +98,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 </small>
 
 !!! note
-    Performance Policies, Folders and Protection Templates are Nimble specific constructs that can be created on the Nimble array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on [HPE InfoSight](https://infosight.hpe.com).
+    Performance Policies, Folders and Protection Templates are array OS specific constructs that can be created on the array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on [HPE InfoSight](https://infosight.hpe.com).
 
 ### Provisioning parameters
 
@@ -108,34 +126,34 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 
 ### Cloning parameters
 
-Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC in the current namespace or use `importVolAsClone` and reference a Nimble volume name to clone and import to Kubernetes.
+Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC in the current namespace or use `importVolAsClone` and reference an array volume name to clone and import to Kubernetes.
 
 | Parameter        | String  | Description |
 | ---------------- | ------- | ----------- |
 | cloneOf          | Text    | The name of the PV to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
-| importVolAsClone | Text    | The name of the Nimble volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
+| importVolAsClone | Text    | The name of the array volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
 | snapshot         | Text    | The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created. |
 | createSnapshot   | Boolean | Indicates that a new snapshot of the volume should be taken matching the name provided in the `snapshot` parameter. If the `snapshot` parameter is not specified, a default name will be created. |
 
 ### Import parameters
 
-Importing volumes to Kubernetes requires the source Nimble volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.
+Importing volumes to Kubernetes requires the source array volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.
 
 | Parameter          | String  | Description |
 | ------------------ | ------- | ----------- |
-| importVolumeName   | Text    | The name of the Nimble volume to import. |
-| snapshot           | Text    | The name of the Nimble snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored. |
-| takeover           | Boolean | Indicates the current group will takeover ownership of the Nimble volume and volume collection. This should be performed against a downstream replica. |
-| reverseReplication | Boolean | Reverses the replication direction so that writes to the Nimble volume are replicated back to the group where it was replicated from. |
+| importVolumeName   | Text    | The name of the array volume to import. |
+| snapshot           | Text    | The name of the array snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored. |
+| takeover           | Boolean | Indicates the current group will takeover ownership of the array volume and volume collection. This should be performed against a downstream replica. |
+| reverseReplication | Boolean | Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from. |
 | forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
 
 ## VolumeGroupClass parameters
 
-If basic data protection is required and performed on the Nimble array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
+If basic data protection is required and performed on the array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
 | Parameter          | String  | Description |
 | ------------------ | ------- | ----------- |
-| description        | Text    | Text to be added to the volume collection description on the Nimble array. Empty by default. |
+| description        | Text    | Text to be added to the volume collection description on the array. Empty by default. |
 | protectionTemplate | Text    | The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". Empty by default, meaning no array snapshots are performed on the `VolumeGroups`. |
 
 !!! tip "New feature"
@@ -149,6 +167,6 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 
 | Parameter   | String  | Description |
 | ----------- | ------  | ----------- |
-| description | Text    | Text to be added to the snapshot's description on the Nimble array. |
-| writable    | Boolean | Indicates if the snapshot is writable on the Nimble array. Defaults to "false". |
-| online      | Boolean | Indicates if the snapshot is set to online on the Nimble array. Defaults to "false". |
+| description | Text    | Text to be added to the snapshot's description on the array. |
+| writable    | Boolean | Indicates if the snapshot is writable on the array. Defaults to "false". |
+| online      | Boolean | Indicates if the snapshot is set to online on the array. Defaults to "false". |
