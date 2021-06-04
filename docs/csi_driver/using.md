@@ -835,7 +835,7 @@ The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unav
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 
-### Using volume encryption
+### Using Volume Encryption
 
 From version 2.0.0 and onwards of the CSI driver supports host-based volume encryption for any of the CSPs supported by the CSI driver.
 

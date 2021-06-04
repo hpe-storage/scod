@@ -107,7 +107,7 @@ During the import volume process, any legacy (non-container volumes) or existing
     • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
     • Support for `importVol` is available from HPE CSI Driver 1.2.0+.
 
-### Clone Volumes
+### Cloning Persistent Volumes
 
 Cloning supports two modes of cloning. Either use `cloneOf` and reference a `PersistentVolumeClaim` in the current namespace to clone or use `importVolAsClone` and reference an array volume name to clone and import into the Kubernetes cluster. Volumes with clones are immutable once created.
 
@@ -122,9 +122,9 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
     • Cloning using above parameters is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `importVolAsClone` and `cloneOf` is available from HPE CSI Driver 1.3.0+.
 
-### Volume Snapshots
+### Creating Snapshots on Persistent Volumes
 
-During snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster. Volumes with snapshots are immutable once created.
+During the snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster. Volumes with snapshots are immutable once created.
 
 | Parameter          | Option      | Description |
 | ------------------ | ----------- | ----------- |
@@ -226,7 +226,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | --------- | ------- | ----------- |
 | read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
-### VolumeGroupClass QoS
+### Creating a VolumeGroupClass with QoS Settings
 
 In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be created dynamically using the QoS parameters for the `VolumeGroupClass`. The following parameters are available for a `VolumeGroup` on the array. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
@@ -239,6 +239,9 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | bwMaxLimitKb | Text   | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | latencyGoal  | Text   | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 | domain       | Text   | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
+
+!!! note
+    QoS settings are mandatory when creating a VolumeGroupClass on the array.
 
 ### FCPortsList
 
