@@ -451,7 +451,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.18.yaml
 ```
 
-## Legacy versions
+## Legacy Versions
 
 Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
 
@@ -461,14 +461,8 @@ Older versions of the HPE CSI Driver for Kubernetes are kept here for reference.
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
 ```
 
-<<<<<<< HEAD
-## Legacy Versions
-
-Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
-=======
 !!! note
     Latest supported CSI driver version is 1.4.0 for Kubernetes 1.17.
->>>>>>> upstream/master
 
 ### Kubernetes 1.16
 

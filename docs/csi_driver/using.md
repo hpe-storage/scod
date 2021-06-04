@@ -32,18 +32,6 @@ Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kube
 Install snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
 ```markdown fct_label="HPE CSI Driver v2.0.0"
-<<<<<<< HEAD
-
-Kubernetes 1.20+
-
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout release-4.1
-kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
-
-Kubernetes 1.17 - 1.19
-
-=======
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 
@@ -59,28 +47,18 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 
 ```markdown fct_label="HPE CSI Driver v1.4.0"
 # Kubernetes 1.17-1.19
->>>>>>> upstream/master
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
-<<<<<<< HEAD
-```markdown fct_label="HPE CSI Driver v1.4.0"
-
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout release-3.0
-kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
-=======
 ```markdown fct_label="HPE CSI Driver v1.3.0"
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
->>>>>>> upstream/master
 ```
 
 !!! tip
@@ -857,9 +835,6 @@ The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unav
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 
-<<<<<<< HEAD
-## Further Reading
-=======
 ### Using volume encryption
 
 From version 2.0.0 and onwards of the CSI driver supports host-based volume encryption for any of the CSPs supported by the CSI driver.
@@ -969,7 +944,6 @@ Host-based volume encryption is in effect if the "enc" prefix is seen on the mul
 -->
 
 ## Further reading
->>>>>>> upstream/master
 
 The [official Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/volumes/) contains comprehensive documentation on how to markup `PersistentVolumeClaim` and `StorageClass` API objects to tweak certain behaviors.
 
