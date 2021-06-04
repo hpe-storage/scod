@@ -45,7 +45,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 | provisioningType<sup>1</sup> <br />  | tpvv    | Indicates Thin provisioned volume type. Default: tpvv | **X** | **X** |
 |                                     | full    | Indicates Full provisioned volume type. | **X** |   |
 |                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
-|                                     | reduce  | Indicates Thin Deduplication/Compression volume type. |   | **X** |
+|                                     | reduce  | Indicates Data Reduction volume type. |   | **X** |
 | importVol   | Text      | Name of the volume to import. | **X** | **X** |
 | importVolAsClone  | Text      | Name of the volume to clone and import. | **X** | **X** |
 | cloneOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
@@ -68,17 +68,6 @@ Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclas
 !!! Important
     The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Please see [Using PVC Overrides](../../csi_driver/using.md#using_pvc_overrides) for more details.
 
-### HPE Alletra 9000 and Primera Data Reduction Volumes
-
-These parameters are used to create HPE Alletra 9000 and Primera Data Reduction (Thinly Provisioned with Deduplication/Compression enabled) volumes. Please see [Common Parameters](#common_parameters_for_provisioning) for more details.
-
-| Parameter        | Option | Description |
-| ---------------- | ------ | ----------- |
-| accessProtocol   | fc     | The access protocol to use when accessing the persistent volume. |
-| cpg              | Text   | The name of existing CPG to be used for volume provisioning. |
-| snapCpg          | Text   | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
-| provisioningType | reduce | **Required** |
-
 ### Ephemeral Inline Volumes
 
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
@@ -94,7 +83,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
-### Import Volumes
+### Importing Volumes
 
 During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a `StorageClass`, will be renamed to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported.
 
@@ -122,7 +111,7 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
     • Cloning using above parameters is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `importVolAsClone` and `cloneOf` is available from HPE CSI Driver 1.3.0+.
 
-### Creating Snapshots on Persistent Volumes
+### Creating Snapshots of Persistent Volumes
 
 During the snapshotting process, any existing `PersistentVolumeClaim` defined in the `virtualCopyOf` parameter within a `StorageClass`, will be snapped as `PersistentVolumeClaim` and exposed through the HPE CSI Driver and made available to the Kubernetes cluster. Volumes with snapshots are immutable once created.
 
@@ -182,7 +171,7 @@ These parameters are applicable only for replication. Both parameters are mandat
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. (Optional) <br /> During this process, the remote copy group is stopped and started once. |
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
 
-### iSCSI Target Portal IP
+### Specifying iSCSI Target Portal IPs
 
 This parameter allows the ability to specify a subset of the array iSCSI ports for iSCSI sessions. By default, the HPE CSI Driver uses all available iSCSI ports.
 
@@ -190,7 +179,7 @@ This parameter allows the ability to specify a subset of the array iSCSI ports f
 | -------------- | ------ | ----------- |
 | iscsiPortalIps | Text   | Comma separated list of target portal IPs. |
 
-### VolumeSnapshotClass
+### Creating a VolumeSnapshotClass
 
 These parameters are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
 
@@ -200,7 +189,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | --------- | ------  | ----------- |
 | read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
-### Import Snapshot
+### Importing a Snapshot
 
 During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
 
@@ -208,7 +197,7 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | --------- | ------ | ----------- |
 | importVol | Text   | The name of the array snapshot to import. |
 
-### QoS StorageClass 
+### Creating a QoS StorageClass 
 
 In the array, QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing array volume set.
 
@@ -216,7 +205,7 @@ In the array, QoS rules are applied to a volume set. To use an existing volume s
 | --------- | ------ | ----------- |
 | qosName   | Text   | Name of the HPE Primera or 3PAR volume set which has QoS rules. This parameter is optional. If specified, the `PersistentVolumeClaim` will be associated with the array volume set, for purposes of applying the QoS rules. |
 
-### SnapshotGroupClass
+### Creating a SnapshotGroupClass
 
 These parameters are for `SnapshotGroupClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
 
