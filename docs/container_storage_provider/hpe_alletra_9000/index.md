@@ -9,11 +9,12 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 
 ## Platform Requirements
 
-The following has been tested and validated for HPE CSI driver version with HPE Alletra 9000, HPE Primera and 3PAR. Always check the corresponding CSI driver version in the[compatibility and support](../../csi_driver/index.md#compatibility_and_support) table.
+The following has been tested and validated for HPE CSI driver version with HPE Alletra 9000, HPE Primera and 3PAR. Always check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table.
 
 | Version | Protocols | Host OS | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
 | ------ | ------------------- |-------- | --------- | ------------------- |
-| v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.19-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 <br /> Google Anthos GKE 1.4| 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| v2.0.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
 
