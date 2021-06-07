@@ -2,7 +2,7 @@
 At this point the CSI driver and CSP should be installed and configured.
 
 !!! important
-    Most examples below assumes there's a `Secret` named "hpe-backend" in the "hpe-storage" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_a_hpe_storage_backend).
+    Most examples below assumes there's a `Secret` named "hpe-backend" in the "hpe-storage" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_an_hpe_storage_backend).
 
 [TOC]
 
@@ -728,16 +728,6 @@ spec:
 
 !!! tip "Good to know"
     As the `.spec.csi.volumeAttributes` on the `PersistentVolume` are immutable, the mutations performed on the backend volume are also annotated on the `PersistentVolume` object.
-
-### Using Volume Encryption
-
-The HPE CSI Driver 2.0.0+ provides in-flight volume encryption support in addition to encryption at rest provided by the array.
-
-| Parameter                     | String  | Description |
-| ----------------------------- | ------- | ----------- |
-| hostEncryption                | Boolean | Flag to set encryption on volume. Example: "true/false" |
-| hostEncryptionSecretName      | Text    | SecretName for the encryption. Example: "encrypt-secret" |
-| hostEncryptionSecretNameSpace | Text    | SecretNamespace for the encryption. Example: "hpe-storage" |
 
 ### Using the NFS Server Provisioner
 

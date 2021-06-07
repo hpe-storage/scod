@@ -20,8 +20,9 @@ The following has been tested and validated for HPE CSI driver version with HPE 
 
 Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires a HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities. 
 
-* [3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
-* [Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
+* [HPE Alletra 9000](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_alletra.html)
+* [HPE Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
+* [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 
 !!! important
     Ubuntu is not a supported OS option for the HPE CSI Driver when using HPE Alletra 9000 and HPE Primera. Please refer to SPOCK for the list of Platform supported OS.
@@ -126,11 +127,11 @@ During the snapshotting process, any existing `PersistentVolumeClaim` defined in
     • Snapshotting using `virtualCopyOf` is independent of snapshot `CRD` availability on Kubernetes and it can be performed on any supported Kubernetes version.<br />
     • Support for `virtualCopyOf` is available from HPE CSI Driver 1.3.0+.
 
-### Remote Copy with Peer Persistence Synchronous Replication
+### Remote Copy with Peer Persistence Synchronous Replication Parameters
 
 To enable replication within the HPE CSI Driver, the following steps must be completed:
 
-* Create `Secrets` for both primary and target arrays. Refer to [Adding additional backends](../../csi_driver/deployment.md#adding_additional_backends).
+* Create `Secrets` for both primary and target arrays. Refer to [Configuring Additional Storage Backends](../../csi_driver/deployment.md#configuring_additional_storage_backends).
 * Create replication custom resource.
 * Create replication enabled `StorageClass`.
 
@@ -190,7 +191,7 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | --------- | ------  | ----------- |
 | read_only | Boolean | Indicates if the snapshot is writable on the array. |
 
-### Importing a Snapshot
+### Import a Snapshot
 
 During the import snapshot process, any legacy (non-container snapshot) or an existing docker/k8s snapshot defined in the **ImportVol** parameter, within a `VolumeSnapshotClass`, will be renamed with the prefix "snapshot-". The new snapshot will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the snapshot when it is imported.
 
@@ -198,7 +199,7 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 | --------- | ------ | ----------- |
 | importVol | Text   | The name of the array snapshot to import. |
 
-### Creating a QoS StorageClass 
+### Creating a QoS StorageClass
 
 In the array, QoS rules are applied to a volume set. To use an existing volume set with QoS rules on a `PersistentVolumeClaim`, set the `qosName` parameter within a `StorageClass` to the name of the existing array volume set.
 
@@ -233,13 +234,13 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 !!! note
     QoS settings are mandatory when creating a VolumeGroupClass on the array.
 
-### FCPortsList
+### Specifying Fibre Channel Ports
 
-This parameter allows the ability to specify a subset of array FC ports to create vluns. By default, the HPE CSI Driver uses all available FC ports.
+Use this parameter to specify a subset of Fibre Channel (FC) ports on the array to create vluns. By default, the HPE CSI Driver uses all available FC ports.
 
 | Parameter   | Option | Description |
 | ----------- | ------ | ----------- |
-| fcPortsList | Text   | Comma separated list of fc ports. |
+| fcPortsList | Text   | Comma separated list of available FC ports. |
 
 ### Support
 

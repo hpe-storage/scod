@@ -10,7 +10,7 @@ As different methods of installation are provided, it might not be too obvious w
 
 ![](img/helm.png)
 
-### Need help deciding?
+### Need Help Deciding?
 
 | I have a...                       | Then you need...              |
 | --------------------------------- | ----------------------------- |
@@ -140,9 +140,11 @@ Create a `HPECSIDriver` with the manifest.
 kubectl create -f hpe-csi-operator.yaml
 ```
 
-The CSI driver is now ready for use. Proceed to the next section to learn about [adding a HPE storage backend](#add_a_hpe_storage_backend).
+The CSI driver is now ready for use. Proceed to the next section to learn about [adding an HPE storage backend](#add_an_hpe_storage_backend).
 
 ## Add an HPE Storage Backend
+
+<a id="add_a_hpe_storage_backend" class="headerlink" href="#add_a_hpe_storage_backend" title="Permanent link"></a>
 
 Once the CSI driver is deployed, two additional objects needs to be created to get started with dynamic provisioning of persistent storage, a `Secret` and a `StorageClass`.
 
@@ -425,7 +427,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 !!! important
     The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
-After deploying the CSI driver for the particular version of Kubernetes being used below, [add a HPE storage backend](#add_a_hpe_storage_backend).
+After deploying the CSI driver for the particular version of Kubernetes being used below, [add an HPE storage backend](#add_an_hpe_storage_backend).
 
 ### Kubernetes 1.21
 
