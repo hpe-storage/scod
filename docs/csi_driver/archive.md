@@ -1,4 +1,4 @@
-# Unsupported releases
+# Unsupported Releases
 
 HPE supports up to three minor releases. These release are kept here for historic purposes.
 

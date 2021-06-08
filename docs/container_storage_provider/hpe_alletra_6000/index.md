@@ -10,28 +10,28 @@ The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for K
 !!! seealso
     There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery. It also applies broadly to HPE Alletra 6000.
 
-## Platform requirements
+## Platform Requirements
 
 Always check the corresponding CSI driver version in [compatibility and support](../../csi_driver/index.md#compatibility_and_support) for the required array Operating System ("OS") version for a particular release of the driver. If a certain feature is gated against a certain version of the array OS it will be called out where applicable.
 
 !!! tip
     The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
-### Setting up the array
+### Setting Up the Array
 
 How to deploy an HPE storage array is beyond the scope of this document. Please refer to [HPE InfoSight](https://infosight.hpe.com) for further reading.
 
 !!! error "Important"
     The HPE Nimble Storage Linux Toolkit (NLT) is **not** compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on Kubernetes control plane nodes if they use iSCSI or FC storage from the array.
 
-#### Single tenant deployment
+#### Single Tenant Deployment
 
 The CSP requires access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
 
 !!! tip
     It's highly recommended to deploy a multitenant setup.
 
-#### Multitenant deployment
+#### Multitenant Deployment
 
 In array OS 6.0.0 and newer it's possible to create separate tenants using the `tenantadmin` CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.
 
@@ -53,17 +53,17 @@ Consult the [compatibility and support](../../csi_driver/index.md#compatibility_
 - Striped volumes on grouped arrays are not supported by the CSI driver.
 - The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.
 
-## StorageClass parameters
+## StorageClass Parameters
 
 A `StorageClass` is used to provision or clone a persistent volume. It can also be used to import an existing volume or clone a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.
 
 - [Common parameters for provisioning and cloning](#common_parameters_for_provisioning_and_cloning)
-- [Provisioning parameters](#provisioning_parameters)
-- [Pod inline volume parameters (Local Ephemeral Volumes)](#pod_inline_volume_parameters_local_ephemeral_volumes)
-- [Cloning parameters](#cloning_parameters)
-- [Import parameters](#import_parameters)
-- [VolumeSnapshotClass parameters](#volumesnapshotclass_parameters)
-- [VolumeGroupClass parameters](#volumesnapshotclass_parameters)
+- [Provisioning Parameters](#provisioning_parameters)
+- [Cloning Parameters](#cloning_parameters)
+- [Import Parameters](#import_parameters)
+- [Pod Inline Volume Parameters (Local Ephemeral Volumes)](#pod_inline_volume_parameters_local_ephemeral_volumes)
+- [VolumeGroupClass Parameters](#volumegroupclass_parameters)
+- [VolumeSnapshotClass Parameters](#volumesnapshotclass_parameters)
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
@@ -72,7 +72,7 @@ Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclas
 !!! note
     These are optional parameters unless specified.
 
-### Common parameters for provisioning and cloning
+### Common Parameters for Provisioning and Cloning
 
 These parameters are mutable between a parent volume and creating a clone from a snapshot.
 
@@ -92,7 +92,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#volumegroupclass_parameters).
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#creating_a_volumegroupclass).
  <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
  <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
 </small>
@@ -100,7 +100,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 !!! note
     Performance Policies, Folders and Protection Templates are array OS specific constructs that can be created on the array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on [HPE InfoSight](https://infosight.hpe.com).
 
-### Provisioning parameters
+### Provisioning Parameters
 
 These parameters are immutable for both volumes and clones once created, clones will inherit parent attributes.
 
@@ -109,7 +109,30 @@ These parameters are immutable for both volumes and clones once created, clones 
 | encrypted       | Boolean        | Indicates that the volume should be encrypted. Defaults to "false". |
 | pool            | Text           | The name of the pool in which to place the volume. Defaults to the "default" pool. |
 
-### Pod inline volume parameters (Local Ephemeral Volumes)
+### Cloning Parameters
+
+Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC in the current namespace or use `importVolAsClone` and reference an array volume name to clone and import to Kubernetes.
+
+| Parameter        | String  | Description |
+| ---------------- | ------- | ----------- |
+| cloneOf          | Text    | The name of the PV to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
+| importVolAsClone | Text    | The name of the array volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
+| snapshot         | Text    | The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created. |
+| createSnapshot   | Boolean | Indicates that a new snapshot of the volume should be taken matching the name provided in the `snapshot` parameter. If the `snapshot` parameter is not specified, a default name will be created. |
+
+### Import Parameters
+
+Importing volumes to Kubernetes requires the source array volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.
+
+| Parameter          | String  | Description |
+| ------------------ | ------- | ----------- |
+| importVolumeName   | Text    | The name of the array volume to import. |
+| snapshot           | Text    | The name of the array snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored. |
+| takeover           | Boolean | Indicates the current group will takeover ownership of the array volume and volume collection. This should be performed against a downstream replica. |
+| reverseReplication | Boolean | Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from. |
+| forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
+
+### Pod Inline Volume Parameters (Local Ephemeral Volumes)
 
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
 
@@ -124,30 +147,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
-### Cloning parameters
-
-Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC in the current namespace or use `importVolAsClone` and reference an array volume name to clone and import to Kubernetes.
-
-| Parameter        | String  | Description |
-| ---------------- | ------- | ----------- |
-| cloneOf          | Text    | The name of the PV to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
-| importVolAsClone | Text    | The name of the array volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
-| snapshot         | Text    | The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created. |
-| createSnapshot   | Boolean | Indicates that a new snapshot of the volume should be taken matching the name provided in the `snapshot` parameter. If the `snapshot` parameter is not specified, a default name will be created. |
-
-### Import parameters
-
-Importing volumes to Kubernetes requires the source array volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.
-
-| Parameter          | String  | Description |
-| ------------------ | ------- | ----------- |
-| importVolumeName   | Text    | The name of the array volume to import. |
-| snapshot           | Text    | The name of the array snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored. |
-| takeover           | Boolean | Indicates the current group will takeover ownership of the array volume and volume collection. This should be performed against a downstream replica. |
-| reverseReplication | Boolean | Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from. |
-| forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
-
-## VolumeGroupClass parameters
+### VolumeGroupClass Parameters
 
 If basic data protection is required and performed on the array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
@@ -159,7 +159,7 @@ If basic data protection is required and performed on the array, `VolumeGroups` 
 !!! tip "New feature"
     `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver. Learn more in the [Using section](../../csi_driver/using.md#volume_groups).
 
-## VolumeSnapshotClass parameters
+### VolumeSnapshotClass Parameters
 
 These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
 

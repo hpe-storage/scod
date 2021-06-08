@@ -71,7 +71,7 @@ In Rancher 2.5 and earlier, the "Apps" interface is the default method of instal
 
 For Rancher Apps to make use of persistent storage from HPE, a supported backend needs to be configured along with a `StorageClass`. These procedures are generic regardless of Kubernetes distribution being used.
 
-- Go ahead and [add a HPE storage backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend)
+- Go ahead and [add an HPE storage backend](../../csi_driver/deployment.md#add_an_hpe_storage_backend)
 
 ### HPE Volume Driver for Kubernetes FlexVolume plugin
 
