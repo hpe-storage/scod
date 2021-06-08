@@ -59,11 +59,11 @@ A `StorageClass` is used to provision or clone a persistent volume. It can also 
 
 - [Common parameters for provisioning and cloning](#common_parameters_for_provisioning_and_cloning)
 - [Provisioning Parameters](#provisioning_parameters)
-- [Cloning Persistent Volumes](#cloning_persistent_volumes)
-- [Importing Volumes](#importing_volumes)
-- [Ephemeral Inline Volumes](#ephemeral_inline_volumes)
-- [Creating a VolumeGroupClass](#creating_a_volumegroupclass)
-- [Creating a VolumeSnapshotClass](#creating_a_volumesnapshotclass)
+- [Cloning Parameters](#cloning_parameters)
+- [Import Parameters](#import_parameters)
+- [Pod Inline Volume Parameters (Local Ephemeral Volumes)](#pod_inline_volume_parameters_local_ephemeral_volumes)
+- [VolumeGroupClass Parameters](#volumegroupclass_parameters)
+- [VolumeSnapshotClass Parameters](#volumesnapshotclass_parameters)
 
 Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. `StorageClass` API objects needs be rewritten and parameters need to be updated regardless.
 
@@ -109,7 +109,7 @@ These parameters are immutable for both volumes and clones once created, clones 
 | encrypted       | Boolean        | Indicates that the volume should be encrypted. Defaults to "false". |
 | pool            | Text           | The name of the pool in which to place the volume. Defaults to the "default" pool. |
 
-### Cloning Persistent Volumes
+### Cloning Parameters
 
 Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC in the current namespace or use `importVolAsClone` and reference an array volume name to clone and import to Kubernetes.
 
@@ -120,7 +120,7 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a PVC 
 | snapshot         | Text    | The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created. |
 | createSnapshot   | Boolean | Indicates that a new snapshot of the volume should be taken matching the name provided in the `snapshot` parameter. If the `snapshot` parameter is not specified, a default name will be created. |
 
-### Importing Volumes
+### Import Parameters
 
 Importing volumes to Kubernetes requires the source array volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.
 
@@ -132,7 +132,7 @@ Importing volumes to Kubernetes requires the source array volume to be offline. 
 | reverseReplication | Boolean | Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from. |
 | forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
 
-### Ephemeral Inline Volumes
+### Pod Inline Volume Parameters (Local Ephemeral Volumes)
 
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
 
@@ -147,7 +147,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
-### Creating a VolumeGroupClass
+### VolumeGroupClass Parameters
 
 If basic data protection is required and performed on the array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
@@ -159,7 +159,7 @@ If basic data protection is required and performed on the array, `VolumeGroups` 
 !!! tip "New feature"
     `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver. Learn more in the [Using section](../../csi_driver/using.md#volume_groups).
 
-### Creating a VolumeSnapshotClass
+### VolumeSnapshotClass Parameters
 
 These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
 
