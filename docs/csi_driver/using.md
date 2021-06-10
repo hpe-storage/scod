@@ -927,11 +927,8 @@ Filesystem              Size  Used Avail Use% Mounted on
 
 Host-based volume encryption is in effect if the "enc" prefix is seen on the multipath device name.
 
-<!-- FIXME
 !!! seealso 
-    For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE DEV: [Foobar](https://hpedev.io]
-
--->
+    For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE DEV: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
 
 ## Further reading
 

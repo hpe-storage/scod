@@ -137,11 +137,11 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 CSP logs can be accessed from their respective services.
 
 ```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
-kubectl logs -f svc/nimble-csp-svc -n hpe-storage
+kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
 ```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
-kubectl logs -f svc/primera3par-csp-svc -n hpe-storage
+kubectl logs -f deploy/primera3par-csp -n hpe-storage
 ```
 
 ### Log Collector

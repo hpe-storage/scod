@@ -39,12 +39,10 @@ No special configuration is needed on the Kubernetes cluster when using a tenant
 
 Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of.
 
-<!-- FIXME
-- Visit the array admin guide on HPE InfoSight to learn more about how to use the `tenantadmin` CLI
+- Visit the array admin guide on [HPE InfoSight](https://infosight.hpe.com) to learn more about how to use the `tenantadmin` CLI.
 
 !!! seealso
-    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [FIXME](https://foo).
--->
+    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/).
 
 ### Limitations
 

@@ -93,11 +93,9 @@ Release highlights:
   <tr>
    <th>Blogs</th>
    <td>
-   <!-- FIXME
-    <a href="https://">One</a><br />
-    <a href="https://">Two</a><br />
-    <a href="https://">Three</a>
-   -->
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-now-available-for-HPE-Alletra/ba-p/7136280">HPE CSI Driver for Kubernetes now available for HPE Alletra</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/">Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble</a> (tutorial)<br />
+    <a href="https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/">Host-based Volume Encryption with HPE CSI Driver for Kubernetes</a> (tutorial)
    </td>
  </tr>
 </table>
