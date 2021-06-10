@@ -48,8 +48,8 @@ Create a working directory and set environment variables referenced throughout t
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=1.4.0
-export MY_K8S=1.20
+export MY_CSI_DRIVER=2.0.0
+export MY_K8S=1.21
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -67,8 +67,8 @@ Pull, tag and push the images to the private registry.
 
 ```text
 cat images | xargs -n 1 docker pull
-awk '{ print $1" "$1 }' images | sed "s/ quay.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
-sed -e "s/quay.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+awk '{ print $1" "$1 }' images | sed "s/ quay.io| k8s.gcr.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -e "s/quay.io|k8s.gcr.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
 ```
 
 !!! tip
