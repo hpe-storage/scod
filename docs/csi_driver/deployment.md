@@ -98,10 +98,12 @@ The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift.
 
 Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
 
-As an example, we'll deploy version `0.17.0` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself with the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
+As an example, we'll deploy version `0.18.2` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself with the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
 
 ```markdown
-curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.17.0/install.sh | bash -s v0.17.0
+curl -L https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.18.2/install.sh -o install.sh
+chmod +x install.sh
+./install.sh v0.18.2
 ```
 
 Install the HPE CSI Operator.
@@ -125,14 +127,25 @@ metadata:
   name: csi-driver
   namespace: my-hpe-csi-operator
 spec:
+  cspClientTimeout: 60
+  disable:
+    alletra6000: false
+    alletra9000: false
+    nimble: false
+    primera: false
   disableNodeConformance: false
+  disableNodeGetVolumeStats: false
   imagePullPolicy: IfNotPresent
   iscsi:
     chapPassword: ""
     chapUser: ""
+  kubeletRootDir: /var/lib/kubelet/
   logLevel: info
   registry: quay.io
 ```
+
+!!! tip
+    The contents depends on which version of the CSI driver being installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
 
 Create a `HPECSIDriver` with the manifest.
 
