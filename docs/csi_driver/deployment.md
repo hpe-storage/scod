@@ -411,17 +411,17 @@ kubectl create ns hpe-storage
 Worker node IO settings:
 
 ```markdown
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-linux-config.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-linux-config.yaml
 ```
 
 Container Storage Provider:
 
 ```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/nimble-csp.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/nimble-csp.yaml
 ```
 
 ```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/3par-primera-csp.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/3par-primera-csp.yaml
 ```
 
 !!! important
