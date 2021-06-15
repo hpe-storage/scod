@@ -1,3 +1,6 @@
+!!! error "Expired content"
+    The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.
+
 # Introduction
 
 This is the documentation for [HPE Cloud Volumes Plugin for Docker](https://hub.docker.com/plugins/cvblock). It allows dynamic provisioning of Docker Volumes on standalone Docker Engine or Docker Swarm nodes.

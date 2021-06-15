@@ -71,11 +71,11 @@ In Rancher 2.5 and earlier, the "Apps" interface is the default method of instal
 
 For Rancher Apps to make use of persistent storage from HPE, a supported backend needs to be configured along with a `StorageClass`. These procedures are generic regardless of Kubernetes distribution being used.
 
-- Go ahead and [add a HPE storage backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend)
+- Go ahead and [add an HPE storage backend](../../csi_driver/deployment.md#add_an_hpe_storage_backend)
 
 ### HPE Volume Driver for Kubernetes FlexVolume plugin
 
-Only use the FlexVolume driver for Kubernetes 1.12 and below or with HPE Cloud Volumes up to Kubernetes 1.17. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
+Only use the FlexVolume driver for Kubernetes 1.12 and below. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
 
 !!! caution
     The FlexVolume driver is being deprecated. Reach out to your HPE representative if you think deploying the FlexVolume driver on your Rancher managed Kubernetes cluster is the correct course of action.

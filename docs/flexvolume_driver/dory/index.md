@@ -1,3 +1,6 @@
+!!! error "Expired content"
+    The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.
+
 # Introduction
 The [Open Source project Dory](https://github.com/hpe-storage/dory) was designed in 2017 to transition Docker Volume plugins to be used with Kubernetes. Dory is the shim between the FlexVolume exec calls to the Docker Volume API.
 

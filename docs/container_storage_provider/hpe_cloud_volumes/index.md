@@ -1,3 +1,6 @@
+!!! error "Expired content"
+    The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.
+
 # Introduction
 
 The HPE Cloud Volumes CSP integrates seamlessly with the HPE Cloud Volumes Block service in the public cloud. The CSP abstracts the data management capabilities of the storage service for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important HPE Cloud Volumes Block configuration details.

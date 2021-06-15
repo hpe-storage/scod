@@ -6,7 +6,7 @@ The HPE CSI Driver for Kubernetes includes a Kubernetes Pod Monitor. Specificall
 
 The Pod Monitor is mandatory and automatically applied for the RWX server `Deployment` managed by the HPE CSI Driver. It may be used for any `Pods` on the Kubernetes cluster to perform a more graceful automatic recovery rather than performing a manual intervention to resurrect stuck `Pods`.
 
-## CSI driver parameters
+## CSI Driver Parameters
 
 The Pod Monitor is part of the "hpe-csi-controller" `Deployment` served by the "hpe-csi-driver" container. It's by default enabled and the Pod Monitor interval is set to 30 seconds.
 
@@ -23,7 +23,7 @@ The parameters that control the "hpe-csi-driver" are the following:
         - --pod-monitor-interval=30
 ```
 
-## Pod inclusion
+## Pod Inclusion
 
 Enable the Pod Monitor for a single replica `Deployment` by labeling the `Pod` (assumes an existing PVC name "my-pvc" exists).
 

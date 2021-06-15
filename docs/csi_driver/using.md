@@ -2,14 +2,14 @@
 At this point the CSI driver and CSP should be installed and configured.
 
 !!! important
-    Most examples below assumes there's a `Secret` named "hpe-backend" in the "hpe-storage" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_a_hpe_storage_backend).
+    Most examples below assumes there's a `Secret` named "hpe-backend" in the "hpe-storage" `Namespace`. Learn how to add `Secrets` in the [Deployment section](deployment.md#add_an_hpe_storage_backend).
 
 [TOC]
 
 !!! tip
     If you're familiar with the basic concepts of persistent storage on Kubernetes and are looking for an overview of example YAML declarations for different object types supported by the HPE CSI driver, [visit the source code repo](https://github.com/hpe-storage/csi-driver/tree/master/examples/kubernetes) on GitHub.
 
-## PVC access modes
+## PVC Access Modes
 
 The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI implementation for block based storage. The CSI driver also supports `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) using a NFS Server Provisioner. It's enabled by transparently deploying a NFS server for each Persistent Volume Claim (PVC) against a `StorageClass` where it's enabled, that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are illustrated as RWO using block based storage, but many of the examples apply in the majority of use cases.
 
@@ -25,33 +25,46 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 * [NFS Server Provisioner `StorageClass` parameters](#base_storageclass_parameters)
 * [Diagnosing the NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources)
 
-## Enabling CSI snapshots
+## Enabling CSI Snapshots
 
 Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
 
-Install snapshot beta CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
+Install snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-!!! caution "Important"
-    While CSI snapshots are marked GA in Kubernetes 1.20 and CSI external snapshotter 4.0, the current release (1.4.0) of the CSI driver only supports CSI external snapshotter 3.0 and only support the "beta" CSI snapshot APIs.
-
-```markdown fct_label="HPE CSI Driver v1.4.0"
+```markdown fct_label="HPE CSI Driver v2.0.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-3.0
+
+# Kubernetes 1.20 and newer
+git checkout tags/v4.0.0 -b release-4.0
+
+# Kubernetes 1.18 and 1.19
+git checkout tags/v3.0.3 -b release-3.0
+
+# All versions
+kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
+```
+
+```markdown fct_label="HPE CSI Driver v1.4.0"
+# Kubernetes 1.17-1.19
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 ```markdown fct_label="HPE CSI Driver v1.3.0"
+# Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout release-2.0
+git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 !!! tip
     The [provisioning](#provisioning_concepts) section contains examples on how to create `VolumeSnapshotClass` and `VolumeSnapshot` objects.
 
-## Base StorageClass parameters
+## Base StorageClass Parameters
 
 Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](../container_storage_provider/index.md) for more elaborate examples.
 
@@ -114,44 +127,48 @@ allowVolumeExpansion: true
 
 !!! important "Important"
     Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
-    The example `StorageClass` does not work with the `primera3par` CSP version 1.0.0, use the example from the [CSP](../container_storage_provider/hpe_3par_primera/index.md#storageclass_example) instead.
 
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
-| Parameter                 | String   | Description |
-| ------------------------- | -------------- | ----------- |
-| accessProtocol            | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
-| description<sup>1</sup>   | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
-| csi.storage.k8s.io/fstype | Text           | Filesystem to format new volumes with. XFS is preferred, ext3, ext4 and btrfs is supported. Defaults to "ext4" if omitted. |
-| fsOwner                   | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
-| fsMode                    | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
-| fsCreateOptions           | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
-| nfsResources              | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
-| nfsNamespace              | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
-| nfsMountOptions           | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
-| nfsProvisionerImage       | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceLimitsCpuM     | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
-| nfsResourceLimitsMemoryMi | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
+| Parameter                     | String         | Description |
+| ----------------------------- | -------------- | ----------- |
+| accessProtocol                | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
+| description<sup>1</sup>       | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
+| csi.storage.k8s.io/fstype     | Text           | Filesystem to format new volumes with. XFS is preferred, ext3, ext4 and btrfs is supported. Defaults to "ext4" if omitted. |
+| fsOwner                       | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
+| fsMode                        | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
+| fsCreateOptions               | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
+| nfsResources                  | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
+| nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
+| nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
+| nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
+| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
+| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi" |
+| hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
+| hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
+| hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
 
 <small><sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).</small>
 
 !!! note
     All common HPE CSI Driver parameters are optional.
 
-## Provisioning concepts
+## Provisioning Concepts
 
 These instructions are provided as an example on how to use the HPE CSI Driver with a [CSP](../container_storage_provider/index.md) supported by HPE.
 
 - [Create a PersistentVolumeClaim from a StorageClass](#create_a_persistentvolumeclaim_from_a_storageclass)
-- [Ephemeral inline volume](#ephemeral_inline_volume)
-- [Raw block volume](#raw_block_volume)
-- [Using CSI snapshots](#using_csi_snapshots)
+- [Ephemeral inline volumes](#ephemeral_inline_volumes)
+- [Raw Block Volumes](#raw_block_volumes)
+- [Using CSI Snapshots](#using_csi_snapshots)
 - [Volume Groups](#volume_groups)
 - [Snapshot Groups](#snapshot_groups)
 - [Expanding PVCs](#expanding_pvcs)
-- [Using PVC overrides](#using_pvc_overrides)
-- [Using volume mutations](#using_volume_mutations)
+- [Using PVC Overrides](#using_pvc_overrides)
+- [Using Volume Mutations](#using_volume_mutations)
+- [Using Volume Encryption](#using_volume_encryption)
 - [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
+- [Using volume encryption](#using_volume_encryption)
 
 !!! tip "New to Kubernetes?"
     There's a basic tutorial of how dynamic provisioning of persistent storage on Kubernetes works in the [Video Gallery](../learn/video_gallery/index.md#dynamic_provisioning_of_persistent_storage_on_kubernetes).
@@ -261,7 +278,7 @@ my-pod      2/2     Running   0          2m29s
 !!! tip
     A simple `Pod` does not provide any automatic recovery if the node the `Pod` is scheduled on crashes or become unresponsive. Please see [the official Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/) for different workload types that provide automatic recovery. A shortlist of recommended workload types that are suitable for persistent storage is available in [this blog post](https://datamattsson.tumblr.com/post/182297931146/highly-available-stateful-workloads-on-kubernetes) and best practices are outlined in [this blog post](https://datamattsson.tumblr.com/post/185031432701/best-practices-for-stateful-workloads-on).
 
-### Ephemeral inline volume
+### Ephemeral Inline Volumes
 
 It's possible to declare a volume "inline" a `Pod` specification. The volume is ephemeral and only persists as long as the `Pod` is running. If the `Pod` gets rescheduled, deleted or upgraded, the volume is deleted and a new volume gets provisioned if it gets restarted.
 
@@ -335,7 +352,7 @@ The parameters used in the examples are the bare minimum required parameters. An
 !!! seealso
     For more elaborate use cases around ephemeral inline volumes, check out the tutorial on HPE DEV: [Using Ephemeral Inline Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
 
-### Raw block volume
+### Raw Block Volumes
 
 The default `volumeMode` for a `PersistentVolumeClaim` is `Filesystem`. If a raw block volume is desired, `volumeMode` needs to be set to `Block`. No filesystem will be created. Example:
 
@@ -379,7 +396,7 @@ spec:
 !!! seealso
     There's an in-depth tutorial available on HPE DEV that covers raw block volumes: [Using Raw Block Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
 
-### Using CSI snapshots
+### Using CSI Snapshots
 
 CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision `VolumeSnapshot` objects from an existing `PersistentVolumeClaim`. New PVCs may then be created using the snapshot as a source.
 
@@ -658,7 +675,7 @@ spec:
   storageClassName: hpe-scod-override
 ```
 
-### Using volume mutations
+### Using Volume Mutations
 
 The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be mutated by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be mutated in the `StorageClass` by setting the `allowMutations` parameter.
 
@@ -798,7 +815,7 @@ spec:
 
 Requesting an empty read-only volume might not seem practical. The primary use case is to source existing datasets into immutable applications, using either a backend CSP cloning capability or CSI data management feature such as [snapshots or existing PVCs](#using_csi_snapshots).
 
-#### Limitations and considerations for the NFS Server Provisioner
+#### Limitations and Considerations for the NFS Server Provisioner
 
 The current hardcoded limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
 
@@ -807,6 +824,111 @@ The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimits
 The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
+
+### Using Volume Encryption
+
+From version 2.0.0 and onwards of the CSI driver supports host-based volume encryption for any of the CSPs supported by the CSI driver.
+
+Host-based volume encryption is controlled by `StorageClass` parameters configured by the Kubernetes administrator and may be configured to be overridden by Kubernetes users. In the below example, a single `Secret` is used to encrypt and decrypt all volumes provisioned by the `StorageClass`.
+
+First, create a `Secret`, in this example we'll use the "hpe-storage" `Namespace`.
+
+```markdown
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-passphrase
+  namespace: hpe-storage
+stringData:
+  hostEncryptionPassphrase: "HPE CSI Driver for Kubernetes 2.0.0 Rocks!"
+```
+
+!!! tip
+    The "hostEncryptionPassphrase" can be up to 512 characters.
+
+Next, incorporate the `Secret` into a `StorageClass`.
+
+```markdown
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-encrypted
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  description: "Volume provisioned by the HPE CSI Driver"
+  hostEncryption: "true"
+  hostEncryptionSecretName: my-passphrase
+  hostEncryptionSecretNamespace: hpe-storage
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+```
+
+Next, create a `PersistentVolumeClaim` that uses the "hpe-encrypted" `StorageClass`:
+
+```markdown
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-encrypted-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: hpe-encrypted
+```
+
+Attach a basic `Pod` to verify functionality.
+
+```markdown
+kind: Pod
+apiVersion: v1
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: pod-datelog-1
+      image: nginx
+      command: ["bin/sh"]
+      args: ["-c", "while true; do date >> /data/mydata.txt; sleep 1; done"]
+      volumeMounts:
+        - name: export1
+          mountPath: /data
+    - name: pod-datelog-2
+      image: debian
+      command: ["bin/sh"]
+      args: ["-c", "while true; do date >> /data/mydata.txt; sleep 1; done"]
+      volumeMounts:
+        - name: export1
+          mountPath: /data
+  volumes:
+    - name: export1
+      persistentVolumeClaim:
+        claimName: my-encrypted-pvc
+```
+
+Once the `Pod` comes up, verify that the volume is encrypted.
+
+```markdown
+$ kubectl exec -it my-pod -c pod-datelog-1 -- df -h /data
+Filesystem              Size  Used Avail Use% Mounted on
+/dev/mapper/enc-mpatha  100G   33M  100G   1% /data
+```
+
+Host-based volume encryption is in effect if the "enc" prefix is seen on the multipath device name.
+
+!!! seealso 
+    For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE DEV: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
 
 ## Further reading
 

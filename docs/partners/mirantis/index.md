@@ -28,20 +28,15 @@ In this particular example, Kubernetes 1.18 is being used. Follow the steps for 
 - **Step 2** → Determine which backend being used (Nimble or Primera/3PAR) and deploy the corresponding CSP manifest.
 - **Step 3** → Deploy the HPE CSI Driver manifests for the Kubernetes version being used.
 
-Next, add a [supported HPE backend](../../csi_driver/deployment.md#add_a_hpe_storage_backend) and [create a `StorageClass`](../../csi_driver/using.md#base_storageclass_parameters).
+Next, add a [supported HPE backend](../../csi_driver/deployment.md#add_an_hpe_storage_backend) and [create a `StorageClass`](../../csi_driver/using.md#base_storageclass_parameters).
 
 Learn more about using the CSI objects in [the comprehensive overview](../../csi_driver/using.md). Also make sure to familiarize yourself with the particular features and capabilities of the backend being used.
 
-- [HPE Nimble Storage](../../container_storage_provider/hpe_nimble_storage/index.md)
-- [HPE Primera and 3PAR](../../container_storage_provider/hpe_3par_primera/index.md)
+- [Container Storage Providers](../../container_storage_provider/index.md)
 
 ## Docker Swarm
 
-Some HPE storage backends have Docker Volume Plugins capable of supporting Docker Swarm workloads.
-
-- [HPE Nimble Storage with Linux workers](../../docker_volume_plugins/hpe_nimble_storage/index.md)
-- [HPE Nimble Storage with Windows workers](https://infosight.hpe.com/org/urn%3Ainfosight%3A605d9baf-c394-4882-9742-a44bd8678cad/resources/nimble/software/Integration%20Kits/HPE%20Nimble%20Storage%20Volume%20Plugin%20for%20Docker%20Windows%20Containers) (link require HPE InfoSight login)
-- [HPE Cloud Volumes with Linux workers](../../docker_volume_plugins/hpe_cloud_volumes/index.md)
+Provisioning Docker Volumes for Docker Swarm workloads from a HPE primary storage backend is deprecated.
 
 ## Limitations
 

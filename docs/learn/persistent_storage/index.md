@@ -433,7 +433,7 @@ If all of the components show in "Running" state, then the HPE CSI Driver for Ku
 
 ### Creating a Secret
 
-Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI driver to communicate to the HPE Primera or Nimble Storage. This `Secret`, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_a_hpe_storage_backend) 
+Once the HPE CSI Driver has been deployed, a `Secret` needs to be created in order for the CSI driver to communicate to the HPE Primera or Nimble Storage. This `Secret`, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the `StorageClass` to authenticate to a specific backend for various CSI operations. For more information, see [adding an HPE storage backend](https://scod.hpedev.io/csi_driver/deployment.html#add_an_hpe_storage_backend) 
 
 Here is an example `Secret`.
 
@@ -722,14 +722,14 @@ The above output means that the HPE CSI Driver has successfully provisioned two 
 
 We will use Helm again to deploy WordPress using the `PersistentVolumeClaims` we just created. When WordPress is deployed, the volumes will be attached, formatted and mounted.
 
-The first step is to add the WordPress chart to Helm.
+The first step is to add the WordPress chart to Helm. The output should be similar to below.
 
 ```markdown
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm search repo bitnami/wordpress
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-bitnami/wordpress       9.2.1           5.4.0           Web publishing platform for building blogs and ...
+bitnami/wordpress       11.0.13         5.7.2           Web publishing platform for building blogs and ...
 ```
 
 Next, deploy WordPress by setting the deployment parameter `persistence.existingClaim=<existing_PVC>` to the `PVC` **my-wordpress** created in the previous step.
@@ -792,7 +792,7 @@ $ kubectl delete pod my-wordpress-69b7976c85-9mfjv
 pod "my-wordpress-69b7976c85-9mfjv" deleted
 ```
 
-Now if run `kubectl get pods` and you should see the MariaDB `Pod` recreating itself with a new name. This may take a few minutes.
+Now if run `kubectl get pods` and you should see the WordPress `Pod` recreating itself with a new name. This may take a few minutes.
 
 Output should be similar to the following as the WordPress container is recreating.
 

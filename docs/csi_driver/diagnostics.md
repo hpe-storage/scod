@@ -2,20 +2,11 @@
 
 It's recommended to familiarize yourself with inspecting workloads on Kubernetes. This particular [cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods) is very useful to have readily available. 
 
-## Sanity checks
+## Sanity Checks
 
 Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
-```markdown fct_label="HPE Cloud Volumes"
-kubectl get pods --all-namespaces -l 'app in (cv-csp, hpe-csi-node, hpe-csi-controller)'
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-hpe-storage   cv-csp-66988c97cd-7cst5               1/1     Running   0          21s
-hpe-storage   hpe-csi-controller-7b5bc47fbf-h6dwq   9/9     Running   0          21s
-hpe-storage   hpe-csi-node-7s77p                    2/2     Running   0          21s 
-hpe-storage   hpe-csi-node-vlfb9                    2/2     Running   0          21s
-```
-
-```markdown fct_label="HPE Nimble Storage"
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
@@ -24,7 +15,7 @@ hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0         
 hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
 ```
 
-```markdown fct_label="HPE Primera and 3PAR"
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
@@ -90,7 +81,7 @@ spec:
   uuid: 0242f811-3995-746d-652d-6c6e78352d77
 ```
 
-## NFS Server Provisioner resources
+## NFS Server Provisioner Resources
 
 The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default `Namespace` where the resources are deployed is "hpe-nfs" but is configurable in the `StorageClass`. See [base `StorageClass` parameters](using.md#base_storageclass_parameters) for more details.
 
@@ -117,7 +108,7 @@ kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-snapshott
 
 Log files associated with the HPE CSI Driver logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution for Kubernetes such as Fluentd. Some of the logs on the host are persisted which follow standard logrotate policies.
 
-### CSI driver logs
+### CSI Driver Logs
 
 Node driver
 ```
@@ -131,7 +122,7 @@ kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
 !!! tip
     The logs for both node and controller drivers are persisted at `/var/log/hpe-csi.log`
 
-### Log level
+### Log Level
 
 Log levels for both CSI Controller and Node driver can be controlled using `LOG_LEVEL` environment variable. Possible values are `info`, `warn`, `error`, `debug`, and `trace`. Apply the changes using `kubectl apply -f <yaml>` command after adding this to CSI controller and node container spec as below. For Helm charts this is controlled through `logLevel` variable in `values.yaml`.
 
@@ -141,23 +132,19 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
               value: trace
 ```
 
-### CSP logs
+### CSP Logs
 
 CSP logs can be accessed from their respective services.
 
-```markdown fct_label="HPE Cloud Volumes"
-kubectl logs -f svc/cv-csp-svc -n hpe-storage
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
-```markdown fct_label="HPE Nimble Storage"
-kubectl logs -f svc/nimble-csp-svc -n hpe-storage
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+kubectl logs -f deploy/primera3par-csp -n hpe-storage
 ```
 
-```markdown fct_label="HPE 3PAR and Primera"
-kubectl logs -f svc/primera3par-csp-svc -n hpe-storage
-```
-
-### Log collector
+### Log Collector
 
 Log collector script `hpe-logcollector.sh` can be used to collect the logs from any node which has `kubectl` access to the cluster.
 
@@ -188,7 +175,7 @@ Options:
 
 HPE provides a set of well tested defaults for the CSI driver and all the supported CSPs. In certain case it may be necessary to fine tune the CSI driver to accommodate a certain workload or behavior. 
 
-### Data path configuration
+### Data Path Configuration
 
 The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on [config.json](https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json). In order to tune these values, edit the config map with `kubectl edit configmap hpe-linux-config -n hpe-storage` and restart node plugin using `kubectl delete pod -l app=hpe-csi-node` to apply.
 

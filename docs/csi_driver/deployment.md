@@ -4,13 +4,13 @@ The HPE CSI Driver is deployed by using industry standard means, either a Helm c
 
 [TOC]
 
-## Delivery vehicles
+## Delivery Vehicles
 
 As different methods of installation are provided, it might not be too obvious which delivery vehicle is the right one.
 
 ![](img/helm.png)
 
-### Need help deciding?
+### Need Help Deciding?
 
 | I have a...                       | Then you need...              |
 | --------------------------------- | ----------------------------- |
@@ -33,7 +33,7 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Arti
 
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
 
-### Helm for air-gapped environments
+### Helm for Air-gapped Environments
 
 In the event of deploying the HPE CSI Driver in a secure air-gapped environment, Helm is the recommended method. For sake of completeness, it's also possible to follow the [advanced install](#advanced_install) procedures and replace "quay.io" in the deployment manifests with the internal private registry location.
 
@@ -48,8 +48,8 @@ Create a working directory and set environment variables referenced throughout t
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=1.4.0
-export MY_K8S=1.20
+export MY_CSI_DRIVER=2.0.0
+export MY_K8S=1.21
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -67,8 +67,8 @@ Pull, tag and push the images to the private registry.
 
 ```text
 cat images | xargs -n 1 docker pull
-awk '{ print $1" "$1 }' images | sed "s/ quay.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
-sed -e "s/quay.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+awk '{ print $1" "$1 }' images | sed "s/ quay.io| k8s.gcr.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -e "s/quay.io|k8s.gcr.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
 ```
 
 !!! tip
@@ -94,7 +94,7 @@ The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift.
 
 - See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section
 
-### Upstream Kubernetes and others
+### Upstream Kubernetes and Others
 
 Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
 
@@ -140,41 +140,57 @@ Create a `HPECSIDriver` with the manifest.
 kubectl create -f hpe-csi-operator.yaml
 ```
 
-The CSI driver is now ready for use. Proceed to the next section to learn about [adding a HPE storage backend](#add_a_hpe_storage_backend).
+The CSI driver is now ready for use. Proceed to the next section to learn about [adding an HPE storage backend](#add_an_hpe_storage_backend).
 
-## Add a HPE storage backend
+## Add an HPE Storage Backend
+
+<a id="add_a_hpe_storage_backend" class="headerlink" href="#add_a_hpe_storage_backend" title="Permanent link"></a>
 
 Once the CSI driver is deployed, two additional objects needs to be created to get started with dynamic provisioning of persistent storage, a `Secret` and a `StorageClass`.
 
 !!! tip
     Naming the `Secret` and `StorageClass` is entirely up to the user, however, to keep up with the examples on SCOD, it's highly recommended to use the names illustrated here.
 
-### Secret parameters
+### Secret Parameters
 
 All parameters are mandatory and described below.
 
 | Parameter   | Description
 | ----------- | -
-| serviceName | This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes `Service`, such as "nimble-csp-svc" or "primera3par-csp-svc"
+| serviceName | This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes `Service`, such as "alletra6000-csp-svc" or "alletra9000-csp-svc"
 | servicePort | This is port the `serviceName` is listening to.
-| backend     | This is the management hostname or IP address of the actual backend storage system, such as a Nimble or Primera array. When using HPE Cloud Volumes, this is the API endpoint of the Cloud Volume service.
+| backend     | This is the management hostname or IP address of the actual backend storage system, such as an Alletra 6000 or 9000 array.
 | username    | Backend storage system username with the correct privileges to perform storage management.
 | password    | Backend storage system password.
 
 Example:
 
-```markdown fct_label="HPE Cloud Volumes"
+```markdown fct_label="HPE Alletra 6000"
 apiVersion: v1
 kind: Secret
 metadata:
   name: hpe-backend
   namespace: hpe-storage
 stringData:
-  serviceName: cv-csp-svc
+  serviceName: alletra6000-csp-svc
   servicePort: "8080"
-  backend: prod.cloudvolumes.hpe.com
-  username: ClientID
-  password: ActiveAPIToken
+  backend: 192.168.1.110
+  username: admin
+  password: admin
+```
+
+```markdown fct_label="HPE Alletra 9000"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra9000-csp-svc
+  servicePort: "8080"
+  backend: 10.10.0.20
+  username: 3paradm
+  password: 3pardata
 ```
 
 ```markdown fct_label="HPE Nimble Storage"
@@ -191,7 +207,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Primera"
+```markdown fct_label="HPE Primera and 3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -212,11 +228,11 @@ kubectl create -f secret.yaml
 ```
 
 !!! tip
-    In a real world scenario it's more practical to name the `Secret` something that makes sense for the organization. It could be the hostname of the backend or the role it carries, i.e "hpe-nimble-sanjose-prod".
+    In a real world scenario it's more practical to name the `Secret` something that makes sense for the organization. It could be the hostname of the backend or the role it carries, i.e "hpe-alletra-sanjose-prod".
 
 Next step involves [creating a default StorageClass](using.md#base_storageclass_parameters).
 
-## Adding additional backends
+## Configuring Additional Storage Backends
 
 It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple `StorageClass` and `Secret` API objects to represent an environment with multiple systems.
 
@@ -241,6 +257,34 @@ This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate 
 
 To create a new `Secret`, specify the name, `Namespace`, backend username, backend password and the backend IP address to be used by the CSP and save it as `custom-secret.yaml` (a detailed description of the parameters are [available above](#secret_parameters)).
 
+```markdown fct_label="HPE Alletra 6000"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra6000-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.110
+  username: admin
+  password: admin
+```
+
+```markdown fct_label="HPE Alletra 9000"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra9000-csp-svc
+  servicePort: "8080"
+  backend: 10.10.0.20
+  username: 3paradm
+  password: 3pardata
+```
+
 ```markdown fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
@@ -255,7 +299,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Primera"
+```markdown fct_label="HPE Primera and 3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -283,7 +327,7 @@ NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
 ```
 
-### Create a StorageClass with the custom Secret
+### Create a StorageClass with the Custom Secret
 
 To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
@@ -338,7 +382,7 @@ allowVolumeExpansion: true
 
 Next, [Create a PersistentVolumeClaim from a StorageClass](using.md#create_a_persistentvolumeclaim_from_a_storageclass).
 
-## Advanced install
+## Advanced Install
 
 This guide is primarily written to accommodate a highly manual installation on upstream Kubernetes or partner OEMs engaged with HPE to bundle the HPE CSI Driver in a custom distribution. Installation steps may vary for different vendors and flavors of Kubernetes.
 
@@ -347,9 +391,12 @@ The following example walks through deployment of the **latest** CSI driver.
 !!! caution "Critical"
     It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the [Helm chart](deployment.md#helm) or [Operator](deployment.md#operator).
 
-### Manual CSI driver install
+### Manual CSI Driver Install
 
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
+
+!!! important "Uninstalling the CSI driver when installed manually"
+    The manifests below create a number of objects, including `CustomResourceDefinitions` (CRDs) which may hold critical information about storage resources. Simply deleting the below manifests in order to uninstall the CSI driver may render `PersistentVolumes` unusable. 
 
 ### Common
 
@@ -364,55 +411,60 @@ kubectl create ns hpe-storage
 Worker node IO settings:
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-linux-config.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-linux-config.yaml
 ```
 
 Container Storage Provider:
 
-```markdown fct_label="HPE Cloud Volumes"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/edge/cv-csp.yaml
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/nimble-csp.yaml
 ```
 
-```markdown fct_label="HPE Nimble Storage"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/nimble-csp.yaml
-```
-
-```markdown fct_label="HPE Primera and 3PAR"
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/3par-primera-csp.yaml
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/3par-primera-csp.yaml
 ```
 
 !!! important
     The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
-After deploying the CSI driver for the particular version of Kubernetes being used below, [add a HPE storage backend](#add_a_hpe_storage_backend).
+After deploying the CSI driver for the particular version of Kubernetes being used below, [add an HPE storage backend](#add_an_hpe_storage_backend).
+
+### Kubernetes 1.21
+
+```markdown
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.21.yaml
+```
 
 ### Kubernetes 1.20
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.20.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.20.yaml
 ```
 
 ### Kubernetes 1.19
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.19.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.19.yaml
 ```
 
 ### Kubernetes 1.18
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.18.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.18.yaml
 ```
+
+## Legacy Versions
+
+Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
 
 ### Kubernetes 1.17
 
 ```markdown
-kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
 ```
 
-## Legacy versions
-
-Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
+!!! note
+    Latest supported CSI driver version is 1.4.0 for Kubernetes 1.17.
 
 ### Kubernetes 1.16
 
