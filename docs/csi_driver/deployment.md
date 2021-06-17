@@ -466,6 +466,66 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.18.yaml
 ```
 
+## Advanced Uninstall
+
+The following steps outline how to uninstall the CSI driver that has been deployed using the [Advanced Install](#advanced_install) above. 
+
+!!! caution
+    Uninstalling the HPE CSI Driver while applications have volumes mounted through the CSI driver can lead to IO disruption or data loss. Exercise extreme care when uninstalling.
+
+Uninstall Worker node settings:
+
+```markdown
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-linux-config.yaml
+```
+
+Uninstall relevant Container Storage Provider:
+
+```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/nimble-csp.yaml
+```
+
+```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+kubectl delete deployment.apps/primera3par-csp
+kubectl delete service/primera3par-csp-svc
+kubectl delete service/alletra9000-csp-svc
+```
+
+!!! note
+    **HPE Alletra 9000, Primera and 3PAR users**: <br /> If you are reinstalling the HPE CSI Driver, **DO NOT** remove the `crd/hpevolumeinfos.storage.hpe.com`. This `CustomResourceDefinition` contains important volume metadata used by the HPE Alletra 9000, Primera and 3PAR CSP.
+
+Uninstall the CSI driver:
+
+### Kubernetes 1.21
+
+```markdown
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.21.yaml
+```
+
+### Kubernetes 1.20
+
+```markdown
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.20.yaml
+```
+
+### Kubernetes 1.19
+
+```markdown
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.19.yaml
+```
+
+### Kubernetes 1.18
+
+```markdown
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.18.yaml
+```
+
+If no longer needed, delete the "hpe-storage" `Namespace`.
+
+```markdown
+kubectl create ns hpe-storage
+```
+
 ## Legacy Versions
 
 Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
