@@ -523,7 +523,7 @@ kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 If no longer needed, delete the "hpe-storage" `Namespace`.
 
 ```markdown
-kubectl create ns hpe-storage
+kubectl delete ns hpe-storage
 ```
 
 ## Legacy Versions
