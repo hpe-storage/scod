@@ -930,7 +930,7 @@ Host-based volume encryption is in effect if the "enc" prefix is seen on the mul
 !!! seealso 
     For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE DEV: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
 
-## Further reading
+## Further Reading
 
 The [official Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/volumes/) contains comprehensive documentation on how to markup `PersistentVolumeClaim` and `StorageClass` API objects to tweak certain behaviors.
 
