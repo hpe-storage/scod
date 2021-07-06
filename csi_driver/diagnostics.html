@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Hewlett Packard Enterprise">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE primary storage. Tailored for IT ops, developers and partners. Including HPE Alletra, Nimble Storage and Primera."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+  <title>Diagnostics - HPE Storage Container Orchestrator Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/hpedev.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Diagnostics";
+    var mkdocs_page_input_path = "csi_driver/diagnostics.md";
+    var mkdocs_page_url = "/csi_driver/diagnostics.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-79554149-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> HPE Storage Container Orchestrator Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">WELCOME</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../welcome/index.html">Get started!</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="index.html">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="deployment.html">Deployment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="using.html">Using</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="monitor.html">Pod Monitor</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="diagnostics.html">Diagnostics</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#sanity_checks">Sanity Checks</a></li>
+        
+            <li><a class="toctree-l4" href="#nfs_server_provisioner_resources">NFS Server Provisioner Resources</a></li>
+        
+            <li><a class="toctree-l4" href="#volume_and_snapshot_groups">Volume and Snapshot Groups</a></li>
+        
+            <li><a class="toctree-l4" href="#logging">Logging</a></li>
+        
+            <li><a class="toctree-l4" href="#tuning">Tuning</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">CONTAINER STORAGE PROVIDERS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 6000 and Nimble</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../container_storage_provider/hpe_alletra_9000/index.html">HPE Alletra 9000 and Primera/3PAR</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">PARTNER ECOSYSTEMS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/kasten/index.html">Kasten by Veeam</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/rancher_labs/index.html">Rancher Labs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEARN</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../learn/containers101/index.html">Cloud-Native, Containers & DevOps</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/video_gallery/index.html">Video Gallery</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">COMMUNITY</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://developer.hpe.com">HPE Developer Community</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://slack.hpedev.io">Sign up to HPE DEV on Slack</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">EXTERNAL LINKS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGAL</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../legal/contributing/index.html">Contributing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../legal/support/index.html">Support</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../legal/license/index.html">License</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGACY DRIVERS AND PLUGINS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">HPE Storage Container Orchestrator Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>HPE CSI DRIVER FOR KUBERNETES &raquo;</li>
+        
+      
+    
+    <li>Diagnostics</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>It's recommended to familiarize yourself with inspecting workloads on Kubernetes. This particular <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods">cheat sheet</a> is very useful to have readily available. </p>
+<h2 id="sanity_checks">Sanity Checks<a class="headerlink" href="#sanity_checks" title="Permanent link">&para;</a></h2>
+<p>Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but <code>Running</code>, proceed to inspect the logs of the problematic workload.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-0><input name=tab-group-0 type=radio id=tab-group-0-0_markdown checked=checked class=code-tab data-lang=markdown aria-controls=tab-group-0-0_markdown-panel role=tab><label for=tab-group-0-0_markdown class=code-tab-label data-lang=markdown id=tab-group-0-0_markdown-label>HPE Alletra 6000 and Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=markdown id=tab-group-0-0_markdown-panel aria-labelledby=tab-group-0-0_markdown-label><pre><code class=markdown>kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
+NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
+hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
+hpe-storage   hpe-csi-node-dk5t4                    2/2     Running   0          15s
+hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0          15s
+hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
+</code></pre></div><input name=tab-group-0 type=radio id=tab-group-0-1_markdown class=code-tab data-lang=markdown aria-controls=tab-group-0-1_markdown-panel role=tab><label for=tab-group-0-1_markdown class=code-tab-label data-lang=markdown id=tab-group-0-1_markdown-label>HPE Alletra 9000, Primera and 3PAR</label><div class=code-tabpanel role=tabpanel data-lang=markdown id=tab-group-0-1_markdown-panel aria-labelledby=tab-group-0-1_markdown-label><pre><code class=markdown>kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
+NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
+hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
+hpe-storage   hpe-csi-node-86kh6                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-k8p4p                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-r2mg8                    2/2     Running   0          14s
+hpe-storage   hpe-csi-node-vwb5r                    2/2     Running   0          14s
+hpe-storage   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
+</code></pre></div></div>
+<p>A Custom Resource Definition (CRD) named <code>hpenodeinfos.storage.hpe.com</code> holds important network and host initiator information. </p>
+<p>Retrieve list of nodes.</p>
+<p> <pre><code class=markdown>kubectl get hpenodeinfos
+$ kubectl get hpenodeinfos
+NAME               AGE
+tme-lnx-worker1   57m
+tme-lnx-worker3   57m
+tme-lnx-worker2   57m
+tme-lnx-worker4   57m
+</code></pre></p>
+<p>Inspect a node.</p>
+<p> <pre><code class=markdown>kubectl get hpenodeinfos/tme-lnx-worker1 -o yaml
+apiVersion: storage.hpe.com/v1
+kind: HPENodeInfo
+metadata:
+  creationTimestamp: &quot;2020-08-24T23:50:09Z&quot;
+  generation: 1
+  managedFields:
+  - apiVersion: storage.hpe.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        .: {}
+        f:chap_password: {}
+        f:chap_user: {}
+        f:iqns: {}
+        f:networks: {}
+        f:uuid: {}
+    manager: csi-driver
+    operation: Update
+    time: &quot;2020-08-24T23:50:09Z&quot;
+  name: tme-lnx-worker1
+  resourceVersion: &quot;30337986&quot;
+  selfLink: /apis/storage.hpe.com/v1/hpenodeinfos/tme-lnx-worker1
+  uid: 3984752b-29ac-48de-8ca0-8381532cbf06
+spec:
+  chap_password: RGlkIHlvdSByZWFsbHkgZGVjb2RlIHRoaXM/
+  chap_user: chap-user
+  iqns:
+  - iqn.1994-05.com.redhat:828e7a4eef40
+  networks:
+  - 10.2.2.2/16
+  - 172.16.6.115/24
+  - 172.16.8.115/24
+  - 172.17.0.1/16
+  - 10.1.1.0/12
+  uuid: 0242f811-3995-746d-652d-6c6e78352d77
+</code></pre></p>
+<h2 id="nfs_server_provisioner_resources">NFS Server Provisioner Resources<a class="headerlink" href="#nfs_server_provisioner_resources" title="Permanent link">&para;</a></h2>
+<p>The NFS Server Provisioner consists of a number of Kubernetes resources per PVC. The default <code>Namespace</code> where the resources are deployed is "hpe-nfs" but is configurable in the <code>StorageClass</code>. See <a href="using.html#base_storageclass_parameters">base <code>StorageClass</code> parameters</a> for more details.</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ConfigMap</td>
+<td>hpe-nfs-config</td>
+<td>This <code>ConfigMap</code> holds the configuration file for the NFS server. Local tweaks may be wanted. Please see the <a href="https://github.com/nfs-ganesha/nfs-ganesha/tree/master/src/config_samples">config file reference</a> for more details.</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>hpe-nfs-&lt;UUID&gt;</td>
+<td>The <code>Deployment</code> that is running the NFS <code>Pod</code>.</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>hpe-nfs-&lt;UUID&gt;</td>
+<td><code>Pod</code> <code>Service</code> the NFS clients perform mounts against.</td>
+</tr>
+<tr>
+<td>PVC</td>
+<td>hpe-nfs-&lt;UUID&gt;</td>
+<td>The RWO claim serving the NFS workload.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code>&lt;UUID&gt;</code> stems from the user request RWX claim UUID for easy tracking.</p>
+</div>
+<h2 id="volume_and_snapshot_groups">Volume and Snapshot Groups<a class="headerlink" href="#volume_and_snapshot_groups" title="Permanent link">&para;</a></h2>
+<p>If there's issues with <code>VolumeSnapshots</code> not being created when performing <code>SnapshotGroup</code> snapshots, checking the logs of the "csi-volume-group-provisioner" and "csi-volume-group-snapshotter" in the "hpe-csi-controller" <code>Deployment</code>.</p>
+<p> <pre><code class=markdown>kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-provisioner
+kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-snapshotter
+</code></pre></p>
+<h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
+<p>Log files associated with the HPE CSI Driver logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution for Kubernetes such as Fluentd. Some of the logs on the host are persisted which follow standard logrotate policies.</p>
+<h3 id="csi_driver_logs">CSI Driver Logs<a class="headerlink" href="#csi_driver_logs" title="Permanent link">&para;</a></h3>
+<p>Node driver</p>
+<p> <pre><code class>kubectl logs -f  daemonset.apps/hpe-csi-node  hpe-csi-driver -n hpe-storage
+</code></pre></p>
+<p>Controller driver</p>
+<p> <pre><code class>kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The logs for both node and controller drivers are persisted at <code>/var/log/hpe-csi.log</code></p>
+</div>
+<h3 id="log_level">Log Level<a class="headerlink" href="#log_level" title="Permanent link">&para;</a></h3>
+<p>Log levels for both CSI Controller and Node driver can be controlled using <code>LOG_LEVEL</code> environment variable. Possible values are <code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code>, and <code>trace</code>. Apply the changes using <code>kubectl apply -f &lt;yaml&gt;</code> command after adding this to CSI controller and node container spec as below. For Helm charts this is controlled through <code>logLevel</code> variable in <code>values.yaml</code>.</p>
+<p> <pre><code class=markdown>          env:
+            - name: LOG_LEVEL
+              value: trace
+</code></pre></p>
+<h3 id="csp_logs">CSP Logs<a class="headerlink" href="#csp_logs" title="Permanent link">&para;</a></h3>
+<p>CSP logs can be accessed from their respective services.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-7><input name=tab-group-7 type=radio id=tab-group-7-0_markdown checked=checked class=code-tab data-lang=markdown aria-controls=tab-group-7-0_markdown-panel role=tab><label for=tab-group-7-0_markdown class=code-tab-label data-lang=markdown id=tab-group-7-0_markdown-label>HPE Alletra 6000 and Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=markdown id=tab-group-7-0_markdown-panel aria-labelledby=tab-group-7-0_markdown-label><pre><code class=markdown>kubectl logs -f deploy/nimble-csp -n hpe-storage
+</code></pre></div><input name=tab-group-7 type=radio id=tab-group-7-1_markdown class=code-tab data-lang=markdown aria-controls=tab-group-7-1_markdown-panel role=tab><label for=tab-group-7-1_markdown class=code-tab-label data-lang=markdown id=tab-group-7-1_markdown-label>HPE Alletra 9000, Primera and 3PAR</label><div class=code-tabpanel role=tabpanel data-lang=markdown id=tab-group-7-1_markdown-panel aria-labelledby=tab-group-7-1_markdown-label><pre><code class=markdown>kubectl logs -f deploy/primera3par-csp -n hpe-storage
+</code></pre></div></div>
+<h3 id="log_collector">Log Collector<a class="headerlink" href="#log_collector" title="Permanent link">&para;</a></h3>
+<p>Log collector script <code>hpe-logcollector.sh</code> can be used to collect the logs from any node which has <code>kubectl</code> access to the cluster.</p>
+<p> <pre><code class=markdown>curl -O https://raw.githubusercontent.com/hpe-storage/csi-driver/master/hpe-logcollector.sh
+chmod 555 hpe-logcollector.sh
+</code></pre></p>
+<p>Usage:</p>
+<p> <pre><code class=markdown>./hpe-logcollector.sh -h
+Collect HPE storage diagnostic logs using kubectl.
+
+Usage:
+     hpe-logcollector.sh [-h|--help] [--node-name NODE_NAME] \
+                         [-n|--namespace NAMESPACE] [-a|--all]
+Options:
+-h|--help                  Print this usage text
+--node-name NODE_NAME      Collect logs only for Kubernetes node
+                           NODE_NAME
+-n|--namespace NAMESPACE   Collect logs from HPE CSI deployment in namespace
+                           NAMESPACE (default: kube-system)
+-a|--all                   Collect logs from all nodes (the default)
+</code></pre></p>
+<h2 id="tuning">Tuning<a class="headerlink" href="#tuning" title="Permanent link">&para;</a></h2>
+<p>HPE provides a set of well tested defaults for the CSI driver and all the supported CSPs. In certain case it may be necessary to fine tune the CSI driver to accommodate a certain workload or behavior. </p>
+<h3 id="data_path_configuration">Data Path Configuration<a class="headerlink" href="#data_path_configuration" title="Permanent link">&para;</a></h3>
+<p>The HPE CSI Driver for Kubernetes automatically configures Linux iSCSI/multipath settings based on <a href="https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/charts/hpe-csi-driver/files/config.json">config.json</a>. In order to tune these values, edit the config map with <code>kubectl edit configmap hpe-linux-config -n hpe-storage</code> and restart node plugin using <code>kubectl delete pod -l app=hpe-csi-node</code> to apply.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>HPE provide a set of general purpose default values for the IO paths, tuning is only required if prescribed by HPE.</p>
+</div>
+              
+            </div>
+          </div>
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../container_storage_provider/hpe_alletra_6000/index.html" class="btn btn-neutral float-right" title="HPE Alletra 6000 and Nimble">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="monitor.html" class="btn btn-neutral" title="Pod Monitor"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/diagnostics.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="monitor.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../container_storage_provider/hpe_alletra_6000/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

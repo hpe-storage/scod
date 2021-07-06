@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Hewlett Packard Enterprise">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE primary storage. Tailored for IT ops, developers and partners. Including HPE Alletra, Nimble Storage and Primera."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+  <title>Mirantis - HPE Storage Container Orchestrator Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/hpedev.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Mirantis";
+    var mkdocs_page_input_path = "partners/mirantis/index.md";
+    var mkdocs_page_url = "/partners/mirantis/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-79554149-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HPE Storage Container Orchestrator Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">WELCOME</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../welcome/index.html">Get started!</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/index.html">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/deployment.html">Deployment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/using.html">Using</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">CONTAINER STORAGE PROVIDERS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 6000 and Nimble</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../container_storage_provider/hpe_alletra_9000/index.html">HPE Alletra 9000 and Primera/3PAR</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">PARTNER ECOSYSTEMS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../commvault/index.html">Commvault</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kasten/index.html">Kasten by Veeam</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">Mirantis</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#docker_swarm">Docker Swarm</a></li>
+        
+            <li><a class="toctree-l4" href="#limitations">Limitations</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rancher_labs/index.html">Rancher Labs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../vmware/index.html">VMware</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEARN</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../learn/containers101/index.html">Cloud-Native, Containers & DevOps</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/video_gallery/index.html">Video Gallery</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">COMMUNITY</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://developer.hpe.com">HPE Developer Community</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://slack.hpedev.io">Sign up to HPE DEV on Slack</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">EXTERNAL LINKS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGAL</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../legal/contributing/index.html">Contributing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../legal/support/index.html">Support</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../legal/license/index.html">License</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGACY DRIVERS AND PLUGINS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HPE Storage Container Orchestrator Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>PARTNER ECOSYSTEMS &raquo;</li>
+        
+      
+    
+    <li>Mirantis</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>Mirantis Kubernetes Engine (MKE) is the successor of the Universal Control Plane part of Docker Enterprise Edition (Docker EE). The HPE CSI Driver for Kubernetes allows users to provision persistent storage for Kubernetes workloads running on MKE. See the note below on <a href="#docker_swarm">Docker Swarm</a> for workloads deployed outside of Kubernetes.</p>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#steps_to_install">Steps to install</a></li>
+</ul>
+</li>
+<li><a href="#docker_swarm">Docker Swarm</a></li>
+<li><a href="#limitations">Limitations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>At this time neither of the HPE CSI Driver Helm chart or operator will install correctly on MKE. This ecosystem guide will be updated if future versions of the chart or operator will be supported.</p>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<p>The MKE managers and workers needs to run a supported host OS as outlined in the particular version of the HPE CSI Driver found in the <a href="../../csi_driver/index.html#compatibility_and_support">release tables</a>. Also verify that the HPE CSI Driver support the version Kubernetes used by MKE (see below).</p>
+<h3 id="steps_to_install">Steps to install<a class="headerlink" href="#steps_to_install" title="Permanent link">&para;</a></h3>
+<p>MKE admins needs to familiarize themselves with the <a href="../../csi_driver/deployment.html#advanced_install">advanced install</a> method of the CSI driver. Before the installation begins, make sure an account with administrative privileges is being used to the deploy the driver. Also determine the actual Kubernetes version MKE is using. </p>
+<p> <pre><code class=markdown>kubectl version --short true
+Client Version: v1.19.4
+Server Version: v1.18.10-mirantis-1
+</code></pre></p>
+<p>In this particular example, Kubernetes 1.18 is being used. Follow the steps for 1.18 highlighted within the <a href="../../csi_driver/deployment.html#common">advanced install</a> section of the deployment documentation.</p>
+<ul>
+<li><strong>Step 1</strong> → Install the Linux node IO settings <code>ConfigMap</code>.</li>
+<li><strong>Step 2</strong> → Determine which backend being used (Nimble or Primera/3PAR) and deploy the corresponding CSP manifest.</li>
+<li><strong>Step 3</strong> → Deploy the HPE CSI Driver manifests for the Kubernetes version being used.</li>
+</ul>
+<p>Next, add a <a href="../../csi_driver/deployment.html#add_an_hpe_storage_backend">supported HPE backend</a> and <a href="../../csi_driver/using.html#base_storageclass_parameters">create a <code>StorageClass</code></a>.</p>
+<p>Learn more about using the CSI objects in <a href="../../csi_driver/using.html">the comprehensive overview</a>. Also make sure to familiarize yourself with the particular features and capabilities of the backend being used.</p>
+<ul>
+<li><a href="../../container_storage_provider/index.html">Container Storage Providers</a></li>
+</ul>
+<h2 id="docker_swarm">Docker Swarm<a class="headerlink" href="#docker_swarm" title="Permanent link">&para;</a></h2>
+<p>Provisioning Docker Volumes for Docker Swarm workloads from a HPE primary storage backend is deprecated.</p>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Only MKE 3.3 and newer is supported.</li>
+<li>Helm chart or operator delivery vehicle of the HPE CSI Driver is not supported.</li>
+<li>HPE CSI Driver does not support Windows workers.</li>
+</ul>
+              
+            </div>
+          </div>
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../rancher_labs/index.html" class="btn btn-neutral float-right" title="Rancher Labs">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../kasten/index.html" class="btn btn-neutral" title="Kasten by Veeam"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=partners/mirantis/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../kasten/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../rancher_labs/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Hewlett Packard Enterprise">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE primary storage. Tailored for IT ops, developers and partners. Including HPE Alletra, Nimble Storage and Primera."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+  <title>Commvault - HPE Storage Container Orchestrator Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/hpedev.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Commvault";
+    var mkdocs_page_input_path = "partners/commvault/index.md";
+    var mkdocs_page_url = "/partners/commvault/index.html";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-79554149-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> HPE Storage Container Orchestrator Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">WELCOME</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../welcome/index.html">Get started!</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/index.html">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/deployment.html">Deployment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/using.html">Using</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">CONTAINER STORAGE PROVIDERS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 6000 and Nimble</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../container_storage_provider/hpe_alletra_9000/index.html">HPE Alletra 9000 and Primera/3PAR</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">PARTNER ECOSYSTEMS</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="index.html">Commvault</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#overview">Overview</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#pre-requisites">Pre-requisites</a></li>
+        
+            <li><a class="toctree-l4" href="#getting_started">Getting Started</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../kasten/index.html">Kasten by Veeam</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rancher_labs/index.html">Rancher Labs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../vmware/index.html">VMware</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEARN</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../learn/containers101/index.html">Cloud-Native, Containers & DevOps</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/video_gallery/index.html">Video Gallery</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">COMMUNITY</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://developer.hpe.com">HPE Developer Community</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://slack.hpedev.io">Sign up to HPE DEV on Slack</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">EXTERNAL LINKS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGAL</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../legal/contributing/index.html">Contributing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../legal/support/index.html">Support</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../legal/license/index.html">License</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGACY DRIVERS AND PLUGINS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">HPE Storage Container Orchestrator Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>PARTNER ECOSYSTEMS &raquo;</li>
+        
+      
+    
+    <li>Commvault</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The Commvault intelligent data management platform provides Kubernetes-native protection, application mobility, and disaster recovery for containerized applications. Combined with Commvault Command Center™, Commvault provides enterprise IT operations and DevOps teams an easy-to-use, self-service dashboard for managing the protection of Kubernetes.</p>
+<p>HPE and Commvault have been delivering end-to-end solutions for many years. Learn more about HPE and Commvaults partnership here: <a href="https://www.commvault.com/supported-technologies/hpe">https://www.commvault.com/supported-technologies/hpe</a>.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#pre-requisites">Pre-requisites</a><ul>
+<li><a href="#permissions">Permissions</a></li>
+<li><a href="#cluster_requirements">Cluster requirements</a></li>
+</ul>
+</li>
+<li><a href="#getting_started">Getting Started</a><ul>
+<li><a href="#configuring_commvault_with_kubernetes">Configuring Commvault with Kubernetes</a><ul>
+<li><a href="#create_a_service_account">Create a Service Account</a></li>
+</ul>
+</li>
+<li><a href="#backup_and_restores">Backup and Restores</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">&para;</a></h2>
+<p>The HPE CSI Driver has been validated on Commvault Complete Backup and Recovery version 11.21 and later. </p>
+<h5 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h5>
+<p>This guide assumes you have administrative access to Commvault Command Center and access to a Kubernetes cluster with <code>kubectl</code> and a <code>KUBECONFIG</code> file configured with a cluster administrator account. This will be used to create a Kubernetes service account for Commvault Complete Backup and Recovery, with the <code>default-sa-crb</code> cluster role binding. Please refer to the <a href="https://documentation.commvault.com/11.22/essential/129223_creating_service_account_for_kubernetes_authentication.html">Creating a Service Account for Kubernetes Authentication</a>.</p>
+<h5 id="cluster_requirements">Cluster requirements<a class="headerlink" href="#cluster_requirements" title="Permanent link">&para;</a></h5>
+<p>The cluster needs to be running Kubernetes 1.17 or later and have the CSI snapshot <code>CustomResourceDefinitions</code> (CRDs) and the CSI external snapshotter deployed. Follow the guides available on SCOD to:</p>
+<ul>
+<li><a href="../../csi_driver/using.html#enabling_csi_snapshots">Enable CSI snapshots</a></li>
+<li><a href="../../csi_driver/using.html#using_csi_snapshots">Using CSI snapshots</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The rest of this guide assumes the default <code>VolumeSnapshotClass</code> and <code>VolumeSnapshots</code> are functional within the cluster with a compatible Kubernetes snapshot API level between the CSI driver and Commvault.</p>
+</div>
+<h2 id="getting_started">Getting Started<a class="headerlink" href="#getting_started" title="Permanent link">&para;</a></h2>
+<p>This guide will walk through the steps to configure Commvault to perform data protection operations within a Kubernetes cluster. To learn more, refer to the <a href="https://documentation.commvault.com/11.22/essential/123634_kubernetes.html">official Commvault documentation</a>.</p>
+<ul>
+<li>Complete the <a href="https://documentation.commvault.com/11.22/essential/86638_step_3_complete_core_setup_wizard.html">Core Setup Wizard</a></li>
+<li>Review <a href="https://documentation.commvault.com/11.22/essential/123637_supported_configurations_for_kubernetes.html">Supported Configurations for Kubernetes</a></li>
+</ul>
+<h4 id="configuring_commvault_with_kubernetes">Configuring Commvault with Kubernetes<a class="headerlink" href="#configuring_commvault_with_kubernetes" title="Permanent link">&para;</a></h4>
+<p>If the setup page is not displayed, from the navigation pane, click <strong>Guided setup</strong>.</p>
+<p><img alt="" src="img/commvault1.png" /></p>
+<p>After you complete the core setup, on the <strong>Protect</strong> tab, click the <strong>Kubernetes</strong> tile.</p>
+<p><img alt="" src="img/commvault2.png" /></p>
+<p>On the <strong>Create server backup plan</strong> page, enter in a <strong>Plan name</strong>, then choose <strong>Storage</strong>, <strong>Retention period</strong>, and <strong>RPO schedule</strong>. For more information, see <a href="https://documentation.commvault.com/11.22/essential/86648_creating_server_plan.html">Creating a Server Plan</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you configured a server backup plan as part of the <strong>Core Setup</strong>, the wizard skips this page.</p>
+</div>
+<p><img alt="" src="img/commvault3.png" /></p>
+<p>Click <strong>Save</strong>.</p>
+<p>The <strong>Add cluster</strong> page appears.</p>
+<p><img alt="" src="img/commvault4.png" /></p>
+<p>In the <strong>API server endpoint</strong> box, enter the API server endpoint URL. This can be found using <code>kubectl config view</code> under <code>server: https://&lt;control_plane_load_balancer_ip&gt;:&lt;port&gt;</code>.</p>
+<p><img alt="" src="img/commvault5.png" /></p>
+<p>Select <strong>Authentication</strong> method (<strong>Service account</strong>, <strong>Kubeconfig file</strong>, or <strong>Username and Password</strong>).</p>
+<h5 id="create_a_service_account">Create a Service Account<a class="headerlink" href="#create_a_service_account" title="Permanent link">&para;</a></h5>
+<p>In this example, we will cover how to create a Kubernetes service account within the cluster to be used by Commvault for backup and restore operations. </p>
+<p>The official guide is available here: <a href="https://documentation.commvault.com/11.22/essential/129223_creating_service_account_for_kubernetes_authentication.html">Creating a Service Account for Kubernetes Authentication</a></p>
+<ul>
+<li>Create a Kubernetes service account (for example, cvbackup).</li>
+</ul>
+<p> <pre><code class=markdown>kubectl create serviceaccount cvbackup
+</code></pre></p>
+<ul>
+<li>To ensure that the service account has sufficient privileges to perform data protection operations, add the service account to the <code>default-sa-crb</code> cluster role binding.</li>
+</ul>
+<p> <pre><code class=markdown>kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:cvbackup
+</code></pre></p>
+<ul>
+<li>Extract the service account token required to configure your Kubernetes cluster for data protection.</li>
+</ul>
+<p> <pre><code class=markdown>kubectl get secrets -o jsonpath=&quot;{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='cvbackup')].data.token}&quot;|base64 --decode
+</code></pre></p>
+<ul>
+<li>Use the Kubernetes service account <strong>cvbackup</strong>, and the token for authentication to your Kubernetes cluster by pasting them into the appropriate fields.</li>
+</ul>
+<p>Click <strong>Save</strong>.</p>
+<p>Next choose the <a href="https://documentation.commvault.com/11.22/essential/123896_creating_application_group_of_content_to_back_up_for_kubernetes.html">Application group</a>, <a href="https://documentation.commvault.com/11.22/essential/122510_using_labels_to_automatically_discover_applications_or_other_objects_for_kubernetes.html">Labels</a> or <strong>Volumes</strong> you want to backup.</p>
+<p><img alt="" src="img/commvault6.png" /></p>
+<p>Click <strong>Finish</strong>. </p>
+<h4 id="backup_and_restores">Backup and Restores<a class="headerlink" href="#backup_and_restores" title="Permanent link">&para;</a></h4>
+<p>To perform snapshot and restore operations through Commvault using the HPE CSI Driver for Kubernetes, please refer to the Commvault documentation.</p>
+<ul>
+<li><a href="https://documentation.commvault.com/11.22/essential/123639_kubernetes_backup.html">Backup</a></li>
+<li><a href="https://documentation.commvault.com/11.22/essential/123640_kubernetes_restores.html">Restores</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Above links are external to <a href="https://documentation.commvault.com/">documentation.commvault.com</a>.</p>
+</div>
+              
+            </div>
+          </div>
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kasten/index.html" class="btn btn-neutral float-right" title="Kasten by Veeam">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../container_storage_provider/hpe_alletra_9000/index.html" class="btn btn-neutral" title="HPE Alletra 9000 and Primera/3PAR"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=partners/commvault/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../container_storage_provider/hpe_alletra_9000/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../kasten/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

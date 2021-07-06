@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+    
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Hewlett Packard Enterprise">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE primary storage. Tailored for IT ops, developers and partners. Including HPE Alletra, Nimble Storage and Primera."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+  <title>Pod Monitor - HPE Storage Container Orchestrator Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/hpedev.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Pod Monitor";
+    var mkdocs_page_input_path = "csi_driver/monitor.md";
+    var mkdocs_page_url = "/csi_driver/monitor.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-79554149-3', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> HPE Storage Container Orchestrator Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">WELCOME</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../welcome/index.html">Get started!</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="index.html">Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="deployment.html">Deployment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="using.html">Using</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="monitor.html">Pod Monitor</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#csi_driver_parameters">CSI Driver Parameters</a></li>
+        
+            <li><a class="toctree-l4" href="#pod_inclusion">Pod Inclusion</a></li>
+        
+            <li><a class="toctree-l4" href="#limitations">Limitations</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="diagnostics.html">Diagnostics</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">CONTAINER STORAGE PROVIDERS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 6000 and Nimble</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../container_storage_provider/hpe_alletra_9000/index.html">HPE Alletra 9000 and Primera/3PAR</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">PARTNER ECOSYSTEMS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/kasten/index.html">Kasten by Veeam</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/rancher_labs/index.html">Rancher Labs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEARN</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../learn/containers101/index.html">Cloud-Native, Containers & DevOps</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/video_gallery/index.html">Video Gallery</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">COMMUNITY</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://developer.hpe.com">HPE Developer Community</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://slack.hpedev.io">Sign up to HPE DEV on Slack</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">EXTERNAL LINKS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGAL</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../legal/contributing/index.html">Contributing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../legal/support/index.html">Support</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../legal/license/index.html">License</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">LEGACY DRIVERS AND PLUGINS</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">HPE Storage Container Orchestrator Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>HPE CSI DRIVER FOR KUBERNETES &raquo;</li>
+        
+      
+    
+    <li>Pod Monitor</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>The HPE CSI Driver for Kubernetes includes a Kubernetes Pod Monitor. Specifically it looks for <code>Pods</code> with the label <code>monitored-by: hpe-csi</code> and has <code>NodeLost</code> status set on them. This usually occurs if a node becomes unresponsive or partioned due to a network outage. The Pod Monitor will delete the affected <code>Pod</code> and associated HPE CSI Driver <code>VolumeAttachment</code> to allow Kubernetes to reschedule the workload on a healthy node.</p>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#csi_driver_parameters">CSI Driver Parameters</a></li>
+<li><a href="#pod_inclusion">Pod Inclusion</a></li>
+<li><a href="#limitations">Limitations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The Pod Monitor is mandatory and automatically applied for the RWX server <code>Deployment</code> managed by the HPE CSI Driver. It may be used for any <code>Pods</code> on the Kubernetes cluster to perform a more graceful automatic recovery rather than performing a manual intervention to resurrect stuck <code>Pods</code>.</p>
+<h2 id="csi_driver_parameters">CSI Driver Parameters<a class="headerlink" href="#csi_driver_parameters" title="Permanent link">&para;</a></h2>
+<p>The Pod Monitor is part of the "hpe-csi-controller" <code>Deployment</code> served by the "hpe-csi-driver" container. It's by default enabled and the Pod Monitor interval is set to 30 seconds.</p>
+<p>Edit the CSI driver deployment to change the interval or disable the Pod Monitor. </p>
+<p> <pre><code class=markdown>kubectl edit -n hpe-storage deploy/hpe-csi-controller
+</code></pre></p>
+<p>The parameters that control the "hpe-csi-driver" are the following:</p>
+<p> <pre><code class=markdown>        - --pod-monitor
+        - --pod-monitor-interval=30
+</code></pre></p>
+<h2 id="pod_inclusion">Pod Inclusion<a class="headerlink" href="#pod_inclusion" title="Permanent link">&para;</a></h2>
+<p>Enable the Pod Monitor for a single replica <code>Deployment</code> by labeling the <code>Pod</code> (assumes an existing PVC name "my-pvc" exists).</p>
+<p> <pre><code class=markdown>---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        monitored-by: hpe-csi
+        app: my-app
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        command:
+          - &quot;sleep&quot;
+          - &quot;4800&quot;
+        volumeMounts:
+        - mountPath: /data
+          name: my-vol
+      volumes:
+      - name: my-vol
+        persistentVolumeClaim:
+          claimName: my-pvc
+</code></pre></p>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Kubernetes provide automatic recovery for your applications, not high availability. Expect applications to take minutes (up to 8 minutes) to fully recover during a node failure or network partition using the Pod Monitor for <code>Pods</code> with <code>PersistentVolumeClaims</code>.</li>
+</ul>
+              
+            </div>
+          </div>
+
+<footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="diagnostics.html" class="btn btn-neutral float-right" title="Diagnostics">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="using.html" class="btn btn-neutral" title="Using"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/monitor.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="using.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="diagnostics.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
