@@ -29,7 +29,21 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 
 Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
 
-Install snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
+Ensure the snapshot CRDs and common snapshot controller hasn't been installed already.
+
+```markdown
+kubectl get crd volumesnapshots.snapshot.storage.k8s.io \
+  volumesnapshotcontents.snapshot.storage.k8s.io \
+  volumesnapshotclasses.snapshot.storage.k8s.io
+```
+
+Vendors may package, name and deploy the common snapshot controller using their own naming conventions. Run the command below and look for workload names that contain "snapshot".
+
+```markdown
+kubectl get sts,deploy -A
+```
+
+If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
 ```markdown fct_label="HPE CSI Driver v2.0.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
