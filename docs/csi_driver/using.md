@@ -37,7 +37,7 @@ kubectl get crd volumesnapshots.snapshot.storage.k8s.io \
   volumesnapshotclasses.snapshot.storage.k8s.io
 ```
 
-Vendors may package, name and deploy the common snapshot controller using their own naming conventions. Run the below and look for workload names that contain the word "snapshot".
+Vendors may package, name and deploy the common snapshot controller using their own naming conventions. Run the command below and look for workload names that contain "snapshot".
 
 ```markdown
 kubectl get sts,deploy -A
