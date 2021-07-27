@@ -15,9 +15,12 @@ The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI imple
 
 | Access Mode   | Abbreviation | Use Case |
 | ------------- | ------------ | -------- |
-| ReadWriteOnce | RWO          | For high performance `Pods` where access to the PVC is exclusive to one `Pod` at a time. May use either block based storage or the NFS Server Provisioner where connectivity to the data fabric is limited to a few worker nodes in the Kubernetes cluster |
-| ReadWriteMany | RWX          | For shared filesystems where multiple `Pods` in the same `Namespace` need simultaneous access to a PVC. |
+| ReadWriteOnce | RWO          | For high performance `Pods` where access to the PVC is exclusive to one host at a time. May use either block based storage or the NFS Server Provisioner where connectivity to the data fabric is limited to a few worker nodes in the Kubernetes cluster. |
+| ReadWriteMany | RWX          | For shared filesystems where multiple `Pods` in the same `Namespace` need simultaneous access to a PVC across multiple nodes. |
 | ReadOnlyMany  | ROX          | Read-only representation of RWX. |
+
+!!! seealso "ReadWriteOnce and access by multiple Pods"
+    `Pods` that require access to the same "ReadWriteOnce" (RWO) PVC needs to reside in the same `Namespace` and have [selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) or [affinity scheduling rules](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) applied when deployed. The `Pod` won't start and throw a "Multi-Attach" error in the event log if a `Pod` is already attached to the PVC on a different node.
 
 The NFS Server Provisioner is not enabled by the default `StorageClass` and needs a custom `StorageClass`. The following sections are tailored to help understand the NFS Server Provisioner capabilities.
 
