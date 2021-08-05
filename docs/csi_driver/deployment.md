@@ -59,7 +59,11 @@ curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
 | grep image: | awk '{print $2}' | sort | uniq > images
+echo quay.io/hpestorage/nfs-provisioner:v1.0.0 >> images
 ```
+
+!!! important
+    The NFS server provisioner image is not automatically pulled from the private registry. Use the "nfsProvisionerImage" parameter in the [`StorageClass`](using.md#base_storageclass_parameters).
 
 The above command should not output anything. A list of images should be in the file "images".
 
