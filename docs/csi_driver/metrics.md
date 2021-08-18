@@ -1,37 +1,36 @@
-# HPE CSI Info Metrics Provider
+# HPE CSI Info Metrics Provider for Prometheus
 
 The HPE CSI Driver for Kubernetes may be accompanied by a Prometheus metrics endpoint to provide metadata about the volumes provisioned by the CSI driver and supporting backends. It's conventionally deployed with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) to provide a richer set of metrics from the backend storage systems.
 
 [TOC]
 
-## Exported Metrics
+## Metrics Provided
 
-The exporter provide two metrics, "hpestoragecsi_volume_info" and "hpestoragecsi_backend_info".
+The exporter provides two metrics, "hpestoragecsi_volume_info" and "hpestoragecsi_backend_info".
 
 ### Volume Info
 
-| Metric | Type | Labels | Description |
-| :------------------------ | :---- | :----------------------------------------------------- | :---------------------------------------------------------- |
-| hpestoragecsi_volume_info | Gauge | backend, pv, pvc, pvc_namespace, storage_class, volume | Indicates a volume whose provisioner is the HPE CSI Driver. |
+| Metric                    | Type    | Description                                                 | Value |
+| :------------------------ | :------ | :---------------------------------------------------------- | :---- |
+| hpestoragecsi_volume_info | Gauge   | Indicates a volume whose provisioner is the HPE CSI Driver. | 1     |
 
-The labels have the following meanings.
 
-| Label | Description |
+| Label         | Description                                                |
 | :------------ | :--------------------------------------------------------- |
 | backend       | Backend hostname or IP address as defined in the `Secret`. |
 | pv            | `PersistentVolume` name                                    |
 | pvc           | `PersistentVolumeClaim` name                               |
 | pvc_namespace | `PersistentVolumeClaim` `Namespace`                        |
 | storage_class | `StorageClass` used to provision the `PersistentVolume`    |
-| volume        | Backend volume name                                        |
+| volume        | Volume handle used by the backend storage system           | 
 
 ### Backend Info
 
-| Metric | Type | Labels | Description |
-| :------------------------- | :----- | :------ | :------------------------------------------------------------------------ |
-| hpestoragecsi_backend_info | Gauge  | backend | Indicates a storage system for which the HPE CSI driver is a provisioner. |
+| Metric                     | Type   | Description                                                               | Value |
+| :------------------------- | :----- | :------------------------------------------------------------------------ | :---- |
+| hpestoragecsi_backend_info | Gauge  | Indicates a storage system for which the HPE CSI driver is a provisioner. | 1     |
 
-The labels have the following meanings.
+This metric includes the following labels.
 
 | Label | Description |
 | :------ | :-------------------------------------------------------- |
@@ -46,15 +45,15 @@ The exporter may be installed either via Helm or through YAML manifests with the
 
 ### Helm
 
-The Helm chart is available on Artifact Hub. All direction on how to manage and install the chart is available within the chart documentation.
+The Helm chart is available on Artifact Hub. Instructions on how to manage and install the chart is available within the chart documentation.
 
 - [HPE CSI Info Metrics Provider for Prometheus Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics)
 
 ### Advanced Install
 
-Before beginning an advanced install, it needs to be determined how Prometheus is deployed on the Kubernetes cluster as it dictates how the scrape target is configured, either via a `Service` annotation or a `ServiceMonitor` CRD.
+Before beginning an advanced install, determine how Prometheus will be deployed on the Kubernetes cluster as it will dictate how the scrape target will be configured with either a `Service` annotation or a `ServiceMonitor` CRD.
 
-Start by downloading the manifest, it needs local changes before applying to the cluster.
+Start by downloading the manifest, it will need to be modified before applying to the cluster.
 
 #### Version 1.0.0
 
@@ -64,7 +63,7 @@ Supports HPE CSI Driver for Kubernetes 2.0.0 and later.
 wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics.yaml
 ```
 
-Optional, `ServiceMonitor` definition:
+Optional `ServiceMonitor` definition:
 
 ```markdown
 wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics-service-monitor.yaml
@@ -72,7 +71,7 @@ wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/cs
 
 #### Configuring Advanced Install
 
-The sections that needs be updated is the main container parameters and the optional annotation and label.
+Update the main container parameters and optionally add service labels and annotations.
 
 In the "hpe-csi-info-metrics" `Deployment` at `.spec.template.spec.containers[0].args` in "hpe-csi-info-metrics.yaml":
 
@@ -115,7 +114,7 @@ Apply the manifest:
 kubectl apply -f hpe-csi-info-metrics.yaml
 ```
 
-Optionally, if using the Prometheus Operator, add any additional lables in "hpe-csi-info-metrics-service-monitor.yaml":
+Optionally, if using the Prometheus Operator, add any additional labels in "hpe-csi-info-metrics-service-monitor.yaml":
 
 ```markdown
   # Corresponding labels on the CSI Info Metrics service are added to
