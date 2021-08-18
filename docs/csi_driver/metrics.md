@@ -1,6 +1,6 @@
 # HPE CSI Info Metrics
 
-The HPE CSI Driver for Kubernetes may be accompanied by a Prometheus metrics endpoint to provide metadata about the volumes provisioned by the CSI driver and supporting backends. It's conventionally deployed with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) to provide a richer set of metrics from the backend storage systems. 
+The HPE CSI Driver for Kubernetes may be accompanied by a Prometheus metrics endpoint to provide metadata about the volumes provisioned by the CSI driver and supporting backends. It's conventionally deployed with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) to provide a richer set of metrics from the backend storage systems.
 
 [TOC]
 
@@ -18,7 +18,7 @@ The labels have the following meanings.
 
 | Label | Description |
 | :------------ | :--------------------------------------------------------- |
-| backend       | Backend hostname or IP address as defined in the `Secret`. | 
+| backend       | Backend hostname or IP address as defined in the `Secret`. |
 | pv            | `PersistentVolume` name                                    |
 | pvc           | `PersistentVolumeClaim` name                               |
 | pvc_namespace | `PersistentVolumeClaim` `Namespace`                        |
@@ -88,7 +88,7 @@ In the "hpe-csi-info-metrics" `Deployment` at `.spec.template.spec.containers[0]
 
 Remove the `#` in front of `--accept-eula` to accept the [HPE license restrictions](https://www.hpe.com/us/en/software/licensing.html).
 
-In the "hpe-csi-info-metrics-service" `Service`: 
+In the "hpe-csi-info-metrics-service" `Service`:
 
 ```markdown
 metadata:
