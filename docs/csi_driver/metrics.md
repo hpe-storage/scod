@@ -14,15 +14,16 @@ The exporter provides two metrics, "hpestoragecsi_volume_info" and "hpestoragecs
 | :------------------------ | :------ | :---------------------------------------------------------- | :---- |
 | hpestoragecsi_volume_info | Gauge   | Indicates a volume whose provisioner is the HPE CSI Driver. | 1     |
 
+This metric includes the following labels.
 
 | Label         | Description                                                |
 | :------------ | :--------------------------------------------------------- |
 | backend       | Backend hostname or IP address as defined in the `Secret`. |
-| pv            | `PersistentVolume` name                                    |
-| pvc           | `PersistentVolumeClaim` name                               |
-| pvc_namespace | `PersistentVolumeClaim` `Namespace`                        |
-| storage_class | `StorageClass` used to provision the `PersistentVolume`    |
-| volume        | Volume handle used by the backend storage system           | 
+| pv            | `PersistentVolume` name.                                   |
+| pvc           | `PersistentVolumeClaim` name.                              |
+| pvc_namespace | `PersistentVolumeClaim` `Namespace`.                       |
+| storage_class | `StorageClass` used to provision the `PersistentVolume`.   |
+| volume        | Volume handle used by the backend storage system.          | 
 
 ### Backend Info
 
@@ -32,9 +33,9 @@ The exporter provides two metrics, "hpestoragecsi_volume_info" and "hpestoragecs
 
 This metric includes the following labels.
 
-| Label | Description |
-| :------ | :-------------------------------------------------------- |
-| backend | Backend hostname or IP address as defined in the `Secret` |
+| Label   | Description                                                |
+| :------ | :--------------------------------------------------------- |
+| backend | Backend hostname or IP address as defined in the `Secret`. |
 
 ## Deployment
 
@@ -53,7 +54,7 @@ The Helm chart is available on Artifact Hub. Instructions on how to manage and i
 
 Before beginning an advanced install, determine how Prometheus will be deployed on the Kubernetes cluster as it will dictate how the scrape target will be configured with either a `Service` annotation or a `ServiceMonitor` CRD.
 
-Start by downloading the manifest, it will need to be modified before applying to the cluster.
+Start by downloading the manifest, which needs to be modified before applying to the cluster.
 
 #### Version 1.0.0
 
