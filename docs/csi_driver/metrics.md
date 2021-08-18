@@ -1,4 +1,4 @@
-# HPE CSI Info Metrics
+# HPE CSI Info Metrics Provider
 
 The HPE CSI Driver for Kubernetes may be accompanied by a Prometheus metrics endpoint to provide metadata about the volumes provisioned by the CSI driver and supporting backends. It's conventionally deployed with [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter) to provide a richer set of metrics from the backend storage systems.
 
