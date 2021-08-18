@@ -98,7 +98,7 @@ metadata:
     app: hpe-csi-info-metrics
     # Optionally add labels, for example to be included in Prometheus
     # metrics via a targetLabels setting in a ServiceMonitor spec
-    # cluster: my-cluster
+    #cluster: my-cluster
   # Optionally add annotations, for example to configure it as a
   # scrape target when using the Prometheus Helm chart's default
   # configuration.
