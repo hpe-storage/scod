@@ -2,6 +2,7 @@
     background: #477083;
 }
 .wy-nav-side {
+    width: 310px;
     background: #425563;
 }
 
@@ -126,4 +127,12 @@
 .md-fenced-code-tabs .codehilite {
     width: 100%;
     margin: 0px;
+}
+
+.rst-versions {
+  width: 310px;
+}
+
+.wy-nav-content-wrap {
+  margin-left: 310px;
 }

@@ -52,6 +52,8 @@ nav:
 #   - 'HPE RA Library': ''
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
+  - HPE EZMERAL CONTAINER PLATFORM:
+    - 'Install HPE CSI Driver': "ezmeral_container_platform/install.md"
   - PARTNER ECOSYSTEMS:
     - 'Commvault': "partners/commvault/index.md"
     - 'Kasten by Veeam': 'partners/kasten/index.md'
