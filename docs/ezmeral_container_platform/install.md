@@ -13,7 +13,7 @@ Examine the table found in the [Compatibility and Support](../csi_driver/index.m
 
 ### Version 5.2.0 or earlier
 
-Early versions of HPE Container Platform contained a checkbox to deploy the HPE CSI Driver for Kubernetes. This method is not supported. Make sure clusters are deployed without having the checkbox ticked.
+Early versions of HPE Container Platform contained a checkbox to deploy the HPE CSI Driver for Kubernetes. This method is not supported. Make sure clusters are deployed without the checkbox ticked.
 
 ![](img/hpecp-old.png)
 
