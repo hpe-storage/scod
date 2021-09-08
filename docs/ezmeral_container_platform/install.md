@@ -1,6 +1,6 @@
 # Introduction
 
-HPE Ezmeral Container Platform deploys and manages open source upstream Kubernetes clusters through its management console. It's also capable of importing foreign Kubernetes clusters. This guide describes the necessary steps to perform for a successful deployment of HPE CSI Driver for Kubernetes on HPE Ezmeral managed clusters.
+HPE Ezmeral Container Platform deploys and manages open source upstream Kubernetes clusters through its management console. It's also capable of importing foreign Kubernetes clusters. This guide describes the necessary steps to perform a successful deployment of the HPE CSI Driver for Kubernetes on HPE Ezmeral managed clusters.
 
 ## Prerequisites
 
