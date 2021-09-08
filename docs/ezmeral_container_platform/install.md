@@ -31,7 +31,7 @@ kubectl patch --type json -p '[{"op":"add","path":"/spec/unrestrictedFsMountName
 ```
 
 !!! caution
-    In theory you may use any `Namespace` name desired. This might change in a future release and it's encouraged to use "hpe-storage" for compatability with upcoming releases of HPE Ezmeral Container Platform.
+    In theory you may use any `Namespace` name desired. This might change in a future release and it's encouraged to use "hpe-storage" for compatibility with upcoming releases of HPE Ezmeral Container Platform.
 
 By not performing this configuration change, the following events will be seen on the CSI controller `ReplicaSet` or CSI node `DaemonSet` trying to schedule `Pods`.
 
