@@ -44,7 +44,7 @@ Events:
 
 ## Installation
 
-Any method to install the HPE CSI Driver for Kubernetes on a HPE Ezmeral Container Platform managed Kubernetes cluster is supported. Helm is strongly recommended. Make sure to deploy the CSI driver to the "hpe-storage" `Namespace` for future compatibility.
+Any method to install the HPE CSI Driver for Kubernetes on an HPE Ezmeral Container Platform managed Kubernetes cluster is supported. Helm is strongly recommended. Make sure to deploy the CSI driver to the "hpe-storage" `Namespace` for future compatibility.
 
 - HPE CSI Driver for Kubernetes Helm chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) (recommended)
 - HPE CSI Operator for Kubernetes on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator)
