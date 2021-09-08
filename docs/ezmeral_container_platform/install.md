@@ -21,7 +21,7 @@ Continue with [Installation](#installation).
 
 ### Version 5.3.0 or later
 
-The CSI driver need privileged access to the worker nodes to attach and detach storage devices. By default, an admission controller prevent all user deployed workloads to be denied access to the host filesystem. An exception needs to be created for the "hpe-storage" `Namespace`.
+The CSI driver needs privileged access to the worker nodes to attach and detach storage devices. By default, an admission controller prevents all user deployed workloads access to the host filesystem. An exception needs to be created for the "hpe-storage" `Namespace`.
 
 As a Kubernetes cluster admin, run the following.
 
