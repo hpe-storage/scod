@@ -49,3 +49,6 @@ Any method to install the HPE CSI Driver for Kubernetes on an HPE Ezmeral Contai
 - HPE CSI Driver for Kubernetes Helm chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver) (recommended)
 - HPE CSI Operator for Kubernetes on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator)
 - [Advanced Install](../csi_driver/deployment.md#advanced_install) using YAML manifests
+
+!!! Important
+    In some versions of ECP the kubelet root has been relocated, in those circumstances you'll see errors similar to: `Error: command mount failed with rc=32 err=mount: /dev/mapper/mpathh is already mounted or /var/lib/docker/kubelet/plugins/hpe.com/mounts/pvc-uuid busy /dev/mapper/mpathh is already mounted on /var/lib/docker/kubelet/plugins/hpe.com/mounts/pvc-uuid`. In this case it's recommended to install the CSI driver using Helm with the `--set kubeletRootDir=/var/lib/docker/kubelet` parameter.
