@@ -146,7 +146,7 @@ You should see output similar to below. As you can see, each node has a role **c
 ```markdown
 $ kubectl get nodes
 NAME          STATUS   ROLES                  AGE     VERSION
-kube-group1   Ready    control-plane,master   2d18h   v1.20.1
+kube-group1   Ready    control-plane,master   2d18h   v1.21.5
 ...
 ```
 
@@ -214,7 +214,7 @@ first-nginx-pod   1/1     1            1           38s
 
 $ kubectl get pods
 NAME                             READY   STATUS    RESTARTS   AGE
-first-nginx-pod-8d7bb985-kql7t   1/1     Running   0          10s
+first-nginx-pod-8d7bb985-rrdv8   1/1     Running   0          10s
 ```
 
 !!! Important
@@ -231,58 +231,59 @@ kubectl describe pod <pod_name>
 
 The output should be similar to this. Note, the `Pod` name will be unique to your deployment.
 ```markdown
-kubectl describe pod first-nginx-pod-8d7bb985-kql7t
-Name:         first-nginx-pod-8d7bb985-kql7t
+Name:         first-nginx-pod-8d7bb985-rrdv8
 Namespace:    default
 Priority:     0
-Node:         kube-group1/192.168.1.50
-Start Time:   Wed, 13 Jan 2021 14:31:07 -0700
+Node:         kube-group1/10.90.200.11
+Start Time:   Mon, 01 Nov 2021 13:37:59 -0500
 Labels:       pod-template-hash=8d7bb985
               run=nginx-first-pod
-Annotations:  cni.projectcalico.org/podIP: 192.168.55.68/32
-              cni.projectcalico.org/podIPs: 192.168.55.68/32
+Annotations:  cni.projectcalico.org/podIP: 192.168.162.9/32
+              cni.projectcalico.org/podIPs: 192.168.162.9/32
 Status:       Running
-IP:           192.168.55.68
+IP:           192.168.162.9
 IPs:
-  IP:           192.168.55.68
+  IP:           192.168.162.9
 Controlled By:  ReplicaSet/first-nginx-pod-8d7bb985
 Containers:
   nginx:
-    Container ID:   containerd://aece6579cc1b3ddcad9ce9e8ba6994699807602c3124df20e9129868787ec893
+    Container ID:   docker://3610d71c054e6b8fdfffbf436511fda048731a456b9460ae768ae7db6e831398
     Image:          nginx
-    Image ID:       docker.io/library/nginx@sha256:10b8cc432d56da8b61b070f4c7d2543a9ed17c2b23010b43af434fd40e2ca4aa
+    Image ID:       docker-pullable://nginx@sha256:644a70516a26004c97d0d85c7fe1d0c3a67ea8ab7ddf4aff193d9f301670cf36
     Port:           <none>
     Host Port:      <none>
     State:          Running
-      Started:      Wed, 13 Jan 2021 14:31:15 -0700
+      Started:      Mon, 01 Nov 2021 13:38:06 -0500
     Ready:          True
     Restart Count:  0
     Environment:    <none>
     Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-xzgwz (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-w7sbw (ro)
 Conditions:
   Type              Status
-  Initialized       True 
-  Ready             True 
-  ContainersReady   True 
-  PodScheduled      True 
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
 Volumes:
-  default-token-xzgwz:
-    Type:        Secret (a volume populated by a Secret)
-    SecretName:  default-token-xzgwz
-    Optional:    false
-QoS Class:       BestEffort
-Node-Selectors:  <none>
-Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
-                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+  kube-api-access-w7sbw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
 Events:
-  Type    Reason     Age   From               Message
-  ----    ------     ----  ----               -------
-  Normal  Scheduled  80s   default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-kql7t to kube-group1
-  Normal  Pulling    79s   kubelet            Pulling image "nginx"
-  Normal  Pulled     74s   kubelet            Successfully pulled image "nginx" in 5.378619409s
-  Normal  Created    72s   kubelet            Created container nginx
-  Normal  Started    72s   kubelet            Started container nginx
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  5m14s  default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-rrdv8 to kube-group1
+  Normal  Pulling    5m13s  kubelet            Pulling image "nginx"
+  Normal  Pulled     5m7s   kubelet            Successfully pulled image "nginx" in 5.95086952s
+  Normal  Created    5m7s   kubelet            Created container nginx
+  Normal  Started    5m7s   kubelet            Started container nginx
 ```
 
 Looking under the "Events" section is a great place to start when checking for issues or errors during `Pod` creation.
@@ -295,7 +296,7 @@ kubectl port-forward <pod_name> 80:80
 
 The output should be similar to this:
 ```markdown
-kubectl port-forward first-nginx-pod-8d7bb985-kql7t 80:80
+kubectl port-forward first-nginx-pod-8d7bb985-rrdv8 80:80
 Forwarding from 127.0.0.1:80 -> 8080
 Forwarding from [::1]:80 -> 8080
 ```
@@ -318,13 +319,13 @@ To do this, open a **second** terminal, by clicking on the WSL terminal icon aga
 Run:
 
 ```markdown
-kubectl exec -it <pod_name> /bin/bash
+kubectl exec -it <pod_name> -- /bin/bash
 ```
 
 You can explore the `Pod` and run various commands. Some commands might not be available within the `Pod`. Why would that be?
 
 ```markdown
-root@first-nginx-pod-8d7bb985-kql7t:/# df -h
+root@first-nginx-pod-8d7bb985-rrdv8:/# df -h
 Filesystem               Size  Used Avail Use% Mounted on
 overlay                   46G  8.0G   38G  18% /
 tmpfs                     64M     0   64M   0% /dev
