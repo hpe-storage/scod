@@ -4,7 +4,7 @@
 
 The recorded CSI workshop available in the [Video Gallery](../../learn/video_gallery/index.md#hpe_dev_hack_shack_workshop_using_the_container_storage_interface) is now available on-demand, as a self-paced and interactive workshop hosted by the HPE DEV community.
 
-All you have to do is [register here](https://hackshack.hpedev.io/workshops).
+All you have to do is [register here](https://hackshack.hpedev.io/workshop/2).
 
 A string of e-mails will setup your own sandbox to perform the exercises at your own pace. The environment will have a time restriction before resetting but you should have plenty of time to complete the workshop exercises. 
 
