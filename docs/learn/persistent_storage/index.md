@@ -405,12 +405,15 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 ```
 
+!!! Note
+    It is safe to ignore the warnings: <br /> `W1104 14:25:11.178003   18461 warnings.go:70] apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition`.
+ 
 Wait a few minutes as the deployment finishes.
 
 Verify that everything is up and running correctly by listing out the `Pods`.
 
 ```markdown
-kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
+kubectl get all -n hpe-storage
 ```
 
 The output is **similar** to this:
@@ -419,15 +422,34 @@ The output is **similar** to this:
     The `Pod` names will be unique to your deployment.
 
 ```markdown
-$ kubectl get pods --all-namespaces -l 'app in (nimble-csp, primera3par-csp, hpe-csi-node, hpe-csi-controller)'
-NAME                                  READY   STATUS    RESTARTS   AGE
-hpe-csi-controller-66fc6544f8-mnllq   9/9     Running   0          77s
-hpe-csi-node-gqjnq                    2/2     Running   0          77s
-nimble-csp-5d4c9fc5b6-sxqmm           1/1     Running   0          77s
-primera3par-csp-94b9c4978-4xv86       1/1     Running   0          77s
+$ kubectl get all -n hpe-storage
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/hpe-csi-controller-6f9b8c6f7b-n7zcr   9/9     Running   0          7m41s
+pod/hpe-csi-node-npp59                    2/2     Running   0          7m41s
+pod/nimble-csp-5f6cc8c744-rxgfk           1/1     Running   0          7m41s
+pod/primera3par-csp-7f78f498d5-4vq9r      1/1     Running   0          7m41s
+
+NAME                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/alletra6000-csp-svc   ClusterIP   10.96.9.1       <none>        8080/TCP   7m41s
+service/alletra9000-csp-svc   ClusterIP   10.99.182.52    <none>        8080/TCP   7m41s
+service/nimble-csp-svc        ClusterIP   10.106.47.131   <none>        8080/TCP   7m41s
+service/primera3par-csp-svc   ClusterIP   10.103.84.59    <none>        8080/TCP   7m41s
+
+NAME                          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/hpe-csi-node   1         1         1       1            1           <none>          7m41s
+
+NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hpe-csi-controller   1/1     1            1           7m41s
+deployment.apps/nimble-csp           1/1     1            1           7m41s
+deployment.apps/primera3par-csp      1/1     1            1           7m41s
+
+NAME                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/hpe-csi-controller-6f9b8c6f7b   1         1         1       7m41s
+replicaset.apps/nimble-csp-5f6cc8c744           1         1         1       7m41s
+replicaset.apps/primera3par-csp-7f78f498d5      1         1         1       7m41s
 ```
 
-If all of the components show in "Running" state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera and Nimble Storage have been successfully deployed.
+If all of the components show in **Running** state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera and Nimble Storage have been successfully deployed.
 
 !!! Important
     With the HPE CSI Driver deployed, the rest of this guide is designed to demonstrate the usage of the CSI driver with HPE Primera or Nimble Storage. You will need to choose which storage system (HPE Primera or Nimble Storage) to use for the rest of the exercises. While the HPE CSI Driver supports connectivity to multiple backends, configurating multiple backends is outside of the scope of this lab guide.
@@ -818,6 +840,178 @@ kubectl port-forward svc/my-wordpress 80:80
 Open a browser on your workstation to **http://127.0.0.1** and you should see your WordPress site running.
 
 This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring [SCOD](https://scod.hpedev.io) further and the specific HPE Storage CSP ([Nimble](http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html), [Primera, and 3PAR](http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html)) to learn more.
+
+## Optional Lab: Advanced Configuration
+
+### Configuring additional storage backends
+
+It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple `StorageClass` and `Secret` API objects to represent an environment with multiple systems.
+
+To view the current `Secrets` in the **hpe-storage** `Namespace` (assuming default names):
+
+```markdown
+kubectl -n hpe-storage get secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         10m
+```
+
+This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate to a specific backend for CSI operations. In order to add a new `Secret` or manage access to multiple backends, additional `Secrets` will need to be created per backend. 
+
+In the previous steps, if you connected to Nimble Storage, create a new `Secret` for the Primera array or if you connected to Primera array above then create a `Secret` for the Nimble Storage.
+
+!!! Note "Secret Requirements"
+    * Each `Secret` name must be unique.
+    * **servicePort** should be set to **8080**.
+
+Using your text editor of choice, create a new `Secret`, specify the name, `Namespace`, backend username, backend password and the backend IP address to be used by the CSP and save it as `gold-secret.yaml`.
+
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gold-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.2
+  username: admin
+  password: admin
+```
+
+```markdown fct_label="HPE Primera"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gold-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: "8080"
+  backend: 10.10.0.2
+  username: 3paradm
+  password: 3pardata
+```
+
+Create the `Secret` using `kubectl`:
+
+```markdown
+kubectl create -f gold-secret.yaml
+```
+
+You should now see the `Secret` in the "hpe-storage" `Namespace`:
+
+```markdown
+kubectl -n hpe-storage get secret
+NAME                     TYPE          DATA      AGE
+gold-secret              Opaque        5         1m
+custom-secret            Opaque        5         15m
+```
+
+### Create a StorageClass with the new Secret
+
+To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+
+We will start by creating a `StorageClass` called **hpe-gold**. We will use the `gold-secret` created in the previous step and specify the **hpe-storage** `Namespace` where the CSI driver was deployed.
+
+!!! Note
+    Please note that at most one `StorageClass` can be marked as default. If two or more of them are marked as default, a `PersistentVolumeClaim` without `storageClassName` explicitly specified cannot be created.
+
+```markdown fct_label="HPE Nimble Storage"
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-gold
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: gold-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: gold-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: gold-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: gold-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: gold-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  performancePolicy: "SQL Server"
+  description: "Volume from HPE CSI Driver"
+  accessProtocol: iscsi
+  limitIops: "76800"
+  allowOverrides: description,limitIops,performancePolicy
+allowVolumeExpansion: true
+```
+
+```markdown fct_label="HPE Primera"
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-gold
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: gold-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: gold-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: gold-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: gold-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: gold-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  cpg: SSD_r6
+  provisioningType: tpvv
+  accessProtocol: iscsi
+  allowOverrides: cpg,provisioningType
+allowVolumeExpansion: true
+```
+
+We can verify the StorageClass is now available.
+
+```markdown
+kubectl get sc
+NAME                     PROVISIONER   AGE
+hpe-standard (default)   csi.hpe.com   15m
+hpe-gold                 csi.hpe.com   1m
+```
+
+!!! note
+    Don't forget to call out the `StorageClass` explicitly when creating `PVCs` from non-default `StorageClasses`.
+
+### Creating a PersistentVolumeClaim
+
+With a `StorageClass` available, we can request an amount of storage for our application using a `PersistentVolumeClaim`. Using your text editor of choice, create a new `PVC` and save it as `gold-pvc.yaml`.
+
+```markdown
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gold-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: hpe-gold
+```
+
+Create the `PersistentVolumeClaim`.
+```markdown
+kubectl create -f gold-pvc.yaml
+```
+
+We can see the **my-pvc** `PersistentVolumeClaim` was created.
+```markdown
+kubectl get pvc
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
+gold-pvc                      Bound    pvc-7a74d656-0b14-42a2-9437-e374a5d3bd68   50Gi       RWO            hpe-gold       1m
+```
+
+You can see that the new `PVC` is using the new `StorageClass` which is backed by the additional storage backend allowing you to add additional flexibility to your containerized workloads and match the persistent storage requirements to the application.
 
 ## Cleanup (Optional)
 
