@@ -204,7 +204,7 @@ kubectl create -f https://scod.hpedev.io/learn/persistent_storage/yaml/nginx-sta
 
 We can see the `Deployment` was successfully created and the NGINX `Pod` is running.
 
-!!! Note
+!!! note
     The `Pod` names will be unique to your deployment.
 
 ```markdown
@@ -222,7 +222,7 @@ first-nginx-pod-8d7bb985-rrdv8   1/1     Running   0          10s
 
 We can inspect the `Pod` further using the **kubectl describe** command. 
 
-!!! Note
+!!! note
     You can use tab completion to help with Kubernetes commands and objects. Start typing the first few letters of the command or Kubernetes object (i.e `Pod`) name and hit **TAB** and it should autofill the name.
 
 ```markdown
@@ -301,7 +301,7 @@ Forwarding from 127.0.0.1:80 -> 8080
 Forwarding from [::1]:80 -> 8080
 ```
 
-!!! NOTE
+!!! note
     If you have something already running locally on port 80, modify the `port-forward` to an unused port (i.e. 5000:80). `Port-forward` is meant for temporarily exposing an application outside of a Kubernetes cluster. For a more permanent solution, look into Ingress Controllers.
 
 Finally, open a browser and go to **http://127.0.0.1** and you should see the following.
@@ -383,7 +383,7 @@ To get started with the deployment of the HPE CSI Driver for Kbuernetes, the CSI
 
 The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). There, you will find the configuration and installation instructions for the chart.
 
-!!! Note
+!!! note
     [Helm](https://helm.sh) is the package manager for Kubernetes. Software is delivered in a format called a "chart". Helm is a [standalone CLI](https://helm.sh/docs/intro/install/) that interacts with the Kubernetes API server using your `KUBECONFIG` file.
 
 ### Installing the Helm chart
@@ -405,7 +405,7 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 ```
 
-!!! Note
+!!! note
     It is safe to ignore the warnings: <br /> `W1104 14:25:11.178003   18461 warnings.go:70] apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition`.
  
 Wait a few minutes as the deployment finishes.
@@ -413,43 +413,24 @@ Wait a few minutes as the deployment finishes.
 Verify that everything is up and running correctly by listing out the `Pods`.
 
 ```markdown
-kubectl get all -n hpe-storage
+kubectl get pods -n hpe-storage
 ```
 
 The output is **similar** to this:
 
-!!! Note
+!!! note
     The `Pod` names will be unique to your deployment.
 
 ```markdown
-$ kubectl get all -n hpe-storage
+$ kubectl get pods -n hpe-storage
 NAME                                      READY   STATUS    RESTARTS   AGE
 pod/hpe-csi-controller-6f9b8c6f7b-n7zcr   9/9     Running   0          7m41s
 pod/hpe-csi-node-npp59                    2/2     Running   0          7m41s
 pod/nimble-csp-5f6cc8c744-rxgfk           1/1     Running   0          7m41s
 pod/primera3par-csp-7f78f498d5-4vq9r      1/1     Running   0          7m41s
-
-NAME                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-service/alletra6000-csp-svc   ClusterIP   10.96.9.1       <none>        8080/TCP   7m41s
-service/alletra9000-csp-svc   ClusterIP   10.99.182.52    <none>        8080/TCP   7m41s
-service/nimble-csp-svc        ClusterIP   10.106.47.131   <none>        8080/TCP   7m41s
-service/primera3par-csp-svc   ClusterIP   10.103.84.59    <none>        8080/TCP   7m41s
-
-NAME                          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
-daemonset.apps/hpe-csi-node   1         1         1       1            1           <none>          7m41s
-
-NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/hpe-csi-controller   1/1     1            1           7m41s
-deployment.apps/nimble-csp           1/1     1            1           7m41s
-deployment.apps/primera3par-csp      1/1     1            1           7m41s
-
-NAME                                            DESIRED   CURRENT   READY   AGE
-replicaset.apps/hpe-csi-controller-6f9b8c6f7b   1         1         1       7m41s
-replicaset.apps/nimble-csp-5f6cc8c744           1         1         1       7m41s
-replicaset.apps/primera3par-csp-7f78f498d5      1         1         1       7m41s
 ```
 
-If all of the components show in **Running** state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Primera and Nimble Storage have been successfully deployed.
+If all of the components show in **Running** state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Alletra, Primera and Nimble Storage have been successfully deployed.
 
 !!! Important
     With the HPE CSI Driver deployed, the rest of this guide is designed to demonstrate the usage of the CSI driver with HPE Primera or Nimble Storage. You will need to choose which storage system (HPE Primera or Nimble Storage) to use for the rest of the exercises. While the HPE CSI Driver supports connectivity to multiple backends, configurating multiple backends is outside of the scope of this lab guide.
@@ -586,7 +567,7 @@ NAME                     PROVISIONER   AGE
 hpe-standard (default)   csi.hpe.com   2m
 ```
 
-!!! Note 
+!!! note 
     You can create multiple `StorageClasses` to match the storage requirements of your applications. We set **hpe-standard** `StorageClass` as default using the annotation `storageclass.kubernetes.io/is-default-class: "true"`. There can only be one **default** `StorageClass` per cluster, for any additional `StorageClasses` set this to **false**. To learn more about configuring a default `StorageClass`, see [Default StorageClass](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on kubernetes.io. 
 
 ---
@@ -616,7 +597,7 @@ spec:
       storage: 50Gi
 ```
 
-!!! Note
+!!! note
     We don't have a `StorageClass` (SC) explicitly defined within this `PVC` therefore it will use the default `StorageClass`. You can use `spec.storageClassName` to override the default `SC` with another one available to the cluster.
 
 Create the `PersistentVolumeClaim`.
@@ -631,7 +612,7 @@ NAME                          STATUS   VOLUME                                   
 my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
 ```
 
-!!! Note
+!!! note
     The `Persistent Volume` name is a randomly generated name by Kubernetes. For consistent naming for your stateful applications, check out [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) deployment model. These names can be used to track the volume back to the storage system. It is important to note that HPE Primera has a 30 character limit on volume names therefore the name will be truncated. For example: `pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8` will be truncated to `pvc-70d5caf8-7558-40e6-a8b7-77d` on an HPE Primera system.
 
 We can inspect the `PVC` further for additional information including event logs for troubleshooting.
@@ -763,7 +744,7 @@ helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=C
 
 Check to verify that WordPress and MariaDB were deployed and are in the **Running** state. This may take a few minutes. 
 
-!!! Note
+!!! note
     The `Pod` names will be unique to your deployment.
 
 ```markdown
@@ -779,7 +760,7 @@ Finally take a look at the WordPress site. Again, we can use `kubectl port-forwa
 kubectl port-forward svc/my-wordpress 80:80
 ```
 
-!!! NOTE
+!!! note
     If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80).
 
 Open a browser on your workstation to **http://127.0.0.1** and you should see, **"Hello World!"**.
@@ -859,7 +840,7 @@ This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate 
 
 In the previous steps, if you connected to Nimble Storage, create a new `Secret` for the Primera array or if you connected to Primera array above then create a `Secret` for the Nimble Storage.
 
-!!! Note "Secret Requirements"
+!!! note "Secret Requirements"
     * Each `Secret` name must be unique.
     * **servicePort** should be set to **8080**.
 
@@ -914,7 +895,7 @@ To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and
 
 We will start by creating a `StorageClass` called **hpe-gold**. We will use the `gold-secret` created in the previous step and specify the **hpe-storage** `Namespace` where the CSI driver was deployed.
 
-!!! Note
+!!! note
     Please note that at most one `StorageClass` can be marked as default. If two or more of them are marked as default, a `PersistentVolumeClaim` without `storageClassName` explicitly specified cannot be created.
 
 ```markdown fct_label="HPE Nimble Storage"
@@ -1017,7 +998,7 @@ You can see that the new `PVC` is using the new `StorageClass` which is backed b
 
 As others will be using this lab at a later time, we can clean up the objects that were deployed during this lab exercise. 
 
-!!! Note
+!!! note
     These steps may take a few minutes to complete. Please be patient and don't cancel out the process.
 
 Remove WordPress & NGINX deployments.
