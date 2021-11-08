@@ -458,11 +458,11 @@ stringData:
 Download and modify, using the text editor of your choice, the `Secret` file with the **backend** IP per your environment.
 
 ```markdown fct_label="Nimble Storage"
-wget http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-secret.yaml
+wget --no-check-certificate http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-secret.yaml
 ```
 
 ```markdown fct_label="HPE Primera"
-wget http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
+wget --no-check-certificate http://scod.hpedev.io/learn/persistent_storage/yaml/primera-secret.yaml
 ```
 
 Save the file and create the `Secret` within the cluster.
