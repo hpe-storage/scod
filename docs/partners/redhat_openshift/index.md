@@ -158,13 +158,21 @@ metadata:
   name: csi-driver
   namespace: hpe-csi-driver
 spec:
-  disableNodeConformance: false
+  disable:
+    nimble: false
+    primera: false
+    alletra6000: false
+    alletra9000: false
   imagePullPolicy: IfNotPresent
-  iscsi:
-    chapPassword: ""
-    chapUser: ""
   logLevel: info
-  registry: "quay.io"
+  disableNodeConformance: false
+  iscsi:
+    chapUser: ''
+    chapPassword: ''
+  registry: quay.io
+  kubeletRootDir: /var/lib/kubelet/
+  disableNodeGetVolumeStats: false
+  cspClientTimeout: 60
 ```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
