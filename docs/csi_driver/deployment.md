@@ -90,7 +90,7 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --versi
 
 The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running on Kubernetes.
 
-The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). The CSI Operator images are hosted both on quay.io and officially certified containers on Red Hat Ecosystem Catalog.
+The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). The CSI Operator images are hosted both on quay.io and officially certified containers in the Red Hat Ecosystem Catalog.
 
 ### Red Hat OpenShift Container Platform
 
