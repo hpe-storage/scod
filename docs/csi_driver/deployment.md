@@ -88,9 +88,9 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --versi
 
 ## Operator
 
-The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running in Kubernetes.
+The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running on Kubernetes.
 
-The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). The CSI Operator images are hosted both on docker.io and officially certified containers on Red Hat Ecosystem Catalog.
+The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https://operatorhub.io/operator/hpe-csi-operator). The CSI Operator images are hosted both on quay.io and officially certified containers in the Red Hat Ecosystem Catalog.
 
 ### Red Hat OpenShift Container Platform
 
@@ -100,17 +100,11 @@ The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift.
 
 ### Upstream Kubernetes and Others
 
-Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately.
+Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately (does NOT apply to OpenShift 4 and later).
 
-As an example, we'll deploy version `0.18.2` of the OLM to be able to manage the HPE CSI Operator. Familiarize yourself with the latest stable release on the [OLM GitHub project's release page](https://github.com/operator-framework/operator-lifecycle-manager/releases).
+Visit the [documentation](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md) in the OLM GitHub repo to learn how to install OLM.
 
-```markdown
-curl -L https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.18.2/install.sh -o install.sh
-chmod +x install.sh
-./install.sh v0.18.2
-```
-
-Install the HPE CSI Operator.
+Once OLM is operational, install the HPE CSI Operator.
 
 ```markdown
 kubectl create -f https://operatorhub.io/install/hpe-csi-operator.yaml
