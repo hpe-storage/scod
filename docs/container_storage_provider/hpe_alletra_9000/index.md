@@ -13,7 +13,8 @@ The following has been tested and validated for HPE CSI driver version with HPE 
 
 | Version | Protocols | Host OS | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
 | ------ | ------------------- |-------- | --------- | ------------------- |
-| v2.0.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| v2.1.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.19-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
+| v2.0.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x |
 | v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
@@ -58,6 +59,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 | allowBatchReplicatedVolumeCreation <br /> | Boolean <br />  | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
 | oneRcgPerPvc <br /> | Boolean <br /> | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
 | iscsiPortalIps <br /> | Text <br /> | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
+| hostSeesVLUN <br /> | Boolean <br /> | Enable hostsees VLUN. Default matched set type VLUN. | **X** | **X** |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
