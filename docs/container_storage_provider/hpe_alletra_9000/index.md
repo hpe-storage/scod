@@ -38,28 +38,29 @@ All parameters enumerated reflects the current version and may contain unannounc
 
 ### Common Provisioning Parameters
 
-| Parameter                         | Option  | Description | 3PAR | HPE Alletra 9000 and Primera |
-| --------------------------------- | ------- | ----------- | ---- | ------- |
-| accessProtocol <br /> (required)    | fc      | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-|                                     | iscsi   | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-| cpg<sup>1</sup> <br />                | Text    | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array.| **X** | **X** | 
-| snapCpg<sup>1</sup>                            | Text    | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
-| compression<sup>1</sup>                         | Boolean | Indicates that the volume should be compressed. | **X** |   |
-| provisioningType<sup>1</sup> <br />  | tpvv    | Indicates Thin provisioned volume type. Default: tpvv | **X** | **X** |
-|                                     | full    | Indicates Full provisioned volume type. | **X** |   |
-|                                     | dedup   | Indicates Thin Deduplication volume type. | **X** |   |
-|                                     | reduce  | Indicates Data Reduction volume type. |   | **X** |
-| importVol   | Text      | Name of the volume to import. | **X** | **X** |
-| importVolAsClone  | Text      | Name of the volume to clone and import. | **X** | **X** |
-| cloneOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
-| virtualCopyOf<sup>2</sup>  | Text      | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
-| qosName  | Text      | Name of the volume set which has QoS rules applied. | **X** | **X** |
-| remoteCopyGroup <br /> | Text | Name of a new or existing remote copy group on the array. | **X** | **X** |
-| replicationDevices <br /> | Text <br /> | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
-| allowBatchReplicatedVolumeCreation <br /> | Boolean <br />  | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
-| oneRcgPerPvc <br /> | Boolean <br /> | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
-| iscsiPortalIps <br /> | Text <br /> | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
-| hostSeesVLUN <br /> | Boolean <br /> | Enable hostsees VLUN. Default matched set type VLUN. | **X** | **X** |
+| Parameter  | Option  | Description | 3PAR | HPE Alletra 9000 and Primera |
+| ---------- | ------- | ----------- | ---- | ---------------------------- |
+| accessProtocol <br /> (**Required**)  | fc | The access protocol to use when accessing the persistent volume. | **X** | **X** |
+|                                       | iscsi | The access protocol to use when accessing the persistent volume. | **X** | **X** |
+| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array. | **X** | **X** | 
+| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
+| compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. | **X** |   |
+| provisioningType <sup>1</sup> <br /> (**Default: tpvv**) | tpvv | Indicates Thin provisioned volume type. | **X** | **X** |
+|                               | full | Indicates Full provisioned volume type. | **X** |   |
+|                               | dedup | Indicates Thin Deduplication volume type. | **X** |   |
+|                               | reduce | Indicates Data Reduction volume type. |   | **X** |
+| hostSeesVLUN | Boolean | Enable "host sees" VLUN template. | **X** | **X** |
+| importVol | Text | Name of the volume to import. | **X** | **X** |
+| importVolAsClone | Text | Name of the volume to clone and import. | **X** | **X** |
+| cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
+| virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
+| qosName | Text | Name of the volume set which has QoS rules applied. | **X** | **X** |
+| remoteCopyGroup | Text | Name of a new or existing remote copy group on the array. | **X** | **X** |
+| replicationDevices | Text | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
+| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
+| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
+| iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
+
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
@@ -87,9 +88,26 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
+### VLUN Templates
+
+A VLUN template enables the export of a virtual volume as a VLUN to hosts. Those volume exports, which are seen as LUNs by the hosts, are active VLUNs. For more information, see the [HPE Primera OS Commmand Line Interface - Installation and Reference Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00105286en_us&page=createvlun.html).
+
+The HPE CSI Driver supports the following types of VLUN templates:
+
+* **Matched set** - (Default) The VLUN is visible to initiators with the host's WWNs only on the specified port(s). 
+* **Host sees** - The VLUN is visible to the initiators with any of the host's WWNs.
+
+| Parameter    | String  | Description |
+| ------------ | ------- | ----------- |
+| hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
+
+!!! note
+    `hostSeeVLUN` is a mutable parameter. To modify an existing `PVC`, `hostSeesVLUN` needs to be specified with the `allowMutations` parameter along with editing the `PVC` with annotation `csi.hpe.com/hostSeesVLUN: "true"`. The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `pod` will need to be scheduled on another node by either deleting the pod or draining the node.
+
+
 ### Importing Volumes
 
-During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a `StorageClass`, will be renamed to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported.
+During the import volume process, any legacy (non-container volumes) or existing docker/k8s volume defined in the **ImportVol** parameter, within a `StorageClass`, will be renamed to match the `PersistentVolumeClaim` that leverages the `StorageClass`. The new volumes will be exposed through the HPE CSI Driver and made available to the Kubernetes cluster. **Note:** All previous Access Control Records and Initiator Groups will be removed from the volume when it is imported. The `hostSeesVLUN` parameter improves the performance in clusters where many pods are being migrated or created.
 
 | Parameter      | Option      | Description |
 | -------------- | ----------- | ----------- |
