@@ -155,17 +155,10 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 * Create replication custom resource.
 * Create replication enabled `StorageClass`.
 
-!!! important
-    Due to a limitation within the HPE Primera/3PAR WSAPI, the **auto-synchronize** policy for replicated volumes is not available. Due to this, any automatically create remote copy groups (RCG) through the HPE CSI Driver will require a manual recovery and restore once both HPE Primera or 3PAR systems are online and both Remote Copy links are **up**. This will be addressed in an upcoming release of the HPE Primera and 3PAR WSAPI.
-    <br /><br />
-    For more information on **Auto synchronize**: <br />
-    • "Remote Copy group policies" in [HPE Primera OS: Configuring data replicationusing Remote Copy over IP](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088914en_us).<br />
-    • "How Remote Copy recovers synchronous Remote Copy groups following replication link failure" in [Disaster-Tolerant Solutions with HPE 3PAR Remote Copy](https://h20195.www2.hpe.com/v2/GetPDF.aspx/4AA3-8318ENW.pdf).<br />
-    <br /><br />**Workaround:**<br /> It is recommended to **pre-create** the remote copy group with "Auto Synchronize" and "Auto Recover" enabled using either the SSMC or with the CLI using: `setrcopygroup pol auto_failover,auto_synchronize <group_name>`. Set the `remoteCopyGroup` parameter to the existing remote copy group name.
-
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
-A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. 
+A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD Mandatory Parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
+
 ```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
@@ -181,17 +174,33 @@ spec:
 ```
 
 !!! important
-    • targetCpg, targetName, targetSecret and targetSecretNamespace are mandatory for `HPEReplicationDeviceInfo` CRD.<br />
-    • Currently, the HPE CSI Driver only supports Remote Copy Peer Persistence mode. Async support will be added in a future release.<br />
+    **The HPE CSI Driver only supports Remote Copy Peer Persistence mode.**
 
 These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the array, then a new RCG will be created.
 
-| Parameter          | Option  | Description |
-| ---------------------------------- | ------- | ----------- |
-| remoteCopyGroup                    | Text    | Name of new or existing remote copy group on the array. |
-| replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+| Parameter       | Option  | Description |
+| --------------- | ------- | ----------- |
+| remoteCopyGroup | Text    | Name of new or existing remote copy group on the array. |
+| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. (Optional) <br /> During this process, the remote copy group is stopped and started once. |
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
+
+!!! important
+    HPE CSI Driver version 2.0 and before, the **Auto Synchronize** and **Auto Recovery** policies for replicated volumes are not set automatically. To configure these policies, create a new remote copy group with **Auto Synchronize** and **Auto Recover** enabled in SSMC or via CLI with the following command: <br/ > `setrcopygroup pol auto_failover,auto_synchronize <group_name>`
+
+### Add Non-Replicated Volume to Remote Copy Group
+
+To add a non-replicated volume to an existing remote copy group, `allowMutations: description` at minimum must be enabled within the `StorageClass`. Refer to [Remote Copy with Peer Persistence Replication](#remote_copy_with_peer_persistence_synchronous_replication_parameters) for more details.
+
+Edit the non-replicated PVC and annotate the following parameters:
+
+| Parameter       | Option  | Description |
+| --------------- | ------- | ----------- |
+| remoteCopyGroup | Text    | Name of existing remote copy group. |
+| oneRcgPerPvc    | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
+| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+
+```
 
 ### Specifying iSCSI Target Portal IPs
 
