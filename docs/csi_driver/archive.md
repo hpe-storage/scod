@@ -4,7 +4,7 @@ HPE supports up to three minor releases. These release are kept here for histori
 
 [TOC]
 
-#### HPE CSI Driver for Kubernetes 1.3.0
+#### HPE CSI Driver/Operator for Kubernetes 1.3.0
 
 Release highlights:
 
