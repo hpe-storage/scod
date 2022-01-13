@@ -11,11 +11,11 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 
 The following has been tested and validated for HPE CSI driver version with HPE Alletra 9000, HPE Primera and 3PAR. Always check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table.
 
-| Version | Protocols | Host OS | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
-| ------ | ------------------- |-------- | --------- | ------------------- |
-| v2.1.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.19-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
-| v2.0.0 | iSCSI & FC | CentOS 8.x <br /> RHEL 8.x <br /> CoreOS | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x |
-| v1.4.0 | iSCSI & FC | CentOS 8.1 <br /> RHEL 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
+| Version | Protocols | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Host OS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
+| ------ | ------------------- |------------- | --------- | ------------------- |
+| v2.1.0 | iSCSI & FC | CentOS 7.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.19-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
+| v2.0.0 | iSCSI & FC | CentOS 7.x, 8.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x |
+| v1.4.0 | iSCSI & FC | CentOS 7.x, 8.1 <br /> RHEL 7.x, 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
 
@@ -61,7 +61,6 @@ All parameters enumerated reflects the current version and may contain unannounc
 | oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
 | iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
 
-
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
  <br /><sup>1</sup> = Parameters that are editable after provisioning.
@@ -103,7 +102,6 @@ The HPE CSI Driver supports the following types of VLUN templates:
 
 !!! note
     `hostSeeVLUN` is a mutable parameter. To modify an existing `PVC`, `hostSeesVLUN` needs to be specified with the `allowMutations` parameter along with editing the `PVC` with annotation `csi.hpe.com/hostSeesVLUN: "true"`. The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `pod` will need to be scheduled on another node by either deleting the pod or draining the node.
-
 
 ### Importing Volumes
 
@@ -190,7 +188,7 @@ These parameters are applicable only for replication. Both parameters are mandat
 
 ### Add Non-Replicated Volume to Remote Copy Group
 
-To add a non-replicated volume to an existing remote copy group, `allowMutations: description` at minimum must be enabled within the `StorageClass`. Refer to [Remote Copy with Peer Persistence Replication](#remote_copy_with_peer_persistence_synchronous_replication_parameters) for more details.
+To add a non-replicated volume to an existing remote copy group, `allowMutations: description` at minimum must be defined within the `StorageClass`. Refer to [Remote Copy with Peer Persistence Replication](#remote_copy_with_peer_persistence_synchronous_replication_parameters) for more details.
 
 Edit the non-replicated PVC and annotate the following parameters:
 
@@ -200,7 +198,8 @@ Edit the non-replicated PVC and annotate the following parameters:
 | oneRcgPerPvc    | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 
-```
+!!! note
+    `remoteCopyGroup` and `oneRcgPerPvc` parameters are mutually exclusive and cannot be added together when editing a `PVC`.
 
 ### Specifying iSCSI Target Portal IPs
 
