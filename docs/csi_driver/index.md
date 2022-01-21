@@ -60,17 +60,18 @@ These are the combinations HPE has tested and can provide official support servi
 
 Release highlights:
 
+* Prometheus exporters
 * Support for Red Hat OCP 4.8
 * Support for Kubernetes 1.22
 * Reliability/Stability enhancements
-    * Peer Persistence Remote Copy enhancements/fixes
+    * Peer Persistence Remote Copy enhancements
     * Volume Mutator enhancements
     * Logging enhancements
 
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>1.19-1.22<sup>1</sup></td>
+    <td>1.20-1.22<sup>1</sup></td>
   </tr>
   <tr>
     <th>Worker&nbsp;OS</th>
@@ -96,7 +97,8 @@ Release highlights:
   <tr>
    <th>Blogs</th>
    <td>
-    
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-enhancements-with-monitoring-and/ba-p/7158137">HPE CSI Driver for Kubernetes enhancements with monitoring and alerting</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/get-started-with-prometheus-and-grafana-on-docker-with-hpe-storage-array-exporter/">Get started with Prometheus and Grafana on Docker with HPE Storage Array Exporter</a> (tutorial)
    </td>
  </tr>
 </table>

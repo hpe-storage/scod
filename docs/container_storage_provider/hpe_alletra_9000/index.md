@@ -13,7 +13,7 @@ The following has been tested and validated for HPE CSI driver version with HPE 
 
 | Version | Protocols | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Host OS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
 | ------ | ------------------- |------------- | --------- | ------------------- |
-| v2.1.0 | iSCSI & FC | CentOS 7.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.19-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
+| v2.1.0 | iSCSI & FC | CentOS 7.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.20-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
 | v2.0.0 | iSCSI & FC | CentOS 7.x, 8.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x |
 | v1.4.0 | iSCSI & FC | CentOS 7.x, 8.1 <br /> RHEL 7.x, 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
 | v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
@@ -55,10 +55,10 @@ All parameters enumerated reflects the current version and may contain unannounc
 | cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
 | virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
 | qosName | Text | Name of the volume set which has QoS rules applied. | **X** | **X** |
-| remoteCopyGroup | Text | Name of a new or existing remote copy group on the array. | **X** | **X** |
+| remoteCopyGroup | Text | Name of a new or existing Remote Copy group on the array. | **X** | **X** |
 | replicationDevices | Text | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
-| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. <br /> During this process, the remote copy group is stopped and started once. | **X** | **X** |
-| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy Group per persistent volume. | **X** | **X** |
+| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. <br /> During this process, the Remote Copy group is stopped and started once. | **X** | **X** |
+| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy group per persistent volume. | **X** | **X** |
 | iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
 
 <small>
@@ -89,7 +89,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 
 ### VLUN Templates
 
-A VLUN template enables the export of a virtual volume as a VLUN to hosts. Those volume exports, which are seen as LUNs by the hosts, are active VLUNs. For more information, see the [HPE Primera OS Commmand Line Interface - Installation and Reference Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00105286en_us&page=createvlun.html).
+A VLUN template enables the export of a virtual volume as a VLUN to hosts. For more information, see the [HPE Primera OS Commmand Line Interface - Installation and Reference Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00105286en_us&page=createvlun.html).
 
 The HPE CSI Driver supports the following types of VLUN templates:
 
@@ -101,7 +101,7 @@ The HPE CSI Driver supports the following types of VLUN templates:
 | hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
 
 !!! note
-    `hostSeeVLUN` is a mutable parameter. To modify an existing `PVC`, `hostSeesVLUN` needs to be specified with the `allowMutations` parameter along with editing the `PVC` with annotation `csi.hpe.com/hostSeesVLUN: "true"`. The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `pod` will need to be scheduled on another node by either deleting the pod or draining the node.
+    `hostSeeVLUN` is a mutable parameter. To modify an existing `PVC`, `hostSeesVLUN` needs to be specified with the `allowMutations` parameter along with editing the `PVC` with annotation `csi.hpe.com/hostSeesVLUN: "true"`. The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `Pod` will need to be scheduled on another node by either deleting the `Pod` or draining the node.
 
 ### Importing Volumes
 
@@ -155,7 +155,7 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
-A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD Mandatory Parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
+A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD mandatory parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
 
 ```yaml
 apiVersion: storage.hpe.com/v1
@@ -174,28 +174,28 @@ spec:
 !!! important
     **The HPE CSI Driver only supports Remote Copy Peer Persistence mode.**
 
-These parameters are applicable only for replication. Both parameters are mandatory. If the remote copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the array, then a new RCG will be created.
+These parameters are applicable only for replication. Both parameters are mandatory. If the Remote Copy volume group (RCG) name, as defined within the `StorageClass`, does not exist on the array, then a new RCG will be created.
 
 | Parameter       | Option  | Description |
 | --------------- | ------- | ----------- |
-| remoteCopyGroup | Text    | Name of new or existing remote copy group on the array. |
+| remoteCopyGroup | Text    | Name of new or existing Remote Copy group on the array. |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
-| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single remote copy group. (Optional) <br /> During this process, the remote copy group is stopped and started once. |
-| oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
+| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
+| oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
 !!! important
-    HPE CSI Driver version 2.0 and before, the **Auto Synchronize** and **Auto Recovery** policies for replicated volumes are not set automatically. To configure these policies, create a new remote copy group with **Auto Synchronize** and **Auto Recover** enabled in SSMC or via CLI with the following command: <br/ > `setrcopygroup pol auto_failover,auto_synchronize <group_name>`
+    HPE CSI Driver version 2.0 and before, the **Auto synchronize** and **Auto recover** policies for replicated volumes are not set automatically. To configure these policies, create a new Remote Copy group with **Auto Synchronize** and **Auto recover** enabled in SSMC or via CLI with the following command: <br/ > `setrcopygroup pol auto_recover,auto_synchronize <group_name>`
 
-### Add Non-Replicated Volume to Remote Copy Group
+### Add Non-Replicated Volume to Remote Copy group
 
-To add a non-replicated volume to an existing remote copy group, `allowMutations: description` at minimum must be defined within the `StorageClass`. Refer to [Remote Copy with Peer Persistence Replication](#remote_copy_with_peer_persistence_synchronous_replication_parameters) for more details.
+To add a non-replicated volume to an existing Remote Copy group, `allowMutations: description` at minimum must be defined within the `StorageClass`. Refer to [Remote Copy with Peer Persistence Replication](#remote_copy_with_peer_persistence_synchronous_replication_parameters) for more details.
 
 Edit the non-replicated PVC and annotate the following parameters:
 
 | Parameter       | Option  | Description |
 | --------------- | ------- | ----------- |
-| remoteCopyGroup | Text    | Name of existing remote copy group. |
-| oneRcgPerPvc    | Boolean | Creates a dedicated Remote Copy Group per persistent volume. (Optional) |
+| remoteCopyGroup | Text    | Name of existing Remote Copy group. |
+| oneRcgPerPvc    | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 
 !!! note
