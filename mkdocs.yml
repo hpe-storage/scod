@@ -81,5 +81,6 @@ nav:
     - 'Contributing': 'legal/contributing/index.md'
     - 'Support': 'legal/support/index.md'
     - 'License': 'legal/license/index.md'
+    - 'Notices': 'legal/notices/index.md'
   - LEGACY DRIVERS AND PLUGINS:
     - 'Docker, FlexVolume and CSPs': 'legacy/index.md'
