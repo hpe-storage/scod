@@ -38,33 +38,35 @@ All parameters enumerated reflects the current version and may contain unannounc
 
 ### Common Provisioning Parameters
 
-| Parameter  | Option  | Description | 3PAR | HPE Alletra 9000 and Primera |
-| ---------- | ------- | ----------- | ---- | ---------------------------- |
-| accessProtocol <br /> (**Required**)  | fc | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-|                                       | iscsi | The access protocol to use when accessing the persistent volume. | **X** | **X** |
-| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array. | **X** | **X** | 
-| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. | **X** | **X** |
-| compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. | **X** |   |
-| provisioningType <sup>1</sup> <br /> (**Default: tpvv**) | tpvv | Indicates Thin provisioned volume type. | **X** | **X** |
-|                               | full | Indicates Full provisioned volume type. | **X** |   |
-|                               | dedup | Indicates Thin Deduplication volume type. | **X** |   |
-|                               | reduce | Indicates Data Reduction volume type. |   | **X** |
-| hostSeesVLUN | Boolean | Enable "host sees" VLUN template. | **X** | **X** |
-| importVol | Text | Name of the volume to import. | **X** | **X** |
-| importVolAsClone | Text | Name of the volume to clone and import. | **X** | **X** |
-| cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. | **X** | **X** |
-| virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. | **X** | **X** |
-| qosName | Text | Name of the volume set which has QoS rules applied. | **X** | **X** |
-| remoteCopyGroup | Text | Name of a new or existing Remote Copy group on the array. | **X** | **X** |
-| replicationDevices | Text | Indicates name of custom resource of type `hpereplicationdeviceinfos`. | **X** | **X** |
-| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. <br /> During this process, the Remote Copy group is stopped and started once. | **X** | **X** |
-| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy group per persistent volume. | **X** | **X** |
-| iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. | **X** | **X** |
+| Parameter  | &nbsp;&nbsp;Option&nbsp;&nbsp;  | Description |
+| ---------- | ------- | ----------- |
+| accessProtocol <br /> (**Required**)  | fc | The access protocol to use when accessing the persistent volume. |
+|                                       | iscsi | The access protocol to use when accessing the persistent volume. |
+| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array. |
+| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
+| compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
+| provisioningType <sup>1</sup> <br /> (**Default: tpvv**) | tpvv | Indicates Thin provisioned volume type. |
+|                               | full <sup>3</sup> | Indicates Full provisioned volume type. |
+|                               | dedup <sup>3</sup> | Indicates Thin Deduplication volume type. |
+|                               | reduce <sup>4</sup> | Indicates Data Reduction volume type. |
+| hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
+| importVol | Text | Name of the volume to import. |
+| importVolAsClone | Text | Name of the volume to clone and import. |
+| cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. |
+| virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. |
+| qosName | Text | Name of the volume set which has QoS rules applied. |
+| remoteCopyGroup <sup>1</sup> | Text | Name of a new or existing Remote Copy group on the array. |
+| replicationDevices | Text | Indicates name of custom resource of type `hpereplicationdeviceinfos`. |
+| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. <br /> During this process, the Remote Copy group is stopped and started once. |
+| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy group per persistent volume. |
+| iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. |
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
  <br /><sup>1</sup> = Parameters that are editable after provisioning.
  <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
+ <br /><sup>3</sup> = HPE 3PAR only parameter
+ <br /><sup>4</sup> = HPE Primera/Alletra 9000 only parameter
 </small>
 
 Please see [using the HPE CSI Driver](../../csi_driver/using.md#base_storageclass_parameters) for additional `StorageClass` examples like CSI snapshots and clones. 
