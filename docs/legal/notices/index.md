@@ -2,7 +2,7 @@ Attributions for third party components.
 
 [TOC]
 
-##### HPE CSI Info Metrics Provider for Prometheus
+# HPE CSI Info Metrics Provider for Prometheus
 
 ```markdown
 HPE CSI Info Metrics Provider for Prometheus
