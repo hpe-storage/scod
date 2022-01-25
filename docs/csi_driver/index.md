@@ -97,8 +97,8 @@ Release highlights:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-enhancements-with-monitoring-and/ba-p/7158137">HPE CSI Driver for Kubernetes enhancements with monitoring and alerting</a> <br /> (release blog)<br />
-    <a href="https://developer.hpe.com/blog/get-started-with-prometheus-and-grafana-on-docker-with-hpe-storage-array-exporter/">Get started with Prometheus and Grafana on Docker with HPE Storage Array Exporter</a> (tutorial)
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-enhancements-with-monitoring-and/ba-p/7158137">HPE CSI Driver enhancements with monitoring and alerting</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/get-started-with-prometheus-and-grafana-on-docker-with-hpe-storage-array-exporter/">Get started with Prometheus and Grafana and HPE Storage Array Exporter</a> (tutorial)
    </td>
  </tr>
 </table>
