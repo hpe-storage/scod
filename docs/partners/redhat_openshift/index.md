@@ -19,12 +19,13 @@ Software delivered through the HPE and Red Hat partnership follows a rigorous ce
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------ |
 | Certified               | 4.4                               | 1.4.0            | Nimble, Primera and 3PAR             |
 | Uncertified<sup>2</sup> | 4.5 (Upgrade path only)           | -                | -                                    |
-| Certified               | 4.6 EUS                           | 1.4.0, 2.0.0     | Alletra, Nimble, Primera and 3PAR    |
+| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0, 2.0.0     | Alletra, Nimble, Primera and 3PAR    |
 | Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                | -                                    |
-| Certified               | 4.8                               | 2.1.0            | Alletra, Nimble, Primera and 3PAR    |
+| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.0            | Alletra, Nimble, Primera and 3PAR    |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
-<small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small>
+<small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
+<small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small>
 
 Check this table periodically for future releases.
 
@@ -82,21 +83,22 @@ securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
 
 ![Search for HPE](img/webcon-1.png)
-*Search for 'HPE' in the search field.*
+*Search for 'HPE CSI' in the search field and select the non-marketplace version.*
 
-![Select the Operator and click Install](img/webcon-2.png)
-*Select the HPE CSI Operator and click 'Install'.*
+![Click Install](img/webcon-2.png)
+*Click 'Install'.*
 
 ![Select subscribe](img/webcon-3.png)
-*In the next pane, click 'Subscribe'.*
+*In the next pane, select the Namespace where the SCC was applied to and click 'Install'.*
 
 ![Operator installed](img/webcon-4.png)
-*The HPE CSI Operator is now installed.*
+*The HPE CSI Operator is now installed, select 'View Operator'.*
 
 ![Create a new instance](img/webcon-5.png)
-*Click the HPE CSI Operator, in the next pane, click 'Create Instance'.*
+*Click 'Create Instance'.*
 
-* In the next 'Create HPECSIDriver' pane, click 'Create'
+![Configure instance](img/webcon-6.png)
+*Normally, no customizations are needed, click 'Create'.*
 
 By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
 
@@ -157,21 +159,21 @@ metadata:
   name: csi-driver
   namespace: hpe-csi-driver
 spec:
+  logLevel: info
   disable:
-    nimble: false
-    primera: false
     alletra6000: false
     alletra9000: false
-  imagePullPolicy: IfNotPresent
-  logLevel: info
+    nimble: false
+    primera: false
   disableNodeConformance: false
   iscsi:
-    chapUser: ''
     chapPassword: ''
+    chapUser: ''
+  imagePullPolicy: IfNotPresent
+  cspClientTimeout: 60
+  disableNodeGetVolumeStats: false
   registry: quay.io
   kubeletRootDir: /var/lib/kubelet/
-  disableNodeGetVolumeStats: false
-  cspClientTimeout: 60
 ```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
