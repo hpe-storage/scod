@@ -4,6 +4,53 @@ HPE supports up to three minor releases. These release are kept here for histori
 
 [TOC]
 
+#### HPE CSI Driver/Operator for Kubernetes 1.3.0
+
+Release highlights:
+
+* Kubernetes CSI Sidecar: Volume Mutator
+* Broader ecosystem support
+* Native iSCSI CHAP configuration
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.15-1.18<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.3-4.4, Ubuntu 18.04, Ubuntu 20.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x<br />
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0, 4.2.0<sup>2</sup><br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.3.0.md>v1.3.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/hpe-csi-driver-for-kubernetes-1-3-0-now-available/ba-p/7099684">Around The Storage Block</a> (release)<br/>
+    <a href="https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on">HPE DEV</a> (Remote copy peer persistence tutorial)<br/>
+    <a href="https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe">HPE DEV</a> (Introducing the volume mutator)<br/>
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>1</sup> = For HPE Ezmeral Container Platform and Rancher; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.<br />
+ <sup>2</sup> = Only FC is supported on Primera OS prior to 4.2.0.
+</small>
+
 #### HPE CSI Driver for Kubernetes 1.2.0
 
 Release highlights: Support for raw block volumes and inline ephemeral volumes. NFS Server Provisioner in Tech Preview (beta).
