@@ -160,7 +160,7 @@ For a tutorial on how to enable replication, check out the blog [Enabling Remote
 A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD mandatory parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
 
 ```yaml
-apiVersion: storage.hpe.com/v1
+apiVersion: storage.hpe.com/v2
 kind: HPEReplicationDeviceInfo
 metadata:
   name: r1
