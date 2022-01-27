@@ -63,9 +63,9 @@ Learn the fundamentals of storage provisioning on Kubernetes.
 
 An interactive CSI workshop from HPE Discover Virtual Experience. It explains key provisioning concepts, including CSI snapshots and clones, ephemeral inline volumes, raw block volumes and how to use the NFS server provisioner.
 
-<iframe width="696" height="392" src="https://player.vimeo.com/video/436874235" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="696" height="392" src="https://www.youtube.com/embed/1xEsUYm7G04" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<small>[Watch on Vimeo](https://vimeo.com/436874235)</small>
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=1xEsUYm7G04)</small>
 
 ### Using the HPE CSI Driver to create CSI snapshots and clones
 
@@ -127,6 +127,17 @@ This tutorial shows how to use HPE storage with VMware Tanzu as well as how to c
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=iC5taH0wLs0)</small>
 
+## Monitoring, Metering and Diagnostics
+
+Tutorials and demos showcasing monitoring and troubleshooting.
+
+### Get Started with the HPE Storage Array Exporter for Prometheus on Kubernetes
+
+Learn how to stand up a Prometheus and Grafana environment on Kubernetes and start using the HPE Storage Array Exporter for Prometheus and the HPE CSI Info Metrics Provider for Prometheus to provide Monitoring and Alerting.
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/tf9o5zG-HQs" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://www.youtube.com/watch?v=tf9o5zG-HQs)</small>
 
 # Watch more
 
