@@ -9,24 +9,13 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 
 ## Platform Requirements
 
-The following has been tested and validated for HPE CSI driver version with HPE Alletra 9000, HPE Primera and 3PAR. Always check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table.
-
-| Version | Protocols | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Host OS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Container Orchestrator | HPE Alletra 9000, Primera and 3PAR OS |
-| ------ | ------------------- |------------- | --------- | ------------------- |
-| v2.1.0 | iSCSI & FC | CentOS 7.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.20-1.22 <br /> Red Hat OpenShift 4.6, 4.8 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x, 9.4.x |
-| v2.0.0 | iSCSI & FC | CentOS 7.x, 8.x <br /> RHEL 7.x, 8.x <br /> CoreOS, <br /> SLES 15 SP2 | Kubernetes 1.18-1.21 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.5 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ <br /> Alletra OS 9.3.x |
-| v1.4.0 | iSCSI & FC | CentOS 7.x, 8.1 <br /> RHEL 7.x, 8.1 <br /> CoreOS | Kubernetes 1.17-1.20 <br /> Red Hat OpenShift 4.4, 4.6 <br /> SUSE CaaSP 4.2 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
-| v1.3.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.19 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0+ |
-| v1.2.0 | iSCSI & FC | CentOS 7.6, 7.7 <br /> RHEL 7.6, 7.7 <br /> CoreOS | Kubernetes 1.16-1.18 <br /> Red Hat OpenShift 4.2, 4.3 | 3PAR OS 3.3.1+ <br /> Primera OS 4.0, 4.1 |
+check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
 
 Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires an HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities. 
 
 * [HPE Alletra 9000](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_alletra.html)
 * [HPE Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 * [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
-
-!!! important
-    Ubuntu is not a supported OS option for the HPE CSI Driver when using HPE Alletra 9000 and HPE Primera. Please refer to SPOCK for the list of Platform supported OS.
 
 ### User Role Requirements
 

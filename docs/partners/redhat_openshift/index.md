@@ -15,13 +15,14 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 Software delivered through the HPE and Red Hat partnership follows a rigorous certification process and only qualify what's listed in the following table.
 
-| Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers          |
-| ----------------------- | --------------------------------- | ---------------- | ------------------------------------ |
-| Certified               | 4.4                               | 1.4.0            | Nimble, Primera and 3PAR             |
-| Uncertified<sup>2</sup> | 4.5 (Upgrade path only)           | -                | -                                    |
-| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0, 2.0.0     | Alletra, Nimble, Primera and 3PAR    |
-| Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                | -                                    |
-| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.0            | Alletra, Nimble, Primera and 3PAR    |
+| Status                  | Red Hat OpenShift                 | HPE CSI Operator        | Container Storage Providers          |
+| ----------------------- | --------------------------------- | ----------------------- | ------------------------------------ |
+| Certified               | 4.4                               | 1.4.0                   | Nimble, Primera and 3PAR             |
+| Uncertified<sup>2</sup> | 4.5 (Upgrade path only)           | -                       | -                                    |
+| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0, 2.0.0, 2.1.0     | Alletra, Nimble, Primera and 3PAR    |
+| Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                       | -                                    |
+| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.0                   | Alletra, Nimble, Primera and 3PAR    |
+| Uncertified<sup>2</sup> | 4.9                               | -                       | -                                    |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
@@ -88,8 +89,11 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 ![Click Install](img/webcon-2.png)
 *Click 'Install'.*
 
-![Select subscribe](img/webcon-3.png)
-*In the next pane, select the Namespace where the SCC was applied to and click 'Install'.*
+![Click Install](img/webcon-3.png)
+*Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.*
+
+![Click Approve](img/webcon-3-1.png)
+*Click 'Approve' to finalize installation of the Operator*
 
 ![Operator installed](img/webcon-4.png)
 *The HPE CSI Operator is now installed, select 'View Operator'.*
@@ -137,9 +141,16 @@ metadata:
   namespace: hpe-csi-driver
 spec:
   channel: stable
+  installPlanApproval: Manual
   name: hpe-csi-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
+```
+
+Next, approve the installation.
+
+```markdown
+oc -n hpe-csi-driver patch $(oc get installplans -n hpe-csi-driver -o name) -p '{"spec":{"approved":true}}' --type merge
 ```
 
 The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.
@@ -150,7 +161,7 @@ Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updat
 deployment "hpe-csi-driver-operator" successfully rolled out
 ```
 
-The next step is to create a `HPECSIDriver` object. It's unique per backend CSP.
+The next step is to create a `HPECSIDriver` object.
 
 ```markdown
 apiVersion: storage.hpe.com/v1
