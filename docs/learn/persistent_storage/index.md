@@ -891,7 +891,7 @@ custom-secret            Opaque        5         15m
 
 ### Create a StorageClass with the new Secret
 
-To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../../container_storage_provider/index.md).
 
 We will start by creating a `StorageClass` called **hpe-gold**. We will use the `gold-secret` created in the previous step and specify the **hpe-storage** `Namespace` where the CSI driver was deployed.
 
