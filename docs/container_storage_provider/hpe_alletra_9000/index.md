@@ -9,7 +9,7 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 
 ## Platform Requirements
 
-check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
+Check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
 
 Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires an HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities. 
 
