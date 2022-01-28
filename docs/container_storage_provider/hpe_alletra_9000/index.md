@@ -148,8 +148,23 @@ For a tutorial on how to enable replication, check out the blog [Enabling Remote
 
 A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD mandatory parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
 
-```yaml
+
+```yaml fct_label="HPE CSI Driver v2.1.0 and later"
 apiVersion: storage.hpe.com/v2
+kind: HPEReplicationDeviceInfo
+metadata:
+  name: r1
+spec:
+  target_array_details:
+  - targetCpg: <cpg_name>
+    targetSnapCpg: <snapcpg_name> #optional.
+    targetName: <target_array_name>
+    targetSecret: <target_secret_name>
+    targetSecretNamespace: hpe-storage
+```
+
+```yaml fct_label="HPE CSI Driver v2.0.0"
+apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
 metadata:
   name: r1
