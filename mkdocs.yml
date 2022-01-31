@@ -32,6 +32,7 @@ plugins:
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
         'container_storage_provider/hpe_nimble_storage/index.md': 'container_storage_provider/hpe_alletra_6000/index.md'
         'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_9000/index.md'
+        'partners/rancher_labs/index.md': 'partners/suse_rancher/index.md'
 nav:
   - WELCOME:
     - 'Get started!': 'welcome/index.md'
@@ -58,8 +59,8 @@ nav:
     - 'Commvault': "partners/commvault/index.md"
     - 'Kasten by Veeam': 'partners/kasten/index.md'
     - 'Mirantis': 'partners/mirantis/index.md'
-    - 'Rancher Labs': 'partners/rancher_labs/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
+    - 'SUSE Rancher': 'partners/suse_rancher/index.md'
     - 'VMware': 'partners/vmware/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
   - LEARN:
