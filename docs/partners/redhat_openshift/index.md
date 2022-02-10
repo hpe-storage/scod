@@ -61,7 +61,7 @@ In situations where the operator needs to be upgraded, follow the prerequisite s
 !!! danger "Automatic Updates"
     Do not under any circumstance enable "Automatic Updates" for the HPE CSI Operator for Kubernetes
 
-Once the steps have been followed for the particular version transition.
+Once the steps have been followed for the particular version transition:
 
 - Uninstall the `HPECSIDriver` instance
 - Uninstall the HPE CSI Operator for Kubernetes
