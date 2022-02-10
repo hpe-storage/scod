@@ -52,6 +52,21 @@ The HPE CSI Operator for Kubernetes needs to be installed through the interfaces
 !!! tip
     There's a tutorial available on YouTube accessible through the [Video Gallery](../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift. 
 
+#### Upgrading
+
+In situations where the operator needs to be upgraded, follow the prerequisite steps in the Helm chart on Artifact Hub.
+
+- [Upgrading the chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#upgrading-the-chart)
+
+!!! danger "Automatic Updates"
+    Do not under any circumstance enable "Automatic Updates" for the HPE CSI Operator for Kubernetes
+
+Once the steps have been followed for the particular version transition.
+
+- Uninstall the `HPECSIDriver` instance
+- Uninstall the HPE CSI Operator for Kubernetes
+- Proceed to installation through the [OpenShift Web Console](#openshift_web_console) or [OpenShift CLI](#openshift_cli)
+
 #### Prerequisites
 
 The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OpenShift, please create the following `SecurityContextConstraints` (SCC) to allow the CSI driver to be running with these privileges.
