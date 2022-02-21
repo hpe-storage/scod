@@ -190,7 +190,9 @@ These parameters are applicable only for replication. Both parameters are mandat
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
 !!! important
-    HPE CSI Driver version 2.0 and before, the **Auto synchronize** and **Auto recover** policies for replicated volumes are not set automatically. To configure these policies, create a new Remote Copy group with **Auto Synchronize** and **Auto recover** enabled in SSMC or via CLI with the following command: <br/ > `setrcopygroup pol auto_recover,auto_synchronize <group_name>`
+    
+    Remote Copy groups (RCG) created by the HPE CSI driver 2.1 and later have the **Auto synchronize** and **Auto recover** policies applied. <br /> To add or remove these policies from RCGs, modify the existing RCG using the SSMC or CLI with the following command: <br/ > <br /> **Add** <br /> `setrcopygroup pol auto_recover,auto_synchronize <group_name>` <br/ > **Remove** <br /> `setrcopygroup pol no_auto_recover,no_auto_synchronize <group_name>`
+
 
 ### Add Non-Replicated Volume to Remote Copy group
 
