@@ -92,7 +92,7 @@ The HPE CSI Driver supports the following types of VLUN templates:
 | hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
 
 !!! note
-    `hostSeeVLUN` is a mutable parameter. To modify an existing `PVC`, `hostSeesVLUN` needs to be specified with the `allowMutations` parameter along with editing the `PVC` with annotation `csi.hpe.com/hostSeesVLUN: "true/false"`. The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `Pod` will need to be scheduled on another node by either deleting the `Pod` or draining the node.
+    To modify an existing PVC, hostSeesVLUN needs to be specified with the allowMutations parameter along with adding the PVC annotation csi.hpe.com/hostSeesVLUN with the string values of either "true" or "false". The HPE CSI Driver creates the vlun template based upon the `hostSeesVLUN` parameter during the volume publish operation. For the change to take effect, the `Pod` will need to be scheduled on another node by either deleting the `Pod` or draining the node.
 
 ### Importing Volumes
 
