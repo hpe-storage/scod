@@ -48,6 +48,15 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```markdown fct_label="HPE CSI Driver v2.1.1"
+# Kubernetes 1.20-1.23
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v5.0.1 -b release-5.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
 ```markdown fct_label="HPE CSI Driver v2.0.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -68,14 +77,6 @@ git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
-```
-
-```markdown fct_label="HPE CSI Driver v1.3.0"
-# Kubernetes 1.17-1.19
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v3.0.3 -b release-3.0
-kubectl apply -f config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
 !!! tip
