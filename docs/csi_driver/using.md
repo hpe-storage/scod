@@ -389,6 +389,9 @@ spec:
   volumeMode: Block
 ```
 
+!!! note
+    The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
+
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
 ```yaml
