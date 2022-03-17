@@ -37,9 +37,14 @@ In array OS 6.0.0 and newer it's possible to create separate tenants using the `
 
 No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
 
-Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of.
-
 - Visit the array admin guide on [HPE InfoSight](https://infosight.hpe.com) to learn more about how to use the `tenantadmin` CLI.
+
+##### Tenant Limitations
+
+Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of, here are a few less obvious limitations.
+
+- CHAP is configured globally for the CSI driver. The CSI driver is contracted to create the CHAP user if it doesn't exist. It's important that the CHAP user does not exist prior when used with a tenant, as tenant may not share CHAP users among themselves or the admin account.
+- Both port 443 and 5392 needs to be exposed to the Kubernetes cluster in multitenant deployments.
 
 !!! seealso
     An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/).

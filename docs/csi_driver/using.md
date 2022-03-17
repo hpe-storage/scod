@@ -30,7 +30,7 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 
 ## Enabling CSI Snapshots
 
-Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot beta CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes SIG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
+Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kubernetes 1.17+. The snapshot CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes TAG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.
 
 Ensure the snapshot CRDs and common snapshot controller hasn't been installed already.
 
@@ -427,7 +427,26 @@ CSI introduces snapshots as native objects in Kubernetes that allows end-users t
 
 Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining additional snapshot parameters.
 
-Kubernetes 1.17+ (CSI snapshots in beta)
+Kubernetes 1.20+ (CSI snapshots GA)
+
+```markdown fct_label="HPE CSI Driver v2.0.0+"
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: hpe-snapshot
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
+driver: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "Snapshot created by the HPE CSI Driver"
+  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
+  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
+  csi.storage.k8s.io/snapshotter-list-secret-name: hpe-backend
+  csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
+```
+
+Kubernetes 1.17-1.19 (CSI snapshots in beta)
 
 ```markdown fct_label="HPE CSI Driver v1.4.0"
 apiVersion: snapshot.storage.k8s.io/v1beta1
@@ -463,7 +482,17 @@ parameters:
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
 
-```yaml
+```markdown fct_label="GA"
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshot
+metadata:
+  name: my-snapshot
+spec:
+  source:
+    persistentVolumeClaimName: my-pvc
+```
+
+```markdown fct_label="beta"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshot
 metadata:
@@ -639,7 +668,7 @@ If no `VolumeSnapshots` are being enumerated, check the [diagnostics](diagnostic
 
 ### Expanding PVCs
 
-To perform expansion operations on Kubernetes 1.14+, you must enhance your `StorageClass` with some additional attributes. Please see [base `StorageClass` parameters](#base_storageclass_parameters).
+To perform expansion operations on Kubernetes 1.14+, you must enhance your `StorageClass` with the `.allowVolumeExpansion: true` key. Please see [base `StorageClass` parameters](#base_storageclass_parameters) for additional information.
 
 Then, a volume provisioned by a `StorageClass` with expansion attributes may have its `PersistentVolumeClaim` expanded by altering the `.spec.resources.requests.storage` key of the `PersistentVolumeClaim`.
 

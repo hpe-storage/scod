@@ -2,6 +2,10 @@
 
 Software components documented on SCOD are generally covered with valid support contract on the HPE product being used. Terms and conditions may be found in the support contract. Please reach out to your official HPE representative or HPE partner for any uncertainties.
 
+## CSI Info Metrics Provider support
+
+The HPE CSI Info Metrics Provider for Prometheus is supported by HPE when used with HPE storage arrays on valid support contracts. Send email to [support@nimblestorage.com](mailto:support@nimblestorage.com) to get started with any issue that requires assistance. Engage your HPE representative for other means to contact HPE Storage support directly.
+
 ## Container Storage Providers
 
 Each Container Storage Provider (CSP) uses their own official support routes to resolve any issues with the HPE CSI Driver for Kuberernetes and the respective CSP.
