@@ -4,7 +4,7 @@ A Container Storage Interface ([CSI](https://github.com/container-storage-interf
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-2.0.0.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-2.1.0.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
@@ -29,13 +29,14 @@ Below is the official table for CSI features we track and deem readily available
 | Inline Ephemeral Volumes               | Beta              | 1.16              | 1.2.0          |
 | Volume Limits                          | GA                | 1.17              | 1.2.0          |
 | Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
-| Generic Ephemeral Volumes              | Beta              | 1.21              | 1.3.0          |
+| Generic Ephemeral Volumes              | GA                | 1.23              | 1.3.0          |
 | Volume Groups<sup>1</sup>              | N/A               | 1.17              | 1.4.0          |
 | Snapshot Groups<sup>1</sup>            | N/A               | 1.17              | 1.4.0          |
 | NFS Server Provisioner<sup>1</sup>     | N/A               | 1.17              | 1.4.0          |
 | Volume Encryption<sup>1</sup>          | N/A               | 1.18              | 2.0.0          |
 | Topology                               | GA                | 1.17              | Future         |
 | Volume Health                          | Alpha             | 1.21              | Future         |
+| Volume Populator                       | Alpha             | 1.18              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
@@ -87,11 +88,11 @@ Release highlights:
       3PAR OS 3.3.2
     </td>
   </tr>
-  <!--
   <tr>
     <th>Release&nbsp;notes</th>
     <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.1.1.md>v2.1.1</a> on GitHub</td>
   </tr>
+  <!--
   <tr>
    <th>Blogs</th>
    <td>
