@@ -503,7 +503,7 @@ spec:
 ```
 
 !!! tip
-    If a specific `VolumeSnapshotClass` is desired, use `.spec.snapshotClassName` to call it out.
+    If a specific `VolumeSnapshotClass` is desired, use `.spec.volumeSnapshotClassName` to call it out.
 
 Check that a new `VolumeSnapshot` is created based on your claim:
 
