@@ -43,7 +43,7 @@ Users deploying applications that require persistent storage (i.e. through the H
 For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.6/authentication/managing-security-context-constraints.html).
 
 !!! note
-    If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsmode: 0770` parameter to the `StorageClass`.
+    If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsMode: "0770"` parameter to the `StorageClass` with RWO claims or `fsMode: "0777"` for RWX claims.
 
 ### Deployment
 
