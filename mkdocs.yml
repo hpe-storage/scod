@@ -5,14 +5,13 @@ site_author: 'Hewlett Packard Enterprise'
 theme: 
   name: readthedocs
   custom_dir: hpe_theme/
+  analytics:
+    gtag: 'G-PC28RTKKTW'
 repo_name: 'hpe-storage/scod'
 repo_url: 'https://github.com/hpe-storage/scod'
-copyright: 'Copyright 2020 Hewlett Packard Enterprise Development LP'
+copyright: 'Copyright 2022 Hewlett Packard Enterprise Development LP'
 extra_css:
   - css/hpedev.css
-google_analytics:
-  - 'UA-79554149-3'
-  - 'auto'
 use_directory_urls: false
 edit_uri: ''
 markdown_extensions:
