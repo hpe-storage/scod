@@ -2,7 +2,7 @@
     background: #477083;
 }
 .wy-nav-side {
-    width: 310px;
+    width: 300px;
     background: #425563;
 }
 
@@ -13,7 +13,19 @@
 
 .wy-menu-vertical span {
     font-weight: bold;
+    font-size: 105%;
     color: #ddd;
+}
+
+.wy-menu-vertical a {
+    line-height: 100%;
+    padding-left: 2.6em;
+    color: #b3b3b3;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+	height: 16px;
+	line-height: 16px;
 }
 
 /* blue */
