@@ -873,7 +873,7 @@ The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimits
 
 The `PVC` with "ReadWriteMany" or "ReadOnlyMany" access mode can NOT be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
 
-Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behaviour.
+Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
 
 The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 
