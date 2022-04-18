@@ -16,7 +16,7 @@ The MKE managers and workers needs to run a supported host OS as outlined in the
 
 MKE admins needs to familiarize themselves with the [advanced install](../../csi_driver/deployment.md#advanced_install) method of the CSI driver. Before the installation begins, make sure an account with administrative privileges is being used to the deploy the driver. Also determine the actual Kubernetes version MKE is using. 
 
-```markdown
+```text
 kubectl version --short true
 Client Version: v1.19.4
 Server Version: v1.18.10-mirantis-1

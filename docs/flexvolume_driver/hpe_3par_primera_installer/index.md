@@ -160,7 +160,7 @@ INVENTORY:
 
 ##### File Persona Example Configuration
 
-```markdown
+```text
 #Mandatory Parameters for Filepersona---------------------------------------------------------------
   DEFAULT_FILE:
     # Specify the port to be used by HPE 3PAR plugin etcd cluster
@@ -179,7 +179,7 @@ INVENTORY:
 
 ##### Multiple Backend Example Configuration
 
-```markdown
+```text
 INVENTORY:
   DEFAULT:
 #Mandatory Parameters-------------------------------------------------------------------------------
@@ -239,7 +239,7 @@ INVENTORY:
 ```
 
 ### Step 5: Run the Ansible playbook
-```markdown
+```text
 $ cd python-hpedockerplugin/ansible_3par_docker_plugin/
 $ ansible-playbook -i hosts install_hpe_3par_volume_driver.yml
 ```
@@ -247,7 +247,7 @@ $ ansible-playbook -i hosts install_hpe_3par_volume_driver.yml
 ### Step 6: Verify the installation
 
 * Once playbook has completed successfully, the PLAY RECAP should look like below
-```markdown
+```text
 Installer should not show any failures and PLAY RECAP should look like below
 
 PLAY RECAP ***********************************************************************
@@ -261,7 +261,7 @@ localhost              : ok=9    changed=3    unreachable=0    failed=0
 
 * Verify plugin installation on all nodes.
 
-```markdown
+```text
 $ docker ps | grep plugin; ssh <Master2-IP> "docker ps | grep plugin";ssh <Master3-IP> "docker ps | grep plugin";ssh <Worker1-IP> "docker ps | grep plugin";ssh <Worker2-IP> "docker ps | grep plugin"
 51b9d4b1d591        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
 a43f6d8f5080        hpestorage/legacyvolumeplugin:3.3.1          "/bin/sh -c ./plugin…"   12 minutes ago      Up 12 minutes         plugin_container
@@ -365,7 +365,7 @@ spec:
 
 Check if the pod is running successfully:
 
-```markdown
+```text
 $ kubectl get pod pod-nginx
 NAME          READY   STATUS    RESTARTS   AGE
 pod-nginx     1/1     Running   0          2m29s
@@ -472,7 +472,7 @@ This will create a `PV` thinly provisioned using the `FC-r6` cpg.
 In order to upgrade the driver, simply modify the `ansible_3par_docker_plugin/properties/plugin_configuration_properties_sample.yml` used for the initial deployment and modify `hpestorage/legacyvolumeplugin` to the latest image from docker hub.
 
 For example:
-```markdown
+```text
     volume_plugin: hpestorage/legacyvolumeplugin:3.3
 
     Change to:
@@ -551,7 +551,7 @@ Once the replication is enabled at the array level, the FlexVolume driver will n
 
 Edit the **plugin_configuration_properties.yml** file and edit the Optional Replication Section.
 
-```markdown
+```text
 INVENTORY:
   DEFAULT:
 #Mandatory Parameters-------------------------------------------------------------------------------

@@ -58,7 +58,7 @@ All contributions must include acceptance of the DCO:
 To accept the DCO, simply add this line to each commit message with your
 name and email address (`git commit -s` will do this for you):
 
-```markdown
+```text
 Signed-off-by: Jane Example <jane@example.com>
 ```
 

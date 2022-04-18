@@ -12,13 +12,13 @@ The Pod Monitor is part of the "hpe-csi-controller" `Deployment` served by the "
 
 Edit the CSI driver deployment to change the interval or disable the Pod Monitor. 
 
-```markdown
+```text
 kubectl edit -n hpe-storage deploy/hpe-csi-controller
 ```
 
 The parameters that control the "hpe-csi-driver" are the following:
 
-```markdown
+```text
         - --pod-monitor
         - --pod-monitor-interval=30
 ```
@@ -27,8 +27,7 @@ The parameters that control the "hpe-csi-driver" are the following:
 
 Enable the Pod Monitor for a single replica `Deployment` by labeling the `Pod` (assumes an existing PVC name "my-pvc" exists).
 
-```markdown
----
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

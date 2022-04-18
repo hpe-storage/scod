@@ -68,19 +68,19 @@ The official guide is available here: [Creating a Service Account for Kubernetes
 
 - Create a Kubernetes service account (for example, cvbackup).
 
-```markdown
+```text
 kubectl create serviceaccount cvbackup
 ``` 
 
 - To ensure that the service account has sufficient privileges to perform data protection operations, add the service account to the `default-sa-crb` cluster role binding.
 
-```markdown
+```text
 kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:cvbackup
 ```
 
 - Extract the service account token required to configure your Kubernetes cluster for data protection.
 
-```markdown
+```text
 kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='cvbackup')].data.token}"|base64 --decode
 ```
 

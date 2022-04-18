@@ -73,20 +73,20 @@ The HPE CSI Driver needs to run in privileged mode and needs access to host port
 
 Download the SCC to where you have access to `oc` and the OpenShift cluster:
 
-```markdown
+```text
 curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
 ```
 
 Change `my-hpe-csi-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
 
-```markdown
+```text
 oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
 sed -i'' -e 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
 ```
 
 Deploy the SCC:
 
-```markdown
+```text
 oc create -f hpe-csi-scc.yaml
 securitycontextconstraints.security.openshift.io/hpe-csi-scc created
 ```
@@ -135,7 +135,7 @@ It's assumed the SCC has been applied to the project and have `kube:admin` privi
 
 First, an `OperatorGroup` needs to be created.
 
-```markdown
+```yaml
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
@@ -148,7 +148,7 @@ spec:
 
 Next, create a `Subscription` to the Operator.
 
-```markdown
+```yaml
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
@@ -164,13 +164,13 @@ spec:
 
 Next, approve the installation.
 
-```markdown
+```text
 oc -n hpe-csi-driver patch $(oc get installplans -n hpe-csi-driver -o name) -p '{"spec":{"approved":true}}' --type merge
 ```
 
 The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.
 
-```markdown
+```text
 oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
 Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
 deployment "hpe-csi-driver-operator" successfully rolled out
@@ -178,7 +178,7 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object.
 
-```markdown
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:

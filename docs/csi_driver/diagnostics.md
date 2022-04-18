@@ -6,7 +6,7 @@ It's recommended to familiarize yourself with inspecting workloads on Kubernetes
 
 Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
-```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
@@ -15,7 +15,7 @@ hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0         
 hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
 ```
 
-```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
@@ -30,7 +30,7 @@ A Custom Resource Definition (CRD) named `hpenodeinfos.storage.hpe.com` holds im
 
 Retrieve list of nodes.
 
-```markdown
+```text
 kubectl get hpenodeinfos
 $ kubectl get hpenodeinfos
 NAME               AGE
@@ -42,7 +42,7 @@ tme-lnx-worker4   57m
 
 Inspect a node.
 
-```markdown
+```yaml
 kubectl get hpenodeinfos/tme-lnx-worker1 -o yaml
 apiVersion: storage.hpe.com/v1
 kind: HPENodeInfo
@@ -99,7 +99,7 @@ The NFS Server Provisioner consists of a number of Kubernetes resources per PVC.
 
 If there's issues with `VolumeSnapshots` not being created when performing `SnapshotGroup` snapshots, checking the logs of the "csi-volume-group-provisioner" and "csi-volume-group-snapshotter" in the "hpe-csi-controller" `Deployment`.
 
-```markdown
+```text
 kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-provisioner
 kubectl logs -n hpe-storage deploy/hpe-csi-controller csi-volume-group-snapshotter
 ```
@@ -126,7 +126,7 @@ kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
 
 Log levels for both CSI Controller and Node driver can be controlled using `LOG_LEVEL` environment variable. Possible values are `info`, `warn`, `error`, `debug`, and `trace`. Apply the changes using `kubectl apply -f <yaml>` command after adding this to CSI controller and node container spec as below. For Helm charts this is controlled through `logLevel` variable in `values.yaml`.
 
-```markdown
+```text
           env:
             - name: LOG_LEVEL
               value: trace
@@ -136,11 +136,11 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 
 CSP logs can be accessed from their respective services.
 
-```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
-```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl logs -f deploy/primera3par-csp -n hpe-storage
 ```
 
@@ -148,14 +148,14 @@ kubectl logs -f deploy/primera3par-csp -n hpe-storage
 
 Log collector script `hpe-logcollector.sh` can be used to collect the logs from any node which has `kubectl` access to the cluster.
 
-```markdown
+```text
 curl -O https://raw.githubusercontent.com/hpe-storage/csi-driver/master/hpe-logcollector.sh
 chmod 555 hpe-logcollector.sh
 ```
 
 Usage:
 
-```markdown
+```text
 ./hpe-logcollector.sh -h
 Collect HPE storage diagnostic logs using kubectl.
 

@@ -616,7 +616,7 @@ By default, it contains only the path to the socket file for the volume plugin:
 
 Valid options for the FlexVolume driver can be inspected by executing the binary on the host with the `config` argument:
 
-```markdown
+```text
 /usr/libexec/kubernetes/kubelet-plugins/volume/exec/hpe.com~nimble/nimble config
 Error processing option 'logFilePath' - key:logFilePath not found
 Error processing option 'logDebug' - key:logDebug not found
