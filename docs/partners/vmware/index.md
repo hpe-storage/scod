@@ -130,7 +130,7 @@ This is adapted from the following tutorial, please read over to understand all 
 
 Check if `ProviderID` is already configured on your cluster.
 
-```markdown
+```text
 kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{"\n"}{end}'
 ```
 
@@ -138,7 +138,7 @@ If this command returns empty, then proceed with configuring the vSphere Cloud P
 
 If the `ProviderID` is set, then you can proceed directly to installing the [vSphere CSI Driver](#install_the_vsphere_container_storage_interface_csi_driver).
 
-```markdown
+```text
 $ kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{"\n"}{end}'
 vsphere://4238c1a1-e72f-74bf-db48-0d9f4da3e9c9
 vsphere://4238ede5-50e1-29b6-1337-be8746a5016c
@@ -155,7 +155,7 @@ Create a `vsphere.conf` file.
 Set the vCenter server FQDN or IP and vSphere datacenter object name to match your environment. 
 
 Copy and paste the following.
-```markdown
+```yaml
 # Global properties in this section will be used for all specified vCenters unless overridden in vCenter section.
 global:
   port: 443
@@ -175,14 +175,14 @@ vcenter:
 
 Create the `ConfigMap` from the `vsphere.conf` file.
 
-```markdown
+```text
 kubectl create configmap cloud-config --from-file=vsphere.conf -n kube-system
 ```
 ##### Create a CPI Secret
 
 The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
 
-```markdown
+```text
 kubectl create -f-
 < paste the YAML >
 ^D (CTRL + D)
@@ -190,7 +190,7 @@ kubectl create -f-
 
 Next create the CPI `Secret`. 
 
-```markdown
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -205,12 +205,12 @@ stringData:
 
 Inspect the `Secret` to verify it was created successfully.
 
-```markdown
+```text
 kubectl describe secret cpi-global-secret -n kube-system
 ```
 
 The output is similar to this:
-```markdown
+```text
 Name:         cpi-global-secret
 Namespace:    kube-system
 Labels:       <none>
@@ -230,7 +230,7 @@ Before installing vSphere Cloud Controller Manager, make sure all nodes are tain
 
 To find your node names, run the following command.
 
-```markdown
+```text
 kubectl get nodes
 
 NAME    STATUS   ROLES                  AGE   VERSION
@@ -241,18 +241,18 @@ node2   Ready    <none>                 44m   v1.20.1
 
 To create the taint, run the following command for each node in your cluster. 
 
-```markdown
+```text
 kubectl taint node <node_name> node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
 ```
 
 Verify the taint has been applied to each node.
 
-```markdown
+```text
 kubectl describe nodes | egrep "Taints:|Name:"
 ```
 
 The output is similar to this:
-```markdown
+```text
 Name:               cp1
 Taints:             node-role.kubernetes.io/master:NoSchedule
 Name:               node1
@@ -265,7 +265,7 @@ Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedu
 
 There are 3 manifests that must be deployed to install the vSphere Cloud Provider Interface (CPI). The following example applies the RBAC roles and the RBAC bindings to your Kubernetes cluster. It also deploys the Cloud Controller Manager in a DaemonSet.
 
-```markdown
+```text
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
@@ -275,7 +275,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsp
 
 Verify `vsphere-cloud-controller-manager` is running.
 
-```markdown
+```text
 kubectl rollout status ds/vsphere-cloud-controller-manager -n kube-system
 daemon set "vsphere-cloud-controller-manager" successfully rolled out
 ```
@@ -298,7 +298,7 @@ Since we are connecting to block storage provided from an HPE Primera, Nimble St
 Create a **csi-vsphere.conf** file.
 
 Copy and paste the following:
-```markdown
+```ini
 [Global]
 cluster-id = "csi-vsphere-cluster"
 
@@ -314,13 +314,13 @@ datacenters = "<vCenter datacenter>"
 
 Create a Kubernetes `Secret` that will contain the configuration details to connect to your vSphere environment.
 
-```markdown
+```text
 kubectl create secret generic vsphere-config-secret --from-file=csi-vsphere.conf -n kube-system
 ```
 
 Verify that the `Secret` was created successfully.
 
-```markdown
+```text
 kubectl get secret vsphere-config-secret -n kube-system
 NAME                    TYPE     DATA   AGE
 vsphere-config-secret   Opaque   1      43s
@@ -334,19 +334,19 @@ For security purposes, it is advised to remove the **csi-vsphere.conf** file.
 
 Check the official [vSphere CSI Driver Github repo](https://github.com/kubernetes-sigs/vsphere-csi-driver) for the latest version.
 
-```markdown fct_label="vSphere 6.7 U3"
+```text fct_label="vSphere 6.7 U3"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-controller-deployment.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-node-ds.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/rbac/vsphere-csi-controller-rbac.yaml
 ```
 
-```markdown fct_label="vSphere 7.0"
+```text fct_label="vSphere 7.0"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-controller-deployment.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-node-ds.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/rbac/vsphere-csi-controller-rbac.yaml
 ```
 
-```markdown fct_label="vSphere 7.0U1"
+```text fct_label="vSphere 7.0U1"
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-controller-deployment.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-node-ds.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/rbac/vsphere-csi-controller-rbac.yaml
@@ -356,7 +356,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-d
 
 Verify that the vSphere CSI driver has been successfully deployed using `kubectl rollout status`.
 
-```markdown
+```text
 kubectl rollout status deployment/vsphere-csi-controller -n kube-system
 deployment "vsphere-csi-controller" successfully rolled out
 
@@ -366,7 +366,7 @@ daemon set "vsphere-csi-node" successfully rolled out
 
 Verify that the vSphere CSI driver `CustomResourceDefinition` has been registered with Kubernetes.
 
-```markdown
+```text
 kubectl describe csidriver/csi.vsphere.vmware.com
 Name:         csi.vsphere.vmware.com
 Namespace:
@@ -403,7 +403,7 @@ Events:  <none>
 ```
 
 Also verify that the vSphere CSINodes `CustomResourceDefinition` has been created.
-```markdown
+```text
 kubectl get csinodes -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.drivers[].name}{"\n"}{end}'
 cp1     csi.vsphere.vmware.com
 node1   csi.vsphere.vmware.com
@@ -419,7 +419,7 @@ With the vSphere CSI driver deployed, lets create a `StorageClass` that can be u
 !!! Important
     The following steps will be using the example VM Storage Policy created at the beginning of this guide. If you do not have a Storage Policy available, refer to [Configuring a VM Storage Policy](#configuring_a_vm_storage_policy) before proceeding to the next steps.
 
-```markdown
+```yaml
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -441,7 +441,7 @@ In this example, we will be deploying a stateful MongoDB application with 3 repl
 
 This is an example MongoDB chart using a StatefulSet. The default volume size is **8Gi**, if you want to change that use `--set persistence.size=50Gi`.
 
-```markdown
+```text
 helm install mongodb \
     --set architecture=replicaset \
     --set replicaSetName=mongod \
@@ -455,13 +455,13 @@ helm install mongodb \
 
 Verify that the MongoDB application has been deployed. Wait for pods to start running and PVCs to be created for each replica.
 
-```markdown
+```text
 kubectl rollout status sts/mongodb
 ```
 
 Inspect the `Pods` and `PersistentVolumeClaims`.
 
-```markdown
+```text
 kubectl get pods,pvc
 NAME       READY   STATUS    RESTARTS   AGE
 mongod-0   1/1     Running   0          90s
@@ -476,7 +476,7 @@ datadir-mongodb-2   Bound    pvc-22bab0f4-8240-48c1-91b1-3495d038533e   50Gi    
 
 To interact with the Mongo replica set, you can connect to the StatefulSet.
 
-```markdown
+```text
 kubectl exec -it sts/mongod bash
 
 root@mongod-0:/# df -h /bitnami/mongodb

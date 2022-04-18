@@ -60,13 +60,13 @@ Start by downloading the manifest, which needs to be modified before applying to
 
 Supports HPE CSI Driver for Kubernetes 2.0.0 and later.
 
-```markdown
+```text
 wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics.yaml
 ```
 
 Optional `ServiceMonitor` definition:
 
-```markdown
+```text
 wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics-service-monitor.yaml
 ```
 
@@ -76,7 +76,7 @@ Update the main container parameters and optionally add service labels and annot
 
 In the "hpe-csi-info-metrics" `Deployment` at `.spec.template.spec.containers[0].args` in "hpe-csi-info-metrics.yaml":
 
-```markdown
+```text
           args:
             - "--telemetry.addr=:9099"
             - "--telemetry.path=/metrics"
@@ -90,7 +90,7 @@ Remove the `#` in front of `--accept-eula` to accept the [HPE license restrictio
 
 In the "hpe-csi-info-metrics-service" `Service`:
 
-```markdown
+```yaml
 metadata:
   name: hpe-csi-info-metrics-service
   namespace: hpe-storage
@@ -111,13 +111,13 @@ metadata:
 
 Apply the manifest:
 
-```markdown
+```text
 kubectl apply -f hpe-csi-info-metrics.yaml
 ```
 
 Optionally, if using the Prometheus Operator, add any additional labels in "hpe-csi-info-metrics-service-monitor.yaml":
 
-```markdown
+```text
   # Corresponding labels on the CSI Info Metrics service are added to
   # the scraped metrics
   #targetLabels:
@@ -126,7 +126,7 @@ Optionally, if using the Prometheus Operator, add any additional labels in "hpe-
 
 Apply the manifest:
 
-```markdown
+```text
 kubectl apply -f hpe-csi-info-metrics-service-monitor.yaml
 ```
 

@@ -25,7 +25,7 @@ In order to allow K10 to perform snapshots and restores using the `VolumeSnapsho
 
 Assuming we have a default `VolumeSnapshotClass` named "hpe-snapshot":
 
-```markdown
+```text
 kubectl annotate volumesnapshotclass hpe-snapshot k10.kasten.io/is-snapshot-class=true
 ```
 

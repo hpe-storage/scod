@@ -58,14 +58,14 @@ Switch to the project you want to install the CSI driver. For this example, the 
 !!! important
     The Rancher CLI does [not support](https://github.com/rancher/rancher/issues/30095) "Apps & Marketplace" introduced in 2.5 yet. Use the web interface or REST API to deploy the CSI driver instead.
 
-```markdown
+```text
 $ rancher context current
 Cluster:torta Project:Default
 ```
 
 Steps to install the CSI driver.
 
-```markdown
+```text
 $ rancher app install hpe-csi-driver hpe-csi-driver --no-prompt
 run "app show-notes hpe-csi-driver" to view app notes once app is ready
 $ rancher app

@@ -5,7 +5,7 @@ Older versions of the HPE CSI Driver for Kubernetes are kept here for reference.
 
 ### Kubernetes 1.19
 
-```markdown
+```text
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.19.yaml
 ```
 
@@ -14,7 +14,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 ### Kubernetes 1.18
 
-```markdown
+```text
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.0.0/hpe-csi-k8s-1.18.yaml
 ```
 
@@ -23,7 +23,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 ### Kubernetes 1.17
 
-```markdown
+```text
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v1.4.0/hpe-csi-k8s-1.17.yaml
 ```
 

@@ -34,7 +34,7 @@ Support for `VolumeSnapshotClasses` and `VolumeSnapshots` is available from Kube
 
 Ensure the snapshot CRDs and common snapshot controller hasn't been installed already.
 
-```markdown
+```text
 kubectl get crd volumesnapshots.snapshot.storage.k8s.io \
   volumesnapshotcontents.snapshot.storage.k8s.io \
   volumesnapshotclasses.snapshot.storage.k8s.io
@@ -42,13 +42,13 @@ kubectl get crd volumesnapshots.snapshot.storage.k8s.io \
 
 Vendors may package, name and deploy the common snapshot controller using their own naming conventions. Run the command below and look for workload names that contain "snapshot".
 
-```markdown
+```text
 kubectl get sts,deploy -A
 ```
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-```markdown fct_label="HPE CSI Driver v2.1.1"
+```text fct_label="HPE CSI Driver v2.1.1"
 # Kubernetes 1.20-1.23
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -57,7 +57,7 @@ kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
 
-```markdown fct_label="HPE CSI Driver v2.0.0"
+```text fct_label="HPE CSI Driver v2.0.0"
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 
@@ -71,7 +71,7 @@ git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
-```markdown fct_label="HPE CSI Driver v1.4.0"
+```text fct_label="HPE CSI Driver v1.4.0"
 # Kubernetes 1.17-1.19
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -86,7 +86,7 @@ kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 
 Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](../container_storage_provider/index.md) for more elaborate examples.
 
-```markdown fct_label="K8s 1.15+"
+```yaml fct_label="K8s 1.15+"
 # Renamed csi.storage.k8s.io/resizer-secret-name to
 # csi.storage.k8s.io/controller-expand-secret-name
 #
@@ -116,7 +116,7 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
 
-```markdown fct_label="K8s 1.14"
+```yaml fct_label="K8s 1.14"
 # Alpha feature: volume expansion
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -195,7 +195,7 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 
 The below YAML declarations are meant to be created with `kubectl create`. Either copy the content to a file on the host where `kubectl` is being executed, or copy & paste into the terminal, like this:
 
-```markdown
+```text
 kubectl create -f-
 < paste the YAML >
 ^D (CTRL + D)
@@ -250,7 +250,7 @@ spec:
 
 After the `PersistentVolumeClaim` has been declared, check that a new `PersistentVolume` is created based on your claim:
 
-```markdown
+```text
 kubectl get pv
 NAME              CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM                STORAGECLASS AGE
 pvc-13336da3-7... 32Gi     RWO          Delete         Bound  default/my-first-pvc hpe-scod     3s
@@ -287,7 +287,7 @@ spec:
 
 Check if the `Pod` is running successfully.
 
-```markdown
+```text
 kubectl get pod my-pod
 NAME        READY   STATUS    RESTARTS   AGE
 my-pod      2/2     Running   0          2m29s
@@ -309,7 +309,7 @@ Ephemeral inline volumes are not associated with a `StorageClass`, hence a `Secr
 There are two ways to declare the `Secret` with ephemeral inline volumes, either the `Secret` is in the same `Namespace` as the workload being declared or it resides in a foreign `Namespace`.
 
 Local `Secret`:
-```markdown
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -338,7 +338,7 @@ spec:
 
 Foreign `Secret`:
 
-```markdown
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -429,7 +429,7 @@ Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining 
 
 Kubernetes 1.20+ (CSI snapshots GA)
 
-```markdown fct_label="HPE CSI Driver v2.0.0+"
+```yaml fct_label="HPE CSI Driver v2.0.0+"
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
@@ -448,7 +448,7 @@ parameters:
 
 Kubernetes 1.17-1.19 (CSI snapshots in beta)
 
-```markdown fct_label="HPE CSI Driver v1.4.0"
+```yaml fct_label="HPE CSI Driver v1.4.0"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
@@ -465,7 +465,7 @@ parameters:
   csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
 ```
 
-```markdown fct_label="HPE CSI Driver v1.3.0"
+```yaml fct_label="HPE CSI Driver v1.3.0"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshotClass
 metadata:
@@ -482,8 +482,8 @@ parameters:
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
 
-```markdown fct_label="GA"
-apiVersion: snapshot.storage.k8s.io/v1beta1
+```yaml fct_label="GA"
+apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
 metadata:
   name: my-snapshot
@@ -492,7 +492,7 @@ spec:
     persistentVolumeClaimName: my-pvc
 ```
 
-```markdown fct_label="beta"
+```yaml fct_label="beta"
 apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshot
 metadata:
@@ -507,7 +507,7 @@ spec:
 
 Check that a new `VolumeSnapshot` is created based on your claim:
 
-```markdown
+```yaml
 kubectl describe volumesnapshot my-snapshot
 Name:         my-snapshot
 Namespace:    default
@@ -521,7 +521,6 @@ Status:
 It's now possible to create a new `PersistentVolumeClaim` from the `VolumeSnapshot`.
 
 ```yaml
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -573,8 +572,7 @@ Again, the size in `.spec.resources.requests.storage` must match the source `Per
 
 Before grouping `PeristentVolumeClaims` there needs to be a `VolumeGroupClass` created. It needs to reference a `Secret` that corresponds to the same backend the `PersistentVolumeClaims` were created on. A `VolumeGroupClass` is a cluster resource that needs administrative privileges to create.
 
-```markdown
----
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: VolumeGroupClass
 metadata:
@@ -592,8 +590,7 @@ parameters:
 
 Once the `VolumeGroupClass` is in place, users may create `VolumeGroups`. The `VolumeGroups` are just like `PersistentVolumeClaims` part of a `Namespace` and both resources need to be in the same `Namespace` for the grouping to be successful.
 
-```markdown
----
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: VolumeGroup
 metadata:
@@ -606,13 +603,13 @@ Depending on the CSP being used, the `VolumeGroup` may reference an object that 
 
 Adding a `PersistentVolumeClaim` to a `VolumeGroup`:
 
-```markdown
+```text
 kubectl annotate pvc/my-pvc csi.hpe.com/volume-group=my-volume-group
 ```
 
 Removing a `PersistentVolumeClaim` from a `VolumeGroup`:
 
-```markdown
+```text
 kubectl annotate pvc/my-pvc csi.hpe.com/volume-group-
 ```
 
@@ -623,8 +620,7 @@ kubectl annotate pvc/my-pvc csi.hpe.com/volume-group-
 
 Being able to create snapshots of the `VolumeGroup` require the CSI external-snapshotter to be [installed](#enabling_csi_snapshots) and also require a `VolumeSnapshotClass` [configured](#using_csi_snapshots) using the same storage backend as the `VolumeGroup`. Once those pieces are in place, a `SnapshotGroupClass` needs to be created. `SnapshotGroupClasses` are cluster objects created by an administrator.
 
-```markdown
----
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: SnapshotGroupClass
 metadata:
@@ -638,8 +634,7 @@ parameters:
 
 Creating a `SnapshotGroup` is later performed using the `VolumeGroup` as a source while referencing a `SnapshotGroupClass` and a `VolumeSnapshotClass`.
 
-```markdown
----
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: SnapshotGroup
 metadata:
@@ -657,7 +652,7 @@ Once the `SnapshotGroup` has been successfully created, the individual `VolumeSn
 
 List `VolumeSnapshots`:
 
-```markdown
+```text
 kubectl get volumesnapshots
 ```
 
@@ -674,7 +669,7 @@ Then, a volume provisioned by a `StorageClass` with expansion attributes may hav
 
 This may be done by the `kubectl patch` command.
 
-```markdown
+```text
 kubectl patch pvc/my-pvc --patch '{"spec": {"resources": {"requests": {"storage": "64Gi"}}}}'
 persistentvolumeclaim/my-pvc patched
 ```
@@ -735,7 +730,7 @@ The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be
 !!! caution "Important"
     In order to mutate a `StorageClass` parameter it needs to have a default value set in the `StorageClass`. In the example below we'll allow mutatating "description". If the parameter "description" isn't set when the volume was provisioned, no subsequent mutations are allowed.
 
-```markdown
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -760,7 +755,7 @@ parameters:
 
 The end-user may now control those parameters by editing or patching the `PersistentVolumeClaim`.
 
-```markdown
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -792,8 +787,7 @@ By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namesp
 
 Example use of `accessModes`:
 
-```markdown fct_label="ReadWriteOnce"
----
+```yaml fct_label="ReadWriteOnce"
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -807,8 +801,7 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-```markdown fct_label="ReadWriteMany"
----
+```yaml fct_label="ReadWriteMany"
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -822,8 +815,7 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-```markdown fct_label="ReadOnlyMany"
----
+```yaml fct_label="ReadOnlyMany"
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -839,8 +831,7 @@ spec:
 
 In the case of declaring a ROX PVC, the requesting `Pod` specification needs to request the PVC as read-only. Example:
 
-```markdown
----
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -887,7 +878,7 @@ Host-based volume encryption is controlled by `StorageClass` parameters configur
 
 First, create a `Secret`, in this example we'll use the "hpe-storage" `Namespace`.
 
-```markdown
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -902,7 +893,7 @@ stringData:
 
 Next, incorporate the `Secret` into a `StorageClass`.
 
-```markdown
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -928,7 +919,7 @@ allowVolumeExpansion: true
 
 Next, create a `PersistentVolumeClaim` that uses the "hpe-encrypted" `StorageClass`:
 
-```markdown
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -944,7 +935,7 @@ spec:
 
 Attach a basic `Pod` to verify functionality.
 
-```markdown
+```yaml
 kind: Pod
 apiVersion: v1
 metadata:
@@ -973,7 +964,7 @@ spec:
 
 Once the `Pod` comes up, verify that the volume is encrypted.
 
-```markdown
+```text
 $ kubectl exec -it my-pod -c pod-datelog-1 -- df -h /data
 Filesystem              Size  Used Avail Use% Mounted on
 /dev/mapper/enc-mpatha  100G   33M  100G   1% /data

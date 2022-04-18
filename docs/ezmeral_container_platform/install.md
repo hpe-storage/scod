@@ -25,7 +25,7 @@ The CSI driver needs privileged access to the worker nodes to attach and detach 
 
 As a Kubernetes cluster admin, run the following.
 
-```markdown
+```text
 kubectl create ns hpe-storage
 kubectl patch --type json -p '[{"op":"add","path":"/spec/unrestrictedFsMountNamespaces/-","value":"hpe-storage"}]' hpecpconfigs/hpecp-global-config -n hpecp
 ```
@@ -35,7 +35,7 @@ kubectl patch --type json -p '[{"op":"add","path":"/spec/unrestrictedFsMountName
 
 By not performing this configuration change, the following events will be seen on the CSI controller `ReplicaSet` or CSI node `DaemonSet` trying to schedule `Pods`.
 
-```markdown
+```text
 Events:
   Type     Reason        Age                    From                   Message
   ----     ------        ----                   ----                   -------

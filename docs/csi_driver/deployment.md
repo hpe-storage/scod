@@ -106,19 +106,19 @@ Visit the [documentation](https://github.com/operator-framework/operator-lifecyc
 
 Once OLM is operational, install the HPE CSI Operator.
 
-```markdown
+```text
 kubectl create -f https://operatorhub.io/install/hpe-csi-operator.yaml
 ```
 
 The Operator will be installed in `my-hpe-csi-operator` namespace. Watch it come up by inspecting the `ClusterServiceVersion` (CSV).
 
-```markdown
+```text
 kubectl get csv -n my-hpe-csi-operator
 ```
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to which CSP is being deployed.
 
-```markdown
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPECSIDriver
 metadata:
@@ -146,7 +146,7 @@ spec:
 
 Create a `HPECSIDriver` with the manifest.
 
-```markdown
+```text
 kubectl create -f hpe-csi-operator.yaml
 ```
 
@@ -175,7 +175,7 @@ All parameters are mandatory and described below.
 
 Example:
 
-```markdown fct_label="HPE Alletra 6000"
+```yaml fct_label="HPE Alletra 6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -189,7 +189,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Alletra 9000"
+```yaml fct_label="HPE Alletra 9000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -203,7 +203,7 @@ stringData:
   password: 3pardata
 ```
 
-```markdown fct_label="HPE Nimble Storage"
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -217,7 +217,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Primera and 3PAR"
+```yaml fct_label="HPE Primera and 3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -233,7 +233,7 @@ stringData:
 
 Create the `Secret` using `kubectl`:
 
-```markdown
+```text
 kubectl create -f secret.yaml
 ```
 
@@ -253,7 +253,7 @@ There's a [brief tutorial available](../learn/video_gallery/index.md#managing_mu
 
 To view the current `Secrets` in the "hpe-storage" `Namespace` (assuming default names):
 
-```markdown
+```text
 kubectl -n hpe-storage get secret/hpe-backend
 NAME                     TYPE          DATA      AGE
 hpe-backend              Opaque        5         2m
@@ -267,7 +267,7 @@ This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate 
 
 To create a new `Secret`, specify the name, `Namespace`, backend username, backend password and the backend IP address to be used by the CSP and save it as `custom-secret.yaml` (a detailed description of the parameters are [available above](#secret_parameters)).
 
-```markdown fct_label="HPE Alletra 6000"
+```yaml fct_label="HPE Alletra 6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -281,7 +281,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Alletra 9000"
+```yaml fct_label="HPE Alletra 9000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -295,7 +295,7 @@ stringData:
   password: 3pardata
 ```
 
-```markdown fct_label="HPE Nimble Storage"
+```yaml fct_label="HPE Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -309,7 +309,7 @@ stringData:
   password: admin
 ```
 
-```markdown fct_label="HPE Primera and 3PAR"
+```yaml fct_label="HPE Primera and 3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -325,13 +325,13 @@ stringData:
 
 Create the `Secret` using `kubectl`:
 
-```markdown
+```text
 kubectl create -f custom-secret.yaml
 ```
 
 You should now see the `Secret` in the "hpe-storage" `Namespace`:
 
-```markdown
+```text
 kubectl -n hpe-storage get secret/custom-secret
 NAME                     TYPE          DATA      AGE
 custom-secret            Opaque        5         1m
@@ -341,7 +341,7 @@ custom-secret            Opaque        5         1m
 
 To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
 
-```markdown fct_label="K8s 1.15+"
+```yaml fct_label="K8s 1.15+"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -364,7 +364,7 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
 
-```markdown fct_label="K8s 1.14"
+```yaml fct_label="K8s 1.14"
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -414,23 +414,23 @@ These object configuration files are common for all versions of Kubernetes.
 
 All components below are deployed in the "hpe-storage" `Namespace`.
 
-```markdown
+```text
 kubectl create ns hpe-storage
 ```
 
 Worker node IO settings:
 
-```markdown
+```text
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-linux-config.yaml
 ```
 
 Container Storage Provider:
 
-```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/nimble-csp.yaml
 ```
 
-```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/3par-primera-csp.yaml
 ```
 
@@ -439,19 +439,19 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 Install the CSI driver:
 
-```markdown fct_label="Kubernetes 1.23"
+```text fct_label="Kubernetes 1.23"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.23.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.22"
+```text fct_label="Kubernetes 1.22"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.22.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.21"
+```text fct_label="Kubernetes 1.21"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.21.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.20"
+```text fct_label="Kubernetes 1.20"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.20.yaml
 ```
 
@@ -469,17 +469,17 @@ The following steps outline how to uninstall the CSI driver that has been deploy
 
 Uninstall Worker node settings:
 
-```markdown
+```text
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-linux-config.yaml
 ```
 
 Uninstall relevant Container Storage Provider:
 
-```markdown fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 6000 and Nimble Storage"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/nimble-csp.yaml
 ```
 
-```markdown fct_label="HPE Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra 9000, Primera and 3PAR"
 kubectl delete deployment.apps/primera3par-csp
 kubectl delete service/primera3par-csp-svc
 kubectl delete service/alletra9000-csp-svc
@@ -490,24 +490,24 @@ kubectl delete service/alletra9000-csp-svc
 
 Uninstall the CSI driver:
 
-```markdown fct_label="Kubernetes 1.23"
+```text fct_label="Kubernetes 1.23"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.23.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.22"
+```text fct_label="Kubernetes 1.22"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.22.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.21"
+```text fct_label="Kubernetes 1.21"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.21.yaml
 ```
 
-```markdown fct_label="Kubernetes 1.20"
+```text fct_label="Kubernetes 1.20"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.1.1/hpe-csi-k8s-1.20.yaml
 ```
 
 If no longer needed, delete the "hpe-storage" `Namespace`.
 
-```markdown
+```text
 kubectl delete ns hpe-storage
 ```
