@@ -19,7 +19,7 @@ Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific pla
 
 ### Network Port Requirements
 
-The HPE Alletra 9000, Primera and 3PAR Container Storage Provider requires the following ports to be open between the array and the Kubernetes cluster running the HPE CSI Driver for Kubernetes.
+The HPE Alletra 9000, Primera and 3PAR Container Storage Provider requires the following ports to be open between the array and the Kubernetes cluster worker nodes running the HPE CSI Driver for Kubernetes.
 
 | Port | Protocol | Description |
 | ---- | -------- | ----------- |
