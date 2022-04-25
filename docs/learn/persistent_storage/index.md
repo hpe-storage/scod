@@ -100,13 +100,13 @@ Let's run through some simple `kubectl` commands to get familiar with your clust
 
 First we need to open a terminal window, the following commands can be run from a Windows, Linux or Mac. In this guide, we will be using the Window Subsystem for Linux (WSL) which allows us to have a Linux terminal within Windows.
 
-To start a WSL terminal session, click the Ubuntu icon in the Windows taskbar.
+To start a WSL terminal session, click the CentOS icon in the Windows taskbar.
 
-![](img/wsl_terminal_ubuntu.png)
+![](img/wsl_terminal.png)
 
 It will open a terminal window. We will be working within this terminal through out this lab.
 
-![](img/wsl_terminal2_ubuntu.png)
+![](img/wsl_terminal2.png)
 
 In order to communicate with the Kubernetes cluster, `kubectl` looks for a file named config in the `$HOME/.kube` directory. You can specify other `kubeconfig` files by setting the `KUBECONFIG` environment variable or by setting the `--kubeconfig` flag.
 
@@ -146,7 +146,7 @@ You should see output similar to below. As you can see, each node has a role **c
 ```text
 $ kubectl get nodes
 NAME          STATUS   ROLES                  AGE     VERSION
-kube-group1   Ready    control-plane,master   2d18h   v1.23.5
+kube-group1   Ready    control-plane,master   2d18h   v1.21.5
 ...
 ```
 
@@ -194,7 +194,7 @@ spec:
 
 Open a WSL terminal session, if you don't have one open already.
 
-![](img/wsl_terminal_ubuntu.png)
+![](img/wsl_terminal.png)
 
 At the prompt, we will start by deploying the NGINX example above, by running:
 
@@ -314,7 +314,7 @@ With the `Pod` running, you can log in and explore the `Pod`.
 
 To do this, open a **second** terminal, by clicking on the WSL terminal icon again. The first terminal should have `kubectl port-forward` still running.
 
-![](img/wsl_terminal_ubuntu.png)
+![](img/wsl_terminal.png)
 
 Run:
 
@@ -390,7 +390,7 @@ The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on [Arti
 
 Open a WSL terminal session, if you don't have one open already.
 
-![](img/wsl_terminal_ubuntu.png)
+![](img/wsl_terminal.png)
 
 To install the chart with the name `my-hpe-csi-driver`, add the HPE CSI Driver for Kubernetes Helm repo.
 
@@ -405,6 +405,9 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 ```
 
+!!! note
+    It is safe to ignore the warnings: <br /> `W1104 14:25:11.178003   18461 warnings.go:70] apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition`.
+ 
 Wait a few minutes as the deployment finishes.
 
 Verify that everything is up and running correctly by listing out the `Pods`.
