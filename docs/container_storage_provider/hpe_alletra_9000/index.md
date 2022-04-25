@@ -17,6 +17,16 @@ Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific pla
 * [HPE Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 * [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
 
+### Network Port Requirements
+
+The HPE Alletra 9000, Primera and 3PAR Container Storage Provider requires the following TCP ports to be open inbound to the array from and the Kubernetes cluster worker nodes running the HPE CSI Driver for Kubernetes.
+
+| Port | Protocol | Description |
+| ---- | -------- | ----------- |
+| 443 | HTTPS | WSAPI (HPE Alletra 9000/Primera) |
+| 8080 | HTTPS | WSAPI (HPE 3PAR) |
+| 22 | SSH | Array communication |
+
 ### User Role Requirements
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
