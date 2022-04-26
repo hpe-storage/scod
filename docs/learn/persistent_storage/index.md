@@ -407,9 +407,6 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
 
 Wait a few minutes as the deployment finishes.
 
-!!! note
-    It is safe to ignore the warnings: <br /> `W1104 14:25:11.178003   18461 warnings.go:70] apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition`.
-
 Verify that everything is up and running correctly by listing out the `Pods`.
 
 ```text
