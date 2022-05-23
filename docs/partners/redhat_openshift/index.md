@@ -207,3 +207,28 @@ The CSI driver is now ready for use. Next, an [HPE storage backend needs to be a
 #### Additional information
 
 At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
+
+#### Uninstall the HPE CSI Operator
+
+When uninstalling an operator managed by OLM, a Cluster Admin must decide whether or not to remove the `CustomResourceDefinitions` (CRD), `APIServices`, and resources related to these types owned by the operator. By design, when OLM uninstalls an operator it does not remove any of the operator’s owned `CRDs`, `APIServices`, or `CRs` in order to prevent data loss.
+
+!!! important
+    Do not modify or remove these `CRDs` or `APIServices` if you are upgrading or reinstalling the HPE CSI driver in order to prevent data loss.
+
+The following are `CRDs` installed by the HPE CSI driver.
+
+```text
+hpenodeinfos.storage.hpe.com
+hpereplicationdeviceinfos.storage.hpe.com
+hpesnapshotgroupinfos.storage.hpe.com
+hpevolumegroupinfos.storage.hpe.com
+hpevolumeinfos.storage.hpe.com
+```
+
+The following are `APIServices` installed by the HPE CSI driver.
+
+```text
+v1.storage.hpe.com
+```
+
+Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
