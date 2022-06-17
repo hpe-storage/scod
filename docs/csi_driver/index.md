@@ -104,7 +104,7 @@ Release highlights:
 </table>
  
 <small>
- <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.1.0
@@ -155,7 +155,7 @@ Release highlights:
 </table>
  
 <small>
- <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.0.0
@@ -203,7 +203,7 @@ Release highlights:
 </table>
  
 <small>
- <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
 </small>
 
 #### HPE CSI Driver for Kubernetes 1.4.0
@@ -249,7 +249,7 @@ Release highlights:
 </table>
  
 <small>
- <sup>1</sup> = For HPE Ezmeral Container Platform, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
 </small>
 
 #### Release Archive

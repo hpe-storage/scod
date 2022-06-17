@@ -47,7 +47,7 @@ Some features may be limited and restricted in a multitenant deployment, such as
 - Both port 443 and 5392 needs to be exposed to the Kubernetes cluster in multitenant deployments.
 
 !!! seealso
-    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE DEV: [Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/).
+    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE Developer: [Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/). There's also a high level overview of multitenancy available as a [lightboard presentation on YouTube](https://www.youtube.com/watch?v=47txpSAGEZs).
 
 ### Limitations
 
@@ -134,6 +134,9 @@ Importing volumes to Kubernetes requires the source array volume to be offline. 
 | takeover           | Boolean | Indicates the current group will takeover ownership of the array volume and volume collection. This should be performed against a downstream replica. |
 | reverseReplication | Boolean | Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from. |
 | forceImport        | Boolean | Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead. |
+
+!!! seealso
+    In this [HPE Developer blog post](https://developer.hpe.com/blog/lift-and-transform-apps-with-hpe-csi-driver-for-kubernetes/) you'll learn how to use the import parameters to lift and transform applications from traditional infrastructure to Kubernetes using the HPE CSI Driver.
 
 ### Pod Inline Volume Parameters (Local Ephemeral Volumes)
 

@@ -5,7 +5,7 @@ The HPE Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CS
 [TOC]
 
 !!! note
-    For help getting started with deploying the HPE CSI Driver using HPE Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE DEV](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
+    For help getting started with deploying the HPE CSI Driver using HPE Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE Developer](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
 
 ## Platform Requirements
 
