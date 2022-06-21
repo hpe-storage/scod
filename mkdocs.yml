@@ -32,6 +32,7 @@ plugins:
         'container_storage_provider/hpe_nimble_storage/index.md': 'container_storage_provider/hpe_alletra_6000/index.md'
         'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_9000/index.md'
         'partners/rancher_labs/index.md': 'partners/suse_rancher/index.md'
+        'ezmeral_container_platform/install.md': 'ezmeral/install.md'
 nav:
   - WELCOME:
     - 'Get started!': 'welcome/index.md'
@@ -52,8 +53,8 @@ nav:
 #   - 'HPE RA Library': ''
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
-  - HPE EZMERAL CONTAINER PLATFORM:
-    - 'Install HPE CSI Driver': "ezmeral_container_platform/install.md"
+  - HPE EZMERAL RUNTIME ENTERPRISE:
+    - 'Install HPE CSI Driver': "ezmeral/install.md"
   - PARTNER ECOSYSTEMS:
     - 'Commvault': "partners/commvault/index.md"
     - 'Kasten by Veeam': 'partners/kasten/index.md'

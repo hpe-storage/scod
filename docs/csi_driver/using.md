@@ -368,7 +368,7 @@ spec:
 The parameters used in the examples are the bare minimum required parameters. Any parameters supported by the HPE CSI Driver and backend CSP may be used for ephemeral inline volumes. See the [base StorageClass parameters](#base_storageclass_parameters) or the respective CSP being used.
 
 !!! seealso
-    For more elaborate use cases around ephemeral inline volumes, check out the tutorial on HPE DEV: [Using Ephemeral Inline Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
+    For more elaborate use cases around ephemeral inline volumes, check out the tutorial on HPE Developer: [Using Ephemeral Inline Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
 
 ### Raw Block Volumes
 
@@ -415,7 +415,7 @@ spec:
 ```
 
 !!! seealso
-    There's an in-depth tutorial available on HPE DEV that covers raw block volumes: [Using Raw Block Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
+    There's an in-depth tutorial available on HPE Developer that covers raw block volumes: [Using Raw Block Volumes on Kubernetes](https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes)
 
 ### Using CSI Snapshots
 
@@ -561,7 +561,7 @@ spec:
 Again, the size in `.spec.resources.requests.storage` must match the source `PersistentVolumeClaim`. This can get sticky from an automation perspective as volume expansion is being used on the source volume. It's recommended to inspect the source `PersistentVolumeClaim` or `VolumeSnapshot` size prior to creating a clone.
 
 !!! seealso "Learn more"
-    For a more comprehensive tutorial on how to use snapshots and clones with CSI on Kubernetes 1.17, see [HPE CSI Driver for Kubernetes: Snapshots, Clones and Volume Expansion](https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion) on HPE DEV.
+    For a more comprehensive tutorial on how to use snapshots and clones with CSI on Kubernetes 1.17, see [HPE CSI Driver for Kubernetes: Snapshots, Clones and Volume Expansion](https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion) on HPE Developer.
 
 ### Volume Groups
 
@@ -783,7 +783,7 @@ Any RWO claim made against the `StorageClass` will also create a NFS server `Dep
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
-    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE DEV on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
+    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
 
 Example use of `accessModes`:
 
@@ -858,15 +858,16 @@ Requesting an empty read-only volume might not seem practical. The primary use c
 
 #### Limitations and Considerations for the NFS Server Provisioner
 
-The current tested and supported limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
+These are some common issues and gotchas that are useful to know about when planning to use the NFS Server Provisioner.
 
-The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation.
-
-The `PVC` with "ReadWriteMany" or "ReadOnlyMany" access mode can NOT be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
-
-Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
-
-The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
+- The current tested and supported limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
+- The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation.
+- The NFS `PVC` can NOT be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
+- Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
+- The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
+- Certain CNIs may have issues to gracefully restore access from the NFS clients to the NFS export. Flannel have exhibited this problem and the most consistent performance have been observed with Calico.
+- The [Volume Mutation](#using_volume_mutations) feature does not work on the NFS `PVC`. If changes are needed, perform the change on the backing "ReadWriteOnce" `PVC`.
+- As outlined in [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner), CSI snapshots and cloning of NFS `PVCs` requires the CSI snapshot and NFS server to reside in the same `Namespace`. This also applies when using third-party backup software such as Kasten K10.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 
@@ -973,7 +974,7 @@ Filesystem              Size  Used Avail Use% Mounted on
 Host-based volume encryption is in effect if the "enc" prefix is seen on the multipath device name.
 
 !!! seealso 
-    For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE DEV: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
+    For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE Developer: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
 
 ## Further Reading
 

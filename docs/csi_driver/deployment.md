@@ -17,7 +17,7 @@ As different methods of installation are provided, it might not be too obvious w
 | Vanilla upstream Kubernetes cluster on a supported host OS. | The [Helm chart](#helm) |
 | Red Hat OpenShift 4.x cluster.         | The [certified CSI operator for OpenShift](../partners/redhat_openshift/index.md) |
 | Supported environment with multiple backends. | [Helm chart](#helm) with additional [Secrets](#create_a_secret_with_backend_details) and [StorageClasses](using.md#base_storageclass_parameters) |
-| HPE Ezmeral Container Platform environment. | The [Helm chart](#helm) |
+| HPE Ezmeral Runtime Enterprise environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
 | Supported platform in an air-gapped environment | The [Helm chart](#helm) using the air-gapped procedure |
@@ -464,9 +464,6 @@ Depending on which version is being deployed, different API objects gets created
 
 The following steps outline how to uninstall the CSI driver that has been deployed using the [Advanced Install](#advanced_install) above. 
 
-!!! caution
-    Uninstalling the HPE CSI Driver while applications have volumes mounted through the CSI driver can lead to IO disruption or data loss. Exercise extreme care when uninstalling.
-
 Uninstall Worker node settings:
 
 ```text
@@ -511,3 +508,7 @@ If no longer needed, delete the "hpe-storage" `Namespace`.
 ```text
 kubectl delete ns hpe-storage
 ```
+
+## Downgrading the CSI driver
+
+Downgrading the CSI driver is currently not supported. It will work between certain minor versions. HPE does not test or document procedures to downgrade between incompatible versions.
