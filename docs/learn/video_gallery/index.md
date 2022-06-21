@@ -49,7 +49,7 @@ This tutorial showcases a few of the HPE Nimble Storage specific features with t
 
 #### Manage multitenancy at scale with HPE Alletra 6000 and Nimble Storage
 
-This lightboard video discuss the advantages of using HPE Alletra 6000 or Nimble Storage to handle multitenancy for storage resources between Kubernetes clusters.
+This lightboard video discusses the advantages of using HPE Alletra 6000 or Nimble Storage to handle multitenancy for storage resources between Kubernetes clusters.
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/47txpSAGEZs" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -151,7 +151,7 @@ Learn how to stand up a Prometheus and Grafana environment on Kubernetes and sta
 
 ### Lift and Transform Apps and Data with HPE Storage
 
-This lightboard video discuss how to lift and transform applications running on traditional infrastructure over to Kubernetes using the HPE CSI Driver. Learn the details on what makes this possible in this [HPE Developer blog post](https://developer.hpe.com/blog/lift-and-transform-apps-with-hpe-csi-driver-for-kubernetes/).
+This lightboard video discusses how to lift and transform applications running on traditional infrastructure over to Kubernetes using the HPE CSI Driver. Learn the details on what makes this possible in this [HPE Developer blog post](https://developer.hpe.com/blog/lift-and-transform-apps-with-hpe-csi-driver-for-kubernetes/).
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/M7t_qPe3i5E" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
