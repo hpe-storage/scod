@@ -145,10 +145,6 @@
   width: 310px;
 }
 
-.wy-nav-content-wrap {
-  /* margin-left: 310px; */
-}
-
 .rst-content .section ol li > ol, .rst-content .section ol li > ul, .rst-content .section ul li > ol, .rst-content .section ul li > ul, .rst-content .toctree-wrapper ol li > ol, .rst-content .toctree-wrapper ol li > ul, .rst-content .toctree-wrapper ul li > ol, .rst-content .toctree-wrapper ul li > ul, .rst-content section ol li > ol, .rst-content section ol li > ul, .rst-content section ul li > ol, .rst-content section ul li > ul, .rst-content .section ol li > *, .rst-content .section ul li > *, .rst-content .toctree-wrapper ol li > *, .rst-content .toctree-wrapper ul li > *, .rst-content section ol li > *, .rst-content section ul li > * {
 	margin-top: 0px;
 	margin-bottom: 0px;
