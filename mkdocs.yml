@@ -1,4 +1,4 @@
-site_name: 'HPE Storage Container Orchestrator Documentation'
+site_name: 'scod.hpedev.io'
 site_description: 'Reference documentation for container orchestrator integration for HPE storage'
 site_url: 'https://scod.hpedev.io/'
 site_author: 'Hewlett Packard Enterprise'
