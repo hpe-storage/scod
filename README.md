@@ -120,6 +120,22 @@ Example:
 
 There should be an example of this [here](https://scod.hpedev.io/csi_driver/deployment.html#advanced_install).
 
+# Embed file contents into markdown files
+
+The MkDocs instance make use of the [mkdocs-include-markdown-plugin](https://github.com/mondeja/mkdocs-include-markdown-plugin). This allows files in the structure to be included into the content but also allows files to be downloadable. Such an example is to embed a YAML file into code block and also make it available as-is, referenceable via a URL.
+
+See the example directives in the plugin docs:
+
+- https://github.com/mondeja/mkdocs-include-markdown-plugin#reference
+
+# Macros
+
+Accessing Jinja-style template variables and macros is accomplished by enclosing the variable or macro  in `{{ my_var or my_macro() }}`. Display the documentation and current variables by putting the following into a markdown page and render it:
+
+```
+{{ macros_info() }}
+```
+
 # Get in touch
 
 The HPE storage team hangs out on [hpedev.slack.com](https://hpedev.slack.com) (sign up [here](https://slack.hpedev.io) if you don't have an @hpe.com address) in #kubernetes and their respective product channels, like #nimblestorage. Feel free to reach out to us there or simply file an [issue](//github.com/hpe-storage/scod/issues) if you have any questions.

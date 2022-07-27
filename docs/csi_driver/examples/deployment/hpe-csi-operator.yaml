@@ -1,0 +1,35 @@
+---
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: csi-driver
+spec:
+  disable:
+    nimble: false
+    primera: false
+    alletra6000: false
+    alletra9000: false
+  imagePullPolicy: IfNotPresent
+  logLevel: info
+  disableNodeConformance: false
+  iscsi:
+    chapUser: ''
+    chapPassword: ''
+  registry: quay.io
+  kubeletRootDir: "/var/lib/kubelet/"
+  disableNodeGetVolumeStats: false
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []

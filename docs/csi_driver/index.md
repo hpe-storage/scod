@@ -21,22 +21,23 @@ Below is the official table for CSI features we track and deem readily available
 
 | Feature                                | K8s maturity      | Since K8s version | HPE CSI Driver |
 |----------------------------------------|-------------------|-------------------|----------------|
-| Dynamic Provisioning                   | GA                | 1.13              | 1.0.0          |
-| Volume Expansion                       | Beta              | 1.16              | 1.1.0          |
-| Volume Snapshots                       | GA                | 1.20              | 1.1.0          |
-| PVC Data Source                        | GA                | 1.18              | 1.1.0          |
-| Raw Block Volume                       | GA                | 1.18              | 1.2.0          |
+| Dynamic Provisioning                   | Stable            | 1.13              | 1.0.0          |
+| Volume Expansion                       | Stable            | 1.24              | 1.1.0          |
+| Volume Snapshots                       | Stable            | 1.20              | 1.1.0          |
+| PVC Data Source                        | Stable            | 1.18              | 1.1.0          |
+| Raw Block Volume                       | Stable            | 1.18              | 1.2.0          |
 | Inline Ephemeral Volumes               | Beta              | 1.16              | 1.2.0          |
-| Volume Limits                          | GA                | 1.17              | 1.2.0          |
+| Volume Limits                          | Stable            | 1.17              | 1.2.0          |
 | Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
 | Generic Ephemeral Volumes              | GA                | 1.23              | 1.3.0          |
 | Volume Groups<sup>1</sup>              | N/A               | 1.17              | 1.4.0          |
 | Snapshot Groups<sup>1</sup>            | N/A               | 1.17              | 1.4.0          |
 | NFS Server Provisioner<sup>1</sup>     | N/A               | 1.17              | 1.4.0          |
 | Volume Encryption<sup>1</sup>          | N/A               | 1.18              | 2.0.0          |
-| Topology                               | GA                | 1.17              | Future         |
+| Topology                               | Stable            | 1.17              | Future         |
+| Storage Capacity Tracking              | Stable            | 1.24              | Future         |
 | Volume Health                          | Alpha             | 1.21              | Future         |
-| Volume Populator                       | Alpha             | 1.18              | Future         |
+| Volume Populator                       | Beta              | 1.24              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
@@ -56,6 +57,64 @@ These are the combinations HPE has tested and can provide official support servi
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md), do note that the FlexVolume drivers are being deprecated.
+
+#### HPE CSI Driver for Kubernetes 2.2.0
+
+Release highlights:
+
+* Support for Kubernetes 1.24 and Red Hat OpenShift 4.10
+* Added Tolerations, Affinity, Labels and Node Selectors to Helm chart
+* Improved automatic recovery for the NFS Server Provisioner
+* Added multipath handling for Alletra 9000, Primera and 3PAR
+* Volume expansion of encrypted volumes
+
+Upgrade considerations:
+
+* Existing [encrypted volumes needs to be migrated](operations.md#migrate_encrypted_volumes) to allow expansion
+* Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v220).
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.21-1.24<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      RHEL<sup>2</sup> 7.x & 8.x, RHCOS 4.8 & 4.10<br />
+      Ubuntu 16.04, 18.04 & 20.04<br />
+      SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x - 6.1.0.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.0.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.2.0.md>v2.2.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/Updates-and-Improvements-to-HPE-CSI-Driver-for-Kubernetes/ba-p/7170878">Updates and Improvements to HPE CSI Driver for Kubernetes</a> (release blog)
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.
+</small>
 
 #### HPE CSI Driver for Kubernetes 2.1.1
 
@@ -198,52 +257,6 @@ Release highlights:
     <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-now-available-for-HPE-Alletra/ba-p/7136280">HPE CSI Driver for Kubernetes now available for HPE Alletra</a> (release blog)<br />
     <a href="https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/">Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble</a> (tutorial)<br />
     <a href="https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/">Host-based Volume Encryption with HPE CSI Driver for Kubernetes</a> (tutorial)
-   </td>
- </tr>
-</table>
- 
-<small>
- <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
-</small>
-
-#### HPE CSI Driver for Kubernetes 1.4.0
-
-Release highlights:
-
-* Kubernetes CSI Sidecars: Volume Group Provisioner and Volume Group Snapshotter
-* NFS Server Provisioner GA
-* HPE Primera Remote Copy Peer Persistence support
-* Air-gap support for the Helm chart
-
-<table>
-  <tr>
-    <th>Kubernetes</th>
-    <td>1.17-1.20<sup>1</sup></td>
-  </tr>
-  <tr>
-    <th>Worker&nbsp;OS</th>
-    <td>CentOS and RHEL 7.7 & 8.1, RHCOS 4.4 & 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP1
-  </tr>
-  <tr>
-    <th>Data&nbsp;protocol</th>
-    <td>Fibre Channel, iSCSI </td>
-  </tr>
-  <tr>
-    <th>Platforms</th>
-    <td>
-      NimbleOS 5.0.10.0-x, 5.1.4.200-x, 5.2.1.0-x, 5.3.0.0-x, 5.3.1.0-x<br />
-      3PAR OS 3.3.1+<br />
-      Primera OS 4.0+<br />
-    </td>
-  <tr>
-    <th>Release&nbsp;notes</th>
-    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.4.0.md>v1.4.0</a> on GitHub</td>
-  </tr>
-  <tr>
-   <th>Blogs</th>
-   <td>
-    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-v1-4-0-with-expanded-ecosystem-and/ba-p/7118180">HPE CSI Driver for Kubernetes v1.4.0 now available!</a> (release blog) <br />
-    <a href="https://developer.hpe.com/blog/7mBn6Yj89Wcg6VN6lzMO/synchronized-volume-snapshots-for-distributed-workloads-on-kubernetes">Synchronized Volume Snapshots for Distributed Workloads on Kubernetes</a> (tutorial)
    </td>
  </tr>
 </table>
