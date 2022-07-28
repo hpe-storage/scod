@@ -26,12 +26,12 @@ These are the assumptions made throughout this procedure.
 - Only `ReadWriteOnce` `PVCs` are covered.
 - No custom `PVC` annotations.
 
-!!! note
-    While these steps are constrained, the workflow remain principally the same if any of these assumptions can't be fulfilled in the particular target environment.
+!!! tip
+    There are many different ways to copy `PVCs`. These steps outlines and uses one particular method developed and tested by HPE and similar workflows may be applied with other tools and procedures.
 
 ### Prepare the Workload and Persistent Volume Claims
 
-First, identify the `PersistentVolume` to migrate from and set a shell variables.
+First, identify the `PersistentVolume` to migrate from and set shell variables.
 
 ```text
 export OLD_SRC_PVC=<insert your existing PVC name here>
@@ -43,9 +43,9 @@ export OLD_SRC_PV=$(kubectl get pvc -o json | \
 !!! important
     Ensure these shell variables are set at all times.
 
-In order to copy data out from a `PVC` the running workload needs to be disassociated with the `PVC`. It's not possible to scale the replicas to zero, the exception being `ReadWriteMany` `PVCs` but that could lead to data inconsistency problems and these procedures assumes application consistency by having the workload shut down.
+In order to copy data out of a `PVC`, the running workload needs to be disassociated with the `PVC`. It's not possible to scale the replicas to zero, the exception being `ReadWriteMany` `PVCs` which could lead to data inconsistency problems. These procedures assumes application consistency by having the workload shut down.
 
-It's out of scope for this procedure how to shut down the particular workload. Ensure there are no `volumeattachments` associated with the `PersistentVolume`.
+It's out of scope for this procedure to demonstrate how to shut down a particular workload. Ensure there are no `volumeattachments` associated with the `PersistentVolume`.
 
 ```text
 kubectl get volumeattachment -o json | \
@@ -55,7 +55,7 @@ kubectl get volumeattachment -o json | \
 ```
 
 !!! tip
-    For large `volumeMode: Filesystem` `PVCs` where copying data may take days, it's recommended to use the [Optional Workflow with Filesystem Persistent Volume Claims](#optional_workflow_with_filesystem_persistent_volume_claims) that utilize the `PVC` `dataSource` capability.
+    For large `volumeMode: Filesystem` `PVCs` where copying data may take days, it's recommended to use the [Optional Workflow with Filesystem Persistent Volume Claims](#optional_workflow_with_filesystem_persistent_volume_claims) that utilizes the `PVC` `dataSource` capability.
 
 #### Create a new Persistent Volume Claim and Update Retain Policies
 
@@ -114,8 +114,8 @@ kubectl patch pv/${OLD_SRC_PV} pv/${NEW_DST_PV} \
  -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
 ```
 
-!!! caution "Dataloss Warning"
-    It's **EXTREMELY** important no errors are returned from the above command. It **WILL** lead to dataloss.
+!!! caution "Data Loss Warning"
+    It's **EXTREMELY** important no errors are returned from the above command. It **WILL** lead to data loss.
 
 Validate the "persistentVolumeReclaimPolicy".
 
@@ -130,7 +130,7 @@ kubectl get pv/${OLD_SRC_PV} pv/${NEW_DST_PV} -o json | \
 
 ### Copy Persistent Volume Claim and Reset
 
-In this phase the data will be copied from the original `PVC` to the new `PVC` with a `Job` submitted to the cluster. Different tools are being used to perform the copy operation, ensure to pick the correct `volumeMode`.
+In this phase, the data will be copied from the original `PVC` to the new `PVC` with a `Job` submitted to the cluster. Different tools are being used to perform the copy operation, ensure to pick the correct `volumeMode`.
 
 #### PVCs with volumeMode: Filesystem
 
@@ -199,7 +199,7 @@ Proceed to [restart the workload](#restart_the_workload).
 
 ### Restart the Workload
 
-This step requires that both the old source `PVC` and the new destination `PVC` to be deleted. Once again, ensure the correct `persistentVolumeReclaimPolicy` is set on the `PVs`.
+This step requires both the old source `PVC` and the new destination `PVC` to be deleted. Once again, ensure the correct `persistentVolumeReclaimPolicy` is set on the `PVs`.
 
 ```text
 kubectl get pv/${OLD_SRC_PV} pv/${NEW_DST_PV} -o json | \
@@ -282,7 +282,7 @@ Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary 
 
 ## Upgrade NFS Servers 
 
-In the event of where the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
+In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
 
 ### Upgrade to v2.2.0
 
@@ -302,7 +302,7 @@ Any prior deployed NFS servers may be upgraded to v2.2.0.
 
 #### Patch Running NFS Servers
 
-When patching the NFS `Deployments` the `Pods` will restart and cause a pause in I/O for the NFS clients having active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
+When patching the NFS `Deployments`, the `Pods` will restart and cause a pause in I/O for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
 
 Patch all NFS `Deployments` with the following.
 
