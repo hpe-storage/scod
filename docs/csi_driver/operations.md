@@ -278,7 +278,7 @@ spec:
 !!! tip
     The capacity of the `dataSource` clone must match the original `PVC`.
 
-Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary but it's recommended to be familiar with using [CSI snapshots](csi_driver/using.md#using_csi_snapshots).
+Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary but it's recommended to be familiar with using [CSI snapshots](using.md#using_csi_snapshots).
 
 ## Upgrade NFS Servers 
 
