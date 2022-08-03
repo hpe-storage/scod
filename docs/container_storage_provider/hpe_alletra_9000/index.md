@@ -194,10 +194,16 @@ These parameters are applicable only for replication. Both parameters are mandat
 
 | Parameter       | Option  | Description |
 | --------------- | ------- | ----------- |
-| remoteCopyGroup | Text    | Name of new or existing Remote Copy group on the array. |
+| remoteCopyGroup | Text    | Name of new or existing Remote Copy group <sup>1</sup> on the array. |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
 | oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
+
+<small>
+ Remote Copy additional details: 
+ <br /><sup>1</sup> = Existing RCG must have CPG and Copy CPG configured.
+ <br />Link to [HPE Primera OS: Configuring data replication using Remote Copy](https://techhub.hpe.com/eginfolib/storage/docs/Primera/RemoteCopy/RCconfig/index.html#GUID-F6C62635-5398-48E5-B1A6-3C8D8806C0D8.html)
+</small>
 
 !!! important
     
