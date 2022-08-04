@@ -12,6 +12,7 @@ Learn more about the partnership and enablement at [docs.pivotal.io](https://doc
 
 It's important to verify that the host OS and Kubernetes version is supported by the HPE CSI Driver. 
 
+- Only iSCSI is supported ([learn why](../vmware/index.md#deployment))
 - Verify versions in the [Compatibility and Support](../../csi_driver/index.md#compatibility_and_support) table
 
 ## Installation

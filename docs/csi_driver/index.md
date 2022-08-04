@@ -79,15 +79,22 @@ Upgrade considerations:
     <td>1.21-1.24<sup>1</sup></td>
   </tr>
   <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.2.0">v2.2.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.2.1">v2.2.1</a> on OperatorHub<br />
+     v2.2.1</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
     <th>Worker&nbsp;OS</th>
     <td>
       RHEL<sup>2</sup> 7.x & 8.x, RHCOS 4.8 & 4.10<br />
       Ubuntu 16.04, 18.04 & 20.04<br />
       SLES 15 SP2
-  </tr>
-  <tr>
-    <th>Data&nbsp;protocol</th>
-    <td>Fibre Channel, iSCSI</td>
   </tr>
   <tr>
     <th>Platforms</th>
@@ -98,6 +105,10 @@ Upgrade considerations:
       Primera OS 4.3.x - 4.5.x<br />
       3PAR OS 3.3.x
     </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
   </tr>
   <tr>
     <th>Release&nbsp;notes</th>

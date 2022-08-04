@@ -15,7 +15,7 @@ git clone https://github.com/< your username or organization >/scod
 cd scod
 ```
 
-SCOD uses [MkDocs](https://www.mkdocs.org) 1.0.4. Ensure you have Python (with `pip`) preinstalled, then install `mkdocs` along with the required plugins.
+SCOD uses [MkDocs](https://www.mkdocs.org). Ensure you have Python (with `pip`) preinstalled, then install `mkdocs` along with the required plugins.
 
 ```
 pip install -r requirements.txt
