@@ -48,7 +48,7 @@ For more information on OpenShift security, see [Managing security context const
 
 ### Limitations
 
-Since the CSI Operator only provide "Basic Install" capabilities. The following limitations apply.
+Since the CSI Operator only provides "Basic Install" capabilities. The following limitations apply:
 
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
 
