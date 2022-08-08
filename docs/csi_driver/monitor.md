@@ -64,4 +64,4 @@ spec:
 
 ## Limitations
 
-* Kubernetes provide automatic recovery for your applications, not high availability. Expect applications to take minutes (up to 8 minutes) to fully recover during a node failure or network partition using the Pod Monitor for `Pods` with `PersistentVolumeClaims`.
+* Kubernetes provide automatic recovery for your applications, not high availability. Expect applications to take minutes (up to 8 minutes with the default tolerations for `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable`) to fully recover during a node failure or network partition using the Pod Monitor for `Pods` with `PersistentVolumeClaims`.

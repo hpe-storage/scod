@@ -33,6 +33,8 @@ plugins:
         'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_9000/index.md'
         'partners/rancher_labs/index.md': 'partners/suse_rancher/index.md'
         'ezmeral_container_platform/install.md': 'ezmeral/install.md'
+  - include-markdown:
+  - macros:
 nav:
   - WELCOME:
     - 'Get started!': 'welcome/index.md'
@@ -40,9 +42,10 @@ nav:
     - 'Overview': 'csi_driver/index.md'
     - 'Deployment': 'csi_driver/deployment.md'
     - 'Using': 'csi_driver/using.md'
-    - 'Pod Monitor': 'csi_driver/monitor.md'
-    - 'Diagnostics': 'csi_driver/diagnostics.md'
     - 'Metrics': 'csi_driver/metrics.md'
+    - 'Pod Monitor': 'csi_driver/monitor.md'
+    - 'Auxiliary Operations': 'csi_driver/operations.md'
+    - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
     - 'HPE Alletra 6000 and Nimble': 'container_storage_provider/hpe_alletra_6000/index.md'
     - 'HPE Alletra 9000 and Primera/3PAR': 'container_storage_provider/hpe_alletra_9000/index.md'
@@ -61,6 +64,7 @@ nav:
     - 'Mirantis': 'partners/mirantis/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
     - 'SUSE Rancher': 'partners/suse_rancher/index.md'
+    - 'Tanzu Kubernetes Grid Integrated': 'partners/tkgi/index.md'
     - 'VMware': 'partners/vmware/index.md'
 #   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
   - LEARN:

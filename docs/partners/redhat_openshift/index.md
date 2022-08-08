@@ -17,22 +17,23 @@ Software delivered through the HPE and Red Hat partnership follows a rigorous ce
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers          |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------ |
-| Certified               | 4.4                               | 1.4.0                      | Nimble, Primera and 3PAR             |
-| Uncertified<sup>2</sup> | 4.5 (Upgrade path only)           | -                          | -                                    |
-| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0, 2.0.0, 2.1.0, 2.1.1 | Alletra, Nimble, Primera and 3PAR    |
+| Certified               | 4.10 EUS<sup>3</sup>              | 2.2.1                      | [All](../../container_storage_provider/index.md) |
+| Uncertified<sup>2</sup> | 4.9 (Upgrade path only)           | -                          | -                                    |
+| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.3<sup>4</sup>, 2.2.1               | [All](../../container_storage_provider/index.md) |
 | Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                          | -                                    |
-| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.0, 2.1.1               | Alletra, Nimble, Primera and 3PAR    |
-| Uncertified<sup>2</sup> | 4.9                               | -                          | -                                    |
+| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0<sup>4</sup>, 2.0.0<sup>4</sup>, 2.1.3<sup>4</sup> | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
-<small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small>
+<small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
+<small><sup>4</sup> = This version is currently uninstallable.</small>
 
 Check this table periodically for future releases.
 
 !!! seealso "Pointers"
-    Other combinations may work but will not be supported.  
-    Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
+    - Other combinations may work but will not be supported.
+    - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
+    - Instructions on this page only reflect the current version of the CSI Operator and OpenShift.
 
 ### Security model
 
@@ -44,6 +45,12 @@ For more information on OpenShift security, see [Managing security context const
 
 !!! note
     If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsMode: "0770"` parameter to the `StorageClass` with RWO claims or `fsMode: "0777"` for RWX claims.
+
+### Limitations
+
+Since the CSI Operator only provides "Basic Install" capabilities. The following limitations apply:
+
+- The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
 
 ### Deployment
 
@@ -64,8 +71,13 @@ In situations where the operator needs to be upgraded, follow the prerequisite s
 Once the steps have been followed for the particular version transition:
 
 - Uninstall the `HPECSIDriver` instance
-- Uninstall the HPE CSI Operator for Kubernetes
+- Delete the "hpecsidrivers.storage.hpe.com" `CRD`<br />:
+  `oc delete crd/hpecsidrivers.storage.hpe.com`
+- [Uninstall](#uninstall_the_hpe_csi_operator) the HPE CSI Operator for Kubernetes
 - Proceed to installation through the [OpenShift Web Console](#openshift_web_console) or [OpenShift CLI](#openshift_cli)
+
+!!! important "Good to know"
+    Deleting the `HPECSIDriver` instance and uninstalling the CSI Operator does not affect any running workloads, `PersistentVolumeClaims`, `StorageClasses` or other API resources created by the CSI Operator. In-flight operations and new requests will be retried once the new `HPECSIDriver` has been instantiated.
 
 #### Prerequisites
 
@@ -179,28 +191,7 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 The next step is to create a `HPECSIDriver` object.
 
 ```yaml
-apiVersion: storage.hpe.com/v1
-kind: HPECSIDriver
-metadata:
-  name: csi-driver
-  namespace: hpe-csi-driver
-spec:
-  logLevel: info
-  disable:
-    alletra6000: false
-    alletra9000: false
-    nimble: false
-    primera: false
-  disableNodeConformance: false
-  iscsi:
-    chapPassword: ''
-    chapUser: ''
-  imagePullPolicy: IfNotPresent
-  cspClientTimeout: 60
-  disableNodeGetVolumeStats: false
-  registry: quay.io
-  kubeletRootDir: /var/lib/kubelet/
-```
+{% include "../../csi_driver/examples/deployment/hpe-csi-operator.yaml" %}```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
@@ -218,17 +209,25 @@ When uninstalling an operator managed by OLM, a Cluster Admin must decide whethe
 The following are `CRDs` installed by the HPE CSI driver.
 
 ```text
+hpecsidrivers.storage.hpe.com
 hpenodeinfos.storage.hpe.com
 hpereplicationdeviceinfos.storage.hpe.com
 hpesnapshotgroupinfos.storage.hpe.com
 hpevolumegroupinfos.storage.hpe.com
 hpevolumeinfos.storage.hpe.com
+snapshotgroupclasses.storage.hpe.com
+snapshotgroupcontents.storage.hpe.com
+snapshotgroups.storage.hpe.com
+volumegroupclasses.storage.hpe.com
+volumegroupcontents.storage.hpe.com
+volumegroups.storage.hpe.com
 ```
 
 The following are `APIServices` installed by the HPE CSI driver.
 
 ```text
 v1.storage.hpe.com
+v2.storage.hpe.com
 ```
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
