@@ -1,3 +1,4 @@
+<img src="img/vm-pks.png" align="right" width="160" hspace="20" vspace="20" />
 # Overview
 
 VMware Tanzu Kubernetes Grid Integrated Engine (TKGI) is supported by the HPE CSI Driver for Kubernetes.
@@ -6,7 +7,7 @@ VMware Tanzu Kubernetes Grid Integrated Engine (TKGI) is supported by the HPE CS
 
 VMware and HPE have a long standing partnership across each of the product portfolios. Allowing TKGI users to access persistent storage with the HPE CSI Driver accelerates stateful workload performance, scalability and efficiency. 
 
-Learn more about the partnership and enablement at [docs.pivotal.io](https://docs.pivotal.io/partners/).
+Learn more about the partnership and enablement on the [VMware Marketplace](https://marketplace.cloud.vmware.com/services/details/hpe-csi-driver-for-kubernetes-1?slug=true).
 
 ## Prerequisites
 
