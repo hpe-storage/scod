@@ -1,3 +1,4 @@
+<img src="img/vm-pks.png" align="right" width="160" hspace="20" vspace="20" />
 # Overview
 
 VMware Tanzu Kubernetes Grid Integrated Engine (TKGI) is supported by the HPE CSI Driver for Kubernetes.
