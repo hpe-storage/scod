@@ -10,7 +10,7 @@ Rancher is capable of managing Kubernetes across a broad spectrum of managed and
 
 ## Supported versions
 
-Rancher uses Helm to deploy and manage partner software. The concept of a Helm repository in Rancher is organized under "Apps & Marketplace" in the Rancher UI. The HPE CSI Driver for Kubernetes is a partner solution present in the official Partner repository.
+Rancher uses Helm to deploy and manage partner software. The concept of a Helm repository in Rancher is organized under "Apps" in the Rancher UI. The HPE CSI Driver for Kubernetes is a partner solution present in the official Partner repository.
 
 | Rancher release | Install methods                       | Recommended CSI driver |
 | --------------- | ------------------------------------- | ---------------------- |
@@ -29,7 +29,7 @@ The HPE CSI Driver is part of the official Partner repository in Rancher. The CS
 
 #### Rancher Cluster Manger (2.6 and newer)
 
-Navigate to "Apps & Marketplace" and select "Charts", search for "HPE CSI".
+Navigate to "Apps" and select "Charts", search for "HPE CSI".
 
 ![](img/new_cluster_manager.png)
 <small>Rancher Cluster Explorer</small>
