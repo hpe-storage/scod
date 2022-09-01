@@ -389,8 +389,13 @@ spec:
   volumeMode: Block
 ```
 
+<!--
 !!! note
     The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
+-->
+
+!!! caution
+    The CSI driver will allow `volumeMode: Block` `PVCs` with `ReadWriteMany` and `ReadOnlyMany` `accessModes` to be provisioned without any exceptions, but it's currently **not** supported and may lead to unpredictable behavior.
 
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
