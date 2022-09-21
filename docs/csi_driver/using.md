@@ -48,6 +48,15 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v2.2.0"
+# Kubernetes 1.21-1.24
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v5.0.1 -b release-5.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
 ```text fct_label="HPE CSI Driver v2.1.1"
 # Kubernetes 1.20-1.23
 git clone https://github.com/kubernetes-csi/external-snapshotter
@@ -68,14 +77,6 @@ git checkout tags/v4.0.0 -b release-4.0
 git checkout tags/v3.0.3 -b release-3.0
 
 # All versions
-kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
-```
-
-```text fct_label="HPE CSI Driver v1.4.0"
-# Kubernetes 1.17-1.19
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v3.0.3 -b release-3.0
 kubectl apply -f client/config/crd -f deploy/kubernetes/snapshot-controller
 ```
 
@@ -432,9 +433,7 @@ CSI introduces snapshots as native objects in Kubernetes that allows end-users t
 
 Start by creating a `VolumeSnapshotClass` referencing the `Secret` and defining additional snapshot parameters.
 
-Kubernetes 1.20+ (CSI snapshots GA)
-
-```yaml fct_label="HPE CSI Driver v2.0.0+"
+```yaml
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
@@ -451,54 +450,13 @@ parameters:
   csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
 ```
 
-Kubernetes 1.17-1.19 (CSI snapshots in beta)
-
-```yaml fct_label="HPE CSI Driver v1.4.0"
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshotClass
-metadata:
-  name: hpe-snapshot
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: csi.hpe.com
-deletionPolicy: Delete
-parameters:
-  description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
-  csi.storage.k8s.io/snapshotter-list-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
-```
-
-```yaml fct_label="HPE CSI Driver v1.3.0"
-apiVersion: snapshot.storage.k8s.io/v1beta1
-kind: VolumeSnapshotClass
-metadata:
-  name: hpe-snapshot
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: csi.hpe.com
-deletionPolicy: Delete
-parameters:
-  description: "Snapshot created by the HPE CSI Driver"
-  csi.storage.k8s.io/snapshotter-secret-name: hpe-backend
-  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
-```
+!!! note
+    [Container Storage Providers](../container_storage_provider) may have optional parameters to the `VolumeSnapshotClass`.
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
 
-```yaml fct_label="GA"
+```yaml
 apiVersion: snapshot.storage.k8s.io/v1
-kind: VolumeSnapshot
-metadata:
-  name: my-snapshot
-spec:
-  source:
-    persistentVolumeClaimName: my-pvc
-```
-
-```yaml fct_label="beta"
-apiVersion: snapshot.storage.k8s.io/v1beta1
 kind: VolumeSnapshot
 metadata:
   name: my-snapshot
@@ -512,7 +470,7 @@ spec:
 
 Check that a new `VolumeSnapshot` is created based on your claim:
 
-```yaml
+```text
 kubectl describe volumesnapshot my-snapshot
 Name:         my-snapshot
 Namespace:    default
