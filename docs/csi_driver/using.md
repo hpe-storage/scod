@@ -470,7 +470,7 @@ spec:
 
 Check that a new `VolumeSnapshot` is created based on your claim:
 
-```yaml
+```text
 kubectl describe volumesnapshot my-snapshot
 Name:         my-snapshot
 Namespace:    default
