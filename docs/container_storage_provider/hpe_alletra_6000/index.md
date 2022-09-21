@@ -37,6 +37,43 @@ In array OS 6.0.0 and newer it's possible to create separate tenants using the `
 
 No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
 
+For reference, as of array OS 6.0.0, this is the `tenantadmin` command synopsis.
+
+```text
+$ tenantadmin --help
+Usage: tenantadmin [options]
+Manage Tenants.
+
+Available options are:
+  --help                           Program help.
+
+  --list                           List Tenants.
+
+  --info name                      Tenant info.
+
+  --add tenant_name                Add a tenant.
+    --folders folders              List of folder paths (comma separated
+                                   pool_name:fqn) the tenant will be able to
+                                   access (mandatory).
+
+  --remove name                    Remove a tenant.
+
+  --add_folder tenant_name         Add a folder path for tenant access.
+    --name folder_name             Name of the folder path (pool_name:fqn) to
+                                   be added (mandatory).
+
+  --remove_folder tenant_name      Remove a folder path from tenant access.
+    --name folder_name             Name of the folder path (pool_name:fqn) to
+                                   be removed (mandatory).
+
+  --passwd                         Change tenant's login password.
+    --tenant name                  Change a specific tenant's login password
+                                   (mandatory).
+```
+
+!!! caution
+    The `tenantadmin` command may only be run by local array OS administrators. LDAP or Active Directory accounts, regardless of role, are not supported.
+
 - Visit the array admin guide on [HPE InfoSight](https://infosight.hpe.com) to learn more about how to use the `tenantadmin` CLI.
 
 ##### Tenant Limitations
@@ -87,7 +124,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 | limitMbps                      | Integer | The MB/s throughput limit for the volume between 1 and 4294967294, or -1 for unlimited (default).|
 | description                    | Text    | Text to be added to the volume's description on the array. Empty string by default. |
 | performancePolicy<sup>2</sup>  | Text    | The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". Defaults to the "default" performance policy. |
-| protectionTemplate<sup>1</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". |
+| protectionTemplate<sup>4</sup> | Text    | The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". |
 | folder                         | Text    | The name of the folder in which to place the volume. Defaults to the root of the "default" pool. |
 | thick                          | Boolean | Indicates that the volume should be thick provisioned. Defaults to "false" |
 | dedupeEnabled<sup>3</sup>      | Boolean | Indicates that the volume should enable deduplication. Defaults to "true" when available. |
@@ -95,9 +132,10 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../csi_driver/using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. This parameter is removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#creating_a_volumegroupclass).
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. 
  <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
  <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
+ <br /><sup>4</sup> = This parameter was removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#creating_a_volumegroupclass).
 </small>
 
 !!! note
@@ -138,7 +176,7 @@ Importing volumes to Kubernetes requires the source array volume to be offline. 
 !!! seealso
     In this [HPE Developer blog post](https://developer.hpe.com/blog/lift-and-transform-apps-with-hpe-csi-driver-for-kubernetes/) you'll learn how to use the import parameters to lift and transform applications from traditional infrastructure to Kubernetes using the HPE CSI Driver.
 
-### Pod Inline Volume Parameters (Local Ephemeral Volumes)
+## Pod Inline Volume Parameters (Local Ephemeral Volumes)
 
 These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.
 
@@ -153,7 +191,7 @@ These parameters are applicable only for Pod inline volumes and to be specified 
 !!! important
     All parameters are **required** for inline ephemeral volumes.
 
-### VolumeGroupClass Parameters
+## VolumeGroupClass Parameters
 
 If basic data protection is required and performed on the array, `VolumeGroups` needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about `VolumeGroups` in the [provisioning concepts documentation](../../csi_driver/using.md#volume_groups).
 
@@ -165,7 +203,7 @@ If basic data protection is required and performed on the array, `VolumeGroups` 
 !!! tip "New feature"
     `VolumeGroupClasses` were introduced with version 1.4.0 of the CSI driver. Learn more in the [Using section](../../csi_driver/using.md#volume_groups).
 
-### VolumeSnapshotClass Parameters
+## VolumeSnapshotClass Parameters
 
 These parametes are for `VolumeSnapshotClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots) for more information.
 
