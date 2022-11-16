@@ -14,12 +14,12 @@ HPE and Commvault have been delivering end-to-end solutions for many years. Lear
 
 ## Pre-requisites
 
-The HPE CSI Driver has been validated on Commvault Complete Backup and Recovery 2022E and later. 
+The HPE CSI Driver has been validated on Commvault Complete Backup and Recovery 2022E. 
 Check that the [HPE CSI Driver](https://scod.hpedev.io/csi_driver/index.html#compatibility_and_support) and [Commvault software](https://documentation.commvault.com/2022e/essential/124720_system_requirements_for_kubernetes.html#kubernetes-release-supportability) versions are compatible with the Kubernetes version being used.
 
 ##### Permissions
 
-This guide assumes you have administrative access to Commvault Command Center and access to a Kubernetes cluster with `kubectl` and a `KUBECONFIG` file configured with a cluster administrator account. This will be used to create a Kubernetes service account for Commvault Complete Backup and Recovery, with the `default-sa-crb` cluster role binding. Please refer to the [Creating a Service Account for Kubernetes Authentication](https://documentation.commvault.com/2022e/essential/129223_creating_kubernetes_cluster_admin_service_account_for_commvault.html).
+This guide assumes you have administrative access to Commvault Command Center and administrator access to a Kubernetes cluster with `kubectl`. Refer to the [Creating a Service Account for Kubernetes Authentication](https://documentation.commvault.com/2022e/essential/129223_creating_kubernetes_cluster_admin_service_account_for_commvault.html) documentation to define a `serviceaccount` and `clusterrolebinding` with `cluster-admin` permissions.
 
 ##### Cluster requirements
 
@@ -31,9 +31,9 @@ The cluster needs to be running Kubernetes 1.22 or later and have the CSI snapsh
 !!! note
     The rest of this guide assumes the default `VolumeSnapshotClass` and `VolumeSnapshots` are functional within the cluster with a compatible Kubernetes snapshot API level between the CSI driver and Commvault.
 
-## Configure Kubernetes protection with Commvault Backup & Recovery
+## Configure Kubernetes protection
 
-To configure data protection for Kubernetes, follow the [official Commvault documentation](https://documentation.commvault.com/2022e/essential/123634_protecting_kubernetes_with_commvault.html)and ensure the version matches the software version in your environment.
+To configure data protection for Kubernetes, follow the [official Commvault documentation](https://documentation.commvault.com/2022e/essential/123634_protecting_kubernetes_with_commvault.html) and ensure the version matches the software version in your environment.
 As a summary, complete the following:
 
 - [Core Setup Wizard](https://documentation.commvault.com/2022e/essential/86638_step_3_complete_core_setup_wizard.html) to complete Commvault deployment
