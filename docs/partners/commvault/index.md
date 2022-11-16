@@ -4,6 +4,8 @@ The Commvault intelligent data management platform provides Kubernetes-native pr
 
 HPE and Commvault have been delivering end-to-end solutions for many years. Learn more about HPE and Commvaults partnership here: [https://www.commvault.com/supported-technologies/hpe](https://www.commvault.com/supported-technologies/hpe).
 
+For an example use case, see the demonstration video [here](https://www.youtube.com/HPMobileEnterprise).
+
 [TOC]
 
 ## Pre-requisites
@@ -17,7 +19,7 @@ This guide assumes you have administrative access to Commvault Command Center an
 
 ##### Cluster requirements
 
-The cluster needs to be running Kubernetes 1.17 or later and have the CSI snapshot `CustomResourceDefinitions` (CRDs) and the CSI external snapshotter deployed. Follow the guides available on SCOD to:
+The cluster needs to be running Kubernetes 1.22 or later and have the CSI snapshot `CustomResourceDefinitions` (CRDs) and the CSI external snapshotter deployed. Follow the guides available on SCOD to:
 
 - [Enable CSI snapshots](../../csi_driver/using.md#enabling_csi_snapshots)
 - [Using CSI snapshots](../../csi_driver/using.md#using_csi_snapshots)
@@ -25,75 +27,14 @@ The cluster needs to be running Kubernetes 1.17 or later and have the CSI snapsh
 !!! note
     The rest of this guide assumes the default `VolumeSnapshotClass` and `VolumeSnapshots` are functional within the cluster with a compatible Kubernetes snapshot API level between the CSI driver and Commvault.
 
-## Getting Started
+## Configure Kubernetes protection with Commvault Backup & Recovery
 
-This guide will walk through the steps to configure Commvault to perform data protection operations within a Kubernetes cluster. To learn more, refer to the [official Commvault documentation](https://documentation.commvault.com/2022e/essential/123634_protecting_kubernetes_with_commvault.html).
+To configure data protection for Kubernetes, follow the [official Commvault documentation](https://documentation.commvault.com/2022e/essential/123634_protecting_kubernetes_with_commvault.html)and ensure the version matches the software version in your environment.
+As a summary, complete the following:
 
-- Complete the [Core Setup Wizard](https://documentation.commvault.com/2022e/essential/86638_step_3_complete_core_setup_wizard.html)
+- [Core Setup Wizard](https://documentation.commvault.com/2022e/essential/86638_step_3_complete_core_setup_wizard.html) to complete Commvault deployment
 - Review [System Requirements for Kubernetes](https://documentation.commvault.com/2022e/essential/124720_system_requirements_for_kubernetes.html)
-
-#### Configuring Commvault with Kubernetes
-
-If the setup page is not displayed, from the navigation pane, click **Guided setup**.
-
-![](img/commvault1.png)
-
-After you complete the core setup, on the **Protect** tab, click the **Kubernetes** tile.
-
-![](img/commvault2.png)
-
-On the **Create server backup plan** page, enter in a **Plan name**, then choose **Storage**, **Retention period**, and **RPO schedule**. For more information, see [Creating a Server Plan](https://documentation.commvault.com/2022e/essential/86648_creating_server_plan.html).
-
-!!! Note
-    If you configured a server backup plan as part of the **Core Setup**, the wizard skips this page.
-
-![](img/commvault3.png)
-
-Click **Save**.
-
-The **Add cluster** page appears.
-
-![](img/commvault4.png)
-
-In the **API server endpoint** box, enter the API server endpoint URL. This can be found using `kubectl config view` under `server: https://<control_plane_load_balancer_ip>:<port>`.
-
-![](img/commvault5.png)
-
-Select **Authentication** method (**Service account**, **Kubeconfig file**, or **Username and Password**).
-
-##### Create a Service Account
-
-In this example, we will cover how to create a Kubernetes service account within the cluster to be used by Commvault for backup and restore operations. 
-
-The official guide is available here: [Creating a Service Account for Kubernetes Authentication](https://documentation.commvault.com/2022e/essential/129223_creating_kubernetes_cluster_admin_service_account_for_commvault.html)
-
-- Create a Kubernetes service account (for example, cvbackup).
-
-```text
-kubectl create serviceaccount cvbackup
-``` 
-
-- To ensure that the service account has sufficient privileges to perform data protection operations, add the service account to the `default-sa-crb` cluster role binding.
-
-```text
-kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:cvbackup
-```
-
-- Extract the service account token required to configure your Kubernetes cluster for data protection.
-
-```text
-kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='cvbackup')].data.token}"|base64 --decode
-```
-
-- Use the Kubernetes service account **cvbackup**, and the token for authentication to your Kubernetes cluster by pasting them into the appropriate fields.
-
-Click **Save**.
-
-Next choose the [Application group](https://documentation.commvault.com/2022e/essential/153329_creating_full_cluster_application_group_for_kubernetes.html), [Labels](https://documentation.commvault.com/2022e/essential/123896_creating_custom_application_group_for_kubernetes.html#select-resources-to-back-up-by-label) or **Volumes** you want to backup.
-
-![](img/commvault6.png)
-
-Click **Finish**. 
+- Complete the [Kubernetes Guided Setup](https://documentation.commvault.com/2022e/essential/131390_completing_guided_setup_for_kubernetes.html)
 
 #### Backup and Restores
 
