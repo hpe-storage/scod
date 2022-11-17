@@ -2,13 +2,12 @@
 
 The Commvault intelligent data management platform provides Kubernetes-native protection, application mobility, and disaster recovery for containerized applications. Combined with Commvault Command Center™, Commvault provides enterprise IT operations and DevOps teams an easy-to-use, self-service dashboard for managing the protection of Kubernetes.
 
-HPE and Commvault have been delivering end-to-end solutions for many years. Learn more about HPE and Commvault's partnership here: [https://www.commvault.com/supported-technologies/hpe](https://www.commvault.com/supported-technologies/hpe).
+HPE and Commvault collaborate continuously to deliver assets relevant to our joint customers.
 
-!!! note
-    HPE and Commvault collaborate continuously to deliver assets relevant to our joint customers.
+- Data protection for Kubernetes using Commvault Backup & Recovery, HPE Apollo Servers, and HPE CSI Driver for Kubernetes ([PDF](https://www.hpe.com/psnow/doc/a00105578enw))
+- Data Protection for Kubernetes using Commvault Backup & Recovery with HPE Alletra ([YouTube](https://www.youtube.com/HPMobileEnterprise))
 
-    - Data protection for Kubernetes using Commvault Backup & Recovery, HPE Apollo Servers, and HPE CSI Driver for Kubernetes ([PDF](https://www.hpe.com/psnow/doc/a00105578enw))
-    - Data Protection for Kubernetes using Commvault Backup & Recovery with HPE Alletra ([YouTube](https://www.youtube.com/HPMobileEnterprise))
+Learn more about HPE and Commvault's partnership here: [https://www.commvault.com/supported-technologies/hpe](https://www.commvault.com/supported-technologies/hpe).
 
 [TOC]
 
