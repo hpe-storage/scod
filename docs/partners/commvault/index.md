@@ -5,7 +5,7 @@ The Commvault intelligent data management platform provides Kubernetes-native pr
 HPE and Commvault collaborate continuously to deliver assets relevant to our joint customers.
 
 - Data protection for Kubernetes using Commvault Backup & Recovery, HPE Apollo Servers, and HPE CSI Driver for Kubernetes ([PDF](https://www.hpe.com/psnow/doc/a00105578enw))
-- Data Protection for Kubernetes using Commvault Backup & Recovery with HPE Alletra ([YouTube](https://www.youtube.com/HPMobileEnterprise))
+- Data Protection for Kubernetes using Commvault Backup & Recovery with HPE Alletra ([YouTube](https://www.youtube.com/watch?v=vVAkDIUSiXc))
 
 Learn more about HPE and Commvault's partnership here: [https://www.commvault.com/supported-technologies/hpe](https://www.commvault.com/supported-technologies/hpe).
 
