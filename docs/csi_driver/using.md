@@ -13,11 +13,12 @@ At this point the CSI driver and CSP should be installed and configured.
 
 The HPE CSI Driver for Kubernetes is primarily a `ReadWriteOnce` (RWO) CSI implementation for block based storage. The CSI driver also supports `ReadWriteMany` (RWX) and `ReadOnlyMany` (ROX) using a NFS Server Provisioner. It's enabled by [transparently deploying a NFS server](#using_the_nfs_server_provisioner) for each Persistent Volume Claim (PVC) against a `StorageClass` where it's enabled, that in turn is backed by a traditional RWO claim. Most of the examples featured on SCOD are illustrated as RWO using block based storage, but many of the examples apply in the majority of use cases.
 
-| Access Mode   | Abbreviation | Use Case |
-| ------------- | ------------ | -------- |
-| ReadWriteOnce | RWO          | For high performance `Pods` where access to the PVC is exclusive to one host at a time. May use either block based storage or the NFS Server Provisioner where connectivity to the data fabric is limited to a few worker nodes in the Kubernetes cluster. |
-| ReadWriteMany | RWX          | For shared filesystems where multiple `Pods` in the same `Namespace` need simultaneous access to a PVC across multiple nodes. |
-| ReadOnlyMany  | ROX          | Read-only representation of RWX. |
+| Access Mode      | Abbreviation | Use Case |
+| ---------------- | ------------ | -------- |
+| ReadWriteOnce    | RWO          | For high performance `Pods` where access to the PVC is exclusive to one host at a time. May use either block based storage or the NFS Server Provisioner where connectivity to the data fabric is limited to a few worker nodes in the Kubernetes cluster. |
+| ReadWriteOncePod | RWOP         | Exclusive access by a single `Pod`. Not currently supported by the HPE CSI Driver. |
+| ReadWriteMany    | RWX          | For shared filesystems where multiple `Pods` in the same `Namespace` need simultaneous access to a PVC across multiple nodes. |
+| ReadOnlyMany     | ROX          | Read-only representation of RWX. |
 
 !!! seealso "ReadWriteOnce and access by multiple Pods"
     `Pods` that require access to the same "ReadWriteOnce" (RWO) PVC needs to reside on the same node and `Namespace` by using [selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) or [affinity scheduling rules](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/) applied when deployed. If not configured correctly, the `Pod` will fail to start and will throw a "Multi-Attach" error in the event log if the PVC is already attached to a `Pod` that has been scheduled on a different node within the cluster.
@@ -27,6 +28,7 @@ The NFS Server Provisioner is not enabled by the default `StorageClass` and need
 * [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
 * [NFS Server Provisioner `StorageClass` parameters](#base_storageclass_parameters)
 * [Diagnosing the NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources)
+* [Limitations and Considerations for the NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner)
 
 ## Enabling CSI Snapshots
 
@@ -743,7 +745,7 @@ Enabling the NFS Server Provisioner to allow RWX and ROX access mode for a PVC i
 
 Any RWO claim made against the `StorageClass` will also create a NFS server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads using taints and tolerations.
 
-By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
+By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities (`VolumeSnapshots` and `.spec.dataSource`) on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
     A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
@@ -825,12 +827,13 @@ These are some common issues and gotchas that are useful to know about when plan
 
 - The current tested and supported limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
 - The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation and 2GiB is the recommended minimum for most workloads.
-- The NFS `PVC` can NOT be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
+- The NFS `PVC` can **NOT** be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
 - Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
 - The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 - Certain CNIs may have issues to gracefully restore access from the NFS clients to the NFS export. Flannel have exhibited this problem and the most consistent performance have been observed with Calico.
 - The [Volume Mutation](#using_volume_mutations) feature does not work on the NFS `PVC`. If changes are needed, perform the change on the backing "ReadWriteOnce" `PVC`.
 - As outlined in [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner), CSI snapshots and cloning of NFS `PVCs` requires the CSI snapshot and NFS server to reside in the same `Namespace`. This also applies when using third-party backup software such as Kasten K10.
+- [VolumeGroups](using.md#volume_groups) and [SnapshotGroups](using.md#snapshot_groups) are only supported on the backing "ReadWriteOnce" `PVC`. The "volume-group" annotation may be set at the initial creation of the NFS `PVC` but will have adverse effect on logging as the Volume Group Provisioner tries to add the NFS `PVC` to the backend consistency group indefinitely.
 - The NFS servers deployed by the HPE CSI Driver are not managed during CSI driver upgrades. Manual [upgrade is required](operations.md#upgrade_nfs_servers).
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.

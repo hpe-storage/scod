@@ -6,7 +6,7 @@ Attributions for third party components.
 
 ```text
 HPE CSI Info Metrics Provider for Prometheus
-Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+{{ config.copyright }}
 
 This product contains the following third party componenets:
 

@@ -9,7 +9,7 @@ theme:
     gtag: 'G-PC28RTKKTW'
 repo_name: 'hpe-storage/scod'
 repo_url: 'https://github.com/hpe-storage/scod'
-copyright: 'Copyright 2022 Hewlett Packard Enterprise Development LP'
+copyright: 'Copyright 2020-2023 Hewlett Packard Enterprise Development LP'
 extra_css:
   - css/hpedev.css
 use_directory_urls: false
