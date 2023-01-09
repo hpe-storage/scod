@@ -38,6 +38,7 @@ Below is the official table for CSI features we track and deem readily available
 | Storage Capacity Tracking              | Stable            | 1.24              | Future         |
 | Volume Health                          | Alpha             | 1.21              | Future         |
 | Volume Populator                       | Beta              | 1.24              | Future         |
+| ReadWriteOncePod                       | Alpha             | 1.22              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
