@@ -238,7 +238,7 @@ Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninst
 
 # Unsupported Helm Chart Install
 
-In the event of an OpenShift release come out in between driver releases or interest arise running the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver with the Helm chart instead.
+In the event Red Hat releases a new release of OpenShift between HPE CSI driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
 
 It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the [support matrix](#certified_combinations) above.
 
