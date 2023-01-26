@@ -13,27 +13,31 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 ### Certified combinations
 
-Software delivered through the HPE and Red Hat partnership follows a rigorous certification process and only qualify what's listed in the following table.
+Software delivered through the HPE and Red Hat partnership follows a [rigorous certification process](https://redhat-connect.gitbook.io/openshift-badges/badges/container-storage-interface-csi-1) and only qualify what's listed as "Certified" in the below table.
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers          |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------ |
+| Field Tested<sup>5</sup>| 4.12 EUS<sup>3</sup>              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [Alletra 6000](../../container_storage_provider/hpe_alletra_6000/index.md) |
+| Field Tested<sup>5</sup>| 4.11                              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [Alletra 6000](../../container_storage_provider/hpe_alletra_6000/index.md) |
 | Certified               | 4.10 EUS<sup>3</sup>              | 2.2.1                      | [All](../../container_storage_provider/index.md) |
 | Uncertified<sup>2</sup> | 4.9 (Upgrade path only)           | -                          | -                                    |
 | Certified               | 4.8 EUS<sup>3</sup>               | 2.1.3<sup>4</sup>, 2.2.1               | [All](../../container_storage_provider/index.md) |
 | Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                          | -                                    |
 | Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0<sup>4</sup>, 2.0.0<sup>4</sup>, 2.1.3<sup>4</sup> | [All](../../container_storage_provider/index.md) |
 
+
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
 <small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
-<small><sup>4</sup> = This version is currently uninstallable.</small>
+<small><sup>4</sup> = This version is currently uninstallable.</small><br />
+<small><sup>5</sup> = Passes the CSI e2e test suite using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
 
 Check this table periodically for future releases.
 
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
-    - Instructions on this page only reflect the current version of the CSI Operator and OpenShift.
+    - Instructions on this page only reflect the current stable version of the CSI Operator and OpenShift EUS.
 
 ### Security model
 
@@ -231,3 +235,17 @@ v2.storage.hpe.com
 ```
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
+
+# Unsupported Helm Chart Install
+
+In the event of an OpenShift release come out in between driver releases or interest arise running the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver with the Helm chart instead.
+
+It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the [support matrix](#certified_combinations) above.
+
+## Steps to install.
+
+- Follow the steps in the [prerequisites](#prerequisites) to apply the `SCC` in the `Namespace` (Project) you wish to install the driver.
+- Install the Helm chart with the steps provided on [ArtifactHub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). Pay attention to which version combination has been field tested.
+
+!!! caution "Unsupported"
+    Understand that this method is not supported by Red Hat and not recommended for production workloads or clusters.
