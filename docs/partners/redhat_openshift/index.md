@@ -17,8 +17,8 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers          |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------ |
-| Field Tested<sup>5</sup>| 4.12 EUS<sup>3</sup>              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [Alletra 6000](../../container_storage_provider/hpe_alletra_6000/index.md) |
-| Field Tested<sup>5</sup>| 4.11                              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [Alletra 6000](../../container_storage_provider/hpe_alletra_6000/index.md) |
+| Field Tested<sup>5</sup>| 4.12 EUS<sup>3</sup>              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [All](../../container_storage_provider/index.md) |
+| Field Tested<sup>5</sup>| 4.11                              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.10 EUS<sup>3</sup>              | 2.2.1                      | [All](../../container_storage_provider/index.md) |
 | Uncertified<sup>2</sup> | 4.9 (Upgrade path only)           | -                          | -                                    |
 | Certified               | 4.8 EUS<sup>3</sup>               | 2.1.3<sup>4</sup>, 2.2.1               | [All](../../container_storage_provider/index.md) |
@@ -30,7 +30,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 <small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
 <small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
 <small><sup>4</sup> = This version is currently uninstallable.</small><br />
-<small><sup>5</sup> = Passes the CSI e2e test suite using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
+<small><sup>5</sup> = Passes the CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
 
 Check this table periodically for future releases.
 
