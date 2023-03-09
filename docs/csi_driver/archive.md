@@ -4,6 +4,54 @@ HPE supports up to three minor releases. These release are kept here for histori
 
 [TOC]
 
+#### HPE CSI Driver for Kubernetes 2.0.0
+
+Release highlights:
+
+* Support for HPE Alletra 5000/6000 and 9000
+* Host-based volume encryption
+* Multitenancy for HPE Alletra 5000/6000 and Nimble Storage 
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.18-1.21<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.3.0<br />
+      Nimble OS 5.0.10.x,  5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x<br />
+      3PAR OS 3.3.1, 3.3.2
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.0.0.md>v2.0.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-now-available-for-HPE-Alletra/ba-p/7136280">HPE CSI Driver for Kubernetes now available for HPE Alletra</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/">Multitenancy for Kubernetes clusters using HPE Alletra 5000/6000 and Nimble</a> (tutorial)<br />
+    <a href="https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/">Host-based Volume Encryption with HPE CSI Driver for Kubernetes</a> (tutorial)
+   </td>
+ </tr>
+</table>
+ 
+<small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+</small>
+
 #### HPE CSI Driver for Kubernetes 1.4.0
 
 Release highlights:

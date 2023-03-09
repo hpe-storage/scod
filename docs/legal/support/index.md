@@ -10,7 +10,7 @@ The HPE CSI Info Metrics Provider for Prometheus is supported by HPE when used w
 
 Each Container Storage Provider (CSP) uses their own official support routes to resolve any issues with the HPE CSI Driver for Kuberernetes and the respective CSP.
 
-### HPE Alletra 6000 and Nimble Storage Container Storage Provider support
+### HPE Alletra 5000/6000 and Nimble Storage Container Storage Provider support
 
 This software is supported by HPE when used with HPE Nimble Storage arrays on valid support contracts. Please send an email to [support@nimblestorage.com](mailto:support@nimblestorage.com) to get started with any issue you might need assistance with. Engage with your HPE representative for other means on how to get in touch with Nimble support directly.
 

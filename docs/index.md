@@ -9,7 +9,7 @@
 -->
 ## HPE Storage Container Orchestrator Documentation 
 
-This is an umbrella documentation project for the HPE CSI Driver for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra 6000, Alletra 9000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and partners.
+This is an umbrella documentation project for the HPE CSI Driver for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra 5000/6000, Alletra 9000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and partners.
 
 ![HPE CSI Driver for Kubernetes](img/csi-driver-overview.png)
 

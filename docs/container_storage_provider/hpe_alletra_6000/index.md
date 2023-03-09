@@ -1,6 +1,6 @@
 # Introduction
 
-The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important array setup requirements.
+The HPE Alletra 5000/6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the `StorageClass` and `VolumeSnapshotClass` parameters but also contains important array setup requirements.
 
 !!! caution "Important"
     For a successful deployment, it's important to understand the array platform requirements found within the [CSI driver](../../csi_driver/index.md#compatibility_and_support) (compute node OS and Kubernetes versions) and the CSP.
@@ -8,7 +8,7 @@ The HPE Alletra 6000 and Nimble Storage Container Storage Provider ("CSP") for K
 [TOC]
 
 !!! seealso
-    There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery. It also applies broadly to HPE Alletra 6000.
+    There's a brief introduction on [how to use HPE Nimble Storage](../../learn/video_gallery/index.md#using_the_hpe_csi_driver_with_hpe_nimble_storage) with the HPE CSI Driver in the Video Gallery. It also applies broadly to HPE Alletra 5000/6000.
 
 ## Platform Requirements
 
@@ -84,7 +84,7 @@ Some features may be limited and restricted in a multitenant deployment, such as
 - Both port 443 and 5392 needs to be exposed to the Kubernetes cluster in multitenant deployments.
 
 !!! seealso
-    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE Developer: [Multitenancy for Kubernetes clusters using HPE Alletra 6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/). There's also a high level overview of multitenancy available as a [lightboard presentation on YouTube](https://www.youtube.com/watch?v=47txpSAGEZs).
+    An in-depth tutorial on how to use multitenancy and the `tenantadmin` CLI is available on HPE Developer: [Multitenancy for Kubernetes clusters using HPE Alletra 5000/6000 and Nimble Storage](https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/). There's also a high level overview of multitenancy available as a [lightboard presentation on YouTube](https://www.youtube.com/watch?v=47txpSAGEZs).
 
 ### Limitations
 
