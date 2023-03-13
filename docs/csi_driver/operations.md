@@ -18,7 +18,7 @@ This procedure migrate (copy) data from LUKS2 to LUKS1 PVCs to allow expansion o
 These are the assumptions made throughout this procedure.
 
 - Data to be migrated has a good backup to restore to, not just a snapshot.
-- HPE CSI Driver for Kubernetes v2.2.0 or later installed.
+- HPE CSI Driver for Kubernetes v2.3.0 or later installed.
 - Worker nodes with access to the Quay registry and SCOD.
 - Access to the commands `kubectl`, `curl`, `jq` and `yq`.
 - Cluster privileges to manipulate `PersistentVolumes`.
@@ -284,13 +284,13 @@ Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary 
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
 
-### Upgrade to v2.2.0
+### Upgrade to v2.3.0
 
-Any prior deployed NFS servers may be upgraded to v2.2.0.
+Any prior deployed NFS servers may be upgraded to v2.3.0.
 
 #### Assumptions
 
-- HPE CSI Driver or Operator v2.2.0 installed.
+- HPE CSI Driver or Operator v2.3.0 installed.
 - All running NFS servers are running in the "hpe-nfs" `Namespace`.
 - Worker nodes with access to the Quay registry and SCOD.
 - Access to the commands `kubectl`, `yq` and `curl`.
@@ -307,7 +307,7 @@ When patching the NFS `Deployments`, the `Pods` will restart and cause a pause i
 Patch all NFS `Deployments` with the following.
 
 ```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.2.0.yaml | \
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.3.0.yaml | \
   kubectl patch -n hpe-nfs \
   $(kubectl get deploy -n hpe-nfs -o name) \
   --patch-file=/dev/stdin

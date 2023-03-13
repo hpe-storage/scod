@@ -75,7 +75,7 @@ Refer to the following guides to configure the VASA provider and create a vVol D
 | HPE Alletra 9000 | [HPE Alletra 9000: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00115274en_us&docLocale=en_US) |
 | HPE Primera | [VMware vVols with HPE Primera Storage](https://support.hpe.com/hpesc/public/docDisplay?docId=a00101451en_us) |
 | HPE Nimble Storage | [Working with VMware Virtual Volumes](https://infosight.hpe.com/InfoSight/media/cms/active/public/pubs_VMware_Integration_Guide__5_0_x.pdf) |
-| HPE Nimble Storage dHCI & HPE Alletra 6000 | [HPE Nimble Storage dHCI and VMware vSphere New Servers Deployment Guide](https://infosight.hpe.com/InfoSight/media/cms/active/public/HPE_Nimble_Storage_dHCI_and_VMware_vSphere_Deployment_Guide_-_Greenfield_Alletra_Deployment.pdf)
+| HPE Nimble Storage dHCI & HPE Alletra 5000/6000 | [HPE Nimble Storage dHCI and VMware vSphere New Servers Deployment Guide](https://infosight.hpe.com/InfoSight/media/cms/active/public/HPE_Nimble_Storage_dHCI_and_VMware_vSphere_Deployment_Guide_-_Greenfield_Alletra_Deployment.pdf)
 | HPE 3PAR | [Implementing VMware Virtual Volumes on HPE 3PAR StoreServ](https://h20195.www2.hpe.com/v2/getpdf.aspx/4AA5-6907ENW.pdf) |
 
 ##### Configuring a VM Storage Policy

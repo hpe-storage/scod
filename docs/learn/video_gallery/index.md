@@ -37,7 +37,7 @@ Learn how to configure HPE Primera Peer Persistence using the HPE CSI Driver.
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=1b9OuadpBfA)</small>
 
-### HPE Alletra 6000 and Nimble Storage
+### HPE Alletra 5000/6000 and Nimble Storage
 
 #### Using the HPE CSI Driver with HPE Nimble Storage
 
@@ -47,9 +47,9 @@ This tutorial showcases a few of the HPE Nimble Storage specific features with t
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=RAttunxAnrY)</small>
 
-#### Manage multitenancy at scale with HPE Alletra 6000 and Nimble Storage
+#### Manage multitenancy at scale with HPE Alletra 5000/6000 and Nimble Storage
 
-This lightboard video discusses the advantages of using HPE Alletra 6000 or Nimble Storage to handle multitenancy for storage resources between Kubernetes clusters.
+This lightboard video discusses the advantages of using HPE Alletra 5000/6000 or Nimble Storage to handle multitenancy for storage resources between Kubernetes clusters.
 
 <iframe width="696" height="392" src="https://www.youtube.com/embed/47txpSAGEZs" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

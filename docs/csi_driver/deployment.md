@@ -42,14 +42,14 @@ Establish a working directory on a bastion Linux host that has HTTP access to th
 !!! note
     Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.
 
-Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver 2.2.0 on Kubernetes 1.24. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
+Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver 2.3.0 on Kubernetes 1.26. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
 
 ```text
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=2.2.0
-export MY_K8S=1.24
+export MY_CSI_DRIVER=2.3.0
+export MY_K8S=1.26
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -59,7 +59,7 @@ curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
 | grep image: | awk '{print $2}' | sort | uniq > images
-echo quay.io/hpestorage/nfs-provisioner:v3.0.0 >> images
+echo quay.io/hpestorage/nfs-provisioner:v3.0.1 >> images
 ```
 
 !!! important
@@ -71,8 +71,8 @@ Pull, tag and push the images to the private registry.
 
 ```text
 cat images | xargs -n 1 docker pull
-awk '{ print $1" "$1 }' images | sed "s/ quay.io| k8s.gcr.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
-sed -e "s/quay.io|k8s.gcr.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+awk '{ print $1" "$1 }' images | sed "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -e "s/quay.io|registry.k8s.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
 ```
 
 !!! tip
@@ -86,6 +86,8 @@ kubectl create ns hpe-storage
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version ${MY_CSI_DRIVER} --set registry=${MY_REGISTRY}
 ```
 
+!!! note
+    If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
 ## Operator
 
 The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running on Kubernetes.
@@ -151,13 +153,13 @@ All parameters are mandatory and described below.
 | ----------- | -
 | serviceName | This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes `Service`, such as "alletra6000-csp-svc" or "alletra9000-csp-svc"
 | servicePort | This is port the `serviceName` is listening to.
-| backend     | This is the management hostname or IP address of the actual backend storage system, such as an Alletra 6000 or 9000 array.
+| backend     | This is the management hostname or IP address of the actual backend storage system, such as an Alletra 5000/6000 or 9000 array.
 | username    | Backend storage system username with the correct privileges to perform storage management.
 | password    | Backend storage system password.
 
 Example:
 
-```yaml fct_label="HPE Alletra 6000"
+```yaml fct_label="HPE Alletra 5000/6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -249,7 +251,7 @@ This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate 
 
 To create a new `Secret`, specify the name, `Namespace`, backend username, backend password and the backend IP address to be used by the CSP and save it as `custom-secret.yaml` (a detailed description of the parameters are [available above](#secret_parameters)).
 
-```yaml fct_label="HPE Alletra 6000"
+```yaml fct_label="HPE Alletra 5000/6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -403,18 +405,18 @@ kubectl create ns hpe-storage
 Worker node IO settings:
 
 ```text
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-linux-config.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-linux-config.yaml
 ```
 
 Container Storage Provider:
 
-```text fct_label="HPE Alletra 6000 and Nimble Storage"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/nimble-csp.yaml
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/nimble-csp.yaml
 ```
 
 ```text fct_label="HPE Alletra 9000, Primera and 3PAR"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/3par-primera-csp.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/3par-primera-crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/3par-primera-csp.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/3par-primera-crd.yaml
 ```
 
 !!! important
@@ -422,20 +424,20 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 Install the CSI driver:
 
+```text fct_label="Kubernetes 1.26"
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.26.yaml
+```
+
+```text fct_label="Kubernetes 1.25"
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.25.yaml
+```
+
 ```text fct_label="Kubernetes 1.24"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.24.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.24.yaml
 ```
 
 ```text fct_label="Kubernetes 1.23"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.23.yaml
-```
-
-```text fct_label="Kubernetes 1.22"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.22.yaml
-```
-
-```text fct_label="Kubernetes 1.21"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.21.yaml
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.23.yaml
 ```
 
 !!! seealso
@@ -450,17 +452,17 @@ The following steps outline how to uninstall the CSI driver that has been deploy
 Uninstall Worker node settings:
 
 ```text
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-linux-config.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-linux-config.yaml
 ```
 
 Uninstall relevant Container Storage Provider:
 
-```text fct_label="HPE Alletra 6000 and Nimble Storage"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/nimble-csp.yaml
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/nimble-csp.yaml
 ```
 
 ```text fct_label="HPE Alletra 9000, Primera and 3PAR"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/3par-primera-csp.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/3par-primera-csp.yaml
 ```
 
 !!! error "HPE Alletra 9000, Primera and 3PAR users"
@@ -468,20 +470,20 @@ kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/m
 
 Uninstall the CSI driver:
 
+```text fct_label="Kubernetes 1.26"
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.26.yaml
+```
+
+```text fct_label="Kubernetes 1.25"
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.26.yaml
+```
+
 ```text fct_label="Kubernetes 1.24"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.24.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.24.yaml
 ```
 
 ```text fct_label="Kubernetes 1.23"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.23.yaml
-```
-
-```text fct_label="Kubernetes 1.22"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.22.yaml
-```
-
-```text fct_label="Kubernetes 1.21"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.2.0/hpe-csi-k8s-1.21.yaml
+kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.3.0/hpe-csi-k8s-1.23.yaml
 ```
 
 If no longer needed, delete the "hpe-storage" `Namespace`.

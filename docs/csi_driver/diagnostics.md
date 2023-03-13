@@ -6,7 +6,7 @@ It's recommended to familiarize yourself with inspecting workloads on Kubernetes
 
 Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
-```text fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
 kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
@@ -136,7 +136,7 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 
 CSP logs can be accessed from their respective services.
 
-```text fct_label="HPE Alletra 6000 and Nimble Storage"
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
 kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
