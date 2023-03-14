@@ -81,14 +81,14 @@ Upgrade considerations:
     <th>Helm Chart</th>
     <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.3.0">v2.3.0</a> on ArtifactHub</td>
   </tr>
-  <tr>
+  <!--tr>
     <th>Operators</th>
     <td>
      <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.3.0">v2.3.0</a> on OperatorHub<br />
      v2.3.0</a> via OpenShift console
     </td>
   </tr>
-  <tr>
+  <tr-->
     <th>Worker&nbsp;OS</th>
     <td>
       RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.10-4.12<br />
@@ -113,12 +113,12 @@ Upgrade considerations:
     <th>Release&nbsp;notes</th>
     <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.3.0.md>v2.3.0</a> on GitHub</td>
   </tr>
-  <!--tr>
+  <tr>
    <th>Blogs</th>
    <td>
     <a href="https://community.hpe.com/t5/around-the-storage-block/support-and-security-updates-for-hpe-csi-driver-for-kubernetes/ba-p/7184293">Support and security updates for HPE CSI Driver for Kubernetes</a> (release blog)
    </td>
- </tr-->
+ </tr>
 </table>
 
 <small>
