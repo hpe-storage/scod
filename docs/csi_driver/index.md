@@ -81,14 +81,14 @@ Upgrade considerations:
     <th>Helm Chart</th>
     <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.3.0">v2.3.0</a> on ArtifactHub</td>
   </tr>
-  <!--tr>
+  <tr>
     <th>Operators</th>
     <td>
      <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.3.0">v2.3.0</a> on OperatorHub<br />
      v2.3.0</a> via OpenShift console
     </td>
   </tr>
-  <tr-->
+  <tr>
     <th>Worker&nbsp;OS</th>
     <td>
       RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.10-4.12<br />
@@ -96,7 +96,7 @@ Upgrade considerations:
       SLES 15 SP2, SP3, SP4
   </tr>
   <tr>
-    <th>Platforms</th>
+    <th>Platforms<sup>3</sup></th>
     <td>
       Alletra OS 5000/6000 6.0.0.x - 6.1.1.x<br />
       Alletra OS 9000 9.3.x - 9.5.x<br />
@@ -124,6 +124,7 @@ Upgrade considerations:
 <small>
  <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.<br />
  <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.
+ <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.2.0
