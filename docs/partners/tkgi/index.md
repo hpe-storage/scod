@@ -14,6 +14,7 @@ Learn more about the partnership and enablement on the [VMware Marketplace](http
 It's important to verify that the host OS and Kubernetes version is supported by the HPE CSI Driver. 
 
 - Only iSCSI is supported ([learn why](../vmware/index.md#deployment))
+- Ensure "Enable Privileged Containers" is ticked in the TKGI cluster deployment plan
 - Verify versions in the [Compatibility and Support](../../csi_driver/index.md#compatibility_and_support) table
 
 ## Installation
