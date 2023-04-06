@@ -15,13 +15,17 @@ These limitations may be expanded or detracted in future releases of either Amaz
 
 The default Linux distribution AWS favors is Bottlerocket OS which is a container-optimized distribution. Due to the slim host library and binary surface, Bottlerocket OS does not include the necessary utilities to support SAN storage. This limitation can be tracked in [this GitHub issue](https://github.com/bottlerocket-os/bottlerocket/issues/2570).
 
-### EKS-A on vSphere
+!!! note
+    Any other OS supported by EKS-A and is listed in the [Compatibility and Support table](../../csi_driver/index.md#compatibility_and_support) is supported by the HPE CSI Driver.
 
-Only iSCSI is supported as the HPE CSI Driver does not support NPIV which is required for virtual Fibre Channel host bus adapters (HBA). More information on this limitation is elaborated on in this [VMware section](../vmware/index.md#deployment) on SCOD.
+### EKS Anywhere on vSphere
+
+Only iSCSI is supported as the HPE CSI Driver does not support NPIV which is required for virtual Fibre Channel host bus adapters (HBA). More information on this limitation is elaborated on in the [VMware section](../vmware/index.md#deployment) on SCOD.
 
 Due to `VSphereMachineConfig` VM templates only allow a single vNIC, no multipath redundancy is available to the host. It's recommended to use NIC teaming on the ESXi hosts to provide network fault tolerance. Also keep in mind that the backend storage system needs to have a data interface in the flat network as the HPE CSI Driver will not try to discover targets over routed networks.
 
-The vSphere CSI Driver and HPE CSI Driver may co-exist in the same cluster but make sure there's only one default `StorageClass` configured before creating `PersistentVolumeClaims`.
+!!! tip
+    The vSphere CSI Driver and HPE CSI Driver may co-exist in the same cluster but make sure there's only one default `StorageClass` configured before creating `PersistentVolumeClaims`.
 
 ## Installation Considerations
 
