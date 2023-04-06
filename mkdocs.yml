@@ -59,7 +59,8 @@ nav:
   - HPE EZMERAL RUNTIME ENTERPRISE:
     - 'Install HPE CSI Driver': "ezmeral/install.md"
   - PARTNER ECOSYSTEMS:
-    - 'Commvault': "partners/commvault/index.md"
+    - 'Amazon EKS Anywhere': 'partners/amazon_eks_anywhere/index.md'
+    - 'Commvault': 'partners/commvault/index.md'
     - 'Kasten by Veeam': 'partners/kasten/index.md'
     - 'Mirantis': 'partners/mirantis/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
