@@ -22,10 +22,10 @@ The default Linux distribution AWS favors is Bottlerocket OS which is a containe
 
 Only iSCSI is supported as the HPE CSI Driver does not support NPIV which is required for virtual Fibre Channel host bus adapters (HBA). More information on this limitation is elaborated on in the [VMware section](../vmware/index.md#deployment) on SCOD.
 
-Due to `VSphereMachineConfig` VM templates only allow a single vNIC, no multipath redundancy is available to the host. It's recommended to use NIC teaming on the ESXi hosts to provide network fault tolerance. Also keep in mind that the backend storage system needs to have a data interface in the flat network as the HPE CSI Driver will not try to discover targets over routed networks.
+Due to `VSphereMachineConfig` VM templates only allow a single vNIC, no multipath redundancy is available to the host. Ensure network fault tolerance according to VMware best practices is available to the VM. Also keep in mind that the backend storage system needs to have a data interface in the same subnet as the HPE CSI Driver will not try to discover targets over routed networks.
 
 !!! tip
-    The vSphere CSI Driver and HPE CSI Driver may co-exist in the same cluster but make sure there's only one default `StorageClass` configured before creating `PersistentVolumeClaims`.
+    The vSphere CSI Driver and HPE CSI Driver may co-exist in the same cluster but make sure there's only one default `StorageClass` configured before creating `PersistentVolumeClaims`. Please see the [official Kubernetes documentation](https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/) on how to change the default `StorageClass`.
 
 ## Installation Considerations
 
