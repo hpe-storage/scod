@@ -50,24 +50,27 @@ The Helm chart is available on Artifact Hub. Instructions on how to manage and i
 
 - [HPE CSI Info Metrics Provider for Prometheus Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics)
 
+!!! caution "Note"
+    It's highly recommended to install the CSI Info Metrics Provider with Helm.
+
 ### Advanced Install
 
 Before beginning an advanced install, determine how Prometheus will be deployed on the Kubernetes cluster as it will dictate how the scrape target will be configured with either a `Service` annotation or a `ServiceMonitor` CRD.
 
 Start by downloading the manifest, which needs to be modified before applying to the cluster.
 
-#### Version 1.0.0
+#### Version 1.0.1
 
 Supports HPE CSI Driver for Kubernetes 2.0.0 and later.
 
 ```text
-wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics.yaml
+wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.1/hpe-csi-info-metrics.yaml
 ```
 
 Optional `ServiceMonitor` definition:
 
 ```text
-wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.0/hpe-csi-info-metrics-service-monitor.yaml
+wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.1/hpe-csi-info-metrics-service-monitor.yaml
 ```
 
 #### Configuring Advanced Install
