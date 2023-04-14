@@ -53,6 +53,10 @@ The Helm chart is available on Artifact Hub. Instructions on how to manage and i
 !!! caution "Note"
     It's highly recommended to install the CSI Info Metrics Provider with Helm.
 
+### Rancher
+
+Since Rancher v2.7 and HPE CSI Driver for Kubernetes v2.3.0 it's possible to install the HPE CSI Info Metrics Provider through the Apps interface in Rancher to use with Rancher Monitoring. Please see the [Rancher](../partners/suse_rancher/index.md) partner page for more information.
+
 ### Advanced Install
 
 Before beginning an advanced install, determine how Prometheus will be deployed on the Kubernetes cluster as it will dictate how the scrape target will be configured with either a `Service` annotation or a `ServiceMonitor` CRD.

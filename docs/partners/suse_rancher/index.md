@@ -16,9 +16,10 @@ Rancher uses Helm to deploy and manage partner software. The concept of a Helm r
 | --------------- | ------------------------------------- | ---------------------- |
 | 2.5             | Cluster Manager, Cluster Explorer     | latest                 |
 | 2.6             | New Cluster Manager                   | latest                 |
+| 2.7             | Cluster Manager App Chart             | latest                 |
 
 !!! tip
-    Learn more about Helm Charts and Apps in the [Rancher documentation](https://rancher.com/docs/rancher/v2.6/en/helm-charts/).
+    Learn more about Helm Charts and Apps in the [Rancher documentation](https://ranchermanager.docs.rancher.com/pages-for-subheaders/helm-charts-in-rancher)
 
 ### HPE CSI Driver for Kubernetes
 
@@ -27,9 +28,9 @@ The HPE CSI Driver is part of the official Partner repository in Rancher. The CS
 !!! note
     In Rancher 2.5 an "Apps & Marketplace" component was introduced in the new "Cluster Explorer" interface. This is the new interface moving forward. Upcoming releases of the HPE CSI Driver for Kubernetes will only support installation via "Apps & Marketplace".
 
-#### Rancher Cluster Manger (2.6 and newer)
+#### Rancher Cluster Manager (2.6 and newer)
 
-Navigate to "Apps" and select "Charts", search for "HPE CSI".
+Navigate to "Apps" and select "Charts", search for "HPE".
 
 ![](img/new_cluster_manager.png)
 <small>Rancher Cluster Explorer</small>
@@ -78,13 +79,13 @@ p-k28xd:hpe-csi-driver   hpe-csi-driver   active    helm3-library   hpe-csi-driv
 
 ### Post install steps
 
-For Rancher workloads to make use of persistent storage from HPE, a supported backend needs to be configured along with a `StorageClass`. These procedures are generic regardless of Kubernetes distribution being used.
+For Rancher workloads to make use of persistent storage from HPE, a supported backend needs to be configured with a `Secret` along with a `StorageClass`. These procedures are generic regardless of Kubernetes distribution and install method being used.
 
 - Go ahead and [add an HPE storage backend](../../csi_driver/deployment.md#add_an_hpe_storage_backend)
 
-### HPE Volume Driver for Kubernetes FlexVolume plugin
+### Ancillary HPE Storage Apps
 
-Only use the FlexVolume driver for Kubernetes 1.12 and below. The FlexVolume driver is provided as a Helm v2 chart in the official Rancher Catalog. Parameters are very specific to the environment to where the driver is being installed to. Please follow the steps in the FlexVolume Helm chart [documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-flexvolume-driver) for further guidance. Also understand that the FlexVolume driver only supports HPE Nimble Storage and HPE Cloud Volumes.
+Introduced in Rancher v2.7 and HPE CSI Driver for Kubernetes v2.3.0 is the ability to deploy the [HPE Storage Array Exporter for Prometheus](https://hpe-storage.github.io/array-exporter/) and [HPE CSI Info Metrics Provider for Prometheus](../../csi_driver/metrics.md) directly from the same Rancher Apps interface. These Helm charts have been enhanced to include support for Rancher Monitoring.
 
-!!! caution
-    The FlexVolume driver is being deprecated. Reach out to your HPE representative if you think deploying the FlexVolume driver on your Rancher managed Kubernetes cluster is the correct course of action.
+!!! tip
+    Make sure to tick "Enable ServiceMonitor" in the "ServiceMonitor settings" when configuring the ancillary Prometheus apps to work with Rancher Monitoring.
