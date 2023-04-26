@@ -1,0 +1,16 @@
+# Change the prefix something unique in the Namespace
+namePrefix: example-
+
+# Existing Namespace, if applicable
+# namespace: example
+
+# Edit the environment.properties file
+configMapGenerator:
+- name: local-conf
+  envs: 
+  - environment.properties
+  behavior: replace
+
+# Base manifests
+bases:
+- ../../base

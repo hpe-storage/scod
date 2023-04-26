@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-nfs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $(SERVICE_SELECTOR)
+      spread-by: hpe-nfs
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        tags: hpe-nfs
+      labels:
+        app: $(SERVICE_SELECTOR)
+        spread-by: hpe-nfs
+      name: hpe-nfs
+    spec:
+      nodeSelector:
+        csi.hpe.com/hpe-nfs: "true"
+      containers:
+      - env:
+        - name: GANESHA_OPTIONS
+          value: -N NIV_WARN
+        image: quay.io/hpestorage/nfs-provisioner:v3.0.1
+        imagePullPolicy: IfNotPresent
+        name: hpe-nfs
+        ports:
+        - containerPort: 49000
+          name: grpc
+          protocol: TCP
+        - containerPort: 2049
+          name: nfs-tcp
+          protocol: TCP
+        - containerPort: 2049
+          name: nfs-udp
+          protocol: UDP
+        - containerPort: 32803
+          name: nlockmgr-tcp
+          protocol: TCP
+        - containerPort: 32803
+          name: nlockmgr-udp
+          protocol: UDP
+        - containerPort: 20048
+          name: mountd-tcp
+          protocol: TCP
+        - containerPort: 20048
+          name: mountd-udp
+          protocol: UDP
+        - containerPort: 111
+          name: portmapper-tcp
+          protocol: TCP
+        - containerPort: 111
+          name: portmapper-udp
+          protocol: UDP
+        - containerPort: 662
+          name: statd-tcp
+          protocol: TCP
+        - containerPort: 662
+          name: statd-udp
+          protocol: UDP
+        - containerPort: 875
+          name: rquotad-tcp
+          protocol: TCP
+        - containerPort: 875
+          name: rquotad-udp
+          protocol: UDP
+        resources:
+          limits:
+            cpu: "$(NFS_SERVER_CPU_LIMIT)"
+            memory: $(NFS_SERVER_MEMORY_LIMIT)
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - DAC_READ_SEARCH
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /export
+          name: hpe-nfs
+        - mountPath: /etc/ganesha.conf
+          name: hpe-nfs-conf
+          subPath: ganesha.conf
+      dnsPolicy: ClusterFirst
+      priorityClassName: system-cluster-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 30
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 30
+      topologySpreadConstraints:
+      - labelSelector:
+          matchLabels:
+            spread-by: hpe-nfs
+        maxSkew: 1
+        topologyKey: node
+        whenUnsatisfiable: ScheduleAnyway
+      volumes:
+      - name: hpe-nfs
+        persistentVolumeClaim:
+          claimName: hpe-nfs
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: ganesha.conf
+            path: ganesha.conf
+          name: hpe-nfs-conf
+        name: hpe-nfs-conf
