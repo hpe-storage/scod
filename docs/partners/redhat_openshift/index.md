@@ -17,27 +17,26 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers          |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------ |
-| Field Tested<sup>5</sup>| 4.12 EUS<sup>3</sup>              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [All](../../container_storage_provider/index.md) |
-| Field Tested<sup>5</sup>| 4.11                              | 2.2.0 [using Helm](#unsupported_helm_chart_install) | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.10 EUS<sup>3</sup>              | 2.2.1                      | [All](../../container_storage_provider/index.md) |
-| Uncertified<sup>2</sup> | 4.9 (Upgrade path only)           | -                          | -                                    |
-| Certified               | 4.8 EUS<sup>3</sup>               | 2.1.3<sup>4</sup>, 2.2.1               | [All](../../container_storage_provider/index.md) |
-| Uncertified<sup>2</sup> | 4.7 (Upgrade path only)           | -                          | -                                    |
-| Certified               | 4.6 EUS<sup>3</sup>               | 1.4.0<sup>4</sup>, 2.0.0<sup>4</sup>, 2.1.3<sup>4</sup> | [All](../../container_storage_provider/index.md) |
-
+| Field Tested<sup>3</sup>| 4.13                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.9 (Upgrade path only)           | -                          | -                                    |
+| EOL<sup>1</sup>         | 4.8 EUS<sup>2</sup>               | 2.2.1                      | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
-<small><sup>2</sup> = HPE will only be certifying the HPE CSI Operator for Kubernetes on **EVEN** versions of Red Hat OpenShift (i.e. 4.4, 4.6, etc). The Operator will not go through the Red Hat certification process for **MIDDLE** releases (i.e. 4.5, 4.7, etc.) and will only be supported as upgrade path to the next **EVEN** release of Red Hat OpenShift.</small><br />
-<small><sup>3</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
-<small><sup>4</sup> = This version is currently uninstallable.</small><br />
-<small><sup>5</sup> = Passes the CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
+<small><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
+<small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
 
-Check this table periodically for future releases.
+Check the table above periodically for future releases.
+
+!!! warning "Important"
+    Due to an [unresolved issue](https://github.com/hpe-storage/csi-driver/issues/323) with "ReadWriteMany" access modes on `PersistentVolumeClaims` utilizing "volumeMode: Block", the HPE CSI Operator does **not** support OpenShift Virtualization.
 
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
-    - Instructions on this page only reflect the current stable version of the CSI Operator and OpenShift EUS.
+    - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift EUS.
 
 ### Security model
 
@@ -45,7 +44,7 @@ By default, OpenShift prevents containers from running as root. Containers are r
 
 Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
 
-For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.6/authentication/managing-security-context-constraints.html).
+For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.12/authentication/managing-security-context-constraints.html).
 
 !!! note
     If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsMode: "0770"` parameter to the `StorageClass` with RWO claims or `fsMode: "0777"` for RWX claims.
@@ -55,6 +54,7 @@ For more information on OpenShift security, see [Managing security context const
 Since the CSI Operator only provides "Basic Install" capabilities. The following limitations apply:
 
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
+- The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
 
 ### Deployment
 
