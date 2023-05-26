@@ -29,7 +29,10 @@ The HPE Alletra 9000, Primera and 3PAR Container Storage Provider requires the f
 
 ### User Role Requirements
 
-The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
+The CSP requires access to a local user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
+
+!!! note
+    LDAP users are not supported by the CSP.
 
 ## StorageClass Parameters
 
