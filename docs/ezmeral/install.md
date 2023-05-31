@@ -15,6 +15,9 @@ Examine the table found in the [Compatibility and Support](../csi_driver/index.m
 
 In Ezmeral 5.4.0 and later, an exception has been added to the "hpe-storage" `Namespace`. Proceed to [Installation](#installation) and disregard any steps outlined in this guide.
 
+!!! note
+    If the HPE CSI Driver built-in NFS Server Provisioner will be used, an exception needs to be granted to the "hpe-nfs" `Namespace`.<br/><br/>Run:<br/> `kubectl patch --type json -p '[{"op": "add", "path": "/spec/match/excludedNamespaces/-", "value": "hpe-nfs"}]' k8spspprivilegedcontainer.constraints.gatekeeper.sh/psp-privileged-container`
+
 ### Version 5.3.0
 
 The CSI driver needs privileged access to the worker nodes to attach and detach storage devices. By default, an admission controller prevents all user deployed workloads access to the host filesystem. An exception needs to be created for the "hpe-storage" `Namespace`.
