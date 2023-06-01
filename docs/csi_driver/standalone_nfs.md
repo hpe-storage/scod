@@ -43,10 +43,11 @@ Run `tree .` in the current directory:
 │   └── values.yaml
 └── overlays
     └── example
+        ├── deployment.yaml
         ├── environment.properties
         └── kustomization.yaml
 
-4 directories, 9 files
+4 directories, 10 files
 ```
 
 !!! important 
