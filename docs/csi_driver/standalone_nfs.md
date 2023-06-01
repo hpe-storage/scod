@@ -93,6 +93,25 @@ sed -i"" 's/example-/my-server-/g' overlays/my-server/kustomization.yaml
 !!! Seealso
     If the NFS server needs to be deployed in a different `Namespace` than the current, edit and uncomment the "namespace" parameter in `overlays/my-server/kustomization.yaml`.
 
+### Change the default fsGroup
+
+The default "fsGroup" is mapped to "nobody" (gid=65534) which allows remote containers run as the root user to write in the NFS export. This may not be desirable as best practices dictate that containers should run with a user id larger than 99.
+
+To allow user containers to write in the export, edit `overlays/my-server/deployment.yaml` and change the "fsGroup" to the corresponding gid running in the remote container.
+
+```text
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-nfs
+spec:
+  template:
+    spec:
+      securityContext:
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+```
+
 Deploy the NFS server by issuing `kubectl apply -k overlays/my-server`:
 
 ```text
