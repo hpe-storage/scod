@@ -12,7 +12,7 @@ In certain situations is desirable to run the NFS Server Provisioner image witho
 
 ## Prerequisites
 
-It's assumed during the creation steps that a Kubernetes cluster is available with enough permissions to deploy privileged containers with `SYS_ADMIN` and `DAC_READ_SEARCH` capabilities. All steps are run in a terminal with `kubectl` and `git` in in the path.
+It's assumed during the creation steps that a Kubernetes cluster is available with enough permissions to deploy privileged `Pods` with `SYS_ADMIN` and `DAC_READ_SEARCH` capabilities. All steps are run in a terminal with `kubectl` and `git` in in the path.
 
 - A default `StorageClass` declared on the cluster
 - Worker nodes that will serve the NFS exports *must* be labeled with `csi.hpe.com/hpe-nfs: "true"`
@@ -61,7 +61,7 @@ Copy the "example" overlay into a new directory. In the examples "my-server" is 
 cp -a overlays/example overlays/my-server
 ```
 
-Edit both "environment.properties" and "kustomization.yaml"
+Edit both "environment.properties" and "kustomization.yaml" in the newly created overlay. Also pay attention to if the remote `Pods` mounting the NFS export are running as a non-root user, if that's the case, the group ID is needed of those `Pods` (customizable per NFS server).
 
 ### environment.properties
 
@@ -96,9 +96,9 @@ sed -i"" 's/example-/my-server-/g' overlays/my-server/kustomization.yaml
 
 ### Change the default fsGroup
 
-The default "fsGroup" is mapped to "nobody" (gid=65534) which allows remote containers run as the root user to write in the NFS export. This may not be desirable as best practices dictate that containers should run with a user id larger than 99.
+The default "fsGroup" is mapped to "nobody" (gid=65534) which allows remote `Pods` run as the root user to write in the NFS export. This may not be desirable as best practices dictate that `Pods` should run with a user id larger than 99.
 
-To allow user containers to write in the export, edit `overlays/my-server/deployment.yaml` and change the "fsGroup" to the corresponding gid running in the remote container.
+To allow user `Pods` to write in the export, edit `overlays/my-server/deployment.yaml` and change the "fsGroup" to the corresponding gid running in the remote `Pod`.
 
 ```text
 apiVersion: apps/v1
