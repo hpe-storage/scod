@@ -14,3 +14,7 @@ configMapGenerator:
 # Base manifests
 bases:
 - ../../base
+
+# Local trims
+patchesStrategicMerge:
+- deployment.yaml
