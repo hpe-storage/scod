@@ -6,7 +6,7 @@ This guide will demonstrate the steps to integrate Cohesity into a Kubernetes cl
 External Resources:
 
 * Data Protection for Kubernetes using Cohesity with HPE Alletra ([PDF](https://www.hpe.com/psnow/doc/a00133050enw))
-* Protect your containerized applications with HPE and Cohesity ([Blog](URL))
+* Protect your containerized applications with HPE and Cohesity ([Blog](https://community.hpe.com/t5/around-the-storage-block/protect-your-containerized-applications-with-hpe-and-cohesity/ba-p/7194173))
 
 Cohesity solutions are available through [HPE Complete](https://buy.hpe.com/us/en/storage/complete-storage-solution/complete-storage-solution/complete-partner-program/cohesity/p/1009514534). 
 
