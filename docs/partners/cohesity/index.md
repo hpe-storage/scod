@@ -71,7 +71,7 @@ Review the Cohesity documentation for [Recover Kubernetes Cluster](https://docs.
 !!! note
     Protection groups and individual `Namespace` resources appear in the same list. Available `Namespaces` are denoted with the Kubernetes ship wheel icon.
 
-For this example, a WordPress `Namespace` backup will be restored to the source Kubernetes cluster but under a new `Namespace` with a `debug-` prefix (see below). This application can run alongside and separately from the parent application.
+For this example, a WordPress `Namespace` backup will be restored to the source Kubernetes cluster but under a new `Namespace` with a "debug-" prefix (see below). This application can run alongside and separately from the parent application.
 
 ![](img/Cohesity-Recovery-Namespace-locationandrename.png)
 
