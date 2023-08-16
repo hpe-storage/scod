@@ -60,6 +60,7 @@ nav:
     - 'Install HPE CSI Driver': "ezmeral/install.md"
   - PARTNER ECOSYSTEMS:
     - 'Amazon EKS Anywhere': 'partners/amazon_eks_anywhere/index.md'
+    - 'Cohesity': 'partners/cohesity/index.md' 
     - 'Commvault': 'partners/commvault/index.md'
     - 'Kasten by Veeam': 'partners/kasten/index.md'
     - 'Mirantis': 'partners/mirantis/index.md'
