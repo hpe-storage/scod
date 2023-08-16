@@ -2,7 +2,7 @@
 
 Hewlett Packard Enterprise and Cohesity offer an integrated approach to solve customer problems commonly found with containerized workloads. HPE Alletra—leveraging the HPE CSI Driver for Kubernetes—together with Cohesity's comprehensive data protection capabilities, empower organizations to overcome challenges associated with containerized environments. 
 
-This guide will demonstrate the steps to integrate Cohesity into a Kubernetes cluster and how to configure a protection policy to back up an application namespace. It proceeds to show that a backup can be restored to a new namespace, useful for providing a test/development environment without affecting the original application namespace.
+This guide will demonstrate the steps to integrate Cohesity into a Kubernetes cluster and how to configure a protection policy to back up an application `Namespace`, a Kubernetes resource type. It proceeds to show that a backup can be restored to a new `Namespace`, useful for providing a test/development environment without affecting the original application `Namespace`.
 
 External HPE Resources:
 
@@ -31,7 +31,7 @@ Review Cohesity's "[Plan and Prepare](https://docs.cohesity.com/7_0/Web/UserGuid
 * Extract Bearer token ID from above `ServiceAccount`
 * Obtain Cohesity Datamover [(download)](https://downloads.cohesity.com/oauth2/login) and push to a local repository or public registry.
 !!! note
-    Cohesity only supports the backup of user-created application namespaces and does not support the backup of infrastructure namespaces such as `kube-system`, etc.
+    Cohesity only supports the backup of user-created application `Namespaces` and does not support the backup of infrastructure `Namespaces` such as `kube-system`, etc.
 
 ### Integrate Cohesity into Kubernetes
 
@@ -46,13 +46,13 @@ After the integration wizard is submitted, see the [Post-Registration task docum
 
 ### Configure Namespace-level Application Backup
 
-A Namespace containing a WordPress application will be protected in this example. It contains a variety of Kubernetes resources and objects including:
+A `Namespace` containing a WordPress application will be protected in this example. It contains a variety of Kubernetes resources and objects including:
 
 * Configuration and Storage: `PersistentVolumeClaim`, `ConfigMap`, and `Secret` 
 * `Service` and `ServiceAccount`
 * Workloads: `Deployment`, `ReplicaSet` and `StatefulSet`
 
-Review the [Protect Kubernetes Namespaces](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/protect.htm?tocpath=Kubernetes%7CBackup%7C_____1) documentation from Cohesity. Create a new protection policy or use an available default policy. Additionally, see the [Manage the Kubernetes Backup Configuration](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/manage-backup.htm) documentation to add/remove namespaces to a protection group, adjust Auto Protect settings, modify the Protection Policy, and trigger an on-demand run.
+Review the [Protect Kubernetes Namespaces](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/protect.htm?tocpath=Kubernetes%7CBackup%7C_____1) documentation from Cohesity. Create a new protection policy or use an available default policy. Additionally, see the [Manage the Kubernetes Backup Configuration](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/manage-backup.htm) documentation to add/remove `Namespaces` to a protection group, adjust Auto Protect settings, modify the Protection Policy, and trigger an on-demand run.
 
 See the screenshot below for an example backup <b>Run details</b> view.<br/>
 
@@ -61,17 +61,17 @@ See the screenshot below for an example backup <b>Run details</b> view.<br/>
 
 ### Demo: Clone a Test/Development Environment by Restoring a Backup
 
-Review the Cohesity documentation for [Recover Kubernetes Cluster](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/ContainerRecover.htm?tocpath=Kubernetes%7C_____5#RecoverKubernetesCluster). Cohesity notes, at time of writing, that granular-level recovery of namespaces is not supported. Consider the following when defining a recovery operation:
+Review the Cohesity documentation for [Recover Kubernetes Cluster](https://docs.cohesity.com/7_0/Web/UserGuide/Content/Container/ContainerRecover.htm?tocpath=Kubernetes%7C_____5#RecoverKubernetesCluster). Cohesity notes, at time of writing, that granular-level recovery of `Namespace` resource types is not supported. Consider the following when defining a recovery operation:
 
-* Select a protection group or individual namespace. If a protection group is chosen, multiple namespaces could be affected on recovery.
+* Select a protection group or individual `Namespace`. If a protection group is chosen, multiple `Namespace` resources could be affected on recovery.
 * If any previously backed up objects exist in the destination, a restore operation <i>will not</i> overwrite them. 
-* For applications deployed by Helm chart, recovery operations applied to new clusters or namespaces will not be managed with Helm.
+* For applications deployed by Helm chart, recovery operations applied to new clusters or `Namespaces` will not be managed with Helm.
 * If an alternate Kubernetes cluster is chosen (<b>New Location</b> in the UI), be sure that the cluster has access to the same Kubernetes `StorageClass` as the backup’s source cluster.
 
 !!! note
-    Protection groups and individual namespaces appear in the same list. Namespaces are denoted with the Kubernetes ship wheel icon.
+    Protection groups and individual `Namespace` resources appear in the same list. Available `Namespaces` are denoted with the Kubernetes ship wheel icon.
 
-For this example, a WordPress namespace backup will be restored to the source Kubernetes cluster but under a new namespace with a "debug-" prefix (see below). This application can run alongside and separately from the parent application.
+For this example, a WordPress `Namespace` backup will be restored to the source Kubernetes cluster but under a new `Namespace` with a `debug-` prefix (see below). This application can run alongside and separately from the parent application.
 
 ![](img/Cohesity-Recovery-Namespace-locationandrename.png)
 
