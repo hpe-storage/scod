@@ -4,6 +4,107 @@ HPE supports up to three minor releases. These release are kept here for histori
 
 [TOC]
 
+#### HPE CSI Driver for Kubernetes 2.1.1
+
+Release highlights:
+
+* Support for Kubernetes 1.23
+* Upstream CSI sidecar updates
+* Improved LUN discoverability in certain environments
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.20-1.23<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6 & 4.8, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.4.x<br />
+      Nimble OS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.3.x, 4.4.x<br />
+      3PAR OS 3.3.2
+    </td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.1.1.md>v2.1.1</a> on GitHub</td>
+  </tr>
+  <!--
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href=""></a> ()<br />
+    <a href=""></a> ()
+   </td>
+ </tr>
+ -->
+</table>
+
+<small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+</small>
+
+#### HPE CSI Driver for Kubernetes 2.1.0
+
+Release highlights:
+
+* Prometheus exporters
+* Support for Red Hat OCP 4.8
+* Support for Kubernetes 1.22
+* Reliability/Stability enhancements
+    * Peer Persistence Remote Copy enhancements
+    * Volume Mutator enhancements
+    * Logging enhancements
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.20-1.22<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6 & 4.8, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.3.x, 9.4.x<br />
+      Nimble OS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x, 4.4.x<br />
+      3PAR OS 3.3.1, 3.3.2
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.1.0.md>v2.1.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-enhancements-with-monitoring-and/ba-p/7158137">HPE CSI Driver enhancements with monitoring and alerting</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/get-started-with-prometheus-and-grafana-on-docker-with-hpe-storage-array-exporter/">Get started with Prometheus and Grafana and HPE Storage Array Exporter</a> (tutorial)
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
+</small>
+
 #### HPE CSI Driver for Kubernetes 2.0.0
 
 Release highlights:
@@ -47,7 +148,7 @@ Release highlights:
    </td>
  </tr>
 </table>
- 
+
 <small>
  <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.
 </small>

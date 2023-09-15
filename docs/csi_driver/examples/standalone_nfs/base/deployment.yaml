@@ -25,7 +25,7 @@ spec:
       - env:
         - name: GANESHA_OPTIONS
           value: -N NIV_WARN
-        image: quay.io/hpestorage/nfs-provisioner:v3.0.1
+        image: quay.io/hpestorage/nfs-provisioner:v3.0.2
         imagePullPolicy: IfNotPresent
         name: hpe-nfs
         ports:
@@ -93,6 +93,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       tolerations:
+      - effect: NoSchedule
+        key: csi.hpe.com/hpe-nfs
+        operator: Exists
       - effect: NoExecute
         key: node.kubernetes.io/not-ready
         operator: Exists

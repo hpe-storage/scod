@@ -50,11 +50,20 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v2.4.0"
+# Kubernetes 1.25-1.28
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v6.2.2 -b hpe-csi-driver-v2.4.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
 ```text fct_label="HPE CSI Driver v2.3.0"
 # Kubernetes 1.23-1.26
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout tags/v5.0.1 -b release-5.0
+git checkout tags/v5.0.1 -b hpe-csi-driver-v2.3.0
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
@@ -63,16 +72,7 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 # Kubernetes 1.21-1.24
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
-git checkout tags/v5.0.1 -b release-5.0
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
-```text fct_label="HPE CSI Driver v2.1.1"
-# Kubernetes 1.20-1.23
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v5.0.1 -b release-5.0
+git checkout tags/v5.0.1 -b hpe-csi-driver-v2.2.0
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
@@ -155,11 +155,11 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | fsMode                        | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
 | fsCreateOptions               | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
 | nfsResources                  | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
-| nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. |
-| nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Default: "nolock, hard,vers=4" |
+| nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. A value of "csi.storage.k8s.io/pvc/namespace" will provision resources in the requesting `PVC` `Namespace`. |
+| nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Uses `mount` command defaults from the node. |
 | nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: no limits applied. Example: "500m" |
-| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: no limits applied. Example: "500Mi". Recommended minimum: "2048Mi". |
+| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m" |
+| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2Gi". Example: "500Mi". Recommended minimum: "2048Mi". |
 | hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
 | hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
 | hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
@@ -390,10 +390,11 @@ spec:
 <!--
 !!! note
     The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
+FIXME
 -->
 
 !!! caution
-    The CSI driver will allow `volumeMode: Block` `PVCs` with `ReadWriteMany` and `ReadOnlyMany` `accessModes` to be provisioned without any exceptions, but it's currently **not** supported and may lead to unpredictable behavior.
+    The CSI driver will allow `volumeMode: Block` `PVCs` with `ReadWriteMany` and `ReadOnlyMany` `accessModes` to be provisioned without any exceptions, but it's currently only supported with the HPE Alletra 6000 CSP. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
 
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
@@ -688,7 +689,7 @@ The HPE CSI Driver (version 1.3.0 and later) allows the CSP backend volume to be
     There's a tutorial available on YouTube accessible through the [Video Gallery](../learn/video_gallery/index.md#adapt_stateful_workloads_dynamically_with_the_hpe_csi_driver_for_kubernetes) on how to use volume mutations to adapt stateful workloads with the HPE CSI Driver.
 
 !!! caution "Important"
-    In order to mutate a `StorageClass` parameter it needs to have a default value set in the `StorageClass`. In the example below we'll allow mutatating "description". If the parameter "description" isn't set when the volume was provisioned, no subsequent mutations are allowed.
+    In order to mutate a `StorageClass` parameter it needs to have a default value set in the `StorageClass`. In the example below we'll allow mutatating "description". If the parameter "description" wasn't set when the `PersistentVolume` was provisioned, no subsequent mutations are allowed. The CSP may set defaults for certain parameters during provisioning, if those are mutable, the mutation will be performed.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -736,11 +737,11 @@ spec:
 
 ### Using the NFS Server Provisioner
 
-Enabling the NFS Server Provisioner to allow RWX and ROX access mode for a PVC is straightforward. Create a new `StorageClass` and set `.parameters.nfsResources` to `"true"`. Any subsequent claim to the `StorageClass` will create a NFS server `Deployment` on the cluster with the associated objects running on top of a RWO PVC.
+Enabling the NFS Server Provisioner to allow "ReadWriteMany" and "ReadOnlyMany" access mode for a `PVC` is straightforward. Create a new `StorageClass` and set `.parameters.nfsResources` to `"true"`. Any subsequent claim to the `StorageClass` will create a NFS server `Deployment` on the cluster with the associated objects running on top of a "ReadWriteOnce" `PVC`.
 
-Any RWO claim made against the `StorageClass` will also create a NFS server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads using taints and tolerations.
+Any "RWO" claim made against the `StorageClass` will also create a NFS server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads using taints and tolerations. The NFS server `Pod` is armed with a `csi.hpe.com/hpe-nfs=true` toleration. It's required to taint dedicated NFS worker nodes if they truly need to be dedicated.
 
-By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities (`VolumeSnapshots` and `.spec.dataSource`) on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the RWX/ROX requesting PVC. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
+By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities (`VolumeSnapshots` and `.spec.dataSource`) on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the "RWX"/"ROX" requesting `PVC`. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
     A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
@@ -789,7 +790,7 @@ spec:
   storageClassName: hpe-nfs
 ```
 
-In the case of declaring a ROX PVC, the requesting `Pod` specification needs to request the PVC as read-only. Example:
+In the case of declaring a "ROX" `PVC`, the requesting `Pod` specification needs to request the `PVC` as read-only. Example:
 
 ```yaml
 apiVersion: v1
@@ -820,16 +821,19 @@ Requesting an empty read-only volume might not seem practical. The primary use c
 
 These are some common issues and gotchas that are useful to know about when planning to use the NFS Server Provisioner.
 
-- The current tested and supported limit for the NFS Server Provisioner is 20 NFS servers per Kubernetes worker node. The NFS server `Deployment` is currently setup in a completely unfettered resource mode where it will consume as much memory and CPU as it requests.
-- The two `StorageClass` parameters `nfsResourceLimitsCpuM` and `nfsResourceLimitsMemoryMi` control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation and 2GiB is the recommended minimum for most workloads.
+- The current tested and supported limit for the NFS Server Provisioner is 32 NFS servers per Kubernetes worker node.
+- The two `StorageClass` parameters "nfsResourceLimitsCpuM" and "nfsResourceLimitsMemoryMi" control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation and 2GiB is the recommended minimum for most workloads. The NFS server `Pod` is by default limited to 2GiB or memory and 1000 milli CPU.
 - The NFS `PVC` can **NOT** be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
 - Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
 - The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 - Certain CNIs may have issues to gracefully restore access from the NFS clients to the NFS export. Flannel have exhibited this problem and the most consistent performance have been observed with Calico.
 - The [Volume Mutation](#using_volume_mutations) feature does not work on the NFS `PVC`. If changes are needed, perform the change on the backing "ReadWriteOnce" `PVC`.
-- As outlined in [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner), CSI snapshots and cloning of NFS `PVCs` requires the CSI snapshot and NFS server to reside in the same `Namespace`. This also applies when using third-party backup software such as Kasten K10.
+- As outlined in [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner), CSI snapshots and cloning of NFS `PVCs` requires the CSI snapshot and NFS server to reside in the same `Namespace`. This also applies when using third-party backup software such as Kasten K10. Use the "nfsNamespace" `StorageClass` parameter to control where to provision resources.
 - [VolumeGroups](using.md#volume_groups) and [SnapshotGroups](using.md#snapshot_groups) are only supported on the backing "ReadWriteOnce" `PVC`. The "volume-group" annotation may be set at the initial creation of the NFS `PVC` but will have adverse effect on logging as the Volume Group Provisioner tries to add the NFS `PVC` to the backend consistency group indefinitely.
 - The NFS servers deployed by the HPE CSI Driver are not managed during CSI driver upgrades. Manual [upgrade is required](operations.md#upgrade_nfs_servers).
+- Using the same network interface for NFS and block IO has shown suboptimal performance. Use FC for the block storage for the best performance.
+- A single NFS server instance is capable of 100GigE wirespeed with large sequential workloads and up to 200,000 IOPS with small IO using bare-metal nodes and multiple clients.
+- Using ext4 as the backing filesystem has shown better performance with simultaneous writers to the same file.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

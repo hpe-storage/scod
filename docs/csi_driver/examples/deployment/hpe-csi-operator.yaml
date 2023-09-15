@@ -12,6 +12,7 @@ spec:
   imagePullPolicy: IfNotPresent
   logLevel: info
   disableNodeConformance: false
+  disableNodeConfiguration: false
   iscsi:
     chapUser: ''
     chapPassword: ''

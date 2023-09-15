@@ -15,14 +15,12 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 Software delivered through the HPE and Red Hat partnership follows a [rigorous certification process](https://redhat-connect.gitbook.io/openshift-badges/badges/container-storage-interface-csi-1) and only qualify what's listed as "Certified" in the below table.
 
-| Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers          |
-| ----------------------- | --------------------------------- | -------------------------- | ------------------------------------ |
-| Field Tested<sup>3</sup>| 4.13                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
+| ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
+| Field Tested<sup>3</sup>| 4.13                              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
-| EOL<sup>1</sup>         | 4.9 (Upgrade path only)           | -                          | -                                    |
-| EOL<sup>1</sup>         | 4.8 EUS<sup>2</sup>               | 2.2.1                      | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
@@ -31,12 +29,12 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 Check the table above periodically for future releases.
 
 !!! warning "Important"
-    Due to an [unresolved issue](https://github.com/hpe-storage/csi-driver/issues/323) with "ReadWriteMany" access modes on `PersistentVolumeClaims` utilizing "volumeMode: Block", the HPE CSI Operator does **not** support OpenShift Virtualization.
+    Due to an [unresolved issue](https://github.com/hpe-storage/csi-driver/issues/323) with "ReadWriteMany" access modes on `PersistentVolumeClaims` utilizing "volumeMode: Block", the HPE CSI Operator only support OpenShift Virtualization with the HPE Alletra 5000/6000 and Nimble Storage CSP.
 
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
-    - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift EUS.
+    - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift.
 
 ### Security model
 
