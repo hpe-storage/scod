@@ -284,13 +284,16 @@ Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary 
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
 
-### Upgrade to v2.3.0
+### Upgrade to v2.4.0
 
-Any prior deployed NFS servers may be upgraded to v2.3.0.
+Any prior deployed NFS servers may be upgraded to v2.4.0.
+
+!!! important
+    With v2.4.0 and onwards the NFS servers are deployed with default resource requests. Those won't be applied on running NFS servers, only new ones.
 
 #### Assumptions
 
-- HPE CSI Driver or Operator v2.3.0 installed.
+- HPE CSI Driver or Operator v2.4.0 installed.
 - All running NFS servers are running in the "hpe-nfs" `Namespace`.
 - Worker nodes with access to the Quay registry and SCOD.
 - Access to the commands `kubectl`, `yq` and `curl`.
@@ -307,7 +310,7 @@ When patching the NFS `Deployments`, the `Pods` will restart and cause a pause i
 Patch all NFS `Deployments` with the following.
 
 ```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.3.0.yaml | \
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.4.0.yaml | \
   kubectl patch -n hpe-nfs \
   $(kubectl get deploy -n hpe-nfs -o name) \
   --patch-file=/dev/stdin
@@ -318,7 +321,7 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.3.
 
 ### Validation
 
-This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.0 of the "nfs-provisioner" image after the uprade is complete.
+This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.2 of the "nfs-provisioner" image after the uprade is complete.
 
 ```text
 kubectl get deploy -A -o yaml | \
@@ -327,3 +330,119 @@ kubectl get deploy -A -o yaml | \
 
 !!! note
     The above line is very long.
+
+## Manual Node Configuration
+
+With the release of HPE CSI Driver v2.4.0 it's possible to completely disable the node conformance and node configuration performed by the CSI node driver at startup. This transfers the responsibilty from the HPE CSI Driver to the Kubernetes cluster administrator to ensure worker nodes boot with a supported configuration.
+
+!!! important
+    This feature is mainly for users who require 100% control of the worker nodes.
+
+### Stages of Initialization
+
+There are two stages of initialization the administrator can control through parameters in the Helm chart.
+
+#### disableNodeConformance
+
+The node conformance runs with the entrypoint of the node driver container. The conformance inserts and runs a systemd service on the node that installs all required packages on the node to allow nodes to attach block storage devices and mount NFS exports. It starts all the required services and configure an important udev rule on the worker node.
+
+This flag was intended to allow administrators to run the CSI driver on nodes with an unsupported or unconfigured package manager.
+
+If node conformance needs to be disabled for any reason, these packages and services needs to be installed and running prior to installing the HPE CSI Driver:
+
+- iSCSI (not necessary when using FC)
+- Multipath
+- XFS programs/utilities
+- NFSv4 client
+
+Package names and services vary greatly between different Linux distributions and it's the system administrator's duty to ensure these are available to the HPE CSI Driver.
+
+#### disableNodeConfiguration
+
+When disabling node configuration the CSI node driver will not touch the node at all. Besides indirectly disabling node conformance, all attempts to write configuration files or manipulate services during runtime are disabled. 
+
+### Mandatory Configuration
+
+These steps are **REQUIRED** for disabling either node configuration or conformance.
+
+On each current and future worker node in the cluster:
+
+```text
+# Don't let udev automatically scan targets(all luns) on Unit Attention.
+# This will prevent udev scanning devices which we are attempting to remove.
+
+if [ -f /lib/udev/rules.d/90-scsi-ua.rules ]; then
+    sed -i 's/^[^#]*scan-scsi-target/#&/' /lib/udev/rules.d/90-scsi-ua.rules
+    udevadm control --reload-rules
+fi
+```
+
+### iSCSI Configuration
+
+Skip this step if only Fibre Channel is being used. This step is only required when node configuration is disabled.
+
+#### iscsid.conf
+
+This example is taken from a Rocky Linux 9.2 node with the HPE parameters applied. Certain parameters may differ for other distributions of either iSCSI or the host OS.
+
+!!! note
+    The location of this file varies between Linux and iSCSI distributions.
+
+Ensure `iscsid` is stopped.
+
+```text
+systemctl stop iscsid
+```
+
+[Download]({{ config.site_url }}csi_driver/examples/operations/iscsid.conf): /etc/iscsi/iscsid.conf 
+
+```text
+{% include "examples/operations/iscsid.conf" %}```
+
+!!! tip "Pro tip!"
+    When nodes are provisioned from some sort of templating system with iSCSI pre-installed, it's notoriously common that nodes are provisioned with identical IQNs. This will lead to device attachment problems that aren't obvious to the user. Make sure each node has a unique IQN.
+
+Ensure `iscsid` is running and enabled:
+
+```text
+systemctl enable --now iscsid
+```
+
+!!! Seealso
+    Some Linux distributions requires the `iscsi_tcp` kernel module to be loaded. Where kernel modules are loaded varies between Linux distributions.
+
+### Multipath Configuration
+
+This step is only required when node configuration is disabled.
+
+#### multipath.conf
+
+The defaults section of the configuration file is merely a preference, make sure to leave the device and blacklist stanzas intact when potentially adding more entries from foreign devices.
+
+!!! note
+    The location of this file varies between Linux and iSCSI distributions.
+
+Ensure `multipathd` is stopped.
+
+```text
+systemctl stop multipathd
+```
+
+[Download]({{ config.site_url }}csi_driver/examples/operations/multipath.conf): /etc/multipath.conf 
+
+```text
+{% include "examples/operations/multipath.conf" %}```
+
+Ensure `multipathd` is running and enabled:
+
+```text
+systemctl enable --now `multipathd`
+```
+
+### Important Considerations
+
+While both disabling conformance and configuration parameters lends itself to a more predictable behaviour when deploying nodes from templates with less runtime configuration, it's still not a complete solution for having immutable nodes. The CSI node driver creates a unique identity for the node and stores it in `/etc/hpe-storage/node.gob`. This file must persist across reboots and redeployments of the node OS image. Immutable Linux distributions such as CoreOS persist the `/etc` directory, some don't.
+
+<!--
+yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-utils-iscsiuio nfs-utils
+-->

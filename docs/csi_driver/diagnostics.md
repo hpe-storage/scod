@@ -110,12 +110,15 @@ Log files associated with the HPE CSI Driver logs data to the standard output st
 
 ### CSI Driver Logs
 
-Node driver
-```
+Node driver:
+
+```text
 kubectl logs -f  daemonset.apps/hpe-csi-node  hpe-csi-driver -n hpe-storage
 ```
-Controller driver
-```
+
+Controller driver:
+
+```text
 kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
 ```
 
