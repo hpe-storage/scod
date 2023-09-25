@@ -63,18 +63,18 @@ Before beginning an advanced install, determine how Prometheus will be deployed 
 
 Start by downloading the manifest, which needs to be modified before applying to the cluster.
 
-#### Version 1.0.1
+#### Version 1.0.2
 
 Supports HPE CSI Driver for Kubernetes 2.0.0 and later.
 
 ```text
-wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.1/hpe-csi-info-metrics.yaml
+wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.2/hpe-csi-info-metrics.yaml
 ```
 
 Optional `ServiceMonitor` definition:
 
 ```text
-wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.1/hpe-csi-info-metrics-service-monitor.yaml
+wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.2/hpe-csi-info-metrics-service-monitor.yaml
 ```
 
 #### Configuring Advanced Install
