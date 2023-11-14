@@ -15,31 +15,32 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 
 Volume parameters available to the vSphere CSI Driver will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088903en_us) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://psnow.ext.hpe.com/doc/a00044881enw) for list of available features. <br /> <br /> For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective [CSP](../../container_storage_provider/index.md).
 
-| Feature                                         | HPE CSI Driver | vSphere CSI Driver |
-| --------------------------------------------- | -------------- | -------------------- |
-| vCenter Cloud Native Storage (CNS) UI Support | No             | GA                   |
-| Dynamic Block PV Provisioning (ReadWriteOnce access mode) | GA | GA (vVOL)            |
-| Dynamic File Provisioning (ReadWriteMany access mode)     | GA | GA (vSan Only)       |
-| Volume Snapshots (CSI)                        | GA             | Alpha (2.4.0)        |
-| Volume Cloning from VolumeSnapshot (CSI)      | GA             | No                   |
-| Volume Cloning from PVC (CSI)                 | GA             | No                   |
-| Volume Expansion (CSI)                        | GA             | GA (offline only)    |
-| Raw Block Volume (CSI)                        | GA             | Alpha                |
-| Generic Ephemeral Volumes (CSI)               | GA             | GA                   |
-| Inline Ephemeral Volumes (CSI)                | GA             | No                   |
-| Topology (CSI)                                | No             | GA                   |
-| Volume Health (CSI)                           | No             | GA (vSan only)       |
-| CSI Controller multiple replica support       | No             | GA                   |
-| Volume Encryption                             | GA             | GA (via VMcrypt)     |
-| Volume Mutator<sup>1</sup>                    | GA             | No                   |
-| Volume Groups<sup>1</sup>                     | GA             | No                   |
-| Snapshot Groups<sup>1</sup>                   | GA             | No                   |
-| Peer Persistence Replication<sup>3</sup>      | GA             | No                   |
+| Feature                                       | HPE CSI Driver | vSphere CSI Driver |
+| --------------------------------------------- | -------------- | -------------------|
+| vCenter Cloud Native Storage (CNS) UI Support             | No | GA                 |
+| Dynamic Block PV Provisioning (ReadWriteOnce access mode) | GA | GA (vVOL)          |
+| Dynamic File Provisioning (ReadWriteMany access mode)     | GA | GA (vSan Only)     |
+| Volume Snapshots (CSI)                                    | GA | Alpha (2.4.0)      |
+| Volume Cloning from VolumeSnapshot (CSI)                  | GA | No                 |
+| Volume Cloning from PVC (CSI)                             | GA | No                 |
+| Volume Expansion (CSI)                                    | GA | GA (offline only)  |
+| Raw Block Volume (CSI)                                    | GA | Alpha              |
+| Generic Ephemeral Volumes (CSI)                           | GA | GA                 |
+| Inline Ephemeral Volumes (CSI)                            | GA | No                 |
+| Topology (CSI)                                            | No | GA                 |
+| Volume Health (CSI)                                       | No | GA (vSan only)     |
+| CSI Controller multiple replica support                   | No | GA                 |
+| Volume Encryption                                         | GA | GA (via VMcrypt)   |
+| Volume Mutator<sup>1</sup>                                | GA | No                 |
+| Volume Groups<sup>1</sup>                                 | GA | No                 |
+| Snapshot Groups<sup>1</sup>                               | GA | No                 |
+| Peer Persistence Replication<sup>3</sup>                  | GA | No<sup>4</sup>     |
 
 <small>
  <sup>1</sup> = Feature comparison based upon HPE CSI Driver for Kubernetes v2.1.1 and the vSphere CSI Driver v2.4.1<br />
  <sup>2</sup> = HPE and VMware fully support features listed as GA for their respective CSI drivers.<br />
- <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra 9000 and Primera storage systems.
+ <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra 9000 and Primera storage systems.<br />
+ <sup>4</sup> = Peer Persistence is an HPE Storage specific platform feature that isn't abstracted up the vSphere CSI Driver. Peer Persistence works with the vSphere CSI Driver when using VMFS datastores.
 </small>
 
 Please refer to [vSphere CSI Driver - Supported Features Matrix](https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-E59B13F5-6F49-4619-9877-DF710C365A1E.html) for the most up-to-date information.
