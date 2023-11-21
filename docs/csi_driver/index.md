@@ -85,17 +85,17 @@ Upgrade considerations:
     <th>Helm Chart</th>
     <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.4.0">v2.4.0</a> on ArtifactHub</td>
   </tr>
-  <!--tr>
+  <tr>
     <th>Operators</th>
     <td>
      <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.0">v2.4.0</a> on OperatorHub<br />
      <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.0</a> via OpenShift console
     </td>
-  </tr-->
+  </tr>
   <tr>
     <th>Worker&nbsp;OS</th>
     <td>
-      RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.10-4.13<br />
+      RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.12-4.14<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
       SLES 15 SP3, SP4, SP5
   </tr>
