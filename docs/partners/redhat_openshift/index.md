@@ -17,14 +17,15 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Field Tested<sup>3</sup>| 4.13                              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.13                              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
-<small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small>
+<!--small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small-->
 
 Check the table above periodically for future releases.
 
