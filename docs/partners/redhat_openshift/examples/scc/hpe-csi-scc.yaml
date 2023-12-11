@@ -1,0 +1,103 @@
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: hpe-csi-controller-scc
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+readOnlyRootFilesystem: true
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+users:
+- system:serviceaccount:hpe-storage:hpe-csi-controller-sa
+volumes:
+- hostPath
+- emptyDir
+- projected
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: hpe-csi-node-scc
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- SYS_ADMIN
+defaultAddCapabilities: []
+fsGroup:
+  type: RunAsAny
+groups: []
+priority:
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:hpe-storage:hpe-csi-node-sa
+volumes:
+- emptyDir
+- hostPath
+- projected
+- configMap
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: hpe-csi-csp-scc
+allowHostDirVolumePlugin: true
+readOnlyRootFilesystem: true
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+#supplementalGroups:
+#  type: RunAsAny
+users:
+- system:serviceaccount:hpe-storage:hpe-csp-sa
+volumes:
+- hostPath
+- emptyDir
+- projected
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: hpe-csi-nfs-scc
+allowPrivilegedContainer: true
+allowPrivilegeEscalation: true
+allowedCapabilities:
+- SYS_ADMIN
+- DAC_READ_SEARCH
+defaultAddCapabilities:  []
+fsGroup:
+  type: RunAsAny
+groups: []
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:hpe-nfs:hpe-csi-nfs-sa
+volumes:
+- persistentVolumeClaim
+- configMap
+- projected

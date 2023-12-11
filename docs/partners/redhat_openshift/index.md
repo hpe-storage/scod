@@ -1,6 +1,5 @@
-<img src="img/redhat-certified.png" align="right" width="160" hspace="20" vspace="20" />
-
 # Overview
+<img src="img/redhat-certified.png" align="right" width="256" hspace="12" vspace="2" />
 HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.
 
 Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE volume drivers and this page serves as the authoritative source for all things HPE primary storage and Red Hat OpenShift.
@@ -54,6 +53,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
 - The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
+- Deploying the NFS Server Provisioner to a `Namespace` other than "hpe-nfs" requires a separate SCC applied to the `Namespace`. See [#nfs_server_provisioner_considerations](NFS Server Provisioner Considerations).
 
 ### Deployment
 
@@ -86,28 +86,22 @@ Once the steps have been followed for the particular version transition:
 
 The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OpenShift, please create the following `SecurityContextConstraints` (SCC) to allow the CSI driver to be running with these privileges.
 
-Download the SCC to where you have access to `oc` and the OpenShift cluster:
-
 ```text
-curl -sL https://raw.githubusercontent.com/hpe-storage/co-deployments/master/operators/hpe-csi-operator/deploy/scc.yaml > hpe-csi-scc.yaml
-```
-
-Change `my-hpe-csi-operator` to the name of the project (e.g. `hpe-csi-driver` below) where the CSI Operator is being deployed.
-
-```text
-oc new-project hpe-csi-driver --display-name="HPE CSI Driver for Kubernetes"
-sed -i'' -e 's/my-hpe-csi-driver-operator/hpe-csi-driver/g' hpe-csi-scc.yaml
-```
-
-Deploy the SCC:
-
-```text
-oc create -f hpe-csi-scc.yaml
-securitycontextconstraints.security.openshift.io/hpe-csi-scc created
+oc new-project hpe-storage --display-name="HPE CSI Driver for Kubernetes"
 ```
 
 !!! important
-    Make note of the project name as it's needed for the Operator deployment in the next steps.
+    The rest of this implementation guide assumes the default "hpe-storage" `Namespace`. If a different `Namespace` is desired. Update the `ServiceAccount` `Namespace` in the SCC below.
+
+Deploy or [download]({{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml) the SCC:
+
+```text
+oc apply -f {{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
+securitycontextconstraints.security.openshift.io/hpe-csi-controller-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-node-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-csp-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-nfs-scc created
+```
 
 #### OpenShift web console
 
@@ -132,7 +126,7 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 *Click 'Create Instance'.*
 
 ![Configure instance](img/webcon-6.png)
-*Normally, no customizations are needed, click 'Create'.*
+*Normally, no customizations are needed, scroll all the way down and click 'Create'.*
 
 By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.
 
@@ -146,7 +140,7 @@ See [Caveats](#caveats) below for information on creating `StorageClasses` in Re
 
 This provides an example Operator deployment using `oc`. If you want to use the web console, proceed to the [previous section](#openshift_web_console).
 
-It's assumed the SCC has been applied to the project and have `kube:admin` privileges. As an example, we'll deploy to the `hpe-csi-driver` project as described in previous steps.
+It's assumed the SCC has been applied to the project and have `kube:admin` privileges. As an example, we'll deploy to the `hpe-storage` project as described in previous steps.
 
 First, an `OperatorGroup` needs to be created.
 
@@ -155,10 +149,10 @@ apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: hpe-csi-driver-for-kubernetes
-  namespace: hpe-csi-driver
+  namespace: hpe-storage
 spec:
   targetNamespaces:
-  - hpe-csi-driver
+  - hpe-storage
 ```
 
 Next, create a `Subscription` to the Operator.
@@ -168,7 +162,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: hpe-csi-operator
-  namespace: hpe-csi-driver
+  namespace: hpe-storage
 spec:
   channel: stable
   installPlanApproval: Manual
@@ -180,13 +174,13 @@ spec:
 Next, approve the installation.
 
 ```text
-oc -n hpe-csi-driver patch $(oc get installplans -n hpe-csi-driver -o name) -p '{"spec":{"approved":true}}' --type merge
+oc -n hpe-storage patch $(oc get installplans -n hpe-storage -o name) -p '{"spec":{"approved":true}}' --type merge
 ```
 
 The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.
 
 ```text
-oc rollout status deploy/hpe-csi-driver-operator -n hpe-csi-driver
+oc rollout status deploy/hpe-csi-driver-operator -n hpe-storage
 Waiting for deployment "hpe-csi-driver-operator" rollout to finish: 0 of 1 updated replicas are available...
 deployment "hpe-csi-driver-operator" successfully rolled out
 ```
@@ -234,6 +228,24 @@ v2.storage.hpe.com
 ```
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
+
+# NFS Server Provisioner Considerations
+
+When deploying NFS servers on OpenShift there's currently two things to keep in mind for a successful deployment.
+
+## Non-standard hpe-nfs Namespace
+
+If NFS servers are deployed in a different `Namespace` than the default "hpe-nfs" by using the "nfsNamespace" `StorageClass` parameter, the "hpe-csi-nfs-scc" SCC needs to be updated to include the `Namespace` `ServiceAccount`.
+
+This example adds "my-namespace" NFS server `ServiceAccount` to the SCC:
+
+```text
+oc patch scc hpe-csi-nfs-scc --type=json -p='[{"op": "add", "path": "/users/-", "value": "system:serviceaccount:my-namespace:hpe-csi-nfs-sa" }]'
+```
+
+## Operators Requesting NFS Persistent Volume Claims
+
+Object references in OpenShift are not compatible with the NFS Server Provisioner. If a user deploys an Operator of any kind that creates a NFS server backed `PVC`, the operation will fail. Instead, pre-provision the `PVC` manually for the Operator instance to use.
 
 # Unsupported Helm Chart Install
 
