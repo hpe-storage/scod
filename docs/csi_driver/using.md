@@ -834,6 +834,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - Using the same network interface for NFS and block IO has shown suboptimal performance. Use FC for the block storage for the best performance.
 - A single NFS server instance is capable of 100GigE wirespeed with large sequential workloads and up to 200,000 IOPS with small IO using bare-metal nodes and multiple clients.
 - Using ext4 as the backing filesystem has shown better performance with simultaneous writers to the same file.
+- Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](../partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 
