@@ -247,6 +247,23 @@ oc patch scc hpe-csi-nfs-scc --type=json -p='[{"op": "add", "path": "/users/-", 
 
 Object references in OpenShift are not compatible with the NFS Server Provisioner. If a user deploys an Operator of any kind that creates a NFS server backed `PVC`, the operation will fail. Instead, pre-provision the `PVC` manually for the Operator instance to use.
 
+## Use the ext4 filesystem for NFS servers
+
+On certain versions of OpenShift the NFS clients may experience stale NFS file handles like the one below when the NFS server is being restarted.
+
+```text
+Error: failed to resolve symlink "/var/lib/kubelet/pods/290ff9e1-cc1e-4d05-b884-0ddcc05a9631/volumes/kubernetes.io~csi/pvc-321cf523-c063-4ce4-97e8-bc1365b8a05b/mount": lstat /var/lib/kubelet/pods/290ff9e1-cc1e-4d05-b884-0ddcc05a9631/volumes/kubernetes.io~csi/pvc-321cf523-c063-4ce4-97e8-bc1365b8a05b/mount: stale NFS file handle
+```
+
+If this problem occurs, use the ext4 filesystem on the backing volumes. The `fsType` is set in the `StorageClass`. Example:
+
+```text
+...
+parameters:
+  csi.storage.k8s.io/fstype: ext4
+...
+```
+
 # Unsupported Helm Chart Install
 
 In the event Red Hat releases a new release of OpenShift between HPE CSI driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
