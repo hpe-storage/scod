@@ -50,6 +50,15 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v2.4.1"
+# Kubernetes 1.26-1.29
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v6.3.3 -b hpe-csi-driver-v2.4.1
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
 ```text fct_label="HPE CSI Driver v2.4.0"
 # Kubernetes 1.25-1.28
 git clone https://github.com/kubernetes-csi/external-snapshotter
@@ -64,15 +73,6 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v5.0.1 -b hpe-csi-driver-v2.3.0
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
-```text fct_label="HPE CSI Driver v2.2.0"
-# Kubernetes 1.21-1.24
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v5.0.1 -b hpe-csi-driver-v2.2.0
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
@@ -155,6 +155,7 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | fsMode                        | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
 | fsCreateOptions               | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
 | nfsResources                  | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
+| nfsForeignStorageClass        | Text           | Provision NFS servers on `PVCs` from a different `StorageClass`. See [Using a Foreign StorageClass](#using_a_foreign_storageclass) |
 | nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. A value of "csi.storage.k8s.io/pvc/namespace" will provision resources in the requesting `PVC` `Namespace`. |
 | nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Uses `mount` command defaults from the node. |
 | nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
@@ -387,14 +388,8 @@ spec:
   volumeMode: Block
 ```
 
-<!--
 !!! note
     The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
-FIXME
--->
-
-!!! caution
-    The CSI driver will allow `volumeMode: Block` `PVCs` with `ReadWriteMany` and `ReadOnlyMany` `accessModes` to be provisioned without any exceptions, but it's currently only supported with the HPE Alletra 6000 CSP. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
 
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
@@ -816,6 +811,32 @@ spec:
 ```
 
 Requesting an empty read-only volume might not seem practical. The primary use case is to source existing datasets into immutable applications, using either a backend CSP cloning capability or CSI data management feature such as [snapshots or existing PVCs](#using_csi_snapshots).
+
+#### Using a Foreign StorageClass
+
+Since HPE CSI Driver for Kubernetes version 2.4.1 it's possible to provision NFS servers on top of non-HPE CSI Driver `StorageClasses`. The most prominent use case for this functionality is to coexist with the vSphere CSI Driver (VMware vSphere Container Storage Plug-in) in FC environments and provide "RWX" `PVCs`.
+
+##### Example StorageClass using a foreign StorageClass
+
+The HPE CSI Driver only manages the NFS server `Deployment`, `Service` and `PVC`. There must be an existing `StorageClass` capable of provisioning "RWO" filesystem `PVCs`.
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-nfs-servers
+provisioner: csi.hpe.com
+parameters:
+  nfsResources: "true"
+  nfsForeignStorageClass: "my-foreign-storageclass-name"
+reclaimPolicy: Delete
+allowVolumeExpansion: false
+```
+
+Next, provision "RWO" or "RWX" claims from the "hpe-nfs-servers" `StorageClass`. An NFS server will be provisioned on a "RWO" `PVC` from the `StorageClass` "my-foreign-storageclass-name".
+
+!!! note
+    Only `StorageClasses` that uses HPE storage proxied by partner CSI drivers are supported by HPE.
 
 #### Limitations and Considerations for the NFS Server Provisioner
 

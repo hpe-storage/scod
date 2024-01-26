@@ -4,6 +4,75 @@ HPE supports up to three minor releases. These release are kept here for histori
 
 [TOC]
 
+#### HPE CSI Driver for Kubernetes 2.2.0
+
+Release highlights:
+
+* Support for Kubernetes 1.24 and Red Hat OpenShift 4.10
+* Added Tolerations, Affinity, Labels and Node Selectors to Helm chart
+* Improved automatic recovery for the NFS Server Provisioner
+* Added multipath handling for Alletra 9000, Primera and 3PAR
+* Volume expansion of encrypted volumes
+
+Upgrade considerations:
+
+* Existing [encrypted volumes needs to be migrated](operations.md#migrate_encrypted_volumes) to allow expansion
+* Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v220).
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.21-1.24<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.2.0">v2.2.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.2.1">v2.2.1</a> on OperatorHub<br />
+     v2.2.1</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      RHEL<sup>2</sup> 7.x & 8.x, RHCOS 4.8 & 4.10<br />
+      Ubuntu 16.04, 18.04 & 20.04<br />
+      SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x - 6.1.0.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.0.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.2.0.md>v2.2.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/Updates-and-Improvements-to-HPE-CSI-Driver-for-Kubernetes/ba-p/7170878">Updates and Improvements to HPE CSI Driver for Kubernetes</a> (release blog)
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.
+</small>
+
 #### HPE CSI Driver for Kubernetes 2.1.1
 
 Release highlights:

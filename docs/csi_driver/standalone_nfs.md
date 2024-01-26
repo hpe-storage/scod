@@ -2,6 +2,9 @@
 
 In certain situations is desirable to run the NFS Server Provisioner image without the dual `PersistentVolumeClaim` (PVC) semantic in a more static fashion on top of a `PVC` provisioned by a non-HPE CSI Driver `StorageClass`.
 
+!!! caution "Notice"
+    Since HPE CSI Driver for Kubernetes v2.4.1, this functionality is built into the CSI driver. See [Using a Foreign StorageClass](using.md#using_a_foreign_storageclass) how to use it.
+
 [TOC]
 
 ## Limitations
