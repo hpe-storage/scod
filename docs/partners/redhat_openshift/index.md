@@ -17,8 +17,8 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
 | Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.13                              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.13                              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
@@ -266,9 +266,12 @@ parameters:
 
 # Unsupported Helm Chart Install
 
-In the event Red Hat releases a new release of OpenShift between HPE CSI driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
+In the event Red Hat releases a new release of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
 
 It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the [support matrix](#certified_combinations) above.
+
+!!! tip
+    Helm chart install is also only current method to use beta releases of the HPE CSI Driver.
 
 ## Steps to install.
 

@@ -98,7 +98,7 @@ Upgrade considerations:
     <td>
       RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.12-4.14<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
-      SLES 15 SP3, SP4, SP5 and SLE Micro equivalents
+      SLES 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
   </tr>
   <tr>
     <th>Platforms<sup>3</sup></th>
@@ -136,6 +136,7 @@ Upgrade considerations:
  <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](../partners) for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
  <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
  <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
+ <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.4.0
