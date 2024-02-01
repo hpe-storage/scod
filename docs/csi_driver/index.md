@@ -4,7 +4,7 @@ A Container Storage Interface ([CSI](https://github.com/container-storage-interf
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-2.3.0.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-2.4.1.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
@@ -68,8 +68,8 @@ Release highlights:
 
 * HPE Alletra Storage MP support
 * Kubernetes 1.29 support
-* Full KubeVirt, OpenShift Virtualization and SUSE Harvester support by introducing HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR
-* Full ARM64 support by introducing HPE Alletra 5000/6000 and Nimble Storage
+* Full KubeVirt, OpenShift Virtualization and SUSE Harvester support for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR
+* Full ARM64 support for HPE Alletra 5000/6000 and Nimble Storage
 * Foreign `StorageClasses` for the NFS Server Provisioner
 * SUSE Linux Enterprise Micro OS (SLE Micro) support
 
@@ -96,9 +96,9 @@ Upgrade considerations:
   <tr>
     <th>Worker&nbsp;OS</th>
     <td>
-      RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.12-4.14<br />
+      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.14<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
-      SLES 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+      SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
   </tr>
   <tr>
     <th>Platforms<sup>3</sup></th>
