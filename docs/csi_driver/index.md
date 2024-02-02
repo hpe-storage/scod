@@ -70,7 +70,7 @@ Release highlights:
 * Kubernetes 1.29 support
 * Full KubeVirt, OpenShift Virtualization and SUSE Harvester support for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR
 * Full ARM64 support for HPE Alletra 5000/6000 and Nimble Storage
-* Foreign `StorageClasses` for the NFS Server Provisioner
+* Support for foreign `StorageClasses` with the NFS Server Provisioner
 * SUSE Linux Enterprise Micro OS (SLE Micro) support
 
 Upgrade considerations:
