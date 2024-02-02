@@ -214,3 +214,65 @@ How to use `VolumeSnapshotClass` and `VolumeSnapshot` objects is elaborated on i
 | description | Text    | Text to be added to the snapshot's description on the array. |
 | writable    | Boolean | Indicates if the snapshot is writable on the array. Defaults to "false". |
 | online      | Boolean | Indicates if the snapshot is set to online on the array. Defaults to "false". |
+
+## Static Provisioning
+
+Static provisioning of `PVs` and `PVCs` may be used when absolute control over physical volumes are required by the storage administrator. This CSP also supports importing volumes and clones of volumes using the [import parameters](#import_parameters) in a `StorageClass`.
+
+### Persistent Volume
+
+Create a `PV` referencing an existing 10GiB volume on the array, replace `.spec.csi.volumeHandle` with the array volume ID.
+
+!!! warning
+    If a filesystem can't be detected on the device a new filesystem will be created. If the volume contains data, make sure the data reside in a whole device filesystem.
+
+```text
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-static-pv-1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  csi:
+    volumeHandle: <insert volume ID here>
+    driver: csi.hpe.com
+    fsType: xfs
+    volumeAttributes:
+      volumeAccessMode: mount
+      fsType: xfs
+    controllerPublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    nodePublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    controllerExpandSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+```
+
+!!! tip
+    Remove `.spec.csi.controllerExpandSecretRef` to disallow volume expansion.
+
+### Persistent Volume Claim
+
+Now, a user may claim the static `PV` by creating a `PVC` referencing the `PV` name in `.spec.volumeName`.
+
+```text
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: my-static-pv-1
+```
