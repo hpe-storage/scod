@@ -88,12 +88,39 @@ The NFS Server Provisioner consists of a number of Kubernetes resources per PVC.
 | Object                | Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Purpose       |
 | --------------------- | -------------------- | ------------- |
 | ConfigMap             | hpe-nfs-config       | This `ConfigMap` holds the configuration file for the NFS server. Local tweaks may be wanted. Please see the [config file reference](https://github.com/nfs-ganesha/nfs-ganesha/tree/master/src/config_samples) for more details. |
-| Deployment            | hpe-nfs-&lt;UUID&gt; | The `Deployment` that is running the NFS `Pod`.  |
-| Service               | hpe-nfs-&lt;UUID&gt; | `Pod` `Service` the NFS clients perform mounts against. |
-| PVC                   | hpe-nfs-&lt;UUID&gt; | The RWO claim serving the NFS workload. |
+| Deployment            | hpe-nfs-UID          | The `Deployment` that is running the NFS `Pod`.  |
+| Service               | hpe-nfs-UID          | The `Service` the NFS clients perform mounts against. |
+| PVC                   | hpe-nfs-UID          | The RWO claim serving the NFS workload. |
 
 !!! tip
-    The `<UUID>` stems from the user request RWX claim UUID for easy tracking.
+    The UID stems from the user request RWX `PVC` for easy tracking. Use `kubectl get pvc/my-pvc -o jsonpath='{.metadata.uid}{"\n"}'` to retrieve it.
+
+### Tracing NFS resources
+
+When troubleshooting NFS deployments it's common that only the source RWX `PVC` and `Namespace` is known. The next few steps explains how resources can be easily traced.
+
+Retrieve the "hpe-nfs-UID" from the NFS `Pod` by specifying `PVC` and `Namespace` of the RWX `PVC`:
+```text
+kubectl get pods -l provisioned-by=my-pvc,provisioned-from=my-namespace -A -o jsonpath='{.items[].metadata.labels.app}{"\n"}'
+```
+
+Next, enumerate the resources from the "hpe-nfs-UID":
+```text
+kubectl get pvc,svc,deploy -A -o name --field-selector metadata.name=hpe-nfs-UID
+```
+
+Example output:
+
+```text
+persistentvolumeclaim/hpe-nfs-UID
+service/hpe-nfs-UID
+deployment.apps/hpe-nfs-UID
+```
+
+If only the `PV` name is known, looking from the backend storage perspective, the `PV` name (and `.spec.claimRef.uid`) contains the UID, for example: "pvc-UID".
+
+!!! seealso "Clarification"
+    The `hpe-nfs-UID` is abbreviated, it will contain a real UID added on, for example "hpe-nfs-98ce7c80-13f9-45d0-9609-089227bf97f1".
 
 ## Volume and Snapshot Groups
 

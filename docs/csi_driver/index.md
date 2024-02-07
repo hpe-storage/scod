@@ -36,12 +36,13 @@ Below is the official table for CSI features we track and deem readily available
 | Volume Encryption<sup>1</sup>          | N/A               | 1.18              | 2.0.0          |
 | Topology                               | Stable            | 1.17              | Future         |
 | Storage Capacity Tracking              | Stable            | 1.24              | Future         |
-| Volume Health                          | Alpha             | 1.21              | Future         |
+| Volume Expansion From Source           | Stable            | 1.27              | Future         |
+| ReadWriteOncePod                       | Stable            | 1.29              | Future         |
 | Volume Populator                       | Beta              | 1.24              | Future         |
-| ReadWriteOncePod                       | Alpha             | 1.22              | Future         |
+| Volume Health                          | Alpha             | 1.21              | Future         |
 | Cross Namespace Snapshots              | Alpha             | 1.26              | Future         |
 | Upstream Volume Group Snapshot         | Alpha             | 1.27              | Future         |
-| Volume Expansion From Source           | Stable            | 1.27              | Future         |
+| Volume Attribute Classes               | Alpha             | 1.29              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
