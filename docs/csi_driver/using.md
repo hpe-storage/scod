@@ -741,6 +741,35 @@ By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namesp
 !!! tip
     A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
 
+Example `StorageClass` with "nfsResources" enabled. No CSP specific parameters for clarity.
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-standard-file
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  description: "NFS backend volume created by the HPE CSI Driver for Kubernetes"
+  csi.storage.k8s.io/fstype: ext4
+  nfsResources: "true"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+```
+
+!!! note
+    Using XFS may result in stale NFS handles during node failures and outages. Always use ext4 for NFS `PVCs`. While "allowVolumeExpansion" isn't supported on the NFS `PVC`, the backend "RWO" `PVC` does.
+
 Example use of `accessModes`:
 
 ```yaml fct_label="ReadWriteOnce"
@@ -856,6 +885,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - A single NFS server instance is capable of 100GigE wirespeed with large sequential workloads and up to 200,000 IOPS with small IO using bare-metal nodes and multiple clients.
 - Using ext4 as the backing filesystem has shown better performance with simultaneous writers to the same file.
 - Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](../partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
+- XFS has proven troublesome to use as a backend "RWO" volume filesystem, leaving stale NFS handles for clients. Use ext4 as the "csi.storage.k8s.io/fstype" `StorageClass` parameter for best results.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

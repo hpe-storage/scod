@@ -104,7 +104,7 @@ Upgrade considerations:
   <tr>
     <th>Platforms<sup>3</sup></th>
     <td>
-      Alletra Storage MP 10.2.x - 10.3.x<br />
+      Alletra Storage MP<sup>5</sup> 10.2.x - 10.3.x<br />
       Alletra OS 9000 9.3.x - 9.5.x<br />
       Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
       Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
@@ -127,7 +127,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    Awaiting publication (1/3/24 8am PT)<!-- a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a-->
+    Awaiting publication (3/1/24 8am PT)<!-- a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a-->
    </td>
  </tr>
 </table>
@@ -138,6 +138,7 @@ Upgrade considerations:
  <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
  <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
  <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
+ <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File.<br/>
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.4.0
