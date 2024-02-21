@@ -63,6 +63,7 @@ These are the combinations HPE has tested and can provide official support servi
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md), do note that the FlexVolume drivers are being deprecated.
 
+<a name="latest_release"></a>
 #### HPE CSI Driver for Kubernetes 2.4.1
 
 Release highlights:
