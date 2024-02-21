@@ -138,7 +138,7 @@ Upgrade considerations:
  <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
  <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
  <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
- <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File.<br/>
+ <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block Storage. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File Storage.<br/>
 </small>
 
 #### HPE CSI Driver for Kubernetes 2.4.0
