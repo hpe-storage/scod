@@ -2,6 +2,18 @@
 
 Older versions of the HPE CSI Driver for Kubernetes are kept here for reference. Check the CSI driver GitHub repo for the appropriate YAML files to declare on the cluster for the respective version of Kubernetes.
 
+!!! important
+    The resources for CSPs, CRDs and ConfigMaps are available in each respective CSI driver version directory [here](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver). Use the below version mappings as reference.
+
+# Kubernetes 1.25
+
+```text
+kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.0/hpe-csi-k8s-1.25.yaml
+```
+
+!!! note
+    Latest supported CSI driver version is 2.4.0 for Kubernetes 1.25.
+
 # Kubernetes 1.24
 
 ```text

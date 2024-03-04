@@ -62,6 +62,11 @@ spec:
           claimName: my-pvc
 ```
 
+!!! danger
+    It's imperative that failure scenarios that are being mitigated for the application are properly tested before put into production. It's up to the CSP to fence the `PersistentVolume` attached to an isolated node when a new "NodePublish" request comes in. Node isolation is the most dangerous scenario as the workload continues to run on the node when disconnected from the outside world. Simply shutdown the kubelet to test this scenario and ensure the block device become inaccessible to the isolated node.
+
 ## Limitations
 
 * Kubernetes provide automatic recovery for your applications, not high availability. Expect applications to take minutes (up to 8 minutes with the default tolerations for `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable`) to fully recover during a node failure or network partition using the Pod Monitor for `Pods` with `PersistentVolumeClaims`.
+* From Kubernetes 1.24 and onwards the Pod Monitor is ineffective on `StatefulSets` due to [non-graceful node shutdown](https://kubernetes.io/docs/concepts/architecture/nodes/#non-graceful-node-shutdown).
+* Using the Pod Monitor on a workload controller besides `Deployment` is unsupported and may have undesired side effects.

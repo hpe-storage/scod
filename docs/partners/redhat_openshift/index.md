@@ -16,10 +16,11 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.13                              | 2.4.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.13                              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1        | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
@@ -28,13 +29,11 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 Check the table above periodically for future releases.
 
-!!! warning "Important"
-    Due to an [unresolved issue](https://github.com/hpe-storage/csi-driver/issues/323) with "ReadWriteMany" access modes on `PersistentVolumeClaims` utilizing "volumeMode: Block", the HPE CSI Operator only support OpenShift Virtualization with the HPE Alletra 5000/6000 and Nimble Storage CSP.
-
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
     - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift.
+    - OpenShift Virtualization OS images are only supported on `PVCs` using "RWX" with `volumeMode: Block`.
 
 ### Security model
 
@@ -112,6 +111,8 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 
 ![Click Install](img/webcon-2.png)
 *Click 'Install'.*
+!!! note
+    Latest supported HPE CSI Operator on OpenShift 4.14 is 2.4.1
 
 ![Click Install](img/webcon-3.png)
 *Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.*
@@ -266,9 +267,12 @@ parameters:
 
 # Unsupported Helm Chart Install
 
-In the event Red Hat releases a new release of OpenShift between HPE CSI driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
+In the event Red Hat releases a new release of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
 
 It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the [support matrix](#certified_combinations) above.
+
+!!! tip
+    Helm chart install is also only current method to use beta releases of the HPE CSI Driver.
 
 ## Steps to install.
 
