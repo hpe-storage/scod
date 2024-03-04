@@ -128,7 +128,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    Awaiting publication (3/1/24 8am PT)<!-- a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a-->
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a>
    </td>
  </tr>
 </table>

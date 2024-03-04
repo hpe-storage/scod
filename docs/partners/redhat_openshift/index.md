@@ -16,10 +16,11 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
+| Certified               | 4.15                              | 2.4.1                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.13                              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
