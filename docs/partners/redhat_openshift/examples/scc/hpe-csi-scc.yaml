@@ -60,7 +60,7 @@ apiVersion: security.openshift.io/v1
 metadata:
   name: hpe-csi-csp-scc
 allowHostDirVolumePlugin: true
-readOnlyRootFilesystem: true
+readOnlyRootFilesystem: false
 runAsUser:
   type: RunAsAny
 seLinuxContext:
