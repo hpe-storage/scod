@@ -9,6 +9,7 @@ spec:
     primera: false
     alletra6000: false
     alletra9000: false
+    alletraStorageMP: false
   imagePullPolicy: IfNotPresent
   logLevel: info
   disableNodeConformance: false
