@@ -68,5 +68,5 @@ spec:
 ## Limitations
 
 * Kubernetes provide automatic recovery for your applications, not high availability. Expect applications to take minutes (up to 8 minutes with the default tolerations for `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable`) to fully recover during a node failure or network partition using the Pod Monitor for `Pods` with `PersistentVolumeClaims`.
-* From Kubernetes 1.24 and onwards the Pod Monitor is ineffective on `StatefulSets` due to [non-graceful node shutdown](https://kubernetes.io/docs/concepts/architecture/nodes/#non-graceful-node-shutdown).
-* Using the Pod Monitor on a workload controller besides `Deployment` is unsupported and may have undesired side effects.
+* HPE CSI Driver 2.3.0 to 2.4.1 are inffective on `StatefulSets` due to an upstream API update that did not take the force flag into account.
+* Using the Pod Monitor on a workload controller besides a `Deployment` configured with `.spec.strategy.type` "Recreate" or a `StatefulSet` is unsupported. The consequence of using other settings and controllers may have undesired side effects such as rendering "multi-attach" errors for `PersistentVolumeClaims` and may delay recovery.
