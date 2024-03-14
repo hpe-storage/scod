@@ -454,7 +454,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 Install the CSI driver:
 
-```text fct_label="Kubernetes 1.28"
+```text fct_label="Kubernetes 1.29"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.1/hpe-csi-k8s-1.29.yaml
 ```
 
