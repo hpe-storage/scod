@@ -91,14 +91,14 @@ Upgrade considerations:
   <tr>
     <th>Operators</th>
     <td>
-     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.1">v2.4.1</a> on OperatorHub<!--br />
-     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.1</a> via OpenShift console -->
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.1">v2.4.1</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.1</a> via OpenShift console
     </td>
   </tr>
   <tr>
     <th>Worker&nbsp;OS</th>
     <td>
-      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.14<br />
+      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
       SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
   </tr>
