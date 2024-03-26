@@ -58,3 +58,12 @@ Go ahead and [Add an HPE Storage Backend](../../csi_driver/deployment.md#add_an_
 
 !!! hint
     When installing the chart on other Linux distributions than Ubuntu LTS, the "kubeletRootDir" will most likely differ.
+
+### Integration Guides
+
+HPE and Canonical have partnered to create integration guides with Charmed Kubernetes for the different storage backends.
+
+- [Charmed Kubernetes integration with HPE Alletra Storage 9000 by Canonical and HPE](https://www.hpe.com/psnow/doc/a00136437enw)
+- [Charmed Kubernetes integration with HPE Alletra Storage 6000 by Canonical and HPE](https://www.hpe.com/psnow/doc/a00136438enw)
+
+These integration guides are also available on [ubuntu.com/engage](https://ubuntu.com/engage?tag=hpe).
