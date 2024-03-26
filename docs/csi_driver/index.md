@@ -299,6 +299,7 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 * The CSI driver support a fixed number of volumes per node. Inspect the current limitation by running `kubectl get csinodes -o yaml` and inspect `.spec.drivers.allocatable` for "csi.hpe.com". The "count" element contains how many volumes the node can attach from the HPE CSI Driver (default is 100).
 * The HPE CSI Driver uses host networking for the node driver. Some CNIs have flaky implementations which prevents the CSI driver components to communicate properly. Especially notorious is Flannel on K3s. Use Calico if possible for the widest compatibility.
 * The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](../container_storage_provider/index.md) have known limitations listed separately.
+* The HPE CSI Driver does not support access mode transformations. I.e, it's not possible to clone an "RWO" volume into an "RWX" volume or vice versa. See [this note](../partners/redhat_openshift/index.md#storageprofile_for_openshift_virtualization_source_pvcs) on how to work around this limitation with OpenShift Virtualization.
 
 ## iSCSI CHAP Considerations
 
