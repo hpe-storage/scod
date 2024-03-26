@@ -265,7 +265,7 @@ parameters:
 ...
 ```
 
-## StorageProfile for OpenShift Virtualization Source PVCs
+# StorageProfile for OpenShift Virtualization Source PVCs
 
 If OpenShift Virtualization is being used and Live Migration is desired for virtual machines `PVCs` cloned from the "openshift-virtualization-os-images" `Namespace`, the `StorageProfile` needs to be updated to "ReadWriteMany".
 
