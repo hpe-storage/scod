@@ -33,7 +33,7 @@ Check the table above periodically for future releases.
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
     - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift.
-    - OpenShift Virtualization OS images are only supported on `PVCs` using "RWX" with `volumeMode: Block`.
+    - OpenShift Virtualization OS images are only supported on `PVCs` using "RWX" with `volumeMode: Block`. See [below](#storageprofile_for_openshift_virtualization_source_pvcs) for more details.
 
 ### Security model
 
@@ -265,9 +265,44 @@ parameters:
 ...
 ```
 
+## StorageProfile for OpenShift Virtualization Source PVCs
+
+If OpenShift Virtualization is being used and Live Migration is desired for virtual machines `PVCs` cloned from the "openshift-virtualization-os-images" `Namespace`, the `StorageProfile` needs to be updated to "ReadWriteMany".
+
+If the default `StorageClass` is named "hpe-standard", issue the following command:
+
+```text
+oc edit -n openshift-cnv storageprofile hpe-standard
+```
+
+Replace the `spec: {}` with the following:
+
+```yaml
+spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteMany
+    volumeMode: Block
+```
+
+Ensure there are no errors. Recreate the OS images:
+
+```text
+oc delete pvc -n openshift-virtualization-os-images --all
+```
+
+Inspect the `PVCs` and ensure they are re-created with "RWX":
+
+```text
+oc get pvc -n openshift-virtualization-os-images -w
+```
+
+!!! hint
+    These steps might be removed in a future release in the event access mode transformation become a supported feature of the CSI driver.
+
 # Unsupported Helm Chart Install
 
-In the event Red Hat releases a new release of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
+In the event Red Hat releases a new version of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
 
 It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the [support matrix](#certified_combinations) above.
 
