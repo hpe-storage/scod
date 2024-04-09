@@ -16,10 +16,10 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.15                              | 2.4.1                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.13                              | 2.4.0, 2.4.1               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
@@ -112,7 +112,7 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 ![Click Install](img/webcon-2.png)
 *Click 'Install'.*
 !!! note
-    Latest supported HPE CSI Operator on OpenShift 4.14 is 2.4.1
+    Latest supported HPE CSI Operator on OpenShift 4.14 is 2.4.2
 
 ![Click Install](img/webcon-3.png)
 *Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.*

@@ -284,6 +284,10 @@ Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary 
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
 
+### Upgrade to v2.4.2
+
+No changes to NFS Server Provisioner image between v2.4.1 and v2.4.2.
+
 ### Upgrade to v2.4.1
 
 Any prior deployed NFS servers may be upgraded to v2.4.1.
