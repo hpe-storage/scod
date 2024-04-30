@@ -92,6 +92,7 @@ Consult the [compatibility and support](../../csi_driver/index.md#compatibility_
 
 - Striped volumes on grouped arrays are not supported by the CSI driver.
 - The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.
+- When using an FC only array and provisioning RWX block volumes, the "multi_initiator" attribute won't get set properly on the volume. The workaround is to run `group --edit --iscsi_enabled yes` on the Array OS CLI.
 
 ## StorageClass Parameters
 

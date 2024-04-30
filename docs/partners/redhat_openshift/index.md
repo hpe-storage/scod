@@ -77,6 +77,7 @@ Once the steps have been followed for the particular version transition:
   `oc delete crd/hpecsidrivers.storage.hpe.com`
 - [Uninstall](#uninstall_the_hpe_csi_operator) the HPE CSI Operator for Kubernetes
 - Proceed to installation through the [OpenShift Web Console](#openshift_web_console) or [OpenShift CLI](#openshift_cli)
+- Reapply the [SCC](#scc) to ensure there hasn't been any changes.
 
 !!! important "Good to know"
     Deleting the `HPECSIDriver` instance and uninstalling the CSI Operator does not affect any running workloads, `PersistentVolumeClaims`, `StorageClasses` or other API resources created by the CSI Operator. In-flight operations and new requests will be retried once the new `HPECSIDriver` has been instantiated.
@@ -92,7 +93,7 @@ oc new-project hpe-storage --display-name="HPE CSI Driver for Kubernetes"
 !!! important
     The rest of this implementation guide assumes the default "hpe-storage" `Namespace`. If a different `Namespace` is desired. Update the `ServiceAccount` `Namespace` in the SCC below.
 
-Deploy or [download]({{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml) the SCC:
+<div id="scc" />Deploy or [download]({{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml) the SCC:
 
 ```text
 oc apply -f {{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
@@ -299,6 +300,52 @@ oc get pvc -n openshift-virtualization-os-images -w
 
 !!! hint
     These steps might be removed in a future release in the event access mode transformation become a supported feature of the CSI driver.
+
+# Live VM migrations for Alletra Storage MP
+
+With HPE CSI Operator for Kubernetes v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP backends including 3PAR, Primera and Alletra 9000.
+
+Identify the `PVC` that that has been cloned from an OS image. The VM name is "centos7-silver-bedbug-14" in this case.
+
+```text
+oc get vm/centos7-silver-bedbug-14 -o jsonpath='{.spec.template.spec.volumes}' | jq
+```
+
+In this instance, the `dataVolume` is the same name as the VM. Grab the `PV` name from the `PVC` name.
+
+```text
+MY_PV_NAME=$(oc get pvc/centos7-silver-bedbug-14 -o jsonpath='{.spec.volumeName}')
+```
+
+Next, patch the `hpevolumeinfo` `CRD`.
+
+```text
+oc patch hpevolumeinfo/${MY_PV_NAME} --type=merge --patch '{"spec": {"record": {"MultiInitiator": "true"}}}'
+```
+
+The VM is now ready to be migrated.
+
+!!! hint
+    If there are multiple `dataVolumes`, each one needs to be patched.
+
+# Unsupported Version of the Operator Install
+
+In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://sdk.operatorframework.io/docs/installation/). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
+
+Install a specific version (v2.4.2 in this case):
+
+```text
+operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v2.4.2
+```
+
+!!! important
+    Once the Operator is installed, a `HPECSIDriver` instance needs to be created. Follow the steps using the [web console](#openshift_web_console) or the [CLI](#openshift_cli) to create an instance.
+
+When the unsupported install isn't needed any longer, run:
+
+```text
+operator-sdk cleanup -n hpe-storage hpe-csi-operator
+```
 
 # Unsupported Helm Chart Install
 
