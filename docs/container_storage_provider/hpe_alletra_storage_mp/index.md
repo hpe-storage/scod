@@ -299,7 +299,7 @@ Use this parameter to specify a subset of Fibre Channel (FC) ports on the array 
 
 | Parameter   | Option | Description |
 | ----------- | ------ | ----------- |
-| fcPortsList | Text   | Comma separated list of available FC ports. |
+| fcPortsList | Text   | Comma separated list of available FC ports. Example: "0:5:1,1:4:2,2:4:1,3:4:2" |
 
 ### Support
 
