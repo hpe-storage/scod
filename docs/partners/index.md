@@ -2,6 +2,8 @@
 
 * [HPE Ezmeral Runtime Enterprise](../ezmeral/install.md)
 * [Amazon EKS Anywhere](amazon_eks_anywhere/index.md)
+* [Canonical](canonical/index.md)
+* [Cohesity](cohesity/index.md)
 * [Commvault](commvault/index.md)
 * [Kasten by Veeam](kasten/index.md)
 * [Mirantis](mirantis/index.md)
