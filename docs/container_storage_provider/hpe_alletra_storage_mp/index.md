@@ -44,12 +44,18 @@ All parameters enumerated reflects the current version and may contain unannounc
 
 ### Common Provisioning Parameters
 
+<!--
+| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the `cpg` parameter is not specified, the CSP will automatically set `cpg` parameter based upon a CPG available to the array. |
+| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
+| compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
+-->
+
 | Parameter  | &nbsp;&nbsp;Option&nbsp;&nbsp;  | Description |
 | ---------- | ------- | ----------- |
 | accessProtocol <br /> (**Required**)  | fc | The access protocol to use when accessing the persistent volume. |
 |                                       | iscsi | The access protocol to use when accessing the persistent volume. |
-| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the cpg parameter is not specified, the CSP will automatically set cpg parameter based upon a CPG available to the array. |
-| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
+| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the `cpg` parameter is not specified, the CSP will select a CPG available to the array. |
+| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Needs to be set with the same value as `cpg` if any kind of `VolumeSnapshots` or `PVC` cloning parameters are used. |
 | compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
 | provisioningType <sup>1</sup> <br /> (**Default: tpvv**) | tpvv | Indicates Thin provisioned volume type. |
 |                               | full <sup>3</sup> | Indicates Full provisioned volume type. |
