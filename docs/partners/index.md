@@ -8,6 +8,7 @@
 * [Kasten by Veeam](kasten/index.md)
 * [Mirantis](mirantis/index.md)
 * [Red Hat OpenShift](redhat_openshift/index.md)
+* [SUSE Harvester](suse_harvester/index.md)
 * [SUSE Rancher](suse_rancher/index.md)
 * [Tanzu Kubernetes Grid Integrated](tkgi/index.md)
 * [VMware](vmware/index.md)
