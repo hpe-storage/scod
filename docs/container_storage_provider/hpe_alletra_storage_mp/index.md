@@ -13,13 +13,12 @@ The HPE Alletra Storage MP, Alletra 9000 and Primera and 3PAR Storage Container 
 ## Platform Requirements
 
 Check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
-
-Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires an HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities. 
+<!-- Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires an HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
 * [HPE Alletra Storage MP](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_greenlake_block.html)
 * [HPE Alletra 9000](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_alletra.html)
 * [HPE Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
-* [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html)
+* [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html) -->
 
 ### Network Port Requirements
 
@@ -62,7 +61,7 @@ All parameters enumerated reflects the current version and may contain unannounc
 |                               | dedup <sup>3</sup> | Indicates Thin Deduplication volume type. |
 |                               | reduce <sup>4</sup> | Indicates Data Reduction volume type. |
 | hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
-| importVol | Text | Name of the volume to import. |
+| importVolumeName | Text | Name of the volume to import. |
 | importVolAsClone | Text | Name of the volume to clone and import. |
 | cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. |
 | virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. |
@@ -124,11 +123,11 @@ During the import volume process, any legacy (non-container volumes) or existing
 | Parameter      | Option      | Description |
 | -------------- | ----------- | ----------- |
 | accessProtocol | fc or iscsi | The access protocol to use when accessing the persistent volume. |
-| importVol      | Text        | The name of the array volume to import. |
+| importVolumeName | Text        | The name of the array volume to import. |
 
 !!! important
     • **No other parameters** are required in the `StorageClass` when importing a volume outside of those parameters listed in the table above.<br />
-    • Support for `importVol` is available from HPE CSI Driver 1.2.0+.
+    • Support for `importVolumeName` is available from HPE CSI Driver 1.2.0+.
 
 ### Cloning Persistent Volumes
 
@@ -262,7 +261,7 @@ During the import snapshot process, any legacy (non-container snapshot) or an ex
 
 | Parameter | Option | Description |
 | --------- | ------ | ----------- |
-| importVol | Text   | The name of the array snapshot to import. |
+| importVolumeName | Text   | The name of the array snapshot to import. |
 
 ### Creating a QoS StorageClass
 
@@ -296,8 +295,28 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | latencyGoal  | Text   | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 | domain       | Text   | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
 
-!!! note
-    QoS settings are mandatory when creating a VolumeGroupClass on the array.
+All QoS settings are mandatory when creating a `VolumeGroupClass` on the array.
+
+Example:
+
+```yaml
+apiVersion: storage.hpe.com/v1
+kind: VolumeGroupClass
+metadata:
+  name: my-volume-group-class
+provisioner: csi.hpe.com
+deletionPolicy: Delete
+parameters:
+  description: "HPE CSI Driver for Kubernetes Volume Group"
+  csi.hpe.com/volume-group-provisioner-secret-name: hpe-backend
+  csi.hpe.com/volume-group-provisioner-secret-namespace: hpe-storage
+  priority: normal
+  ioMinGoal: "300"
+  ioMaxLimit: "10000"
+  bwMinGoalKb: "3000"
+  bwMaxLimitKb: "30000"
+  latencyGoal: "300ms"
+```
 
 ### Specifying Fibre Channel Ports
 

@@ -50,7 +50,16 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-```text fct_label="HPE CSI Driver v2.4.2"
+```text fct_label="HPE CSI Driver v2.5.0"
+# Kubernetes 1.27-1.30
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.0.1 -b hpe-csi-driver-v2.5.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
+```text fct_label="v2.4.2"
 # Kubernetes 1.26-1.29
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -59,7 +68,7 @@ kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
 
-```text fct_label="HPE CSI Driver v2.4.1"
+```text fct_label="v2.4.1"
 # Kubernetes 1.26-1.29
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -68,7 +77,7 @@ kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
 
-```text fct_label="HPE CSI Driver v2.4.0"
+```text fct_label="v2.4.0"
 # Kubernetes 1.25-1.28
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -77,7 +86,7 @@ kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
 
-```text fct_label="HPE CSI Driver v2.3.0"
+```text fct_label="v2.3.0"
 # Kubernetes 1.23-1.26
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
@@ -93,12 +102,7 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 
 Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](../container_storage_provider/index.md) for more elaborate examples.
 
-```yaml fct_label="K8s 1.15+"
-# Renamed csi.storage.k8s.io/resizer-secret-name to
-# csi.storage.k8s.io/controller-expand-secret-name
-#
-# Alpha features: PVC cloning and Pod inline ephemeral volumes
-#
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -123,8 +127,82 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 ```
 
-```yaml fct_label="K8s 1.14"
-# Alpha feature: volume expansion
+!!! important "Important"
+    Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
+
+Common HPE CSI Driver `StorageClass` parameters across CSPs.
+
+| Parameter                     | String         | Description |
+| ----------------------------- | -------------- | ----------- |
+| accessProtocol                | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
+| chapSecretName                | Text           | Name of `Secret` to use for iSCSI CHAP. |
+| chapSecretNamespace           | Text           | Namespace of `Secret` to use for iSCSI CHAP. |
+| description<sup>1</sup>       | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
+| csi.storage.k8s.io/fstype     | Text           | Filesystem to format new volumes with. XFS is preferred, ext3, ext4 and btrfs is supported. Defaults to "ext4" if omitted. |
+| fsOwner                       | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
+| fsMode                        | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
+| fsCreateOptions               | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
+| fsRepair                      | Boolean        | When set to "true", if a mount fails and filesystem corruption is detected, this parameter will control if an actual repair will be attempted. Default "false". <br/><br />**Note:** `fsRepair` is unable to detect or remedy corrupted filesystems that are already mounted. |
+| nfsResources                  | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
+| nfsForeignStorageClass        | Text           | Provision NFS servers on `PVCs` from a different `StorageClass`. See [Using a Foreign StorageClass](#using_a_foreign_storageclass) |
+| nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. A value of "csi.storage.k8s.io/pvc/namespace" will provision resources in the requesting `PVC` `Namespace`. |
+| nfsNodeSelector               | Text           | Customize the `nodeSelector` label value for the NFS `Pod`. The default behavior is to omit the `nodeSelector`. |
+| nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Uses `mount` command defaults from the node. |
+| nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
+| nfsResourceRequestsCpuM         | Text           | Specify CPU requests for the server `Deployment` in milli CPU. Default: "500m". Example: "4000m" |
+| nfsResourceRequestsMemoryMi     | Text           | Specify memory requests (in megabytes) for the server `Deployment`. Default: "512Mi". Example: "4096Mi". |
+| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m" |
+| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2048Mi". Example: "500Mi". Recommended minimum: "2048Mi". |
+| hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
+| hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
+| hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
+
+<small><sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).</small>
+
+!!! note
+    All common HPE CSI Driver parameters are optional.
+
+## Enabling iSCSI CHAP
+
+Familiarize yourself with the [iSCSI CHAP Considerations](index.md#iscsi_chap_considerations) before proceeding. This section describes how to enable iSCSI CHAP with HPE CSI Driver 2.5.0 and later.
+
+Create an iSCSI CHAP `Secret`. The referenced CHAP account does not need to exist on the storage backend, it will be created by the CSP if it doesn't exist.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-chap-secret
+  namespace: hpe-storage
+stringData:
+  # Up to 64 characters including \-:., must start with an alpha-numeric character.
+  chapUser: "my-chap-user"
+  # Between 12 to 16 alpha-numeric characters.
+  chapPassword: "my-chap-password"
+```
+
+Once the `Secret` has been created, there are two methods available to use it depending on the situation, cluster-wide or per `StorageClass`.
+
+### Cluster-wide iSCSI CHAP Credentials
+
+The cluster-wide iSCSI CHAP credentials will be used by all iSCSI-based `PersistentVolumes` regardless of backend and `StorageClass`. The CHAP `Secret` is simply referenced during install of the HPE CSI Driver for Kubernetes Helm Chart. The `Secret` and `Namespace` needs to exist prior to install.
+
+Example:
+
+```text
+helm install my-hpe-csi-driver -n hpe-storage \
+  hpe-storage/hpe-csi-driver \
+  --set iscsi.chapSecretName=my-chap-secret
+```
+
+!!! important
+    Once a `PersistentVolume` has been provisioned with cluster-wide iSCSI CHAP credentials it's not possible to switch over to per `StorageClass` iSCSI CHAP credentials.<br /><br />If CSI driver 2.4.2 or earlier has been used, cluster-wide iSCSI CHAP credentials is the only way to provide the credentials for volumes provisioned with 2.4.2 or earlier.
+
+### Per StorageClass iSCSI CHAP Credentials
+
+The CHAP `Secret` may be referenced in a `StorageClass`.
+
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -134,8 +212,8 @@ metadata:
 provisioner: csi.hpe.com
 parameters:
   csi.storage.k8s.io/fstype: xfs
-  csi.storage.k8s.io/resizer-secret-name: hpe-backend
-  csi.storage.k8s.io/resizer-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
   csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
   csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
   csi.storage.k8s.io/node-publish-secret-name: hpe-backend
@@ -145,39 +223,14 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-name: hpe-backend
   csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
   description: "Volume created by the HPE CSI Driver for Kubernetes"
+  chapSecretNamespace: hpe-storage
+  chapSecretName: my-chap-secret
 reclaimPolicy: Delete
-# Required to allow volume expansion
 allowVolumeExpansion: true
 ```
 
-!!! important "Important"
-    Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
-
-Common HPE CSI Driver `StorageClass` parameters across CSPs.
-
-| Parameter                     | String         | Description |
-| ----------------------------- | -------------- | ----------- |
-| accessProtocol                | Text           | The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Default: "iscsi" |
-| description<sup>1</sup>       | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
-| csi.storage.k8s.io/fstype     | Text           | Filesystem to format new volumes with. XFS is preferred, ext3, ext4 and btrfs is supported. Defaults to "ext4" if omitted. |
-| fsOwner                       | userId:groupId | The user id and group id that should own the root directory of the filesystem. |
-| fsMode                        | Octal digits   | 1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem. |
-| fsCreateOptions               | Text           | A string to be passed to the mkfs command.  These flags are opaque to CSI and are therefore not validated.  To protect the node, only the following characters are allowed:  ```[a-zA-Z0-9=, \-]```. |
-| nfsResources                  | Boolean        | When set to "true", requests against the `StorageClass` will create resources for the NFS Server Provisioner (`Deployment`, RWO `PVC` and `Service`). Required parameter for ReadWriteMany and ReadOnlyMany accessModes. Default: "false" |
-| nfsForeignStorageClass        | Text           | Provision NFS servers on `PVCs` from a different `StorageClass`. See [Using a Foreign StorageClass](#using_a_foreign_storageclass) |
-| nfsNamespace                  | Text           | Resources are by default created in the "hpe-nfs" `Namespace`. If CSI `VolumeSnapshotClass` and `dataSource` functionality is required on the requesting claim, requesting and backing PVC need to exist in the requesting `Namespace`. A value of "csi.storage.k8s.io/pvc/namespace" will provision resources in the requesting `PVC` `Namespace`. |
-| nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Uses `mount` command defaults from the node. |
-| nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m" |
-| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2Gi". Example: "500Mi". Recommended minimum: "2048Mi". |
-| hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
-| hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
-| hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
-
-<small><sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).</small>
-
-!!! note
-    All common HPE CSI Driver parameters are optional.
+!!! warning
+    The iSCSI CHAP credentials are in reality per iSCSI Target. Do **NOT** create multiple `StorageClasses` referencing different CHAP `Secrets` with different credentials for the same backend. It will result in a data outage with conflicting sessions.<br /><br />Ensure the same `Secret` is referenced in all `StorageClasses` using a particular backend.
 
 ## Provisioning Concepts
 
@@ -743,7 +796,7 @@ spec:
 
 Enabling the NFS Server Provisioner to allow "ReadWriteMany" and "ReadOnlyMany" access mode for a `PVC` is straightforward. Create a new `StorageClass` and set `.parameters.nfsResources` to `"true"`. Any subsequent claim to the `StorageClass` will create a NFS server `Deployment` on the cluster with the associated objects running on top of a "ReadWriteOnce" `PVC`.
 
-Any "RWO" claim made against the `StorageClass` will also create a NFS server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads using taints and tolerations. The NFS server `Pod` is armed with a `csi.hpe.com/hpe-nfs=true` toleration. It's required to taint dedicated NFS worker nodes if they truly need to be dedicated.
+Any "RWO" claim made against the `StorageClass` will also create a NFS server `Deployment`. This allows diverse connectivity options among the Kubernetes worker nodes as the HPE CSI Driver will look for nodes labelled `csi.hpe.com/hpe-nfs=true` (or using a custom value specified in `.parameters.nfsNodeSelector`) before submitting the workload for scheduling. This allows dedicated NFS worker nodes without user workloads using taints and tolerations. The NFS server `Pod` is armed with a `csi.hpe.com/hpe-nfs` toleration. It's required to taint dedicated NFS worker nodes if they truly need to be dedicated.
 
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities (`VolumeSnapshots` and `.spec.dataSource`) on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the "RWX"/"ROX" requesting `PVC`. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
@@ -1002,6 +1055,68 @@ Host-based volume encryption is in effect if the "enc" prefix is seen on the mul
 
 !!! seealso 
     For an in-depth tutorial and more advanced use cases for host-based volume encryption, check out this blog post on HPE Developer: [Host-based Volume Encryption with HPE CSI Driver for Kubernetes](https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/)
+
+### Topology and volumeBindingMode
+
+With CSI driver v2.5.0 and newer, basic CSI topology information can be associated with a single backend from a `StorageClass`. For backwards compatibility, only `volumeBindingMode: WaitForFirstConsumer` require topology labels assigned to compute nodes. Using the default `volumeBindingMode` of `Immediate` will preserve the behavior prior to v2.5.0.
+
+!!! tip
+    The "csi-provisioner" is deployed with `--feature-gates Topology=true` and `--immediate-topology=false`. It's impact on volume provisioning and accessibility can be found [here](https://github.com/kubernetes-csi/external-provisioner?tab=readme-ov-file#topology-support).
+
+Assume a simple use case where only a handful of nodes in a Kubernetes cluster have Fibre Channel adapters installed. Workloads with persistent storage requirements from a particular `StorageClass` should be deployed onto those nodes only.
+
+#### Label Compute Nodes
+
+Nodes with the label `csi.hpe.com/zone` are considered during topology accessibility assessments. Assume three nodes in the cluster have FC adapters.
+
+```text
+kubectl label node/my-node{1..3} csi.hpe.com/zone=fc --overwrite
+```
+
+If the CSI driver is already installed on the cluster, the CSI node driver needs to be restarted for the node labels to propagate.
+
+```text
+kubectl rollout restart -n hpe-storage ds/hpe-csi-node
+```
+
+#### Create StorageClass with Topology Information
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  name: hpe-standard-fc
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  description: "Volume created by the HPE CSI Driver for Kubernetes"
+  accessProtocol: fc
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+- matchLabelExpressions:
+  - key: csi.hpe.com/zone
+    values:
+    - fc
+```
+
+Any workload provisioning `PVCs` from the above `StorageClass` will now be scheduled on nodes labeled `csi.hpe.com/zone=fc`.
+
+!!! note
+    The `allowedTopologies` key may be omitted if there's only a single topology applied to a subset of nodes. The nodes always need to be labeled when using `volumeBindingMode: WaitForFirstConsumer`. If all nodes have access to a backend, set `volumeBindingMode: Immediate` and omit `allowedTopologies`.
 
 ## Further Reading
 

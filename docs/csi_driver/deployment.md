@@ -42,14 +42,14 @@ Establish a working directory on a bastion Linux host that has HTTP access to th
 !!! note
     Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.
 
-Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver v2.4.2 on Kubernetes 1.29. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
+Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver v2.5.0 on Kubernetes 1.30. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
 
 ```text
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=2.4.2
-export MY_K8S=1.29
+export MY_CSI_DRIVER=2.5.0
+export MY_K8S=1.30
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -59,11 +59,11 @@ curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
 | grep image: | awk '{print $2}' | sort | uniq > images
-echo quay.io/hpestorage/nfs-provisioner:v3.0.4 >> images
+echo quay.io/hpestorage/nfs-provisioner:v3.0.5 >> images
 ```
 
 !!! important
-    The NFS server provisioner image is not automatically pulled from the private registry. Use the "nfsProvisionerImage" parameter in the [`StorageClass`](using.md#base_storageclass_parameters).
+    In HPE CSI Driver 2.4.2 and earlier the NFS Server Provisioner image is not automatically pulled from the private registry once installed. Use the "nfsProvisionerImage" parameter in the [`StorageClass`](using.md#base_storageclass_parameters).
 
 The above command should not output anything. A list of images should be in the file "images".
 
@@ -71,23 +71,48 @@ Pull, tag and push the images to the private registry.
 
 ```text
 cat images | xargs -n 1 docker pull
-awk '{ print $1" "$1 }' images | sed "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
-sed -e "s/quay.io|registry.k8s.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+awk '{ print $1" "$1 }' images | sed -E -e "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -E -e "s/quay.io|registry.k8s.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
 ```
 
 !!! tip
-    Depending on what kind of private registry being used, the base repositories `hpestorage` and `k8scsi` might need to be created and given write access to the user pushing the images.
+    Depending on what kind of private registry being used, the base repositories `hpestorage` and `sig-storage` might need to be created and given write access to the user pushing the images.
 
 Next, install the chart as normal with the additional `registry` parameter. This is an example, please refer to the Helm [chart documentation](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#installing-the-chart) on ArtifactHub.
 
 ```text
 helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
 kubectl create ns hpe-storage
+```
+
+Version 2.4.2 or earlier.
+
+```text
 helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version ${MY_CSI_DRIVER} --set registry=${MY_REGISTRY}
 ```
 
+Version 2.5.0 or newer, skip to → [Version 2.5.0 and newer](#version_250_and_newer).
+
 !!! note
     If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
+
+#### Version 2.5.0 and newer
+
+In version 2.5.0 and onwards, all images used by the HPE CSI Driver for Kubernetes Helm Chart are parameterized individually with the fully qualified URL.
+
+Use the procedure above to mirror the images to an internal registry. Once mirrored, replace the registry names in the reference `values.yaml` file.
+
+```text
+curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/values/csi-driver/v${MY_CSI_DRIVER}/values.yaml | sed -E -e "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/g" > my-values.yaml
+```
+
+Use the `my-values.yaml` file to install the Helm Chart.
+
+```text
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver \
+-n hpe-storage --version ${MY_CSI_DRIVER} \
+-f my-values.yaml
+```
 
 ## Operator
 

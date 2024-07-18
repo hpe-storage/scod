@@ -16,8 +16,9 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.15                              | 2.4.1, 2.4.2               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.0        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.0 | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
@@ -330,7 +331,7 @@ The VM is now ready to be migrated.
 
 # Unsupported Version of the Operator Install
 
-In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://sdk.operatorframework.io/docs/installation/). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
+In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://console.redhat.com/openshift/downloads). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
 
 Install a specific version (v2.4.2 in this case):
 
