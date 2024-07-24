@@ -107,7 +107,7 @@ Upgrade considerations:
     <td>
       Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.14-4.16<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04<br />
-      SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+      SUSE Linux Enterprise Server 15 SP4, SP5, SP6 and SLE Micro<sup>4</sup> equivalents
   </tr>
   <tr>
     <th>Platforms<sup>3</sup></th>

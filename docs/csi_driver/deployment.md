@@ -144,23 +144,22 @@ The Operator will be installed in `my-hpe-csi-operator` namespace. Watch it come
 kubectl get csv -n my-hpe-csi-operator
 ```
 
-Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml` and populate it according to which CSP is being deployed.
+Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml
-{% include "examples/deployment/hpe-csi-operator.yaml" %}```
+```yaml fct_label="HPE CSI Operator v2.5.0"
+# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.0-sample.yaml
+{% include "examples/deployment/hpecsidriver-v2.5.0-sample.yaml" %}```
+
+```yaml fct_label="v2.4.2"
+# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+{% include "examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
+
+```yaml fct_label="v2.4.1"
+# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
+{% include "examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 !!! tip
-    The contents depends on which version of the CSI driver being installed (the latest being illustrated). Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
-
-Create a `HPECSIDriver` with the manifest.
-
-```text fct_label="Local"
-kubectl create -f hpe-csi-operator.yaml
-```
-
-```text fct_label="Remote"
-kubectl create -f {{ config.site_url }}csi_driver/examples/deployment/hpe-csi-operator.yaml
-```
+    The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
 
 The CSI driver is now ready for use. Proceed to the next section to learn about [adding an HPE storage backend](#add_an_hpe_storage_backend).
 
