@@ -16,8 +16,9 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.15                              | 2.4.1, 2.4.2               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.0        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.0 | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
@@ -189,8 +190,17 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object.
 
-```yaml
-{% include "../../csi_driver/examples/deployment/hpe-csi-operator.yaml" %}```
+```yaml fct_label="HPE CSI Operator v2.5.0"
+# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.0-sample.yaml
+{% include "../../csi_driver/examples/deployment/hpecsidriver-v2.5.0-sample.yaml" %}```
+
+```yaml fct_label="v2.4.2"
+# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+{% include "../../csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
+
+```yaml fct_label="v2.4.1"
+# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
+{% include "../../csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
 
@@ -270,6 +280,9 @@ parameters:
 
 If OpenShift Virtualization is being used and Live Migration is desired for virtual machines `PVCs` cloned from the "openshift-virtualization-os-images" `Namespace`, the `StorageProfile` needs to be updated to "ReadWriteMany".
 
+!!! info
+    These steps are not necessary on recent OpenShift EUS (v4.12.11 onwards) releases as the default `StorageProfile` for "csi.hpe.com" has been corrected upstream.
+
 If the default `StorageClass` is named "hpe-standard", issue the following command:
 
 ```text
@@ -299,7 +312,7 @@ oc get pvc -n openshift-virtualization-os-images -w
 ```
 
 !!! hint
-    These steps might be removed in a future release in the event access mode transformation become a supported feature of the CSI driver.
+    The "accessMode" transformation for block volumes from RWO PVC to RWX clone has been resolved in HPE CSI Driver v2.5.0. Regardless, using source RWX PVs will simplify the workflows for users.
 
 # Live VM migrations for Alletra Storage MP
 
@@ -330,7 +343,7 @@ The VM is now ready to be migrated.
 
 # Unsupported Version of the Operator Install
 
-In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://sdk.operatorframework.io/docs/installation/). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
+In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://console.redhat.com/openshift/downloads). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
 
 Install a specific version (v2.4.2 in this case):
 
