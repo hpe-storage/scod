@@ -345,10 +345,16 @@ The VM is now ready to be migrated.
 
 In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://console.redhat.com/openshift/downloads). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
 
-Install a specific version (v2.4.2 in this case):
+Install a specific version prior and including v2.4.2:
 
 ```text
 operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v2.4.2
+```
+
+Install a specific version after and including v2.5.0:
+
+```text
+operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v2.5.0
 ```
 
 !!! important
