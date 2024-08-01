@@ -86,6 +86,9 @@ Upgrade considerations:
 * Current users of CHAP needs to review the [iSCSI CHAP Considerations](#iscsi_chap_considerations)
 * The `importVol` parameter has been renamed `importVolumeName` for [HPE Alletra Storage MP and Alletra 9000/Primera/3PAR](../container_storage_provider/hpe_alletra_storage_mp/index.md)
 
+!!! caution "note"
+    HPE CSI Driver v2.5.0 is deployed with **v2.5.1** of the Helm chart and Operator
+
 <table>
   <tr>
     <th>Kubernetes</th>
@@ -93,13 +96,13 @@ Upgrade considerations:
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.5.0">v2.5.0</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.5.1">v2.5.1</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>Operators</th>
     <td>
-     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.5.0">v2.5.0</a> on OperatorHub<br />
-     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.5.0</a> via OpenShift console
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.5.1">v2.5.1</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.5.1</a> via OpenShift console
     </td>
   </tr>
   <tr>
