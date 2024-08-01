@@ -276,4 +276,5 @@ spec:
     requests:
       storage: 10Gi
   volumeName: my-static-pv-1
+  storageClassName: ""
 ```
