@@ -248,6 +248,8 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Using Volume Encryption](#using_volume_encryption)
 - [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
 - [Using volume encryption](#using_volume_encryption)
+- [Topology and volumeBindingMode](#topology_and_volumebindingmode)
+- [Static Provisioning](#static_provisioning)
 
 !!! tip "New to Kubernetes?"
     There's a basic tutorial of how dynamic provisioning of persistent storage on Kubernetes works in the [Video Gallery](../learn/video_gallery/index.md#dynamic_provisioning_of_persistent_storage_on_kubernetes).
@@ -451,7 +453,7 @@ spec:
 ```
 
 !!! note
-    The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes.
+    The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes. Consult the [Alletra 6000 CSP documentation](../container_storage_provider/hpe_alletra_6000/index.md#limitations) if using `ReadWriteMany` raw block volumes with FC on Nimble, Alletra 5000 or 6000.
 
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
@@ -1117,6 +1119,13 @@ Any workload provisioning `PVCs` from the above `StorageClass` will now be sched
 
 !!! note
     The `allowedTopologies` key may be omitted if there's only a single topology applied to a subset of nodes. The nodes always need to be labeled when using `volumeBindingMode: WaitForFirstConsumer`. If all nodes have access to a backend, set `volumeBindingMode: Immediate` and omit `allowedTopologies`.
+
+### Static Provisioning
+
+How to map an existing backend volume to a `PersistentVolume` differs between the CSP implementations.
+
+- [HPE Alletra 5000/6000 and Nimble Storage](../container_storage_provider/hpe_alletra_6000/index.md#static_provisioning)
+- [HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR](../container_storage_provider/hpe_alletra_storage_mp/index.md#static_provisioning)
 
 ## Further Reading
 
