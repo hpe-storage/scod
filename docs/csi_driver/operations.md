@@ -454,3 +454,89 @@ While both disabling conformance and configuration parameters lends itself to a 
 <!--
 yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-utils-iscsiuio nfs-utils
 -->
+
+## Expose NFS Services Outside of the Kubernetes Cluster
+
+In certain situations it's practical to expose the NFS exports outside the Kubernetes cluster to allow external applications to access data as part of an ETL (Extract, Transform, Load) pipeline or similar.
+
+Since this is an untested feature with questionable security standards, HPE does not recommend using this facility in production at this time. Reach out to your HPE account representative if this is a critical feature for your workloads.
+
+!!! danger
+    The exports on the NFS servers does not have any network Access Control Lists (ACL) without root squash. Anyone with an NFS client that can reach the load balancer IP address have full access to the filesystem.
+
+### From ClusterIP to LoadBalancer
+
+The NFS server `Service` must be transformed into a "LoadBalancer".
+
+In this example we'll assume a "RWX" `PersistentVolumeClaim` named "my-pvc-1" and NFS resources deployed in the default `Namespace`, "hpe-nfs".
+
+Retrieve NFS UUID
+
+```text
+export UUID=$(kubectl get pvc my-pvc-1 -o jsonpath='{.spec.volumeName}{"\n"}' | awk -Fpvc- '{print $2}')
+```
+
+Patch the NFS `Service`:
+```text
+kubectl patch -n hpe-nfs svc/hpe-nfs-${UUID} -p '{"spec":{"type": "LoadBalancer"}}'
+```
+
+The `Service` will be assigned an external IP address by the load balancer deployed in the cluster. If there is no load balancer deployed, a MetalLB example is provided below.
+
+### MetalLB Example
+
+Deploying MetalLB is outside the scope of this document. In this example, MetalLB was deployed on OpenShift 4.16 (Kubernetes v1.29) using the Operator provided by Red Hat in the "metallb-system" `Namespace`.
+
+Determine the IP address range that will be assigned to the load balancers. In this example, 192.168.1.40 to 192.168.1.60 is being used. Note that the worker nodes in this cluster already have reachable IP addresses in the 192.168.1.0/24 network, which is a requirement.
+
+Create the MetalLB instances, IP address pool and Layer 2 advertisement.
+
+```text
+---
+apiVersion: metallb.io/v1beta1
+kind: MetalLB
+metadata:
+  name: metallb
+  namespace: metallb-system
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  namespace: metallb-system
+  name: hpe-nfs-servers
+spec:
+  protocol: layer2
+  addresses:
+  - 192.168.1.40-192.168.1.60
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+   - hpe-nfs-servers
+```
+
+Shortly, the external IP address of the NFS `Service` patched in the previous steps should have an IP address assigned.
+
+```text
+NAME           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S) 
+hpe-nfs-UUID   LoadBalancer   172.30.217.203   192.168.1.40    <long list of ports>
+```
+
+### Mount the NFS Server from an NFS Client
+
+Mounting the NFS export externally is now possible.
+
+As root:
+
+```text
+mount -t nfs4 192.168.1.40:/export /mnt
+```
+
+!!! note
+    If the NFS server is rescheduled in the Kubernetes cluster, the load balancer IP address follows, and the client will recover and resume IO after a few minutes.
