@@ -950,6 +950,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - Using ext4 as the backing filesystem has shown better performance with simultaneous writers to the same file.
 - Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](../partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
 - XFS has proven troublesome to use as a backend "RWO" volume filesystem, leaving stale NFS handles for clients. Use ext4 as the "csi.storage.k8s.io/fstype" `StorageClass` parameter for best results.
+- The NFS servers provide a "ClusterIP" `Service`. It is possible to expose the NFS servers outside the cluster for external NFS clients. Understand the scope and limitations in [Auxillary Operations](operations.md#expose_nfs_services_outside_of_the_kubernetes_cluster).
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

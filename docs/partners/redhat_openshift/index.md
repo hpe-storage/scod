@@ -243,7 +243,7 @@ Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninst
 
 # NFS Server Provisioner Considerations
 
-When deploying NFS servers on OpenShift there's currently two things to keep in mind for a successful deployment.
+When deploying NFS servers on OpenShift there's currently two things to keep in mind for a successful deployment. Also, be understood with the [Limitations and Considerations for the NFS Server Provisioner](../../csi_driver/using.md#limitations_and_considerations_for_the_nfs_server_provisioner) in general.
 
 ## Non-standard hpe-nfs Namespace
 
