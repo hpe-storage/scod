@@ -37,6 +37,13 @@ The CSP requires access to a local user with either `edit` or the `super` role. 
 !!! note
     LDAP users are not supported by the CSP.
 
+### Virtual Domains
+
+Virtual Domains are not yet fully supported by the CSP. From HPE CSI Driver v2.5.0, it's possible to manually create the Kubernetes hosts connecting to storage within the Virtual Domain. Once the hosts have been created, deploy the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true". The Virtual Domain user may create the hosts through the Virtual Domain if the "AllowDomainUsersAffectNoDomain" parameter is set to either "hostonly" or "yes" on the array.
+
+!!! note
+    Remote Copy Groups managed by the CSP have not been tested with Virtual Domains at this time.
+
 ## VLUN Templates
 
 A VLUN template enables the export of a virtual volume as a VLUN to hosts. For more information, see the [HPE Primera OS Commmand Line Interface - Installation and Reference Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00105286en_us&page=createvlun.html).
