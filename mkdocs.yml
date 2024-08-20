@@ -64,7 +64,7 @@ nav:
     - 'Canonical': 'partners/canonical/index.md'
     - 'Cohesity': 'partners/cohesity/index.md' 
     - 'Commvault': 'partners/commvault/index.md'
-    - 'Kasten by Veeam': 'partners/kasten/index.md'
+    - 'Veeam Kasten': 'partners/kasten/index.md'
     - 'Mirantis': 'partners/mirantis/index.md'
     - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
     - 'SUSE Harvester': 'partners/suse_harvester/index.md'
