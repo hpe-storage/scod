@@ -395,8 +395,8 @@ These are the current limitations of the Remote Copy Peer Persistence integratio
 
 - Only what is considered Classic Peer Persistence is supported. Active/Active hostset proximity is not supported.
 - Peer Persistence does not provide disaster recovery for workloads running on Kubernetes. Peer Persistence provide disaster recovery for the storage system.
-- Peer Persistence only provide data path resilience. If the primary array is unreachable for the CSP, all CSI operations will cease to function until the primary array comes back up.
-- When the primary array is partitioned from the Kubernetes cluster, running workloads will continue to run on the partition if the host the workload was running on has redundant data paths to the secondary array.
+- Peer Persistence only provide data path resilience. If the primary array is unreachable for the CSP or the role of the remote copy group has changed due to disaster recovery operations (manual or automatic switchover/failover), all CSI operations will cease to function until the primary array comes back up and the role of the remote copy groups returned to original state.
+- When the primary array is unavailable for the Kubernetes cluster and remote copy group has failed over to the secondary array successfully, running workloads will continue to run if the host the workload was running on has redundant data paths to the secondary array (current primary array).
 - It's possible to access volumes from the secondary array by [statically provisioning](#static_provisioning) `PersistentVolumes` without renaming the volume on the array. This is only safe if it has been determined that the primary array does not have active hosts accessing the volume against the primary array.
 
 ## Support
