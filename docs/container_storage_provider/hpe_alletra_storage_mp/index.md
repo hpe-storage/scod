@@ -164,6 +164,9 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 For a tutorial on how to enable replication, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
+!!! warning
+    Be understood with the [limitations](#remote_copy_limitations) of the Remote Copy Peer Persistence integration with the HPE CSI Driver before proceeding.
+
 A Custom Resource Definition (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com`  must be created to define the target array information. The CRD object name will be used to define the `StorageClass` parameter **replicationDevices**. CRD mandatory parameters: `targetCpg`, `targetName`, `targetSecret` and `targetSecretNamespace`.
 
 
@@ -214,9 +217,7 @@ These parameters are applicable only for replication. Both parameters are mandat
 </small>
 
 !!! important
-    
     Remote Copy groups (RCG) created by the HPE CSI driver 2.1 and later have the **Auto synchronize** and **Auto recover** policies applied. <br /> To add or remove these policies from RCGs, modify the existing RCG using the SSMC or CLI with the following command: <br/ > <br /> **Add** <br /> `setrcopygroup pol auto_recover,auto_synchronize <group_name>` <br/ > **Remove** <br /> `setrcopygroup pol no_auto_recover,no_auto_synchronize <group_name>`
-
 
 #### Add Non-Replicated Volume to Remote Copy group
 
@@ -232,8 +233,6 @@ Edit the non-replicated PVC and annotate the following parameters:
 
 !!! note
     `remoteCopyGroup` and `oneRcgPerPvc` parameters are mutually exclusive and cannot be added together when editing a `PVC`.
-
-
 
 ## VolumeSnapshotClass Parameters
 
@@ -389,6 +388,16 @@ spec:
   volumeName: my-static-pv-1
   storageClassName: ""
 ```
+
+## Remote Copy Limitations
+
+These are the current limitations of the Remote Copy Peer Persistence integration with the HPE CSI Driver.
+
+- Only what is considered Classic Peer Persistence is supported. Active/Active hostset proximity is not supported.
+- Peer Persistence does not provide disaster recovery for workloads running on Kubernetes. Peer Persistence provide disaster recovery for the storage system.
+- Peer Persistence only provide data path resilience. If the primary array is unreachable for the CSP or the role of the remote copy group has changed due to disaster recovery operations (manual or automatic switchover/failover), all CSI operations will cease to function until the primary array comes back up and the role of the remote copy groups returned to original state.
+- When the primary array is unavailable for the Kubernetes cluster and remote copy group has failed over to the secondary array successfully, running workloads will continue to run if the host the workload was running on has redundant data paths to the secondary array (current primary array).
+- It's possible to access volumes from the secondary array by [statically provisioning](#static_provisioning) `PersistentVolumes` without renaming the volume on the array. This is only safe if it has been determined that the primary array does not have active hosts accessing the volume against the primary array.
 
 ## Support
 
