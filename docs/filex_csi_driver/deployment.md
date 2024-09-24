@@ -84,7 +84,7 @@ metadata:
   name: hpe-file-backend
   namespace: hpe-storage
 stringData:
-  endpoint 192.168.1.1
+  endpoint: 192.168.1.1
   username: my-csi-user
   password: my-secret-password
 ```
