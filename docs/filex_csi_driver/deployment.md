@@ -49,7 +49,7 @@ operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/filex-csi
 The next step is to create a `HPEGreenLakeFileCSIDriver` resource, this can also be done in the OpenShift cluster console.
 
 ```yaml fct_label="HPE GreenLake for File Storage CSI Operator v1.0.0-beta"
-# oc apply -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml
+# oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml
 {% include "examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml" %}```
 
 For reference, this is how the Operator is uninstalled:
