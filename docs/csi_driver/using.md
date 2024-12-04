@@ -1126,7 +1126,7 @@ Any workload provisioning `PVCs` from the above `StorageClass` will now be sched
 How to map an existing backend volume to a `PersistentVolume` differs between the CSP implementations.
 
 - [HPE Alletra 5000/6000 and Nimble Storage](../container_storage_provider/hpe_alletra_6000/index.md#static_provisioning)
-- [HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR](../container_storage_provider/hpe_alletra_storage_mp/index.md#static_provisioning)
+- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](../container_storage_provider/hpe_alletra_storage_mp_b10000/index.md#static_provisioning)
 
 ## Further Reading
 

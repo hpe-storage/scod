@@ -184,7 +184,7 @@ All parameters are mandatory and described below.
 
 Example:
 
-```yaml fct_label="HPE Alletra Storage MP"
+```yaml fct_label="HPE Alletra Storage MP B10000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -290,7 +290,7 @@ This `Secret` is used by the CSI sidecars in the `StorageClass` to authenticate 
 
 To create a new `Secret`, specify the name, `Namespace`, backend username, backend password and the backend IP address to be used by the CSP and save it as `custom-secret.yaml` (a detailed description of the parameters are [available above](#secret_parameters)).
 
-```yaml fct_label="HPE Alletra Storage MP"
+```yaml fct_label="HPE Alletra Storage MP B10000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -468,7 +468,7 @@ Container Storage Provider:
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/nimble-csp.yaml
 ```
 
-```text fct_label="HPE Alletra Storage MP, HPE Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra Storage MP B10000, HPE Alletra 9000, Primera and 3PAR"
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-csp.yaml
 kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-crd.yaml
 ```
@@ -515,12 +515,12 @@ Uninstall relevant Container Storage Provider:
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/nimble-csp.yaml
 ```
 
-```text fct_label="HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
 kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-csp.yaml
 ```
 
-!!! error "HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR users"
-    If you are reinstalling the HPE CSI Driver, **DO NOT** remove the `crd/hpevolumeinfos.storage.hpe.com` resource. This `CustomResourceDefinition` contains important volume metadata used by the HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR CSP. HPE CSI Driver **v2.0.0 and below** share the same YAML file for `crds` and CSP and would require a manual removal of the individual `Service` and `Deployment` in the "hpe-storage" `Namespace`.
+!!! error "HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR users"
+    If you are reinstalling the HPE CSI Driver, **DO NOT** remove the `crd/hpevolumeinfos.storage.hpe.com` resource. This `CustomResourceDefinition` contains important volume metadata used by the HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR CSP. HPE CSI Driver **v2.0.0 and below** share the same YAML file for `crds` and CSP and would require a manual removal of the individual `Service` and `Deployment` in the "hpe-storage" `Namespace`.
 
 Uninstall the CSI driver:
 

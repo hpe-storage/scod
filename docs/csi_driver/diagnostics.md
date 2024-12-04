@@ -15,7 +15,7 @@ hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0         
 hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
 ```
 
-```text fct_label="HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
 kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
 NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
 hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
@@ -170,7 +170,7 @@ CSP logs can be accessed from their respective services.
 kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
-```text fct_label="HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR"
+```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
 kubectl logs -f deploy/primera3par-csp -n hpe-storage
 ```
 

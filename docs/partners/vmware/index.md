@@ -8,7 +8,7 @@ CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. 
 
 ### Feature Comparison
 
-Volume parameters available to the vSphere Container Storage Plug-in will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00001341en_us&docLocale=en_US&page=index.html) (includes HPE Alletra Storage MP, Alletra 9000 and 3PAR) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://www.hpe.com/psnow/doc/a00044881enw) (includes HPE Alletra 5000/6000 and dHCI) for list of available features.
+Volume parameters available to the vSphere Container Storage Plug-in will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the [HPE Primera: VMware ESXi Implementation Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00001341en_us&docLocale=en_US&page=index.html) (includes HPE Alletra Storage MP B10000, Alletra 9000 and 3PAR) or [VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide](https://www.hpe.com/psnow/doc/a00044881enw) (includes HPE Alletra 5000/6000 and dHCI) for list of available features.
 
 For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective [CSP](../../container_storage_provider/index.md).
 
@@ -38,7 +38,7 @@ For a list of available volume parameters in the HPE CSI Driver for Kubernetes, 
 <small>
  <sup>1</sup> = Feature comparison based upon HPE CSI Driver for Kubernetes 2.4.0 and the vSphere Container Storage Plug-in 3.1.2<br />
  <sup>2</sup> = HPE and VMware fully support features listed as GA for their respective CSI drivers.<br />
- <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR storage systems.<br />
+ <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR storage systems.<br />
  <sup>4</sup> = Peer Persistence is an HPE Storage specific platform feature that isn't abstracted up to the vSphere Container Storage Plug-in. Peer Persistence works with the vSphere Container Storage Plug-in when using VMFS datastores.
 </small>
 

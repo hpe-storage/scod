@@ -1,32 +1,29 @@
 # Introduction
 
-The HPE Alletra Storage MP, Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) for Kubernetes is part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes. 
-
-!!! note
-    The HPE CSI Driver for Kubernetes is only compatible with HPE Alletra Storage MP running with block services, such as HPE GreenLake for Block Storage.
+The HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) for Kubernetes is part of the [HPE CSI Driver for Kubernetes](../../csi_driver/index.md). The CSP abstract the data management capabilities of the array for use by Kubernetes.
 
 [TOC]
 
 !!! note
-    For help getting started with deploying the HPE CSI Driver using HPE Alletra Storage MP, Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE Developer](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
+    For help getting started with deploying the HPE CSI Driver using HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE Developer](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
 
 ## Platform Requirements
 
 Check the corresponding CSI driver version in the [compatibility and support](../../csi_driver/index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
 <!-- Refer to the HPE Single Point of Connectivity Knowledge (SPOCK) for specific platform details (requires an HPE Passport account) of the CSP. The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.
 
-* [HPE Alletra Storage MP](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_greenlake_block.html)
+* [HPE Alletra Storage MP B10000](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_greenlake_block.html)
 * [HPE Alletra 9000](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_alletra.html)
 * [HPE Primera](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_primera.html)
 * [HPE 3PAR](https://h20272.www2.hpe.com/SPOCK/Pages/spock2Html.aspx?htmlFile=hw_3par.html) -->
 
 ### Network Port Requirements
 
-The HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Container Storage Provider requires the following TCP ports to be open inbound to the array from the Kubernetes cluster worker nodes running the HPE CSI Driver for Kubernetes.
+The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Storage Provider requires the following TCP ports to be open inbound to the array from the Kubernetes cluster worker nodes running the HPE CSI Driver for Kubernetes.
 
 | Port | Protocol | Description |
 | ---- | -------- | ----------- |
-| 443 | HTTPS | WSAPI (HPE Alletra Storage MP, Alletra 9000/Primera) |
+| 443 | HTTPS | WSAPI (HPE Alletra Storage MP B10000, Alletra 9000/Primera) |
 | 8080 | HTTPS | WSAPI (HPE 3PAR) |
 | 22 | SSH | Array communication |
 
@@ -40,6 +37,35 @@ The CSP requires access to a local user with either `edit` or the `super` role. 
 ### Virtual Domains
 
 Virtual Domains are not yet fully supported by the CSP. From HPE CSI Driver v2.5.0, it's possible to manually create the Kubernetes hosts connecting to storage within the Virtual Domain. Once the hosts have been created, deploy the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true". The Virtual Domain user may create the hosts through the Virtual Domain if the "AllowDomainUsersAffectNoDomain" parameter is set to either "hostonly" or "yes" on the array.
+
+#### Detailed steps to use Virtual Domains
+
+These steps assumes access to the storage platform with privileges to create domains and change settings.
+
+Login to the storage platform with SSH. Create an new domain:
+
+```text
+cli% createdomain -comment "This is a test domain." my-kubernetes-domain-0
+```
+
+Then, create a new user and assign to the domain. These credentials will be used by the CSI driver.
+
+```text
+cli% createuser -c my-password-0 domain-user-0 my-kubernetes-domain-0 edit
+```
+
+Next, make sure domain users are allowed to create hosts outside the domain.
+
+```text
+cli% setsys AllowDomainUsersAffectNoDomain hostonly
+```
+
+The next steps involve installing the HPE CSI Driver for Kubernetes with `disableHostDeletion` set to `true`. The steps to supply the parameter depends on if the Helm chart or Operator is being used.
+
+- Helm chart install from [ArtifactHub.io](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
+- Operator install for [OpenShift](../../partners/redhat_openshift/index.md).
+
+Once the CSI driver is installed and running, [add an HPE storage backend](../../csi_driver/deployment.md#add_an_hpe_storage_backend) with the credentials provided in the steps above.
 
 !!! note
     Remote Copy Groups managed by the CSP have not been tested with Virtual Domains at this time.
@@ -401,4 +427,4 @@ These are the current limitations of the Remote Copy Peer Persistence integratio
 
 ## Support
 
-Please refer to the HPE Alletra Storage MP, Alletra 9000 and Primera and 3PAR Storage CSP [support statement](../../legal/support/index.md#hpe_primera_and_hpe_3par_container_storage_provider_support).
+Please refer to the HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR Storage CSP [support statement](../../legal/support/index.md#hpe_primera_and_hpe_3par_container_storage_provider_support).

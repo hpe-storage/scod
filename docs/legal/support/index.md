@@ -24,11 +24,11 @@ Example cases where support may not be possible include:
 
 <small>* = In the event where other vendors need to be consulted, the HPE Nimble Support team will not disengage from the Support Action. HPE Nimble Support will continue to partner with the customer and other vendors to search for the correct answers to the issue.</small>
 
-### HPE Alletra Storage MP, Alletra 9000 and Primera and 3PAR Container Storage Provider support
+### HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR Container Storage Provider support
 
-Limited to the HPE Alletra Storage MP, Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) only. Best effort support is available for the CSP for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Storage with All-inclusive Single or Multi-System software and an active HPE Pointnext support agreement. Since HPE Pointnext support for the CSP is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
+Limited to the HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR Storage Container Storage Provider (CSP) only. Best effort support is available for the CSP for HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Storage with All-inclusive Single or Multi-System software and an active HPE Pointnext support agreement. Since HPE Pointnext support for the CSP is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
 
-| HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR Hardware Contract Type | Phone Number |
+| HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Hardware Contract Type | Phone Number |
 | ----------------------------------------------------------------------------- | ------------ |
 | **Warranty and Foundation Care**                                              | 800-633-3600 |
 | **Proactive Care (PC)**                                                       | 866-211-5211 |
