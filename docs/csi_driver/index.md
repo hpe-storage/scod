@@ -84,7 +84,7 @@ Upgrade considerations:
 
 * Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v250).
 * Current users of CHAP needs to review the [iSCSI CHAP Considerations](#iscsi_chap_considerations)
-* The `importVol` parameter has been renamed `importVolumeName` for [HPE Alletra Storage MP and Alletra 9000/Primera/3PAR](../container_storage_provider/hpe_alletra_storage_mp/index.md)
+* The `importVol` parameter has been renamed `importVolumeName` for [HPE Alletra Storage MP and Alletra 9000/Primera/3PAR](../container_storage_provider/hpe_alletra_storage_mp_b10000/index.md)
 
 !!! caution "note"
     HPE CSI Driver v2.5.0 is deployed with **v2.5.1** of the Helm chart and Operator

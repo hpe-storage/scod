@@ -191,15 +191,15 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 The next step is to create a `HPECSIDriver` object.
 
 ```yaml fct_label="HPE CSI Operator v2.5.1"
-# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "../../csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.2"
-# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
 {% include "../../csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.1"
-# oc apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
 {% include "../../csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../csi_driver/deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../csi_driver/using.md#base_storageclass_parameter).
@@ -314,9 +314,9 @@ oc get pvc -n openshift-virtualization-os-images -w
 !!! hint
     The "accessMode" transformation for block volumes from RWO PVC to RWX clone has been resolved in HPE CSI Driver v2.5.0. Regardless, using source RWX PVs will simplify the workflows for users.
 
-# Live VM migrations for Alletra Storage MP
+# Live VM migrations for Alletra Storage MP B10000
 
-With HPE CSI Operator for Kubernetes v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP backends including 3PAR, Primera and Alletra 9000.
+With HPE CSI Operator for Kubernetes v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP B10000 backends including 3PAR, Primera and Alletra 9000.
 
 Identify the `PVC` that that has been cloned from an OS image. The VM name is "centos7-silver-bedbug-14" in this case.
 

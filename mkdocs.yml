@@ -30,8 +30,10 @@ plugins:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
         'container_storage_provider/hpe_nimble_storage/index.md': 'container_storage_provider/hpe_alletra_6000/index.md'
-        'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_storage_mp/index.md'
-        'container_storage_provider/hpe_alletra_9000/index.md': 'container_storage_provider/hpe_alletra_storage_mp/index.md'
+        'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_9000/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_storage_mp/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_mp/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
         'partners/rancher_labs/index.md': 'partners/suse_rancher/index.md'
         'ezmeral_container_platform/install.md': 'ezmeral/install.md'
   - include-markdown:
@@ -49,7 +51,7 @@ nav:
     - 'Diagnostics': 'csi_driver/diagnostics.md'
   - CONTAINER STORAGE PROVIDERS:
     - 'HPE Alletra 5000/6000 and Nimble': 'container_storage_provider/hpe_alletra_6000/index.md'
-    - 'HPE Alletra Storage MP and Alletra&nbsp;9000/Primera/3PAR': 'container_storage_provider/hpe_alletra_storage_mp/index.md'
+    - 'HPE Alletra Storage MP B10000 and Alletra&nbsp;9000/Primera/3PAR': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
   - HPE GREENLAKE FOR FILE STORAGE:
     - 'Overview': 'filex_csi_driver/index.md'
     - 'Deployment': 'filex_csi_driver/deployment.md'
