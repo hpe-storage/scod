@@ -19,7 +19,7 @@ markdown_extensions:
   - toc:
       permalink: True
       separator: "_"
-  - markdown_fenced_code_tabs:
+  - markdown_fenced_code_tabs_next:
       single_block_as_tab: False
       active_class: 'active'
       template: 'default'
@@ -29,13 +29,28 @@ plugins:
       redirect_maps:
         'docker_volume_plugins/hpe_cloud_volumes.md': 'docker_volume_plugins/hpe_cloud_volumes/index.md'
         'docker_volume_plugins/hpe_nimble_storage.md': 'docker_volume_plugins/hpe_nimble_storage/index.md'
-        'container_storage_provider/hpe_nimble_storage/index.md': 'container_storage_provider/hpe_alletra_6000/index.md'
-        'container_storage_provider/hpe_3par_primera/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
-        'container_storage_provider/hpe_alletra_9000/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
-        'container_storage_provider/hpe_alletra_storage_mp/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
-        'container_storage_provider/hpe_alletra_mp/index.md': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
-        'partners/rancher_labs/index.md': 'partners/suse_rancher/index.md'
-        'ezmeral_container_platform/install.md': 'ezmeral/install.md'
+        'container_storage_provider/hpe_nimble_storage/index.md': 'csi_driver/container_storage_provider/hpe_alletra_6000/index.md'
+        'container_storage_provider/hpe_3par_primera/index.md': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_9000/index.md': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_storage_mp/index.md': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_mp/index.md': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+        'container_storage_provider/hpe_alletra_6000/index.md': 'csi_driver/container_storage_provider/hpe_alletra_6000/index.md'
+        'partners/rancher_labs/index.md': 'csi_driver/partners/suse_rancher/index.md'
+        'partners/amazon_eks_anywhere/index.md': 'csi_driver/partners/amazon_eks_anywhere/index.md'
+        'partners/canonical/index.md': 'csi_driver/partners/canonical/index.md'
+        'partners/cohesity/index.md': 'csi_driver/partners/cohesity/index.md' 
+        'partners/commvault/index.md': 'csi_driver/partners/commvault/index.md'
+        'partners/kasten/index.md': 'csi_driver/partners/kasten/index.md'
+        'partners/mirantis/index.md': 'csi_driver/partners/mirantis/index.md'
+        'partners/redhat_openshift/index.md': 'csi_driver/partners/redhat_openshift/index.md'
+        'partners/suse_harvester/index.md': 'csi_driver/partners/suse_harvester/index.md'
+        'partners/suse_rancher/index.md': 'csi_driver/partners/suse_rancher/index.md'
+        'partners/tkgi/index.md': 'csi_driver/partners/tkgi/index.md'
+        'partners/vmware/index.md': 'csi_driver/partners/vmware/index.md'
+        'partners/index.md': 'csi_driver/partners/index.md'
+        'ezmeral_container_platform/install.md': 'csi_driver/partners/hpe_ezmeral/install.md'
+        'ezmeral/index.md': 'csi_driver/partners/hpe_ezmeral/install.md'
   - include-markdown:
   - macros:
 nav:
@@ -45,13 +60,27 @@ nav:
     - 'Overview': 'csi_driver/index.md'
     - 'Deployment': 'csi_driver/deployment.md'
     - 'Using': 'csi_driver/using.md'
+    - 'Container Storage Providers':
+      - 'HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR': 'csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+      - 'HPE Alletra 5000/6000 and Nimble Storage': 'csi_driver/container_storage_provider/hpe_alletra_6000/index.md'
     - 'Metrics': 'csi_driver/metrics.md'
     - 'Pod Monitor': 'csi_driver/monitor.md'
     - 'Auxiliary Operations': 'csi_driver/operations.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
-  - CONTAINER STORAGE PROVIDERS:
-    - 'HPE Alletra 5000/6000 and Nimble': 'container_storage_provider/hpe_alletra_6000/index.md'
-    - 'HPE Alletra Storage MP B10000 and Alletra&nbsp;9000/Primera/3PAR': 'container_storage_provider/hpe_alletra_storage_mp_b10000/index.md'
+    - 'Partner Ecosystems':
+      - 'HPE Ezmeral Runtime Enterprise': 'csi_driver/partners/hpe_ezmeral/install.md'
+#      - 'HPE Morpheus Kubernetes Service': 'csi_driver/partners/hpe_morpheus/install.md'
+      - 'Amazon EKS Anywhere': 'csi_driver/partners/amazon_eks_anywhere/index.md'
+      - 'Canonical': 'csi_driver/partners/canonical/index.md'
+      - 'Cohesity': 'csi_driver/partners/cohesity/index.md' 
+      - 'Commvault': 'csi_driver/partners/commvault/index.md'
+      - 'Veeam Kasten': 'csi_driver/partners/kasten/index.md'
+      - 'Mirantis': 'csi_driver/partners/mirantis/index.md'
+      - 'Red Hat OpenShift': 'csi_driver/partners/redhat_openshift/index.md'
+      - 'SUSE Harvester': 'csi_driver/partners/suse_harvester/index.md'
+      - 'SUSE Rancher': 'csi_driver/partners/suse_rancher/index.md'
+      - 'Tanzu TKGI': 'csi_driver/partners/tkgi/index.md'
+      - 'VMware': 'csi_driver/partners/vmware/index.md'
   - HPE GREENLAKE FOR FILE STORAGE:
     - 'Overview': 'filex_csi_driver/index.md'
     - 'Deployment': 'filex_csi_driver/deployment.md'
@@ -63,23 +92,7 @@ nav:
 #   - 'HPE RA Library': ''
 #   - 'HPE InfoSight': ''
 #   - 'External': ''
-  - HPE EZMERAL RUNTIME ENTERPRISE:
-    - 'Install HPE CSI Driver': "ezmeral/install.md"
-  - PARTNER ECOSYSTEMS:
-    - 'Amazon EKS Anywhere': 'partners/amazon_eks_anywhere/index.md'
-    - 'Canonical': 'partners/canonical/index.md'
-    - 'Cohesity': 'partners/cohesity/index.md' 
-    - 'Commvault': 'partners/commvault/index.md'
-    - 'Veeam Kasten': 'partners/kasten/index.md'
-    - 'Mirantis': 'partners/mirantis/index.md'
-    - 'Red Hat OpenShift': 'partners/redhat_openshift/index.md'
-    - 'SUSE Harvester': 'partners/suse_harvester/index.md'
-    - 'SUSE Rancher': 'partners/suse_rancher/index.md'
-    - 'Tanzu Kubernetes Grid Integrated': 'partners/tkgi/index.md'
-    - 'VMware': 'partners/vmware/index.md'
-#   - 'Google Anthos': 'partners/google_cloud_anthos/index.md'
   - LEARN:
-#    - 'Cloud-Native, Containers & DevOps': 'learn/containers101/index.md'
     - 'Persistent Storage for Kubernetes': 'learn/persistent_storage/index.md'
     - 'For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers': 'learn/introduction_to_containers/index.md'
     - 'Introduction to CSI Primitives': 'learn/csi_primitives/index.md'

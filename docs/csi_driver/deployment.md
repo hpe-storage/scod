@@ -15,8 +15,8 @@ As different methods of installation are provided, it might not be too obvious w
 | I have a...                       | Then you need...              |
 | --------------------------------- | ----------------------------- |
 | Vanilla upstream Kubernetes cluster on a supported host OS. | The [Helm chart](#helm) |
-| Red Hat OpenShift 4.x cluster.         | The [certified CSI operator for OpenShift](../partners/redhat_openshift/index.md) |
-| Supported environment with multiple backends. | [Helm chart](#helm) with additional [Secrets](#create_a_secret_with_backend_details) and [StorageClasses](using.md#base_storageclass_parameters) |
+| Red Hat OpenShift 4.x cluster.         | The [certified CSI operator for OpenShift](partners/redhat_openshift/index.md) |
+| Supported environment with multiple backends. | [Helm chart](#helm) with additional [Secrets](#secret_parameters) and [StorageClasses](using.md#base_storageclass_parameters) |
 | HPE Ezmeral Runtime Enterprise environment. | The [Helm chart](#helm) |
 | Operator Life-cycle Manager (OLM) environment. | The [CSI operator](#operator) |
 | Unsupported host OS/Kubernetes cluster and like to tinker. | The [advanced install](#advanced_install) |
@@ -124,7 +124,7 @@ The official HPE CSI Operator for Kubernetes is hosted on [OperatorHub.io](https
 
 The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift. There are a few tweaks needed and there's a separate section for OpenShift.
 
-- See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section
+- See [Red Hat OpenShift](partners/redhat_openshift/index.md) in the partner ecosystem section
 
 ### Upstream Kubernetes and Others
 
@@ -148,15 +148,15 @@ Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe
 
 ```yaml fct_label="HPE CSI Operator v2.5.1"
 # kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
-{% include "examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
+{% include "csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.2"
 # kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
-{% include "examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
+{% include "csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.1"
 # kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
-{% include "examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
+{% include "csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 !!! tip
     The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
@@ -269,7 +269,7 @@ Next step involves [creating a default StorageClass](using.md#base_storageclass_
 
 It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple `StorageClass` and `Secret` API objects to represent an environment with multiple systems.
 
-There's a [brief tutorial available](../learn/video_gallery/index.md#managing_multiple_hpe_primary_storage_backends_using_the_hpe_csi_driver) in the Video Gallery that walks through these steps.
+There's a [brief tutorial available](../learn/video_gallery/index.md#managing_multiple_hpe_storage_backends_using_the_hpe_csi_driver) in the Video Gallery that walks through these steps.
 
 !!! Note
     Make note of the Kubernetes `Namespace` or OpenShift project name used during the deployment. In the following examples, we will be using the "hpe-storage" `Namespace`.
@@ -376,7 +376,7 @@ custom-secret            Opaque        5         1m
 
 ### Create a StorageClass with the Custom Secret
 
-To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+To use the new `Secret` "custom-secret", create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](container_storage_provider/index.md).
 
 ```yaml fct_label="K8s 1.15+"
 apiVersion: storage.k8s.io/v1
@@ -474,7 +474,7 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 ```
 
 !!! important
-    The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective [CSP](../container_storage_provider/index.md).
+    The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective [CSP](container_storage_provider/index.md).
 
 Install the CSI driver:
 
