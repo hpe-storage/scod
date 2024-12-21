@@ -50,7 +50,7 @@ The next step is to create a `HPEGreenLakeFileCSIDriver` resource, this can also
 
 ```yaml fct_label="HPE GreenLake for File Storage CSI Operator v1.0.0-beta"
 # oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml
-{% include "examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml" %}```
+{% include "filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml" %}```
 
 For reference, this is how the Operator is uninstalled:
 

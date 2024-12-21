@@ -100,7 +100,7 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 
 ## Base StorageClass Parameters
 
-Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](../container_storage_provider/index.md) for more elaborate examples.
+Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](container_storage_provider/index.md) for more elaborate examples.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -234,7 +234,7 @@ allowVolumeExpansion: true
 
 ## Provisioning Concepts
 
-These instructions are provided as an example on how to use the HPE CSI Driver with a [CSP](../container_storage_provider/index.md) supported by HPE.
+These instructions are provided as an example on how to use the HPE CSI Driver with a [CSP](container_storage_provider/index.md) supported by HPE.
 
 - [Create a PersistentVolumeClaim from a StorageClass](#create_a_persistentvolumeclaim_from_a_storageclass)
 - [Ephemeral inline volumes](#ephemeral_inline_volumes)
@@ -453,7 +453,7 @@ spec:
 ```
 
 !!! note
-    The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes. Consult the [Alletra 6000 CSP documentation](../container_storage_provider/hpe_alletra_6000/index.md#limitations) if using `ReadWriteMany` raw block volumes with FC on Nimble, Alletra 5000 or 6000.
+    The `accessModes` may be set to `ReadWriteOnce`, `ReadWriteMany` or `ReadOnlyMany`. It's expected that the application handles read/write IO, volume locking and access in the event of concurrent block access from multiple nodes. Consult the [Alletra 6000 CSP documentation](container_storage_provider/hpe_alletra_6000/index.md#limitations) if using `ReadWriteMany` raw block volumes with FC on Nimble, Alletra 5000 or 6000.
 
 Mapping the device in a `Pod` specification is slightly different than using regular filesystems as a `volumeDevices` section is added instead of a `volumeMounts` stanza:
 
@@ -508,7 +508,7 @@ parameters:
 ```
 
 !!! note
-    [Container Storage Providers](../container_storage_provider) may have optional parameters to the `VolumeSnapshotClass`.
+    [Container Storage Providers](container_storage_provider/index.md) may have optional parameters to the `VolumeSnapshotClass`.
 
 Create a `VolumeSnapshot`. This will create a new snapshot of the volume.
 
@@ -606,7 +606,7 @@ parameters:
 ```
 
 !!! note
-    The `VolumeGroupClass` `.parameters` may contain CSP specifc parameters. Check the documentation of the [Container Storage Provider](../container_storage_provider) being used.
+    The `VolumeGroupClass` `.parameters` may contain CSP specifc parameters. Check the documentation of the [Container Storage Provider](container_storage_provider/index.md) being used.
 
 Once the `VolumeGroupClass` is in place, users may create `VolumeGroups`. The `VolumeGroups` are just like `PersistentVolumeClaims` part of a `Namespace` and both resources need to be in the same `Namespace` for the grouping to be successful.
 
@@ -771,7 +771,7 @@ parameters:
 ```
 
 !!! note
-    The `allowMutations` parameter is a comma separated list of values defined by each of the CSPs parameters, except the `description` parameter, which is common across all CSPs. See the documentation for each [CSP](../container_storage_provider/index.md) on what parameters are mutable.
+    The `allowMutations` parameter is a comma separated list of values defined by each of the CSPs parameters, except the `description` parameter, which is common across all CSPs. See the documentation for each [CSP](container_storage_provider/index.md) on what parameters are mutable.
 
 The end-user may now control those parameters by editing or patching the `PersistentVolumeClaim`.
 
@@ -803,7 +803,7 @@ Any "RWO" claim made against the `StorageClass` will also create a NFS server `D
 By default, the NFS Server Provisioner deploy resources in the "hpe-nfs" `Namespace`. This makes it easy to manage and diagnose. However, to use CSI data management capabilities (`VolumeSnapshots` and `.spec.dataSource`) on the PVCs, the NFS resources need to be deployed in the same `Namespace` as the "RWX"/"ROX" requesting `PVC`. This is controlled by the `nfsNamespace` `StorageClass` parameter. See [base `StorageClass` parameters](#base_storageclass_parameters) for more information.
 
 !!! tip
-    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes. There's also a brief tutorial available in the [Video Gallery](../learn/video_gallery/index.md#multi-writer_workloads_using_the_nfs_server_provisioner).
+    A comprehensive [tutorial is available](https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri) on HPE Developer on how to get started with the NFS Server Provisioner and the HPE CSI Driver for Kubernetes.
 
 Example `StorageClass` with "nfsResources" enabled. No CSP specific parameters for clarity.
 
@@ -948,7 +948,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - Using the same network interface for NFS and block IO has shown suboptimal performance. Use FC for the block storage for the best performance.
 - A single NFS server instance is capable of 100GigE wirespeed with large sequential workloads and up to 200,000 IOPS with small IO using bare-metal nodes and multiple clients.
 - Using ext4 as the backing filesystem has shown better performance with simultaneous writers to the same file.
-- Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](../partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
+- Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
 - XFS has proven troublesome to use as a backend "RWO" volume filesystem, leaving stale NFS handles for clients. Use ext4 as the "csi.storage.k8s.io/fstype" `StorageClass` parameter for best results.
 - The NFS servers provide a "ClusterIP" `Service`. It is possible to expose the NFS servers outside the cluster for external NFS clients. Understand the scope and limitations in [Auxillary Operations](operations.md#expose_nfs_services_outside_of_the_kubernetes_cluster).
 
@@ -1125,11 +1125,11 @@ Any workload provisioning `PVCs` from the above `StorageClass` will now be sched
 
 How to map an existing backend volume to a `PersistentVolume` differs between the CSP implementations.
 
-- [HPE Alletra 5000/6000 and Nimble Storage](../container_storage_provider/hpe_alletra_6000/index.md#static_provisioning)
-- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](../container_storage_provider/hpe_alletra_storage_mp_b10000/index.md#static_provisioning)
+- [HPE Alletra 5000/6000 and Nimble Storage](container_storage_provider/hpe_alletra_6000/index.md#static_provisioning)
+- [HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR](container_storage_provider/hpe_alletra_storage_mp_b10000/index.md#static_provisioning)
 
 ## Further Reading
 
 The [official Kubernetes documentation](https://kubernetes.io/docs/concepts/storage/volumes/) contains comprehensive documentation on how to markup `PersistentVolumeClaim` and `StorageClass` API objects to tweak certain behaviors.
 
-Each CSP has a set of unique `StorageClass` parameters that may be tweaked to accommodate a wide variety of use cases. Please see the documentation of [the respective CSP for more details](../container_storage_provider/index.md).
+Each CSP has a set of unique `StorageClass` parameters that may be tweaked to accommodate a wide variety of use cases. Please see the documentation of [the respective CSP for more details](container_storage_provider/index.md).

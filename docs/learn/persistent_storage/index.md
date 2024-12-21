@@ -490,7 +490,7 @@ This concept is sometimes called “profiles” in other storage systems. A clus
 
 We will start by creating a `StorageClass` called **hpe-standard**. We will use the **custom-secret** created in the previous step and specify the **hpe-storage** `namespace` where the CSI driver was deployed.
 
-Here is an example `StorageClasses` for HPE Primera and Nimble Storage systems and some of the available volume parameters that can be defined. See the respective [CSP](../../container_storage_provider/index.md) for more elaborate examples.
+Here is an example `StorageClasses` for HPE Primera and Nimble Storage systems and some of the available volume parameters that can be defined. See the respective [CSP](../../csi_driver/container_storage_provider/index.md) for more elaborate examples.
 
 ```yaml fct_label="HPE Nimble Storage"
 apiVersion: storage.k8s.io/v1
@@ -888,7 +888,7 @@ custom-secret            Opaque        5         15m
 
 ### Create a StorageClass with the new Secret
 
-To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../../container_storage_provider/index.md).
+To use the new `gold-secret`, create a new `StorageClass` using the `Secret` and the necessary `StorageClass` parameters. Please see the requirements section of the respective [CSP](../../csi_driver/container_storage_provider/index.md).
 
 We will start by creating a `StorageClass` called **hpe-gold**. We will use the `gold-secret` created in the previous step and specify the **hpe-storage** `Namespace` where the CSI driver was deployed.
 

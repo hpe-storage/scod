@@ -55,7 +55,7 @@ The Helm chart is available on Artifact Hub. Instructions on how to manage and i
 
 ### Rancher
 
-Since Rancher v2.7 and HPE CSI Driver for Kubernetes v2.3.0 it's possible to install the HPE CSI Info Metrics Provider through the Apps interface in Rancher to use with Rancher Monitoring. Please see the [Rancher](../partners/suse_rancher/index.md) partner page for more information.
+Since Rancher v2.7 and HPE CSI Driver for Kubernetes v2.3.0 it's possible to install the HPE CSI Info Metrics Provider through the Apps interface in Rancher to use with Rancher Monitoring. Please see the [Rancher](partners/suse_rancher/index.md) partner page for more information.
 
 ### Advanced Install
 

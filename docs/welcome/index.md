@@ -4,7 +4,7 @@ HPE provides a broad portfolio of products that integrate with Kubernetes and ne
 
 | Ecosystem | ![](img/alletra6000.png)<br /><br /> HPE Alletra 5000/6000 and Nimble | ![](img/alletramp.png) <br /><br /> HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR |
 | :-: | :-: | :-: |
-| Kubernetes | [HPE CSI Driver](../csi_driver/index.md) with [Alletra 6000 CSP](../container_storage_provider/hpe_alletra_6000/index.md) |[HPE CSI Driver](../csi_driver/index.md) with [Alletra Storage MP B10000 CSP](../container_storage_provider/hpe_alletra_storage_mp_b10000/index.md) |
+| Kubernetes | [HPE CSI Driver](../csi_driver/index.md) with [Alletra 6000 CSP](../csi_driver/container_storage_provider/hpe_alletra_6000/index.md) |[HPE CSI Driver](../csi_driver/index.md) with [Alletra Storage MP B10000 CSP](../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md) |
 
 - Looking to [deploy the CSI driver](../csi_driver/deployment.md)? 
 
