@@ -3,7 +3,7 @@
 
 # Welcome to the Hack Shack!
 
-The recorded CSI workshop available in the [Video Gallery](../../learn/video_gallery/index.md#hpe_dev_hack_shack_workshop_using_the_container_storage_interface) is now available on-demand, as a self-paced and interactive workshop hosted by the HPE Developer Community.
+The recorded CSI workshop available in the [Video Gallery](../../learn/video_gallery/index.md#hpe_developer_hack_shack_workshop_using_the_container_storage_interface) is now available on-demand, as a self-paced and interactive workshop hosted by the HPE Developer Community.
 
 All you have to do is [register here](https://developer.hpe.com/hackshack/workshop/2).
 

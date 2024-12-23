@@ -280,6 +280,7 @@ spec:
 
 Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary but it's recommended to be familiar with using [CSI snapshots](using.md#using_csi_snapshots).
 
+<a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a>
 ## Upgrade NFS Servers 
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
@@ -405,7 +406,7 @@ systemctl stop iscsid
 [Download]({{ config.site_url }}csi_driver/examples/operations/iscsid.conf): /etc/iscsi/iscsid.conf 
 
 ```text
-{% include "examples/operations/iscsid.conf" %}```
+{% include "csi_driver/examples/operations/iscsid.conf" %}```
 
 !!! tip "Pro tip!"
     When nodes are provisioned from some sort of templating system with iSCSI pre-installed, it's notoriously common that nodes are provisioned with identical IQNs. This will lead to device attachment problems that aren't obvious to the user. Make sure each node has a unique IQN.
@@ -439,7 +440,7 @@ systemctl stop multipathd
 [Download]({{ config.site_url }}csi_driver/examples/operations/multipath.conf): /etc/multipath.conf 
 
 ```text
-{% include "examples/operations/multipath.conf" %}```
+{% include "csi_driver/examples/operations/multipath.conf" %}```
 
 Ensure `multipathd` is running and enabled:
 

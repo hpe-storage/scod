@@ -4,7 +4,7 @@ These integrations are either already deprecated or being phased out. Please wor
 
 ## Container Storage Providers
 
-- [HPE Cloud Volumes](../container_storage_provider/hpe_cloud_volumes/index.md)
+- [HPE Cloud Volumes](../csi_driver/container_storage_provider/hpe_cloud_volumes/index.md)
 
 ## Legacy FlexVolume drivers
 
