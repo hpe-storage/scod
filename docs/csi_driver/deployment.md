@@ -147,15 +147,15 @@ kubectl get csv -n my-hpe-csi-operator
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
 ```yaml fct_label="HPE CSI Operator v2.5.1"
-# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.2"
-# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.1"
-# kubectl apply -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 !!! tip

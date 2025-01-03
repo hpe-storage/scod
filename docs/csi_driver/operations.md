@@ -541,3 +541,74 @@ mount -t nfs4 192.168.1.40:/export /mnt
 
 !!! note
     If the NFS server is rescheduled in the Kubernetes cluster, the load balancer IP address follows, and the client will recover and resume IO after a few minutes.
+
+## Apply Custom Images to the Helm Chart and Operator
+
+Container images that comprise the CSI driver can be individually replaced supply a fix, workaround or address a particular Common Vulnerability and Exposure (CVE).
+
+It's preferred to perform these actions while using the Helm chart or Operator. Images may be changed directly in running `Deployments` and `DaemonSets` while the CSI driver is deployed with either YAML manifests or the Helm chart. The Operator will not tolerate runtime changes and the `HPECSIDriver` resource needs to be updated for the change to take.
+
+### Helm
+
+Parameters supplied to a Helm can be inserted either on the command-line or using a "values" YAML file. For an overview of parameters and in this case container images that needs to be manipulated, dump the values file for the chart.
+
+```text
+helm show values hpe-storage/hpe-csi-driver
+```
+
+!!! tip "Clarification"
+    The above command will dump the values for the latest chart in the repository. It will not contain any locally installed values. To pull the values of an installed CSI driver chart, use `helm get values -n hpe-storage my-hpe-csi-driver`.
+
+The section of the values file that concerns container image manipulation is `.images`.
+
+#### Via Command-Line
+
+Imagine there's a patch release from engineering to address a particular issue, say "CON-1234" in the CSI driver images.
+
+```text
+helm install --create-namespace -n hpe-storage my-hpe-csi-driver \
+--set images.csiNodeDriver=quay.io/hpestorage/csi-driver:v0.0.0-CON-1234 \
+--set images.csiControllerDriver=quay.io/hpestorage/csi-driver:v0.0.0-CON-1234 \
+hpe-storage/hpe-csi-driver
+```
+
+#### Via values.yaml
+
+Since the built-in values provide sane defaults, it's only necessary to manipulate the keys and values that are relevant to the change. If there are other changes that are necessary for this particular install, supply those parameters as well.
+
+```yaml
+---
+images:
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+```
+
+Install the chart with the contents above in a `values.yaml` file:
+
+```text
+helm install --create-namespace -nhpe-storage my-hpe-csi-driver \
+-f values.yaml \
+hpe-storage/hpe-csi-driver
+```
+
+!!! note
+    These are generic circumstances to illustrate the relevant steps to apply custom parameters. Be aware of the particular parameters the CSI driver has been installed with for your situation.
+
+### Operator
+
+The Operator manages the Helm chart with a `HPECSIDriver` resource in the chosen `Namespace`, usually "hpe-storage". Changes can be made to the `HPECSIDriver` resource during runtime using either "edit" or "patch" commands but it's recommended to manipulate the source YAML file.
+
+Similar to the Helm chart, the `.spec.images` section needs to be manipulated.
+
+```yaml
+---
+spec:
+  images:
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+```
+
+Visit the [Deployment section](deployment.md#upstream_kubernetes_and_others) for instructions on how to apply the `HPECSIDriver` resource.
+
+!!! tip "Good to Know"
+    It's recommended to run the CSI driver with the bundled images and only apply changes when instructed by HPE. Customers may replace mages as they desire but may need to revert installations when engaging with HPE support.
