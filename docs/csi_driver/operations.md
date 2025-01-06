@@ -548,6 +548,9 @@ Container images that comprise the CSI driver can be individually replaced suppl
 
 It's preferred to perform these actions while using the Helm chart or Operator. Images may be changed directly in running `Deployments` and `DaemonSets` while the CSI driver is deployed with either YAML manifests or the Helm chart. The Operator will not tolerate runtime changes and the `HPECSIDriver` resource needs to be updated for the change to take.
 
+!!! important
+    The examples below demonstrates how to replace the CSI node and controller driver only. HPE may ask to replace any number of images comprising the HPE CSI Driver, such as a CSP or upstream sidecar.
+
 ### Helm
 
 Parameters supplied to a Helm can be inserted either on the command-line or using a "values" YAML file. For an overview of parameters and in this case container images that needs to be manipulated, dump the values file for the chart.
@@ -611,4 +614,4 @@ spec:
 Visit the [Deployment section](deployment.md#upstream_kubernetes_and_others) for instructions on how to apply the `HPECSIDriver` resource.
 
 !!! tip "Good to Know"
-    It's recommended to run the CSI driver with the bundled images and only apply changes when instructed by HPE. Customers may replace mages as they desire but may need to revert installations when engaging with HPE support.
+    It's recommended to run the CSI driver with the bundled images and only apply changes when instructed by HPE. Customers may replace images as they desire but may need to revert installations when engaging with HPE support.
