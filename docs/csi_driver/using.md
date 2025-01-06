@@ -149,10 +149,10 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | nfsNodeSelector               | Text           | Customize the `nodeSelector` label value for the NFS `Pod`. The default behavior is to omit the `nodeSelector`. |
 | nfsMountOptions               | Text           | Customize NFS mount options for the `Pods` to the server `Deployment`. Uses `mount` command defaults from the node. |
 | nfsProvisionerImage           | Text           | Customize provisioner image for the server `Deployment`. Default: Official build from "hpestorage/nfs-provisioner" repo |
-| nfsResourceRequestsCpuM         | Text           | Specify CPU requests for the server `Deployment` in milli CPU. Default: "500m". Example: "4000m" |
-| nfsResourceRequestsMemoryMi     | Text           | Specify memory requests (in megabytes) for the server `Deployment`. Default: "512Mi". Example: "4096Mi". |
-| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m" |
-| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2048Mi". Example: "500Mi". Recommended minimum: "2048Mi". |
+| nfsResourceRequestsCpuM         | Text           | Specify CPU requests for the server `Deployment` in milli CPU. Default: "500m". Example: "4000m". Set to "0" to disable. |
+| nfsResourceRequestsMemoryMi     | Text           | Specify memory requests (in megabytes) for the server `Deployment`. Default: "512Mi". Example: "4096Mi". Set to "0" to disable. |
+| nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m". Set to "0" to disable. |
+| nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2048Mi". Example: "500Mi". Recommended minimum: "2048Mi". Set to "0" to disable. |
 | hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
 | hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
 | hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
