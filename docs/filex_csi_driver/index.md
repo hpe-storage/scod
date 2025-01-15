@@ -42,7 +42,7 @@ Release highlights:
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-greenlake-for-file-csi-driver/1.0.0-beta3">v1.0.0-beta3</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-greenlake-file-csi-driver/1.0.0-beta3">v1.0.0-beta3</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>Operators</th>
