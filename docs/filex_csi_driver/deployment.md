@@ -26,7 +26,7 @@ The HPE GreenLake for File Storage CSI Operator is a fully certified Operator fo
 
 - See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section
 -->
-During the beta, it's only possible to sideload the HPE GreenLake for File Storage CSI Operator using the Operator SDK.
+During the beta, it's possible to sideload the HPE GreenLake for File Storage CSI Operator using the Operator SDK.
 
 The installation procedures assumes the "hpe-storage" `Namespace` exists:
 
@@ -40,17 +40,20 @@ oc create ns hpe-storage
 oc apply -f {{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-filex-csi-scc.yaml
 ```
 
+!!! tip
+    HPE GreenLake for File Storage CSI Operator is available in the OpenShift console from v1.0.0-beta3 and may be installed from the console directly. The Operator SDK steps are not necessary.
+
 Install the Operator:
 
 ```text
-operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/filex-csi-driver-operator-bundle-ocp:v1.0.0-beta
+operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/filex-csi-driver-operator-bundle-ocp:v1.0.0-beta3
 ```
 
 The next step is to create a `HPEGreenLakeFileCSIDriver` resource, this can also be done in the OpenShift cluster console.
 
-```yaml fct_label="HPE GreenLake for File Storage CSI Operator v1.0.0-beta"
-# oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml
-{% include "filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta-sample.yaml" %}```
+```yaml fct_label="HPE GreenLake for File Storage CSI Operator v1.0.0-beta3"
+# oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta3-sample.yaml
+{% include "filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta3-sample.yaml" %}```
 
 For reference, this is how the Operator is uninstalled:
 
