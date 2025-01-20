@@ -2,14 +2,14 @@ site_name: 'SCOD.HPEDEV.IO'
 site_description: 'Reference documentation for container orchestrator integration for HPE storage'
 site_url: 'https://scod.hpedev.io/'
 site_author: 'Hewlett Packard Enterprise'
-theme: 
+theme:
   name: readthedocs
   custom_dir: hpe_theme/
   analytics:
     gtag: 'G-PC28RTKKTW'
 repo_name: 'hpe-storage/scod'
 repo_url: 'https://github.com/hpe-storage/scod'
-copyright: 'Copyright 2020-2024 Hewlett Packard Enterprise Development LP'
+copyright: 'Copyright 2020-2025 Hewlett Packard Enterprise Development LP'
 extra_css:
   - css/hpedev.css
 use_directory_urls: false
@@ -40,7 +40,7 @@ plugins:
         'partners/rancher_labs/index.md': 'csi_driver/partners/suse_rancher/index.md'
         'partners/amazon_eks_anywhere/index.md': 'csi_driver/partners/amazon_eks_anywhere/index.md'
         'partners/canonical/index.md': 'csi_driver/partners/canonical/index.md'
-        'partners/cohesity/index.md': 'csi_driver/partners/cohesity/index.md' 
+        'partners/cohesity/index.md': 'csi_driver/partners/cohesity/index.md'
         'partners/commvault/index.md': 'csi_driver/partners/commvault/index.md'
         'partners/kasten/index.md': 'csi_driver/partners/kasten/index.md'
         'partners/mirantis/index.md': 'csi_driver/partners/mirantis/index.md'
@@ -73,7 +73,7 @@ nav:
       - 'HPE Ezmeral Runtime Enterprise': 'csi_driver/partners/hpe_ezmeral/install.md'
       - 'Amazon EKS Anywhere': 'csi_driver/partners/amazon_eks_anywhere/index.md'
       - 'Canonical': 'csi_driver/partners/canonical/index.md'
-      - 'Cohesity': 'csi_driver/partners/cohesity/index.md' 
+      - 'Cohesity': 'csi_driver/partners/cohesity/index.md'
       - 'Commvault': 'csi_driver/partners/commvault/index.md'
       - 'Veeam Kasten': 'csi_driver/partners/kasten/index.md'
       - 'Mirantis': 'csi_driver/partners/mirantis/index.md'
@@ -82,6 +82,11 @@ nav:
       - 'SUSE Rancher': 'csi_driver/partners/suse_rancher/index.md'
       - 'Tanzu TKGI': 'csi_driver/partners/tkgi/index.md'
       - 'VMware': 'csi_driver/partners/vmware/index.md'
+  - HPE COSI DRIVER FOR KUBERNETES:
+    - 'Overview': 'cosi_driver/index.md'
+    - 'Deployment': 'cosi_driver/deployment.md'
+    - 'Using': 'cosi_driver/using.md'
+    - 'Diagnostics': 'cosi_driver/diagnostics.md'
   - HPE GREENLAKE FOR FILE STORAGE:
     - 'Overview': 'filex_csi_driver/index.md'
     - 'Deployment': 'filex_csi_driver/deployment.md'
