@@ -94,10 +94,10 @@ oc new-project hpe-storage --display-name="HPE CSI Driver for Kubernetes"
 !!! important
     The rest of this implementation guide assumes the default "hpe-storage" `Namespace`. If a different `Namespace` is desired. Update the `ServiceAccount` `Namespace` in the SCC below.
 
-<div id="scc" />Deploy or [download]({{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml) the SCC:
+<div id="scc" />Deploy or [download]({{ config.site_url}}csi_driver/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml) the SCC:
 
 ```text
-oc apply -f {{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
+oc apply -f {{ config.site_url}}csi_driver/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
 securitycontextconstraints.security.openshift.io/hpe-csi-controller-scc created
 securitycontextconstraints.security.openshift.io/hpe-csi-node-scc created
 securitycontextconstraints.security.openshift.io/hpe-csi-csp-scc created
