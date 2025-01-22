@@ -15,7 +15,9 @@ objectstorage-controller-7dff56f8fc-r5tdq        1/1     Running   0          8d
 
 Once the COSI API objects `BucketClaim`, `Bucket` and `BucketAccess` have been created in the cluster, use the `kubectl describe` command to check the status and events, which will have information useful to help diagnose any issue. If any of the resources' statuses shows anything but `true` or if there are any warning events, inspect the logs of the COSI driver and sidecar.
 
-```text
+Describing a `BucketClaim`.
+
+```text fct_label="BucketClaim"
 kubectl describe bucketclaim my-first-bucketclaim
 Name:         my-first-bucketclaim
 Namespace:    default
@@ -40,7 +42,9 @@ Status:
 Events:          <none>
 ```
 
-```text
+Describing a `Bucket`.
+
+```text fct_label="Bucket"
 kubectl describe bucket bc199dde004-4f8d-4a20-900b-e5d61e3facb9
 Name:         bc199dde004-4f8d-4a20-900b-e5d61e3facb9
 Namespace:
@@ -76,7 +80,9 @@ Status:
 Events:          <none>
 ```
 
-```text
+Describing a `BucketAccess`.
+
+```text fct_label="BucketAccess"
 kubectl describe bucketaccess hpe-standard-access
 Name:         hpe-standard-access
 Namespace:    default

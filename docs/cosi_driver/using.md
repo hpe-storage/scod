@@ -245,96 +245,8 @@ As an example, let us create a `Job` that runs a Python script to put and get an
 
 The Python `aws` package `boto3` will be installed in the init container. The Python script is stored in a `ConfigMap` and is mounted to the init container, which will copy it to `PYTHONPATH=/app` where `boto3` is installed. `my-first-access-secret` is mounted as a volume to the main container `my-cosi-app` in the `mountPath: /data/cosi` from where the script will read the bucket-specific s3 user credentials to create the s3 client session.
 
-```yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: my-cosi-app
-spec:
-  template:
-    spec:
-      restartPolicy: Never
-      initContainers:
-      - name: install-boto3
-        image: python:3.9
-        command: ["sh", "-c", "pip install boto3 -t /app && cp /scripts/sample_pod.py /app"]
-        env:
-        - name: http_proxy
-          value: ""
-        - name: https_proxy
-          value: ""
-        volumeMounts:
-        - name: app-volume
-          mountPath: /app
-        - name: script-volume
-          mountPath: /scripts
-      containers:
-      - name: my-cosi-app
-        image: python:3.9
-        command: ["python", "-u", "/app/sample_pod.py"]
-        volumeMounts:
-        - name: app-volume
-          mountPath: /app
-        - name: secret-volume
-          mountPath: /data/cosi
-        env:
-        - name: PYTHONPATH
-          value: "/app"
-      volumes:
-      - name: app-volume
-        emptyDir: {}
-      - name: script-volume
-        configMap:
-          name: test-object-script
-      - name: secret-volume
-        secret:
-          secretName: my-first-access-secret
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: test-object-script
-data:
-  sample_pod.py: |
-    #!/usr/bin/env python3
-
-    import json
-    import boto3
-    import sys
-
-    try:
-        # load the bucket info
-        print("Loading bucket info...")
-        with open('/data/cosi/BucketInfo', 'r') as f:
-            bi = json.load(f)
-
-        # create an s3 client session
-        print("Creating S3 client session...")
-        session = boto3.Session(
-            aws_access_key_id=bi['spec']['secretS3']['accessKeyID'],
-            aws_secret_access_key=bi['spec']['secretS3']['accessSecretKey'],
-        )
-
-        s3 = session.resource(
-            bi['spec']['protocols'][0], # set protocol
-            endpoint_url=bi['spec']['secretS3']['endpoint'], # set endpoint
-        )
-
-        # create an object
-        print("Creating object in S3 bucket...")
-        s3.Object(bi['spec']['bucketName'], 'sample.txt').put(Body='Hello, World!')
-        print('Object created')
-
-        # read the object
-        print('Testing the get-object operation on bucket: ' + bi['spec']['bucketName'] + ', object body: ' + s3.Object(bi['spec']['bucketName'], 'sample.txt').get()['Body'].read().decode('utf-8'))
-
-        # Exit gracefully with zero exit code
-        print("Script completed successfully.")
-        sys.exit(0)
-
-    except Exception as e:
-        print(f"An error occurred: {e}", file=sys.stderr)
-        sys.exit(1)
+```yaml fct_label="my-cosi-app.yaml"
+{% include "cosi_driver/examples/using/my-cosi-app.yaml" %}
 ```
 
 !!! tip
@@ -343,7 +255,7 @@ data:
 Create the `Job` and `ConfigMap`.
 
 ```text
-kubectl create -f my-cosi-app.yaml
+kubectl create -f {{ config.site_url }}cosi_driver/examples/using/my-cosi-app.yaml
 ```
 
 Wait for the `Job` to be completed.
@@ -353,6 +265,8 @@ kubectl get job
 NAME          COMPLETIONS   DURATION   AGE
 my-cosi-app   1/1           15s        2m5s
 ```
+
+The status of the `Pod` can also be tracked till completion.
 
 ```text fct_label="Pod"
 kubectl get pods
