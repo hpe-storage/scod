@@ -108,6 +108,9 @@ Status:
 Events:            <none>
 ```
 
+!!! tip
+    It is useful to check that the network connection between the Kubernetes cluster hosting the HPE COSI driver and HPE Data Services Cloud Console, as well as between the HPE Alletra Storage MP X 10000 system and HPE Data Services Cloud Console is intact. A poor network connection is a common cause of failure while creating or deleting `Bucket` and `BucketAccess` resources.
+
 ## Logging
 
 Log files associated with the HPE COSI Driver posts data to the standard output stream and can be accessed using options under [kubectl logs](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/).
