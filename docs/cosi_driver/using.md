@@ -245,7 +245,7 @@ As an example, let us create a `Job` that runs a Python script to put and get an
 
 The Python `aws` package `boto3` will be installed in the init container. The Python script is stored in a `ConfigMap` and is mounted to the init container, which will copy it to `PYTHONPATH=/app` where `boto3` is installed. `my-first-access-secret` is mounted as a volume to the main container `my-cosi-app` in the `mountPath: /data/cosi` from where the script will read the bucket-specific s3 user credentials to create the s3 client session.
 
-```yaml fct_label="my-cosi-app.yaml"
+```yaml
 {% include "cosi_driver/examples/using/my-cosi-app.yaml" %}
 ```
 
