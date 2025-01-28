@@ -31,11 +31,11 @@ All parameters are mandatory and described below.
 | endpoint            | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
 | glcpUserClientId    | The HPE Green Lake API client ID.
 | glcpUserSecretKey   | The HPE Green Lake API client secret.
-| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console (DSCC) zone.
+| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
 !!! note
-    The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the DSCC zone specified.
+    The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
 
 Example `Secret` manifest named "hpe-object-backend.yaml":
 
@@ -64,7 +64,7 @@ kubectl create -f hpe-object-backend.yaml
 !!! tip "See Also"
     The COSI source code repository contains a parameterized script that can assist in creating a correctly formatted `Secret`. See [github.com/hpe-storage/cosi-driver/scripts/cosi_secret](https://github.com/hpe-storage/cosi-driver/tree/master/scripts/cosi_secret) for more details.
 
-### Creating the S3 user, GLCP user and locating the DSCC zone, S3 endpoint and cluster serial number
+### Creating the S3 User, GLCP User and Locating the Data Services Cloud Console Zone, S3 Endpoint and Cluster Serial Number
 
 1. To create the S3 user:
     * Follow the steps in the HPE documentation to [create an access policy](https://support.hpe.com/hpesc/docDisplay?docId=sd00004219en_us&page=objstr_access_policies_create_dscc.html).
@@ -73,13 +73,13 @@ kubectl create -f hpe-object-backend.yaml
     * To create the user, refer to the [HPE documentation](https://support.hpe.com/hpesc/docDisplay?docId=sd00004219en_us&page=objstr_users_create_dscc.html) for this purpose and select the access policy created in the previous step.
         - Save the user name and password. These will be used as the S3 access key and S3 secret key respectively in the COSI secret.
 2. To create the HPE Green Lake API client ID and secret, refer to the following [HPE documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&page=GUID-23E6EE78-AAB7-472C-8D16-7169938BE628.html).
-3. To locate the DSCC zone FQDN:
+3. To locate the Data Services Cloud Console zone FQDN:
     * Log into HPE Data Services Cloud Console.
     * On the _Services_ page, click _My Services_ to view all services available in your workspace.
     * Select the service that your HPE Alletra Storage MP X 10000 device is assigned to and click _Launch_.
     * After the service is launched, save the value of the URL from the browser. E.g.: `https://console-us1.data.cloud.hpe.com`.
-    * After dropping the prefix `https://console-`, the DSCC zone FQDN value to be used in the `Secret` should have the following format: `us1.data.cloud.hpe.com`.
-    * Supported DSCC instance FQDNs as of January 2025 are:
+    * After dropping the prefix `https://console-`, the Data Services Cloud Console zone FQDN value to be used in the `Secret` should have the following format: `us1.data.cloud.hpe.com`.
+    * Supported Data Services Cloud Console zone FQDNs as of January 2025 are:
         - us1.data.cloud.hpe.com
         - jp1.data.cloud.hpe.com
         - eu1.data.cloud.hpe.com
