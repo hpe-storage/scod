@@ -146,17 +146,18 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml fct_label="HPE CSI Operator v2.5.1"
+```yaml fct_label="HPE CSI Operator v2.5.2"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
+FIXME
+```
+
+```yaml fct_label="v2.5.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.2"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
-
-```yaml fct_label="v2.4.1"
-# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
-{% include "csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 !!! tip
     The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
@@ -184,7 +185,7 @@ All parameters are mandatory and described below.
 
 Example:
 
-```yaml fct_label="HPE Alletra Storage MP B10000"
+```yaml fct_label="Alletra Storage MP B10000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -193,12 +194,12 @@ metadata:
 stringData:
   serviceName: alletrastoragemp-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20
+  backend: 10.10.0.20:443
   username: 3paradm
   password: 3pardata
 ```
 
-```yaml fct_label="HPE Alletra 5000/6000"
+```yaml fct_label="Alletra 5000/6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -212,7 +213,7 @@ stringData:
   password: admin
 ```
 
-```yaml fct_label="HPE Alletra 9000"
+```yaml fct_label="Alletra 9000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -221,12 +222,12 @@ metadata:
 stringData:
   serviceName: alletra9000-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20
+  backend: 10.10.0.20:443
   username: 3paradm
   password: 3pardata
 ```
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml fct_label="Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -240,7 +241,21 @@ stringData:
   password: admin
 ```
 
-```yaml fct_label="HPE Primera and 3PAR"
+```yaml fct_label="Primera"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: "8080"
+  backend: 10.10.0.2:443
+  username: 3paradm
+  password: 3pardata
+```
+
+```yaml fct_label="3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -253,6 +268,9 @@ stringData:
   username: 3paradm
   password: 3pardata
 ```
+
+!!! caution "Improved Security"
+    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 derived platforms except 3PAR should include port 443 with the backend IP address (i.e "10.10.0.2:443") to prevent the CSP from using SSH.
 
 Create the `Secret` using `kubectl`:
 

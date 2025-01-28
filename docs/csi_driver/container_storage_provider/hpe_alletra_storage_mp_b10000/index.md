@@ -23,16 +23,19 @@ The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Stor
 
 | Port | Protocol | Description |
 | ---- | -------- | ----------- |
-| 443 | HTTPS | WSAPI (HPE Alletra Storage MP B10000, Alletra 9000/Primera) |
+| 443 | HTTPS | WSAPI (HPE Alletra Storage MP B10000, Alletra 9000 and Primera) |
 | 8080 | HTTPS | WSAPI (HPE 3PAR) |
-| 22 | SSH | Array communication |
+| 22 | SSH | Array communication (HPE 3PAR) |
+
+!!! caution "HPE 3PAR"
+    From HPE CSI Driver v2.5.2 onwards it's recommended to specify "<IP Addr>:443" in the backend `Secret` to avoid using SSH for any HPE Alletra Storage MP B10000 derived platform except 3PAR. See [Deployment](../../deployment.md#secret_parameters) for more information.
 
 ### User Role Requirements
 
-The CSP requires access to a local user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
+The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
 
 !!! note
-    LDAP users are not supported by the CSP.
+    LDAP accounts may be used from HPE CSI Driver v2.5.2 onwards.
 
 ### Virtual Domains
 

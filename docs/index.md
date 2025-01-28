@@ -9,7 +9,7 @@
 -->
 ## HPE Storage Container Orchestrator Documentation 
 
-This is an umbrella documentation project for the HPE CSI Driver for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra Storage MP B10000, Alletra 9000, Alletra 5000/6000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and technology partners.
+This is an umbrella documentation project for the HPE CSI and COSI drivers for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra Storage MP B10000 and X10000, HPE GreenLake for File Storage, Alletra 5000/6000/9000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and technology partners.
 
 ![HPE CSI Driver for Kubernetes](img/csi-driver-overview.png)
 
@@ -23,4 +23,3 @@ Use the navigation to the left. Not sure what you're looking for? → [Get start
     SCOD is "docs" in reverse?
 
 <div align="right"><img src="https://github.com/hpe-storage/scod/workflows/Publish%20docs%20via%20GitHub%20Pages/badge.svg"></div>
-

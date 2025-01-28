@@ -50,6 +50,15 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v2.5.2"
+# Kubernetes 1.29-1.32
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.2.0 -b hpe-csi-driver-v2.5.2
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
 ```text fct_label="HPE CSI Driver v2.5.0"
 # Kubernetes 1.27-1.30
 git clone https://github.com/kubernetes-csi/external-snapshotter
@@ -73,24 +82,6 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v6.3.3 -b hpe-csi-driver-v2.4.1
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
-```text fct_label="v2.4.0"
-# Kubernetes 1.25-1.28
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v6.2.2 -b hpe-csi-driver-v2.4.0
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
-```text fct_label="v2.3.0"
-# Kubernetes 1.23-1.26
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v5.0.1 -b hpe-csi-driver-v2.3.0
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
@@ -937,7 +928,7 @@ These are some common issues and gotchas that are useful to know about when plan
 
 - The current tested and supported limit for the NFS Server Provisioner is 32 NFS servers per Kubernetes worker node.
 - The two `StorageClass` parameters "nfsResourceLimitsCpuM" and "nfsResourceLimitsMemoryMi" control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation and 2GiB is the recommended minimum for most workloads. The NFS server `Pod` is by default limited to 2GiB of memory and 1000 milli CPU.
-- The NFS `PVC` can **NOT** be expanded. If more capacity is needed, expand the "ReadWriteOnce" `PVC` backing the NFS Server Provisioner. This will result in inaccurate space reporting.
+- HPE CSI Driver v2.5.2 or later is required to expand NFS `PersistentVolumeClaims`.
 - Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
 - The HPE CSI Driver includes a Pod Monitor to delete `Pods` that have become unavailable due to the Pod status changing to `NodeLost` or a node becoming unreachable that the `Pod` runs on. By default the Pod Monitor only watches the NFS Server Provisioner `Deployments`. It may be used for any `Deployment`. See [Pod Monitor](monitor.md) on how to use it, especially the [limitations](monitor.md#limitations).
 - Certain CNIs may have issues to gracefully restore access from the NFS clients to the NFS export. Flannel have exhibited this problem and the most consistent performance have been observed with Calico.
@@ -951,6 +942,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - Additional configuration and considerations may be required when using the NFS Server Provisioner with Red Hat OpenShift. See [NFS Server Provisioner Considerations](partners/redhat_openshift/index.md#nfs_server_provisioner_considerations) for OpenShift.
 - XFS has proven troublesome to use as a backend "RWO" volume filesystem, leaving stale NFS handles for clients. Use ext4 as the "csi.storage.k8s.io/fstype" `StorageClass` parameter for best results.
 - The NFS servers provide a "ClusterIP" `Service`. It is possible to expose the NFS servers outside the cluster for external NFS clients. Understand the scope and limitations in [Auxillary Operations](operations.md#expose_nfs_services_outside_of_the_kubernetes_cluster).
+- If the NFS Server Provisioner is unable to bring up the `Deployment` for some reason, the operation is rolled back and restarted, this may cause unnecessary churn and always make sure there are plenty of resources available where the NFS servers are scheduled.
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

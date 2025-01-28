@@ -2,7 +2,7 @@
 <img src="img/veeam-ready.png" align="right" width="192" hspace="12" vspace="2" />
 Veeam Kasten is a data management platform designed to run natively on Kubernetes to protect applications. Kasten integrates seamlessly with the HPE CSI Driver for Kubernetes thanks to the native support for CSI `VolumeSnapshots` and `VolumeSnapshotClasses`.
 
-HPE CSI Driver for Kubernetes is on the Veeam Alliance Partner Technical Programs designated as Veeam Ready.
+HPE CSI Driver for Kubernetes is on the Veeam Alliance Partner Technical Programs designated as Veeam Ready. HPE CSI Driver v2.5.2 or later is required to support "volumeMode: Block" `PersistentVolumeClaims` with KubeVirt.
 
 - View HPE CSI Driver for Kubernetes in the [Veeam Ready database](https://www.veeam.com/sys1041).
 
