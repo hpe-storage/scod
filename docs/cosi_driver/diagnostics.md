@@ -137,7 +137,7 @@ kubectl logs -f deploy/objectstorage-controller
 
 ### Log Level of Sidecar
 
-You can control the log level for the COSI Sidecar using the `.containers.sideCar.verbosityLevel` field in [`values.yaml`](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-cosi-driver/values.yaml) of the Helm chart. The values are generally small positive integers.
+You can control the log level for the COSI Sidecar using the `.containers.sideCar.verbosityLevel` field in [`values.yaml`](https://github.com/hpe-storage/co-deployments/blob/master/helm/values/cosi-driver/v1.0.0/values.yaml) of the Helm chart. The values are generally small positive integers.
 
 ```yaml
 containers:
