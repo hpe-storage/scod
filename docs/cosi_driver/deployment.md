@@ -12,7 +12,7 @@ Helm is currently the only supported delivery vehicle for the deployment of the 
 
 [Helm](https://helm.sh) is the package manager for Kubernetes. Software is being delivered in a format designated as a "chart". Helm is a [standalone CLI](https://helm.sh/docs/intro/install/) that interacts with the Kubernetes API server using your `KUBECONFIG` file.
 
-The official [Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm) for the HPE COSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver). The chart supports Helm 3 from version 1.0.0 of the HPE COSI Driver. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the COSI driver using Helm.
+The official [Helm chart](https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-cosi-driver) for the HPE COSI Driver for Kubernetes is hosted on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver). The chart supports Helm 3 from version 1.0.0 of the HPE COSI Driver. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the COSI driver using Helm.
 
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver).
 
@@ -62,7 +62,7 @@ kubectl create -f hpe-object-backend.yaml
 ```
 
 !!! tip "See Also"
-    The COSI source code repository contains a parameterized script that can assist in creating a correctly formatted `Secret`. See [github.com/hpe-storage/cosi-driver/scripts/cosi_secret](https://github.com/hpe-storage/cosi-driver/tree/master/scripts/cosi_secret) for more details.
+    The COSI source code repository contains a parameterized script that can assist in creating a correctly formatted `Secret`. See [github.com/hpe-storage/cosi-driver/scripts/cosi_secret](https://github.com/hpe-storage/cosi-driver/tree/main/scripts/cosi_secret) for more details.
 
 ### Creating and Locating Resources
 

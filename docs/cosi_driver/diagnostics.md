@@ -137,20 +137,20 @@ kubectl logs -f deploy/objectstorage-controller
 
 ### Log Level of Sidecar
 
-You can control the log level for the COSI Sidecar using the `.containers.sideCar.verbosityLevel` field in [`values.yaml`](https://github.com/hpe-storage/cosi-driver/tree/master/helm/values.yaml) of the Helm chart. The values are generally small positive integers.
+You can control the log level for the COSI Sidecar using the `.containers.sideCar.verbosityLevel` field in [`values.yaml`](https://github.com/hpe-storage/co-deployments/blob/master/helm/charts/hpe-cosi-driver/values.yaml) of the Helm chart. The values are generally small positive integers.
 
 ```yaml
 containers:
   sideCar:
-    # verbosityLevel specifies the verbosity of the logs that will be printed by the sidecar container
-    # Small postive integer values are generally recommended.
+    # Verbosity level: Small postive integer values are generally recommended.
     # Ref.: https://pkg.go.dev/k8s.io/klog/v2#V
+    # containers.sideCar.verbosityLevel -- Specifies the verbosity of the logs that will be printed by the sidecar container
     verbosityLevel: 5
 ```
 
 ### Log Collector
 
-The log collector script `hpe-logcollector.sh` can be used to collect the logs from any node that has `kubectl` access to the cluster. Please see the script's associated [documentation](https://github.com/hpe-storage/cosi-driver/tree/master/scripts/log_collection) for more details on usage and troubleshooting.
+The log collector script `hpe-logcollector.sh` can be used to collect the logs from any node that has `kubectl` access to the cluster. Please see the script's associated [documentation](https://github.com/hpe-storage/cosi-driver/tree/main/scripts/log_collection) for more details on usage and troubleshooting.
 
 Download the script and provide execute permissions:
 

@@ -68,7 +68,7 @@ Release highlights:
   </tr>
   <tr>
     <th>Release&nbsp;notes</th>
-    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/master/release-notes/v1.0.0.md">v1.0.0</a> on GitHub</td>
+    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v1.0.0</a> on GitHub</td>
   </tr>
 </table>
 
