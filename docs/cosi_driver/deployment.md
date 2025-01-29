@@ -64,7 +64,7 @@ kubectl create -f hpe-object-backend.yaml
 !!! tip "See Also"
     The COSI source code repository contains a parameterized script that can assist in creating a correctly formatted `Secret`. See [github.com/hpe-storage/cosi-driver/scripts/cosi_secret](https://github.com/hpe-storage/cosi-driver/tree/master/scripts/cosi_secret) for more details.
 
-### Creating the S3 User, GLCP User and Locating the Data Services Cloud Console Zone, S3 Endpoint and Cluster Serial Number
+### Creating and Locating Resources
 
 1. To create the S3 user:
     * Follow the steps in the HPE documentation to [create an access policy](https://support.hpe.com/hpesc/docDisplay?docId=sd00004219en_us&page=objstr_access_policies_create_dscc.html).
@@ -76,7 +76,7 @@ kubectl create -f hpe-object-backend.yaml
 3. To locate the Data Services Cloud Console zone FQDN:
     * Log into HPE Data Services Cloud Console.
     * On the _Services_ page, click _My Services_ to view all services available in your workspace.
-    * Select the service that your HPE Alletra Storage MP X 10000 device is assigned to and click _Launch_.
+    * Select the service that your HPE Alletra Storage MP X10000 device is assigned to and click _Launch_.
     * After the service is launched, save the value of the URL from the browser. E.g.: `https://console-us1.data.cloud.hpe.com`.
     * After dropping the prefix `https://console-`, the Data Services Cloud Console zone FQDN value to be used in the `Secret` should have the following format: `us1.data.cloud.hpe.com`.
     * Supported Data Services Cloud Console zone FQDNs as of January 2025 are:
@@ -86,7 +86,7 @@ kubectl create -f hpe-object-backend.yaml
         - uk1.data.cloud.hpe.com
 4. To locate the S3 endpoint:
     * Log into HPE Data Services Cloud Console.
-    * Launch the service that your HPE Alletra Storage MP X 10000 device is assigned to.
+    * Launch the service that your HPE Alletra Storage MP X10000 device is assigned to.
     * Select _Data Ops Manager_.
     * From the menu on the left, select _Systems_. From the list click on the name of the system you want to use for COSI operations.
     * Click on the _Networking_ tab. Under the _Frontend Network_ section, save the value of the _Network DNS Subdomains_ field.
