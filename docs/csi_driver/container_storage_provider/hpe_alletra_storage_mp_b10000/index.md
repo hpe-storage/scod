@@ -63,6 +63,9 @@ Next, make sure domain users are allowed to create hosts outside the domain.
 cli% setsys AllowDomainUsersAffectNoDomain hostonly
 ```
 
+!!! tip
+    Hosts can be created manually at any point. Make sure the name of the host matches the name of each of the compute (worker) nodes in the Kubernetes cluster.
+
 The next steps involve installing the HPE CSI Driver for Kubernetes with `disableHostDeletion` set to `true`. The steps to supply the parameter depends on if the Helm chart or Operator is being used.
 
 - Helm chart install from [ArtifactHub.io](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).

@@ -135,7 +135,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="FIXME">Introducing Morpheus Kubernetes Service with HPE CSI Driver for Kubernetes v2.5.2</a>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-morpheus-kubernetes-service-with-hpe-csi-driver-for/ba-p/7235173">Introducing Morpheus Kubernetes Service with HPE CSI Driver for Kubernetes</a>
    </td>
  </tr>
 </table>
