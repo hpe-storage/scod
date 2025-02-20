@@ -146,17 +146,18 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml fct_label="HPE CSI Operator v2.5.1"
+```yaml fct_label="HPE CSI Operator v2.5.2"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
+{% include "csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
+```
+
+```yaml fct_label="v2.5.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.4.2"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
-
-```yaml fct_label="v2.4.1"
-# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
-{% include "csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
 
 !!! tip
     The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
@@ -184,7 +185,7 @@ All parameters are mandatory and described below.
 
 Example:
 
-```yaml fct_label="HPE Alletra Storage MP B10000"
+```yaml fct_label="Alletra Storage MP B10000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -193,12 +194,12 @@ metadata:
 stringData:
   serviceName: alletrastoragemp-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20
+  backend: 10.10.0.20:443
   username: 3paradm
   password: 3pardata
 ```
 
-```yaml fct_label="HPE Alletra 5000/6000"
+```yaml fct_label="Alletra 5000/6000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -212,7 +213,7 @@ stringData:
   password: admin
 ```
 
-```yaml fct_label="HPE Alletra 9000"
+```yaml fct_label="Alletra 9000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -221,12 +222,12 @@ metadata:
 stringData:
   serviceName: alletra9000-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20
+  backend: 10.10.0.20:443
   username: 3paradm
   password: 3pardata
 ```
 
-```yaml fct_label="HPE Nimble Storage"
+```yaml fct_label="Nimble Storage"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -240,7 +241,21 @@ stringData:
   password: admin
 ```
 
-```yaml fct_label="HPE Primera and 3PAR"
+```yaml fct_label="Primera"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: "8080"
+  backend: 10.10.0.2:443
+  username: 3paradm
+  password: 3pardata
+```
+
+```yaml fct_label="3PAR"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -253,6 +268,9 @@ stringData:
   username: 3paradm
   password: 3pardata
 ```
+
+!!! caution "Improved Security"
+    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 derived platforms except 3PAR should include port 443 with the backend IP address (i.e "10.10.0.2:443") to prevent the CSP from using SSH.
 
 Create the `Secret` using `kubectl`:
 
@@ -438,6 +456,8 @@ The following example walks through deployment of the **latest** CSI driver.
 !!! caution "Critical"
     It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the [Helm chart](deployment.md#helm) or [Operator](deployment.md#operator).
 
+The manifests used below are renders from the latest Helm template with default parameters.
+
 ### Manual CSI Driver Install
 
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
@@ -455,22 +475,29 @@ All components below are deployed in the "hpe-storage" `Namespace`.
 kubectl create ns hpe-storage
 ```
 
-Worker node IO settings and common `CRDs`:
+Clone the "co-deployments" repo.
 
 ```text
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-linux-config.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-volumegroup-snapshotgroup-crds.yaml
+git clone https://github.com/hpe-storage/co-deployments
+cd co-deployments
+```
+
+Worker node IO settings and `CRDs`:
+
+```text
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-linux-config.yaml
+kubectl apply -f yaml/csi-driver/edge/csi-driver-crd.yaml
+kubectl apply -f yaml/csi-driver/edge/crds/
 ```
 
 Container Storage Provider:
 
 ```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/nimble-csp.yaml
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/nimble-csp.yaml
 ```
 
-```text fct_label="HPE Alletra Storage MP B10000, HPE Alletra 9000, Primera and 3PAR"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-csp.yaml
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-crd.yaml
+```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/3par-primera-csp.yaml
 ```
 
 !!! important
@@ -478,66 +505,40 @@ kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/ma
 
 Install the CSI driver:
 
-```text fct_label="Kubernetes 1.29"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.29.yaml
+```text
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-rbac.yaml
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-controller.yaml
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-node.yaml
 ```
 
-```text fct_label="Kubernetes 1.28"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.28.yaml
-```
-
-```text fct_label="Kubernetes 1.27"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.27.yaml
-```
-
-```text fct_label="Kubernetes 1.26"
-kubectl apply -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.26.yaml
-```
-
-!!! seealso
-    Older and unsupported versions of Kubernetes and the CSI driver are [archived on this page](install_legacy.md).
-
-Depending on which version is being deployed, different API objects gets created. Next step: [Add an HPE Storage Backend](#add_an_hpe_storage_backend).
+Next step: [Add an HPE Storage Backend](#add_an_hpe_storage_backend).
 
 ## Advanced Uninstall
 
-The following steps outline how to uninstall the CSI driver that has been deployed using the [Advanced Install](#advanced_install) above. 
+The following steps outline how to uninstall the CSI driver that has been deployed using the [Advanced Install](#advanced_install) above and assumes the shell is in the "co-deployments" directory.
 
 Uninstall Worker node settings:
 
 ```text
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-linux-config.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-linux-config.yaml
 ```
 
 Uninstall relevant Container Storage Provider:
 
 ```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/nimble-csp.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/nimble-csp.yaml
 ```
 
 ```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/3par-primera-csp.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/3par-primera-csp.yaml
 ```
-
-!!! error "HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR users"
-    If you are reinstalling the HPE CSI Driver, **DO NOT** remove the `crd/hpevolumeinfos.storage.hpe.com` resource. This `CustomResourceDefinition` contains important volume metadata used by the HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR CSP. HPE CSI Driver **v2.0.0 and below** share the same YAML file for `crds` and CSP and would require a manual removal of the individual `Service` and `Deployment` in the "hpe-storage" `Namespace`.
 
 Uninstall the CSI driver:
 
-```text fct_label="Kubernetes 1.29"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.29.yaml
-```
-
-```text fct_label="Kubernetes 1.28"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.28.yaml
-```
-
-```text fct_label="Kubernetes 1.27"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.27.yaml
-```
-
-```text fct_label="Kubernetes 1.26"
-kubectl delete -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v2.4.2/hpe-csi-k8s-1.26.yaml
+```text
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-controller.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-node.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-rbac.yaml
 ```
 
 If no longer needed, delete the "hpe-storage" `Namespace`.
@@ -545,6 +546,9 @@ If no longer needed, delete the "hpe-storage" `Namespace`.
 ```text
 kubectl delete ns hpe-storage
 ```
+
+!!! error "HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR users"
+    If you are reinstalling the HPE CSI Driver, **DO NOT** remove the `crd/hpevolumeinfos.storage.hpe.com` resource. This `CustomResourceDefinition` contains important volume metadata used by the HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR CSP.
 
 ## Downgrading the CSI driver
 

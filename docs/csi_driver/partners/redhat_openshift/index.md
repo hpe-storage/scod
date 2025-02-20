@@ -2,7 +2,7 @@
 <img src="img/redhat-certified.png" align="right" width="256" hspace="12" vspace="2" />
 HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.
 
-Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE volume drivers and this page serves as the authoritative source for all things HPE primary storage and Red Hat OpenShift.
+Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE CSI Driver and this page serves as the authoritative source for all things block based HPE primary storage and Red Hat OpenShift.
 
 [TOC]
 
@@ -16,9 +16,11 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1 | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.17                              | 2.5.2                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2 | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2 | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
@@ -42,7 +44,7 @@ By default, OpenShift prevents containers from running as root. Containers are r
 
 Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
 
-For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.12/authentication/managing-security-context-constraints.html).
+For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.17/authentication/managing-security-context-constraints.html).
 
 !!! note
     If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsMode: "0770"` parameter to the `StorageClass` with RWO claims or `fsMode: "0777"` for RWX claims.
@@ -57,7 +59,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 
 ### Deployment
 
-The HPE CSI Operator for Kubernetes needs to be installed through the interfaces provided by Red Hat. Do not follow the instructions found on OperatorHub.io. 
+The HPE CSI Operator for OpenShift needs to be installed through the interfaces provided by Red Hat.
 
 !!! tip
     There's a tutorial available on YouTube accessible through the [Video Gallery](../../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift. 
@@ -69,26 +71,26 @@ In situations where the operator needs to be upgraded, follow the prerequisite s
 - [Upgrading the chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#upgrading-the-chart)
 
 !!! danger "Automatic Updates"
-    Do not under any circumstance enable "Automatic Updates" for the HPE CSI Operator for Kubernetes
+    Do not under any circumstance enable "Automatic Updates" for the HPE CSI Operator for OpenShift.
 
 Once the steps have been followed for the particular version transition:
 
 - Uninstall the `HPECSIDriver` instance
 - Delete the "hpecsidrivers.storage.hpe.com" `CRD`<br />:
   `oc delete crd/hpecsidrivers.storage.hpe.com`
-- [Uninstall](#uninstall_the_hpe_csi_operator) the HPE CSI Operator for Kubernetes
+- [Uninstall](#uninstall_the_hpe_csi_operator) the HPE CSI Operator for OpenShift
 - Proceed to installation through the [OpenShift Web Console](#openshift_web_console) or [OpenShift CLI](#openshift_cli)
 - Reapply the [SCC](#scc) to ensure there hasn't been any changes.
 
 !!! important "Good to know"
-    Deleting the `HPECSIDriver` instance and uninstalling the CSI Operator does not affect any running workloads, `PersistentVolumeClaims`, `StorageClasses` or other API resources created by the CSI Operator. In-flight operations and new requests will be retried once the new `HPECSIDriver` has been instantiated.
+    Deleting the `HPECSIDriver` instance and uninstalling the CSI Operator does not affect any running workloads, `PersistentVolumeClaims`, `StorageClasses` or other resources created by the HPE CSI Operator. In-flight operations and new requests will be retried once the new `HPECSIDriver` has been instantiated.
 
 #### Prerequisites
 
 The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OpenShift, please create the following `SecurityContextConstraints` (SCC) to allow the CSI driver to be running with these privileges.
 
 ```text
-oc new-project hpe-storage --display-name="HPE CSI Driver for Kubernetes"
+oc new-project hpe-storage --display-name="HPE CSI Operator for OpenShift"
 ```
 
 !!! important
@@ -106,15 +108,13 @@ securitycontextconstraints.security.openshift.io/hpe-csi-nfs-scc created
 
 #### OpenShift web console
 
-Once the SCC has been applied to the project, login to the OpenShift web console as `kube:admin` and navigate to **Operators -> OperatorHub**.
+Once the SCC has been applied to the project, login to the OpenShift web console as "kubeadmin" and navigate to **Operators -> OperatorHub**.
 
 ![Search for HPE](img/webcon-1.png)
 *Search for 'HPE CSI' in the search field and select the non-marketplace version.*
 
 ![Click Install](img/webcon-2.png)
 *Click 'Install'.*
-!!! note
-    Latest supported HPE CSI Operator on OpenShift 4.14 is 2.4.2
 
 ![Click Install](img/webcon-3.png)
 *Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.*
@@ -188,7 +188,12 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object.
 
-```yaml fct_label="HPE CSI Operator v2.5.1"
+```yaml fct_label="HPE CSI Operator v2.5.2"
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
+{% include "../../examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
+```
+
+```yaml fct_label="v2.5.1"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
@@ -204,7 +209,7 @@ The CSI driver is now ready for use. Next, an [HPE storage backend needs to be a
 
 #### Additional information
 
-At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.3/operators/olm-what-operators-are.html).
+At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.17/operators/index.html).
 
 #### Uninstall the HPE CSI Operator
 
@@ -239,11 +244,11 @@ v2.storage.hpe.com
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
 
-# NFS Server Provisioner Considerations
+## NFS Server Provisioner Considerations
 
 When deploying NFS servers on OpenShift there's currently two things to keep in mind for a successful deployment. Also, be understood with the [Limitations and Considerations for the NFS Server Provisioner](../../using.md#limitations_and_considerations_for_the_nfs_server_provisioner) in general.
 
-## Non-standard hpe-nfs Namespace
+### Non-standard hpe-nfs Namespace
 
 If NFS servers are deployed in a different `Namespace` than the default "hpe-nfs" by using the "nfsNamespace" `StorageClass` parameter, the "hpe-csi-nfs-scc" SCC needs to be updated to include the `Namespace` `ServiceAccount`.
 
@@ -253,11 +258,11 @@ This example adds "my-namespace" NFS server `ServiceAccount` to the SCC:
 oc patch scc hpe-csi-nfs-scc --type=json -p='[{"op": "add", "path": "/users/-", "value": "system:serviceaccount:my-namespace:hpe-csi-nfs-sa" }]'
 ```
 
-## Operators Requesting NFS Persistent Volume Claims
+### Operators Requesting NFS Persistent Volume Claims
 
 Object references in OpenShift are not compatible with the NFS Server Provisioner. If a user deploys an Operator of any kind that creates a NFS server backed `PVC`, the operation will fail. Instead, pre-provision the `PVC` manually for the Operator instance to use.
 
-## Use the ext4 filesystem for NFS servers
+### Use the ext4 filesystem for NFS servers
 
 On certain versions of OpenShift the NFS clients may experience stale NFS file handles like the one below when the NFS server is being restarted.
 
@@ -274,7 +279,7 @@ parameters:
 ...
 ```
 
-# StorageProfile for OpenShift Virtualization Source PVCs
+## StorageProfile for OpenShift Virtualization Source PVCs
 
 If OpenShift Virtualization is being used and Live Migration is desired for virtual machines `PVCs` cloned from the "openshift-virtualization-os-images" `Namespace`, the `StorageProfile` needs to be updated to "ReadWriteMany".
 
@@ -312,9 +317,9 @@ oc get pvc -n openshift-virtualization-os-images -w
 !!! hint
     The "accessMode" transformation for block volumes from RWO PVC to RWX clone has been resolved in HPE CSI Driver v2.5.0. Regardless, using source RWX PVs will simplify the workflows for users.
 
-# Live VM migrations for Alletra Storage MP B10000
+## Live VM migrations for Alletra Storage MP B10000
 
-With HPE CSI Operator for Kubernetes v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP B10000 backends including 3PAR, Primera and Alletra 9000.
+With HPE CSI Operator for OpenShift v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP B10000 backends including 3PAR, Primera and Alletra 9000.
 
 Identify the `PVC` that that has been cloned from an OS image. The VM name is "centos7-silver-bedbug-14" in this case.
 
@@ -339,7 +344,7 @@ The VM is now ready to be migrated.
 !!! hint
     If there are multiple `dataVolumes`, each one needs to be patched.
 
-# Unsupported Version of the Operator Install
+## Unsupported Version of the Operator Install
 
 In the event on older version of the Operator needs to be installed, the bundle can be installed directly by [installing the Operator SDK](https://console.redhat.com/openshift/downloads). Make sure a recent version of the `operator-sdk` binary is available and that no HPE CSI Driver is currently installed on the cluster.
 
@@ -352,7 +357,7 @@ operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-drive
 Install a specific version after and including v2.5.0:
 
 ```text
-operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v2.5.0
+operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v2.5.2
 ```
 
 !!! important
@@ -364,7 +369,7 @@ When the unsupported install isn't needed any longer, run:
 operator-sdk cleanup -n hpe-storage hpe-csi-operator
 ```
 
-# Unsupported Helm Chart Install
+## Unsupported Helm Chart Install
 
 In the event Red Hat releases a new version of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.
 
@@ -373,7 +378,7 @@ It's not recommended to install the Helm chart unless it's listed as "Field Test
 !!! tip
     Helm chart install is also only current method to use beta releases of the HPE CSI Driver.
 
-## Steps to install.
+### Steps to install.
 
 - Follow the steps in the [prerequisites](#prerequisites) to apply the `SCC` in the `Namespace` (Project) you wish to install the driver.
 - Install the Helm chart with the steps provided on [ArtifactHub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). Pay attention to which version combination has been field tested.

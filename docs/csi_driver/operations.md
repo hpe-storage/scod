@@ -285,6 +285,10 @@ Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary 
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
 
+### Upgrade to v2.5.2
+
+Any prior deployed NFS servers may be upgraded to v2.5.2.
+
 ### Upgrade to v2.5.0
 
 Any prior deployed NFS servers may be upgraded to v2.5.0.
@@ -319,7 +323,7 @@ When patching the NFS `Deployments`, the `Pods` will restart and cause a pause i
 Patch all NFS `Deployments` with the following.
 
 ```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.5.0.yaml | \
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.5.2.yaml | \
   kubectl patch -n hpe-nfs \
   $(kubectl get deploy -n hpe-nfs -o name) \
   --patch-file=/dev/stdin
@@ -330,7 +334,7 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.5.
 
 ### Validation
 
-This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.5 of the "nfs-provisioner" image after the uprade is complete.
+This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.6 of the "nfs-provisioner" image after the uprade is complete.
 
 ```text
 kubectl get deploy -A -o yaml | \
