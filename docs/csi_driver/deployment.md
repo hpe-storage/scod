@@ -148,7 +148,7 @@ Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe
 
 ```yaml fct_label="HPE CSI Operator v2.5.2"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
-FIXME
+{% include "csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
 ```
 
 ```yaml fct_label="v2.5.1"

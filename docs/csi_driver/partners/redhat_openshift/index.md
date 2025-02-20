@@ -192,7 +192,7 @@ The next step is to create a `HPECSIDriver` object.
 
 ```yaml fct_label="HPE CSI Operator v2.5.2"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
-FIXME
+{% include "../../examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
 ```
 
 ```yaml fct_label="v2.5.1"

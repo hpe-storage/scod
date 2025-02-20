@@ -70,7 +70,7 @@ These are the combinations HPE has tested and can provide official support servi
 
 Release highlights:
 
-* Support for [Morpheus Kubernetes Service](partners/hpe_morpheus/install.html)
+* Support for [Morpheus Kubernetes Service](partners/hpe_morpheus/install.md)
 * Introducing support for Kubernetes 1.31-1.32 and OpenShift 4.17-4.18
 * Renamed HPE CSI Operator for Kubernetes to HPE CSI Operator for OpenShift in the Red Hat Ecosystem Catalog
 * LDAP account support for the HPE Alletra Storage MP B10000 CSP

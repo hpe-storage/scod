@@ -10,7 +10,7 @@ Mirantis and HPE perform testing and qualification as needed for either release 
 
 | MKE Version | HPE CSI Driver | Status | Installation Notes | 
 | ------------| -------------- | ------ | ------------------ |
-| 3.7         | [2.4.0](../../index.md#hpe_csi_driver_for_kubernetes_240) | Supported | Helm chart [notes](#helm_chart_install) |
+| 3.7         | [2.4.0](../../archive.md#hpe_csi_driver_for_kubernetes_240) | Supported | Helm chart [notes](#helm_chart_install) |
 | 3.6         | [2.2.0](../../archive.md#hpe_csi_driver_for_kubernetes_220) | Deprecated | Helm chart [notes](#helm_chart_install) |
 | 3.4, 3.5    | -              | Untested | - |
 | 3.3         | [2.0.0](../../archive.md#hpe_csi_driver_for_kubernetes_200) | Deprecated | Advanced Install [notes for MKE 3.3 ](#mirantis_kubernetes_engine_33) | 
