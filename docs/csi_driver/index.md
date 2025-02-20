@@ -132,12 +132,12 @@ Upgrade considerations:
     <th>Release&nbsp;notes</th>
     <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.5.2.md">v2.5.2</a> on GitHub</td>
   </tr>
-  <tr>
+  <!--tr>
    <th>Blogs</th>
    <td>
     <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-morpheus-kubernetes-service-with-hpe-csi-driver-for/ba-p/7235173">Introducing Morpheus Kubernetes Service with HPE CSI Driver for Kubernetes</a>
    </td>
- </tr>
+ </tr-->
 </table>
 
 <small>
