@@ -115,8 +115,6 @@ Once the SCC has been applied to the project, login to the OpenShift web console
 
 ![Click Install](img/webcon-2.png)
 *Click 'Install'.*
-!!! note
-    Latest supported HPE CSI Operator on OpenShift 4.14 is 2.4.2
 
 ![Click Install](img/webcon-3.png)
 *Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.*
