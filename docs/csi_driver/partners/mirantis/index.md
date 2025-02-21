@@ -60,7 +60,7 @@ Learn more about using the CSI objects in [the comprehensive overview](../../usi
 
 ## NFS Server Provisioner on MKE
 
-In order to allow the HPE CSI Driver to deploy privileged NFS servers in the default NFS `Namespace` of "hpe-nfs", the MKE configuration file needs to be updated with the following directly inside the `[cluster_config]` stanza:
+In order to allow the HPE CSI Driver to deploy privileged NFS servers in the default NFS `Namespace` of "hpe-nfs", the MKE configuration file needs to be updated with the following configuration directly inside the `[cluster_config]` stanza:
 
 ```text
 [cluster_config]
