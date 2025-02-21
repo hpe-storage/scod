@@ -10,6 +10,7 @@ Mirantis and HPE perform testing and qualification as needed for either release 
 
 | MKE Version | HPE CSI Driver | Status | Installation Notes | 
 | ------------| -------------- | ------ | ------------------ |
+| 3.8         | [2.5.2](../../index.md#hpe_csi_driver_for_kubernetes_252) | Supported | Helm chart [notes](#helm_chart_install) |
 | 3.7         | [2.4.0](../../archive.md#hpe_csi_driver_for_kubernetes_240) | Supported | Helm chart [notes](#helm_chart_install) |
 | 3.6         | [2.2.0](../../archive.md#hpe_csi_driver_for_kubernetes_220) | Deprecated | Helm chart [notes](#helm_chart_install) |
 | 3.4, 3.5    | -              | Untested | - |
@@ -57,6 +58,27 @@ Learn more about using the CSI objects in [the comprehensive overview](../../usi
 
 - [Container Storage Providers](../../container_storage_provider/index.md)
 
+## NFS Server Provisioner on MKE
+
+In order to allow the HPE CSI Driver to deploy privileged NFS servers in the default NFS `Namespace` of "hpe-nfs", the MKE configuration file needs to be updated with the following configuration directly inside the `[cluster_config]` stanza:
+
+```text
+[cluster_config]
+  priv_attributes_allowed_for_service_accounts = ["kernelCapabilities", "privileged"]
+  priv_attributes_service_accounts = ["hpe-nfs:hpe-csi-nfs-sa"]
+```
+
+Configuring a `StorageClass` with `.parameters.nfsNamespace: csi.storage.k8s.io/pvc/namespace` or any custom `Namespace` would require all `ServiceAccounts` to be enumerated in "priv_attributes_service_accounts" above.
+
+!!! important "How do I update the MKE configuration file?"
+    Updating the MKE configuration file requires administrative privileges and access to the control plane. See the Mirantis documentation for more details.
+
+    * [MKE 3.8](https://docs.mirantis.com/mke/3.8/ops/administer-cluster/configure-an-mke-cluster/use-an-mke-configuration-file.html#modify-an-existing-mke-configuration)
+    * [MKE 3.7](https://docs.mirantis.com/mke/3.7/ops/administer-cluster/configure-an-mke-cluster/use-an-mke-configuration-file.html#modify-an-existing-mke-configuration)
+    * [MKE 3.6](https://docs.mirantis.com/mke/3.6/ops/administer-cluster/configure-an-mke-cluster/use-an-mke-configuration-file.html#modify-an-existing-mke-configuration)
+
+    Versions prior to MKE 3.6 are untested but are supported if the NFS servers come up.
+
 ## Docker Swarm
 
 Provisioning Docker Volumes for Docker Swarm workloads from a HPE primary storage backend is deprecated.
@@ -64,4 +86,3 @@ Provisioning Docker Volumes for Docker Swarm workloads from a HPE primary storag
 ## Limitations
 
 - HPE CSI Driver does not support Windows workers.
-- HPE CSI Driver NFS Server Provisioner is not supported on MKE.
