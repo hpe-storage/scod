@@ -113,10 +113,10 @@ Upgrade considerations:
     <th>Platforms<sup>3</sup></th>
     <td>
       Alletra Storage MP B10000 10.2.x - 10.4.x<br />
-      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Alletra OS 9000 9.3.x - 9.6.x<br />
       Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
       Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
-      Primera OS 4.3.x - 4.5.x<br />
+      Primera OS 4.3.x - 4.6.x<br />
       3PAR OS 3.3.x
     </td>
   </tr>
