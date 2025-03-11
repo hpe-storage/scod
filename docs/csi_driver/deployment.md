@@ -42,20 +42,24 @@ Establish a working directory on a bastion Linux host that has HTTP access to th
 !!! note
     Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.
 
-Create a working directory and set environment variables referenced throughout the procedure. In this example, we'll use HPE CSI Driver v2.5.0 on Kubernetes 1.30. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
+Create a working directory and set environment variables referenced throughout the procedure. Available versions are found in the [co-deployments GitHub repo](https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver).
 
 ```text
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=2.5.0
-export MY_K8S=1.30
+export MY_CSI_DRIVER=2.5.2
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
 
-```text
-curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/hpe-csi-k8s-${MY_K8S}.yaml \
+```text fct_label="v2.5.0 and newer"
+curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/refs/heads/master/helm/values/csi-driver/v${MY_CSI_DRIVER}/values.yaml \
+| grep \.io/ | awk '{print $2}' | sort | uniq > images
+```
+
+```text fct_label="v2.4.2 and older"
+curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/hpe-csi-k8s-1.29.yaml \
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
         https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
 | grep image: | awk '{print $2}' | sort | uniq > images
@@ -88,13 +92,10 @@ kubectl create ns hpe-storage
 Version 2.4.2 or earlier.
 
 ```text
-helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version ${MY_CSI_DRIVER} --set registry=${MY_REGISTRY}
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version v2.4.2 --set registry=${MY_REGISTRY}
 ```
 
 Version 2.5.0 or newer, skip to → [Version 2.5.0 and newer](#version_250_and_newer).
-
-!!! note
-    If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
 
 #### Version 2.5.0 and newer
 
@@ -103,7 +104,7 @@ In version 2.5.0 and onwards, all images used by the HPE CSI Driver for Kubernet
 Use the procedure above to mirror the images to an internal registry. Once mirrored, replace the registry names in the reference `values.yaml` file.
 
 ```text
-curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/values/csi-driver/v${MY_CSI_DRIVER}/values.yaml | sed -E -e "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/g" > my-values.yaml
+curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/values/csi-driver/v2.5.2/values.yaml | sed -E -e "s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/g" > my-values.yaml
 ```
 
 Use the `my-values.yaml` file to install the Helm Chart.
@@ -113,6 +114,9 @@ helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver \
 -n hpe-storage --version ${MY_CSI_DRIVER} \
 -f my-values.yaml
 ```
+
+!!! note
+    If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
 
 ## Operator
 
