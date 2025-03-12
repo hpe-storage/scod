@@ -402,6 +402,10 @@ It's not recommended to retro fit CHAP into an existing environment where `Persi
 
 In 2.5.0 and later the CHAP credentials must be supplied by a separate `Secret`. The `Secret` may be supplied when installing the Helm Chart (the `Secret` must exist prior) or referened in the `StorageClass`.
 
+### One CHAP configuration per backend
+
+Inherently iSCSI CHAP operates per session against an iSCSI portal. The CSI driver only supports using a common set of sessions per iSCSI portal. It's imperative that only one iSCSI CHAP configuration exists (or don't exist) per cluster and storage backend pair.
+
 #### Upgrade Considerations
 
 When using CHAP with 2.4.2 or older the CHAP credentials were provided in clear text in the Helm Chart. To continue to use CHAP for those existing `PersistentVolumes`, a CHAP `Secret` needs to be created and referenced in the Helm Chart install.
