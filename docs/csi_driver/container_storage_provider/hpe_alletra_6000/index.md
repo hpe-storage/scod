@@ -24,6 +24,22 @@ How to deploy an HPE storage array is beyond the scope of this document. Please 
 !!! error "Important"
     The HPE Nimble Storage Linux Toolkit (NLT) is **not** compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on Kubernetes control plane nodes if they use iSCSI or FC storage from the array.
 
+#### Network Requirements
+
+The following ports needs to be reachable from the CSP running on the Kubernetes cluster to the management interface of the array.
+
+| Port | Protocol | Description |
+| ---- | -------- | ----------- |
+| 443<sup>1</sup>  | HTTPS | ArrayOS multitenant REST API |
+| 5392 | HTTPS | ArrayOS REST API |
+
+<small>
+ <sup>1</sup> = The CSP will probe for multi-tenancy first, even if the platform doesn't support it. Leaving port 443 accessible is highly recommended to prevent slow control plane operations.
+</small>
+
+!!! info "Data networks"
+    The data networks expects a flat network between the compute nodes and the array. Routing of iSCSI traffic is not supported by CSP.
+
 #### Single Tenant Deployment
 
 The CSP requires access to a user with either `poweruser` or the `administrator` role. It's recommended to use the `poweruser` role for least privilege practices.
