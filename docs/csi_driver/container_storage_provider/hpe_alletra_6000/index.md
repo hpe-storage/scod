@@ -30,11 +30,11 @@ The following ports needs to be reachable from the CSP running on the Kubernetes
 
 | Port | Protocol | Description |
 | ---- | -------- | ----------- |
-| 443<sup>1</sup>  | HTTPS | ArrayOS multitenant REST API |
-| 5392 | HTTPS | ArrayOS REST API |
+| 443<sup>1</sup>  | HTTPS | Multitenant REST API |
+| 5392 | HTTPS | REST API |
 
 <small>
- <sup>1</sup> = The CSP will probe for multi-tenancy first, even if the platform doesn't support it. Leaving port 443 accessible is highly recommended to prevent slow control plane operations.
+ <sup>1</sup> = The CSP will probe for multitenancy first, even if the platform doesn't support it. Leaving port 443 accessible is highly recommended to prevent slow control plane operations.
 </small>
 
 !!! info "Data networks"
