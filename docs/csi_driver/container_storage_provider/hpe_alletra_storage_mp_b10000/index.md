@@ -28,7 +28,7 @@ The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Stor
 | 22 | SSH | Array communication (HPE 3PAR) |
 
 !!! caution "HPE 3PAR"
-    From HPE CSI Driver v2.5.2 onwards it's recommended to specify "<IP Addr>:443" in the backend `Secret` to avoid using SSH for any HPE Alletra Storage MP B10000 derived platform except 3PAR. See [Deployment](../../deployment.md#secret_parameters) for more information.
+    From HPE CSI Driver v2.5.2 onwards it's recommended to specify "&lt;IP Addr&gt;:443" in the backend `Secret` to avoid using SSH for any HPE Alletra Storage MP B10000 derived platform except 3PAR. See [Deployment](../../deployment.md#secret_parameters) for more information.
 
 ### User Role Requirements
 
