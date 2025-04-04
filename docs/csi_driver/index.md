@@ -110,6 +110,10 @@ Upgrade considerations:
       SUSE Linux Enterprise Server 15 SP4, SP5, SP6 and SLE Micro<sup>4</sup> equivalents
   </tr>
   <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
     <th>Platforms<sup>3</sup></th>
     <td>
       Alletra Storage MP B10000 10.2.x - 10.4.x<br />
@@ -195,6 +199,10 @@ Upgrade considerations:
       SUSE Linux Enterprise Server 15 SP4, SP5, SP6 and SLE Micro<sup>4</sup> equivalents
   </tr>
   <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
     <th>Platforms<sup>3</sup></th>
     <td>
       Alletra Storage MP<sup>5</sup> 10.2.x - 10.4.x<br />
@@ -262,6 +270,10 @@ Release highlights:
       Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
       SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
   </tr>
   <tr>
     <th>Platforms<sup>3</sup></th>
@@ -334,6 +346,10 @@ Upgrade considerations:
       Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04<br />
       SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
   </tr>
   <tr>
     <th>Platforms<sup>3</sup></th>
