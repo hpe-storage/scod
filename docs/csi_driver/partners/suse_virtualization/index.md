@@ -1,4 +1,5 @@
 # Overview
+<img src="img/SUSECertifiedSV.png" align="right" width="128" hspace="12" vspace="2" />
 
 *"Harvester is a modern hyperconverged infrastructure (HCI) solution built for bare metal servers using enterprise-grade open-source technologies including Linux, KVM, Kubernetes, KubeVirt, and Longhorn. Designed for users looking for a flexible and affordable solution to run cloud-native and virtual machine (VM) workloads in your datacenter and at the edge, Harvester provides a single pane of glass for virtualization and cloud-native workload management."*<sup>1</sup>
 
