@@ -34,36 +34,41 @@ Ancillary network configuration of Harvester nodes is managed as a post-install 
 
 #### Example iSCSI Configuration
 
-In a typical setup the IP addresses are assigned by DHCP on the NIC directly without any bridges, VLANs or bonds. The updates that needs to be done to `/oem/90_custom.yaml` on each compute node to reflect this configuration are described below.
-
-Insert the block after the management interface configuration and replace the interface names `ens224` and `ens256` with the actual interface names on your compute nodes. List the available interfaces on the compute node prompt with `ip link`.
+In a typical setup the IP addresses are assigned by DHCP on the NIC directly without any bridges, VLANs or bonds. Network interface configuration on Harvester are part of the node boot strap process post-install. Create the file `/oem/89_hpe-csi-iscsi.yaml` described below on each compute node to reflect a typical configuration.
 
 ```text
-            ...
-            - path: /etc/sysconfig/network/ifcfg-ens224
-              permissions: 384
-              owner: 0
-              group: 0
-              content: |
-                STARTMODE='onboot'
-                BOOTPROTO='dhcp'
-                DHCLIENT_SET_DEFAULT_ROUTE='no'
-              encoding: ""
-              ownerstring: ""
-            - path: /etc/sysconfig/network/ifcfg-ens256
-              permissions: 384
-              owner: 0
-              group: 0
-              content: |
-                STARTMODE='onboot'
-                BOOTPROTO='dhcp'
-                DHCLIENT_SET_DEFAULT_ROUTE='no'
-              encoding: ""
-              ownerstring: ""
-              ...
+name: HPE CSI Driver for Kubernetes iSCSI configuration
+stages:
+  initramfs:
+    - commands: []
+      files:
+        - path: /etc/sysconfig/network/ifcfg-ens1f1
+          permissions: 384
+          owner: 0
+          group: 0
+          content: |
+            STARTMODE='onboot'
+            BOOTPROTO='dhcp'
+            DHCLIENT_SET_DEFAULT_ROUTE='no'
+          encoding: ""
+          ownerstring: ""
+        - path: /etc/sysconfig/network/ifcfg-ens1f0
+          permissions: 384
+          owner: 0
+          group: 0
+          content: |
+            STARTMODE='onboot'
+            BOOTPROTO='dhcp'
+            DHCLIENT_SET_DEFAULT_ROUTE='no'
+          encoding: ""
+          ownerstring: ""
 ```
+!!! tip
+    Replace the interface names `ens1f0` and `ens1f1` with the actual interface names on your compute nodes. List the available interfaces on the compute node prompt with `ip link`.
 
 Reboot the node and verify that IP addresses have been assigned to the NICs by running `ip addr show dev <interface name>` on the compute node prompt.
+
+- Learn more about [Harvester networking](https://docs.harvesterhci.io/v1.5/networking/index) in the official docs.
 
 ## Installing HPE CSI Driver for Kubernetes
 
@@ -74,7 +79,7 @@ The HPE CSI Driver for Kubernetes is installed on Harvester by using the standar
 !!! note
     It does not matter if Harvester is managed by Rancher or running standalone. If the cluster is managed by Rancher, then go to the Virtualization Management dashboard and select "Download KubeConfig" in the dotted context menu of the cluster.
 
-Once the CSI driver is installed, make sure to go through the next steps to [Configure Resources](#configure_resources)
+Once the CSI driver is installed, make sure to go through the next steps to [Configure Resources](#configure_resources).
 
 ## Configure Resources 
 
