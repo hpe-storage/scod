@@ -34,10 +34,10 @@ The installation procedures assumes the "hpe-storage" `Namespace` exists:
 oc create ns hpe-storage
 ```
 
-<div id="scc" />First, deploy or [download]({{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-filex-csi-scc.yaml) the SCC:
+<div id="scc" />First, deploy or [download]({{ config.site_url}}csi_driver/partners/redhat_openshift/examples/scc/hpe-filex-csi-scc.yaml) the SCC:
 
 ```text
-oc apply -f {{ config.site_url}}partners/redhat_openshift/examples/scc/hpe-filex-csi-scc.yaml
+oc apply -f {{ config.site_url}}csi_driver/partners/redhat_openshift/examples/scc/hpe-filex-csi-scc.yaml
 ```
 
 !!! tip
