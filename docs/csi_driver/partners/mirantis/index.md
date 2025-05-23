@@ -32,7 +32,7 @@ MKE 4.0 onwards is based on the k0s Kubernetes distribution and managed by k0rde
 
 Unless there are any special circumstances it's recommended to deploy the CSI driver through the k0rdent catalog as a `MultiClusterService` from a `ServiceTemplate`.
 
-- Visit the HPE CSI Driver for Kubernetes in the [k0rdent catalog](https://catalog.k0rdent.io/v0.3.0/apps/hpe-csi/hpe-csi/).
+- Visit the HPE CSI Driver for Kubernetes in the [k0rdent catalog](https://catalog.k0rdent.io/v0.3.0/apps/hpe-csi/).
 
 If there are special needs, proceed to the [Helm Chart Install](#helm_chart_install).
 

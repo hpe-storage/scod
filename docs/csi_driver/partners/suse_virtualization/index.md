@@ -12,7 +12,7 @@
 
 HPE supports the underlying host OS, SLE Micro, using the HPE CSI Driver for Kubernetes and the Rancher Kubernetes Engine 2 (RKE2) which is a CNCF certified Kubernetes distribution. SUSE Virtualization (formerly Harvester) embeds KubeVirt and uses standard CSI storage constructs to manage storage resources for virtual machines.
 
-- Learn more about [Compatibility & Support](../../../csi_driver/index.html#compatibility_and_support)
+- Learn more about [Compatibility & Support](../../../csi_driver/index.md#compatibility_and_support)
 
 !!! note
     The SCOD documentation refers to SUSE Virtualization as Harvester.
@@ -84,7 +84,7 @@ Once the CSI driver is installed, make sure to go through the next steps to [Con
 
 ## Configure Resources 
 
-In order to upload images, boot VMs and attach data volumes from a HPE storage backend, a `StorageClass` and `Secret` needs to be configured. These steps are outlined in the [deployment section](../../../csi_driver/deployment.html#add_an_hpe_storage_backend) on SCOD.
+In order to upload images, boot VMs and attach data volumes from a HPE storage backend, a `StorageClass` and `Secret` needs to be configured. These steps are outlined in the [deployment section](../../../csi_driver/deployment.md#add_an_hpe_storage_backend) on SCOD.
 
 !!! note
     Booting VMs from a HPE CSI Driver backed volume requires Harvester 1.5.0 or newer.
