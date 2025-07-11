@@ -1,7 +1,11 @@
 # Overview
+
 Welcome to the Video Gallery. This is a collection of current YouTube assets that pertains to supported HPE primary storage container technologies.
 
 [TOC]
+
+!!! caution "Heads up!"
+    Most of the videos published below are part of an automated publishing system which enforces an expiration date. If a video is marked private, it means that the asset has expired. It may come back online, but it's a manual process to update the expiration date.
 
 ## CSI driver management
 
@@ -156,6 +160,14 @@ This lightboard video discusses how to lift and transform applications running o
 <iframe width="696" height="392" src="https://www.youtube.com/embed/M7t_qPe3i5E" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://youtu.be/M7t_qPe3i5E)</small>
+
+### Migrating VMware vSphere vVols to KubeVirt with HPE CSI Driver for Kubernetes
+
+In this video, Michael explains how to migrate VMware vSphere vVols to KubeVirt using the HPE CSI Driver for Kubernetes to enable a modern, container-native infrastructure. All configuration details are availble in this blog post on [developer.hpe.com](https://developer.hpe.com/blog/migrating-vsphere-virtual-volumes-to-kubevirt-with-hpe-csi-driver-for-kubernetes/).
+
+<iframe width="696" height="392" src="https://www.youtube.com/embed/5PYROAFVD-A" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<small>[Watch on YouTube](https://youtu.be/5PYROAFVD-A)</small>
 
 # Watch more
 

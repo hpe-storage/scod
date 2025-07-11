@@ -4,6 +4,88 @@ HPE supports up to three historic minor releases on supported versions of upstre
 
 [TOC]
 
+#### HPE CSI Driver for Kubernetes 2.4.1
+
+Release highlights:
+
+* HPE Alletra Storage MP support
+* Kubernetes 1.29 support
+* Full KubeVirt, OpenShift Virtualization and SUSE Harvester support for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR
+* Full ARM64 support for HPE Alletra 5000/6000 and Nimble Storage
+* Support for foreign `StorageClasses` with the NFS Server Provisioner
+* SUSE Linux Enterprise Micro OS (SLE Micro) support
+
+Upgrade considerations:
+
+* Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v241).
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.26-1.29<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.4.1">v2.4.1</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.1">v2.4.1</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.1</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
+      Ubuntu 16.04, 18.04, 20.04, 22.04<br />
+      SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      Alletra Storage MP<sup>5</sup> 10.2.x - 10.3.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocols</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Filesystems</th>
+    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.4.1.md">v2.4.1</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a>
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>&ast;</sup> = The HPE CSI Driver for Kubernetes is a block storage driver primarily. It includes an [NFS Server Provisioner](using.md#using_the_nfs_server_provisioner) that allows "ReadWriteMany" `PersistentVolumeClaims`.<br/>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](partners/index.md) for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
+ <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
+ <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
+ <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block Storage. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File Storage.<br/>
+</small>
+
 #### HPE CSI Driver for Kubernetes 2.4.0
 
 Release highlights:
@@ -324,7 +406,7 @@ Release highlights:
 
 * Support for HPE Alletra 5000/6000 and 9000
 * Host-based volume encryption
-* Multitenancy for HPE Alletra 5000/6000 and Nimble Storage 
+* Multitenancy for HPE Alletra 5000/6000 and Nimble Storage
 
 <table>
   <tr>

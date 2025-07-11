@@ -1,23 +1,79 @@
-# Choose your platform
+# Choose Your Platform
 
-HPE provides a broad portfolio of products that integrate with Kubernetes and neighboring ecosystems. The following table provides an overview of integrations available for each primary storage platform.
+HPE provide a broad portfolio of storage products that integrate with Kubernetes and neighboring ecosystems. The following table provides an overview of integrations available for HPE Alletra Storage MP.
 
-| Ecosystem | ![](img/alletra6000.png)<br /><br /> HPE Alletra 5000/6000 and Nimble | ![](img/alletramp.png) <br /><br /> HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR |
-| :-: | :-: | :-: |
-| Kubernetes | [HPE CSI Driver](../csi_driver/index.md) with [Alletra 6000 CSP](../csi_driver/container_storage_provider/hpe_alletra_6000/index.md) |[HPE CSI Driver](../csi_driver/index.md) with [Alletra Storage MP B10000 CSP](../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.md) |
+<small>
+<table>
+ <tr>
+  <td colspan="4" align="center" style="padding-left:100px">
+  <img src="img/alletramp-float.png"> <br/>
+  <font size="5em">HPE Alletra Storage MP</font>
+ </td>
+ </tr>
+ <tr>
+  <th>
+  </th>
+  <th>
+   HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;B10000
+  </th>
+  <th>
+   HPE&nbsp;GreenLake&nbsp;for&nbsp;File&nbsp;Storage
+  </th>
+  <th>
+   HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;X10000
+  </th>
+ </tr>
+ <tr>
+  <td align="right">
+  <b>Protocol</b>
+  </td>
+  <td>
+   Block and File
+  </td>
+  <td>
+   File
+  </td>
+  <td>
+   Object
+  </td>
+ </tr>
+ <tr>
+  <td align="right">
+  <b>Workloads</b>
+  </td>
+  <td>
+   Large scale and high performance containers and virtual machines.
+  </td>
+  <td>
+   Data lakes and scalable unstructured workloads.
+  </td>
+  <td>
+   Applications requiring fast AWS S3 compatible object storage.
+  </td>
+ </tr>
+ <tr>
+  <td align="right">
+  <b>Solutions</b>
+  </td>
+  <td>
+   <a href="../csi_driver">HPE CSI Driver for Kubernetes</a><sup>1</sup>
+  </td>
+  <td>
+   <a href="../filex_csi_driver">HPE GreenLake for File Storage CSI Driver</a><sup>2</sup>
+  </td>
+  <td>
+   <a href="../cosi_driver/">HPE COSI Driver for Kubernetes</a>
+  </td>
+ </tr>
+</table>
 
-- Looking to [deploy the CSI driver](../csi_driver/deployment.md)? 
+<sup>1</sup> = HPE CSI Driver for Kubernetes also supports Alletra 5000/6000/9000, Primera, 3PAR and Nimble Storage.<br />
+<sup>2</sup> = Currently in beta.
+</small>
 
-# Help me choose
+!!! tip "Learn more"
+    Explore storage for containers on [hpe.com/storage/containers](http://hpe.com/storage/containers).
 
-Interested in acquiring a persistent storage solution for your Kubernetes project?
-
-| Criteria        | ![](img/alletra6000.png)<br /><br /> HPE Alletra 5000/6000     | ![](img/alletramp.png) <br /><br /> HPE Alletra Storage MP B10000 |
-| :-------------: | :-------------------------------------------------------: | :-------------------------------------------------------: |
-| Availability    | 99.9999%                                                  | 100%                                                      |
-| Workloads       | Business-critical                                         | Mission-critical                                          |
-| Learn&nbsp;more | [hpe.com/storage/alletra](http://hpe.com/storage/alletra) | [hpe.com/storage/greenlake](https://www.hpe.com/us/en/hpe-greenlake-block-storage.html) |
-
-# Other HPE storage platforms
+# Other HPE Storage Platforms
 
 Can't find what you're looking for? Check out [hpe.com/storage](http://hpe.com/storage) for additional HPE storage platforms.

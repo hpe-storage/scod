@@ -1,0 +1,35 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    # There can only be one default StorageClass per cluster
+    storageclass.kubernetes.io/is-default-class: "true"
+  name: hpe-standard
+parameters:
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/fstype: xfs
+  accessProtocol: iscsi
+  description: Volume created by the HPE CSI Driver for Kubernetes
+  destroyOnDelete: "true"
+  pool: default
+  folder: default
+  performancePolicy: default
+  limitIops: "-1"
+  limitMbps: "-1"
+  thick: "false"
+  dedupeEnabled: "true"
+  syncOnDetach: "false"
+  encrypted: "false"
+provisioner: csi.hpe.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
