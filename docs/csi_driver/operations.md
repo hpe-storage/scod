@@ -2,13 +2,13 @@
 
 The documentation in this section illustrates officially HPE supported procedures to perform maintenance tasks on the CSI driver outside the scope of deploying and uninstalling the driver.
 
-[TOC]    
+[TOC]
 
 ## Migrate Encrypted Volumes
 
-Persistent volumes created with v2.1.1 or below using [volume encryption](using.md#using_volume_encryption), the CSI driver use LUKS2 (WikiPedia: [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup)) and can't expand the `PersistentVolumeClaim`. With v2.2.0 and above, LUKS1 is used and the CSI driver is capable of expanding the `PVC`. 
+Persistent volumes created with v2.1.1 or below using [volume encryption](using.md#using_volume_encryption), the CSI driver use LUKS2 (WikiPedia: [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup)) and can't expand the `PersistentVolumeClaim`. With v2.2.0 and above, LUKS1 is used and the CSI driver is capable of expanding the `PVC`.
 
-This procedure migrate (copy) data from LUKS2 to LUKS1 PVCs to allow expansion of the volume. 
+This procedure migrate (copy) data from LUKS2 to LUKS1 PVCs to allow expansion of the volume.
 
 !!! note
     It's not a limitation of LUKS2 to not allow expansion but rather how the CSI driver interact with the host.
@@ -61,7 +61,7 @@ kubectl get volumeattachment -o json | \
 
 Create a new `PVC` named "new-pvc" with enough space to host the data from the old source `PVC`.
 
-```text 
+```text
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -93,7 +93,7 @@ export NEW_DST_PV=$(kubectl get pvc -o json | \
 !!! hint
     The `PVC` name "new-pvc" is a placeholder name. When the procedure is done, the `PVC` will have its original name restored.
 
-##### Important Validation Steps 
+##### Important Validation Steps
 
 At this point, there should be six shell variables declared. Example:
 
@@ -144,7 +144,7 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/pvc-copy-file.yaml | 
 
 Wait for the `Job` to complete.
 
-```text 
+```text
 kubectl get job.batch/pvc-copy-file -w
 ```
 
@@ -175,7 +175,7 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/pvc-copy-block.yaml |
 
 Wait for the `Job` to complete.
 
-```text 
+```text
 kubectl get job.batch/pvc-copy-block -w
 ```
 
@@ -222,7 +222,7 @@ Next, allow the new `PV` to be reclaimed.
 kubectl patch pv ${NEW_DST_PV} -p '{"spec":{"claimRef": null }}'
 ```
 
-Next, create a `PVC` with the old source name and ensure it matches the size of the new destination `PVC`. 
+Next, create a `PVC` with the old source name and ensure it matches the size of the new destination `PVC`.
 
 ```text
 curl -s {{ config.site_url}}csi_driver/examples/operations/pvc-copy.yaml | \
@@ -243,7 +243,7 @@ kubectl get pvc/${OLD_SRC_PVC} -o json | \
 
 If the command is successful, it should output your original `PVC` name.
 
-At this point the original workload should be deployed, verified and resumed. 
+At this point the original workload should be deployed, verified and resumed.
 
 Optionally, the old source `PV` may be removed.
 
@@ -281,9 +281,13 @@ spec:
 Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary but it's recommended to be familiar with using [CSI snapshots](using.md#using_csi_snapshots).
 
 <a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a>
-## Upgrade NFS Servers 
+## Upgrade NFS Servers
 
-In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. 
+In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually.
+
+### Upgrade to v3.0.0
+
+Any prior deployed NFS servers may be upgraded to v3.0.0.
 
 ### Upgrade to v2.5.2
 
@@ -323,7 +327,7 @@ When patching the NFS `Deployments`, the `Pods` will restart and cause a pause i
 Patch all NFS `Deployments` with the following.
 
 ```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-2.5.2.yaml | \
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.0.0.yaml | \
   kubectl patch -n hpe-nfs \
   $(kubectl get deploy -n hpe-nfs -o name) \
   --patch-file=/dev/stdin
@@ -372,7 +376,7 @@ Package names and services vary greatly between different Linux distributions an
 
 #### disableNodeConfiguration
 
-When disabling node configuration the CSI node driver will not touch the node at all. Besides indirectly disabling node conformance, all attempts to write configuration files or manipulate services during runtime are disabled. 
+When disabling node configuration the CSI node driver will not touch the node at all. Besides indirectly disabling node conformance, all attempts to write configuration files or manipulate services during runtime are disabled.
 
 ### Mandatory Configuration
 
@@ -407,7 +411,7 @@ Ensure `iscsid` is stopped.
 systemctl stop iscsid
 ```
 
-[Download]({{ config.site_url }}csi_driver/examples/operations/iscsid.conf): /etc/iscsi/iscsid.conf 
+[Download]({{ config.site_url }}csi_driver/examples/operations/iscsid.conf): /etc/iscsi/iscsid.conf
 
 ```text
 {% include "csi_driver/examples/operations/iscsid.conf" %}```
@@ -441,7 +445,7 @@ Ensure `multipathd` is stopped.
 systemctl stop multipathd
 ```
 
-[Download]({{ config.site_url }}csi_driver/examples/operations/multipath.conf): /etc/multipath.conf 
+[Download]({{ config.site_url }}csi_driver/examples/operations/multipath.conf): /etc/multipath.conf
 
 ```text
 {% include "csi_driver/examples/operations/multipath.conf" %}```

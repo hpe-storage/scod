@@ -16,15 +16,14 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.17                              | 2.5.2                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2 | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2 | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.19                              | 3.0.0                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2, 3.0.0               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.17                              | 2.5.2, 3.0.0               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2, 3.0.0        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.0 | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.0 | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
-| EOL<sup>1</sup>         | 4.11                              | 2.3.0                      | [All](../../container_storage_provider/index.md) |
-| EOL<sup>1</sup>         | 4.10 EUS<sup>2</sup>              | 2.2.1, 2.3.0               | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
@@ -36,11 +35,11 @@ Check the table above periodically for future releases.
     - Other combinations may work but will not be supported.
     - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
     - Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift.
-    - OpenShift Virtualization OS images are only supported on `PVCs` using "RWX" with `volumeMode: Block`. See [below](#storageprofile_for_openshift_virtualization_source_pvcs) for more details.
+    - **Do not attempt** to boot or image OpenShift Virtualization virtual machines from `StorageClasses` with "nfsResources: 'true'", it's not supported and it won't work. Use "RWX" `volumeMode: Block` `PVCs`.
 
 ### Security model
 
-By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification. 
+By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification.
 
 Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
 
@@ -62,7 +61,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 The HPE CSI Operator for OpenShift needs to be installed through the interfaces provided by Red Hat.
 
 !!! tip
-    There's a tutorial available on YouTube accessible through the [Video Gallery](../../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift. 
+    There's a tutorial available on YouTube accessible through the [Video Gallery](../../../learn/video_gallery/index.md#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift) on how to install and use the HPE CSI Operator on Red Hat OpenShift.
 
 #### Upgrading
 
@@ -188,7 +187,12 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object.
 
-```yaml fct_label="HPE CSI Operator v2.5.2"
+```yaml fct_label="HPE CSI Operator v3.0.0"
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml
+{% include "../../examples/deployment/hpecsidriver-v3.0.0-sample.yaml" %}```
+```
+
+```yaml fct_label="v2.5.2"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
 ```
@@ -201,15 +205,11 @@ The next step is to create a `HPECSIDriver` object.
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
 
-```yaml fct_label="v2.4.1"
-# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.1-sample.yaml
-{% include "../../examples/deployment/hpecsidriver-v2.4.1-sample.yaml" %}```
-
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../using.md#base_storageclass_parameters).
 
 #### Additional information
 
-At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.17/operators/index.html).
+At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.19/operators/index.html).
 
 #### Uninstall the HPE CSI Operator
 
@@ -262,22 +262,73 @@ oc patch scc hpe-csi-nfs-scc --type=json -p='[{"op": "add", "path": "/users/-", 
 
 Object references in OpenShift are not compatible with the NFS Server Provisioner. If a user deploys an Operator of any kind that creates a NFS server backed `PVC`, the operation will fail. Instead, pre-provision the `PVC` manually for the Operator instance to use.
 
-### Use the ext4 filesystem for NFS servers
+## Optional NetworkPolicies
 
-On certain versions of OpenShift the NFS clients may experience stale NFS file handles like the one below when the NFS server is being restarted.
+If a `NetworkPolicy` is required for security reasons, HPE provide a boiler plate to get started.
 
-```text
-Error: failed to resolve symlink "/var/lib/kubelet/pods/290ff9e1-cc1e-4d05-b884-0ddcc05a9631/volumes/kubernetes.io~csi/pvc-321cf523-c063-4ce4-97e8-bc1365b8a05b/mount": lstat /var/lib/kubelet/pods/290ff9e1-cc1e-4d05-b884-0ddcc05a9631/volumes/kubernetes.io~csi/pvc-321cf523-c063-4ce4-97e8-bc1365b8a05b/mount: stale NFS file handle
+- Download the [hpe-csi-driver-network-policy.yaml]({{ config.site_url}}csi_driver/partners/redhat_openshift/examples/network-policy/hpe-csi-driver-network-policy.yaml) manifest
+
+In order to apply the `NetworkPolicies`, a few things needs to be configured.
+
+There's currently one egress policy for the "hpe-storage" `Namespace` and an ingress/egress policy for the default NFS Server Provisioner `Namespace`, "hpe-nfs".
+
+!!! note
+    Do not apply the policies without configuring at least the backend(s), otherwise the CSP won't be able to reach the backend(s).
+
+### Backend
+
+Uncomment the particular backend that is serving the OpenShift cluster. Add more backends as needed. Also include any replication targets if applicable. In this example we're using an Alletra 5000 at IP address "192.168.1.67".
+
+```yaml
+  # Primera, Alletra 9000 and Alletra Storage MP B10000
+  #- to:
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 443
+  #    protocol: TCP
+
+  # Nimble Storage and Alletra 5000/6000
+  - to:
+    - ipBlock:
+        cidr: 192.168.1.67/32
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 5392
+      protocol: TCP
+
+  # 3PAR
+  #- to:
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 8080
+  #    protocol: TCP
+  #  - port: 443
+  #    protocol: TCP
+  #  - port: 22
+  #    protocol: TCP
 ```
 
-If this problem occurs, use the ext4 filesystem on the backing volumes. The `fsType` is set in the `StorageClass`. Example:
+### Control-Plane Endpoints
+
+In order for the CSI driver and NFS Server Provisioner to communicate with the OpenShift control-plane, the endpoints needs to be configured. It's possible to leave the endpoints at "0.0.0.0/0" with the caveat that port "6443" is reachable to any arbitrary destination.
+
+Retrieve the endpoints for the cluster with the following:
 
 ```text
-...
-parameters:
-  csi.storage.k8s.io/fstype: ext4
-...
+$ oc get endpoints kubernetes -n default
+NAME         ENDPOINTS                                                  AGE
+kubernetes   192.168.1.166:6443,192.168.1.190:6443,192.168.1.222:6443   13d
 ```
+
+!!! note
+    Both policies have control-plane endpoints configured.
+
+### Custom NFS Server Provisioner Namespace
+
+By default, the NFS Server Provisioner deploys NFS servers in the "hpe-nfs" `Namespace`. If users are allowed to deploy in their own `Namespaces` or a custom `Namespace` is used, the "hpe-nfs-policy" `NetworkPolicy` needs to be deployed in the `Namespace` accordingly.
 
 ## StorageProfile for OpenShift Virtualization Source PVCs
 
@@ -357,7 +408,7 @@ operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-drive
 Install a specific version after and including v2.5.0:
 
 ```text
-operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v2.5.2
+operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.0.0
 ```
 
 !!! important

@@ -7,7 +7,7 @@
     - Find us in the #HPE channel on the [official Slack community of CNCF](https://cloud-native.slack.com).
 
 -->
-## HPE Storage Container Orchestrator Documentation 
+## HPE Storage Container Orchestrator Documentation
 
 This is an umbrella documentation project for the HPE CSI and COSI drivers for Kubernetes and neighboring ecosystems for HPE primary storage including HPE Alletra Storage MP B10000 and X10000, HPE GreenLake for File Storage, Alletra 5000/6000/9000, Nimble Storage, Primera and 3PAR storage systems. The documentation is tailored for IT Ops, developers and technology partners.
 
@@ -16,8 +16,6 @@ This is an umbrella documentation project for the HPE CSI and COSI drivers for K
 Use the navigation on the left-hand side to explore the different topics. Feel free to contribute to this project but please read the [contributing guidelines](legal/contributing/index.md).
 
 Use the navigation to the left. Not sure what you're looking for? → [Get started](welcome/index.md)!
-
-<!-- div align="right"><img src="img/hpe-dev-grommet-gremlin-rockin-static.svg" alt="A screaming monkey with a pink mohawk aka The Gremlin"></div-->
 
 !!! note "Did you know?"
     SCOD is "docs" in reverse?

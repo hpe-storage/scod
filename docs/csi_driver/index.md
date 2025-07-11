@@ -1,15 +1,15 @@
 # Introduction
 
-A Container Storage Interface ([CSI](https://github.com/container-storage-interface/spec)) Driver for Kubernetes. The HPE CSI Driver for Kubernetes allows you to use a [Container Storage Provider](container_storage_provider/index.md) (CSP) to perform data management operations on storage resources. The architecture of the CSI driver allows block storage vendors to implement a CSP that follows the [specification](https://github.com/hpe-storage/container-storage-provider) (a [browser friendly version](https://developer.hpe.com/api/hpe-nimble-csp/)).
+A Container Storage Interface ([CSI](https://github.com/container-storage-interface/spec)) Driver for Kubernetes. The HPE CSI Driver for Kubernetes allows you to use a [Container Storage Provider](container_storage_provider/index.md) (CSP) to perform data management operations on storage resources. The architecture of the CSI driver allows block (iSCSI/FC) and file (NFS) storage vendors to implement a CSP that follows the [specification](https://github.com/hpe-storage/container-storage-provider) (a [browser friendly version](https://developer.hpe.com/api/hpe-nimble-csp/)).
 
 The CSI driver architecture allows a complete separation of concerns between upstream Kubernetes core, SIG Storage (CSI owners), CSI driver author (HPE) and the backend CSP developer.
 
-![HPE CSI Driver Architecture](img/csi_driver_architecture-2.4.1.png)
+![HPE CSI Driver Architecture](img/csi_driver_architecture-3.0.0.png)
 
 !!! tip
     The HPE CSI Driver for Kubernetes is vendor agnostic. Any entity may leverage the driver and provide their own Container Storage Provider.
 
-## Table of Contents 
+## Table of Contents
 
 [TOC]
 
@@ -28,22 +28,24 @@ Below is the official table for CSI features we track and deem readily available
 | Raw Block Volume                       | Stable            | 1.18              | 1.2.0          |
 | Inline Ephemeral Volumes               | Stable            | 1.25              | 1.2.0          |
 | Volume Limits                          | Stable            | 1.17              | 1.2.0          |
-| Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
 | Generic Ephemeral Volumes              | Stable            | 1.23              | 1.3.0          |
+| Volume Mutator<sup>1</sup>             | N/A               | 1.15              | 1.3.0          |
 | Volume Groups<sup>1</sup>              | N/A               | 1.17              | 1.4.0          |
 | Snapshot Groups<sup>1</sup>            | N/A               | 1.17              | 1.4.0          |
 | NFS Server Provisioner<sup>1</sup>     | N/A               | 1.17              | 1.4.0          |
 | Volume Encryption<sup>1</sup>          | N/A               | 1.18              | 2.0.0          |
 | Basic Topology<sup>3</sup>             | Stable            | 1.17              | 2.5.0          |
+| Native NFS (via CSP)                   | Stable            | 1.13              | 3.0.0          |
+| Volume Expansion From Source           | Stable            | 1.27              | 3.0.0          |
 | Advanced Topology<sup>3</sup>          | Stable            | 1.17              | Future         |
 | Storage Capacity Tracking              | Stable            | 1.24              | Future         |
-| Volume Expansion From Source           | Stable            | 1.27              | Future         |
 | ReadWriteOncePod                       | Stable            | 1.29              | Future         |
 | Volume Populator                       | Beta              | 1.24              | Future         |
-| Upstream Volume Group Snapshot         | Beta              | 1.32              | Future         |
 | Volume Attribute Classes               | Beta              | 1.31              | Future         |
+| Upstream Volume Group Snapshot         | Beta              | 1.32              | Future         |
 | Volume Health                          | Alpha             | 1.21              | Future         |
 | Cross Namespace Snapshots              | Alpha             | 1.26              | Future         |
+| Mutable CSI Node Allocatable Count     | Alpha             | 1.33              | Future         |
 
 <small>
  <sup>1</sup> = HPE CSI Driver for Kubernetes specific CSI sidecar. CSP support may vary.<br />
@@ -53,19 +55,100 @@ Below is the official table for CSI features we track and deem readily available
 
 Depending on the CSP, it may support a number of different snapshotting, cloning and restoring operations by taking advantage of `StorageClass` parameter overloading. Please see the respective [CSP](container_storage_provider/index.md) for additional functionality.
 
-Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to find availability of beta and alpha features. HPE provide limited support on non-GA CSI features. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/csi-driver/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra`, `#NimbleStorage`, `#3par-primera` and `#Kubernetes`, sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com).
+Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to find availability of beta and alpha features. HPE provide limited support on non-GA CSI features. Please file any issues, questions or feature requests [here](https://github.com/hpe-storage/csi-driver/issues). You may also join our Slack community to chat with HPE folks close to this project. We hang out in `#Alletra` and `#Kubernetes`, sign up at [slack.hpedev.io](https://slack.hpedev.io/) and login at [hpedev.slack.com](https://hpedev.slack.com).
 
 !!! tip
     Familiarize yourself with the basic requirements below for running the CSI driver on your Kubernetes cluster. It's then highly recommended to continue installing the CSI driver with either a [Helm chart](deployment.md#helm) or an [Operator](deployment.md#operator).
 
 ## Compatibility and Support
 
-These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each [Container Storage Provider](container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here. 
+These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases. Each [Container Storage Provider](container_storage_provider/index.md) has it's own requirements in terms of storage platform OS and may have other constraints not listed here.
 
 !!! note
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md), do note that the FlexVolume drivers are being deprecated.
 
 <a name="latest_release"></a>
+#### HPE CSI Driver for Kubernetes 3.0.0
+
+Release highlights:
+
+* Introducing support for Kubernetes 1.33 and OpenShift 4.19
+* Introducing HPE Alletra Storage MP B1000 File Service CSP
+* Active Peer Persistence support with automatic workload recovery
+* Official support for HPE ProLiant RL300 Gen11 and DL384 Gen12 (ARM-based CPUs)
+* Several enhancements to the NFS Server Provisioner
+* Volume expansion on clone creation
+
+Upgrade considerations:
+
+* Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v300).
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.30-1.33<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/3.0.0">v3.0.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v3.0.0">v3.0.0</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v3.0.0</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      Red Hat Enterprise Linux (including CoreOS)<sup>2</sup> 8.x, 9.x, 10.x<br />
+      Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04<br />
+      SUSE Linux Enterprise Server (including SLE Micro<sup>4</sup>) 15 SP4, SP5, SP6
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      Alletra Storage MP B10000 10.2.x - 10.5.x<br />
+      Alletra OS 9000 9.3.x - 9.6.x<br />
+      Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
+      Primera OS 4.3.x - 4.6.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocols</th>
+    <td>Fibre Channel, iSCSI, NFS</td>
+  </tr>
+  <tr>
+    <th>Filesystems</th>
+    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v3.0.0.md">v3.0.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="">HPE Alletra Storage MP B1000 File Service and Active Peer Persistence support for HPE CSI Driver for Kubernetes</a>
+   </td>
+ </tr>
+</table>
+
+<small>
+ <sup>&ast;</sup> = The HPE CSI Driver for Kubernetes is a block and file storage driver. For block only platforms it includes an [NFS Server Provisioner](using.md#using_the_nfs_server_provisioner) that allows "ReadWriteMany" `PersistentVolumeClaims` for `volumeMode: Filesystem`.<br/>
+ <sup>1</sup> = For Morpheus Kubernetes Service, HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](partners/index.md) for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize AlmaLinux, Amazon Linux, CentOS, Oracle Linux and Rocky Linux as RHEL derives and they are supported by HPE. While RHEL 7 and its derives will work, the host OS have been EOL'd and support is limited.<br/>
+ <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
+ <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
+</small>
+
 #### HPE CSI Driver for Kubernetes 2.5.2
 
 Release highlights:
@@ -309,88 +392,6 @@ Release highlights:
  <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block Storage. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File Storage.<br/>
 </small>
 
-#### HPE CSI Driver for Kubernetes 2.4.1
-
-Release highlights:
-
-* HPE Alletra Storage MP support
-* Kubernetes 1.29 support
-* Full KubeVirt, OpenShift Virtualization and SUSE Harvester support for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR
-* Full ARM64 support for HPE Alletra 5000/6000 and Nimble Storage
-* Support for foreign `StorageClasses` with the NFS Server Provisioner
-* SUSE Linux Enterprise Micro OS (SLE Micro) support
-
-Upgrade considerations:
-
-* Existing claims provisioned with the NFS Server Provisioner [needs to be upgraded](operations.md#upgrade_to_v241).
-
-<table>
-  <tr>
-    <th>Kubernetes</th>
-    <td>1.26-1.29<sup>1</sup></td>
-  </tr>
-  <tr>
-    <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.4.1">v2.4.1</a> on ArtifactHub</td>
-  </tr>
-  <tr>
-    <th>Operators</th>
-    <td>
-     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.1">v2.4.1</a> on OperatorHub<br />
-     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.1</a> via OpenShift console
-    </td>
-  </tr>
-  <tr>
-    <th>Worker&nbsp;OS</th>
-    <td>
-      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
-      Ubuntu 16.04, 18.04, 20.04, 22.04<br />
-      SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
-  </tr>
-  <tr>
-    <th>CPU architecture</th>
-    <td>AMD64, ARM64</td>
-  </tr>
-  <tr>
-    <th>Platforms<sup>3</sup></th>
-    <td>
-      Alletra Storage MP<sup>5</sup> 10.2.x - 10.3.x<br />
-      Alletra OS 9000 9.3.x - 9.5.x<br />
-      Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
-      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
-      Primera OS 4.3.x - 4.5.x<br />
-      3PAR OS 3.3.x
-    </td>
-  </tr>
-  <tr>
-    <th>Data&nbsp;protocols</th>
-    <td>Fibre Channel, iSCSI</td>
-  </tr>
-  <tr>
-    <th>Filesystems</th>
-    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
-  </tr>
-  <tr>
-    <th>Release&nbsp;notes</th>
-    <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.4.1.md">v2.4.1</a> on GitHub</td>
-  </tr>
-  <tr>
-   <th>Blogs</th>
-   <td>
-    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a>
-   </td>
- </tr>
-</table>
-
-<small>
- <sup>&ast;</sup> = The HPE CSI Driver for Kubernetes is a block storage driver primarily. It includes an [NFS Server Provisioner](using.md#using_the_nfs_server_provisioner) that allows "ReadWriteMany" `PersistentVolumeClaims`.<br/>
- <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See [partner ecosystems](partners/index.md) for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
- <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
- <sup>3</sup> = Learn about each data platform's team [support commitment](../legal/support/index.md#container_storage_providers).<br/>
- <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils` and reboot if the CSI node driver doesn't start.<br/>
- <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block Storage. Please see the [VAST CSI Driver](https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver) for HPE GreenLake for File Storage.<br/>
-</small>
-
 #### Release Archive
 
 HPE currently supports up to three minor releases of the HPE CSI Driver for Kubernetes.
@@ -400,10 +401,11 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 ## Known Limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
-* When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI is the only supported data protocol for the HPE CSI Driver when using block storage. The CSI driver does **not** support NPIV.
+* When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI and NFS is the only supported data protocol for the HPE CSI Driver. The CSI driver does **not** support NPIV.
 * Ephemeral, transient or non-persistent Kubernetes nodes are not supported unless the `/etc/hpe-storage` directory persists across node upgrades or reboots. The path is relocatable using a custom Helm chart or deployment manifest by altering the `mountPath` parameter for the directory.
 * The CSI driver support a fixed number of volumes per node. Inspect the current limitation by running `kubectl get csinodes -o yaml` and inspect `.spec.drivers.allocatable` for "csi.hpe.com". The "count" element contains how many volumes the node can attach from the HPE CSI Driver (default is 100). From v2.5.2 onwards this parameter is tunable in the Helm chart. Do NOT increase this value beyond what's been tested in the environment where the CSI driver is running.
 * The HPE CSI Driver uses host networking for the node driver. Some CNIs have flaky implementations which prevents the CSI driver components to communicate properly. Especially notorious is Flannel on K3s. Use Calico if possible for the widest compatibility.
+* If automatic rolling node upgrades are required for the cluster it's recommended to isolate the HPE CSI Driver Controller and related CSPs to a node by itself and schedule the upgrade of that particular node last.
 * The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](container_storage_provider/index.md) have known limitations listed separately.
 
 ## iSCSI CHAP Considerations
