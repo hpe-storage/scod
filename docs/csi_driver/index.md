@@ -73,7 +73,7 @@ These are the combinations HPE has tested and can provide official support servi
 Release highlights:
 
 * Introducing support for Kubernetes 1.33 and OpenShift 4.19
-* Introducing HPE Alletra Storage MP B1000 File Service CSP
+* Introducing HPE Alletra Storage MP B10000 File Service CSP
 * Active Peer Persistence support with automatic workload recovery
 * Official support for HPE ProLiant RL300 Gen11 and DL384 Gen12 (ARM-based CPUs)
 * Several enhancements to the NFS Server Provisioner
@@ -136,7 +136,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="">HPE Alletra Storage MP B1000 File Service and Active Peer Persistence support for HPE CSI Driver for Kubernetes</a>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-b10000-file-service-with-hpe/ba-p/7252531">Introducing HPE Alletra Storage MP B10000 File Service with HPE CSI Driver for Kubernetes 3.0.0</a>
    </td>
  </tr>
 </table>

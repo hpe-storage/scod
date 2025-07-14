@@ -415,6 +415,9 @@ parameters:
   latencyGoal: "300ms"
 ```
 
+!!! important
+    In certain situations where `VolumeGroups` are used, the `StorageClass` needs to have `parameters.fsCreateOptions: "-K"` set to workaround a data path issue. A symptom of this issue is prolonged staging of newly provisioned `PersistentVolumes`.
+
 ## SnapshotGroupClass Parameters
 
 These parameters are for `SnapshotGroupClass` objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check [enabling CSI snapshots](../../using.md#enabling_csi_snapshots) for more information. Volumes with snapshots are immutable.
@@ -529,10 +532,9 @@ These are the current limitations of Active Peer Persistence when used with the 
 - RCGs, volumes and VLUNs may not be managed outside of the CSI driver.
 - Pods (containers or VMs) needs to be labeled accordingly to be monitored by the HPE CSI Driver [Pod Monitor](../../monitor.md) to prevent multi-attach errors.
 - Only intra-cluster disaster recovery is supported.
-- Only WSAPIv3 storage platforms are supported, HPE Alletra Storage MP B10000 and HPE Alletra 9000.
 - Only symmetric host proximity is supported and running Active Peer Persistence beyond a campus distance (around 1km) is not recommended.
 - Only manual host and RCG creation is supported (this limitation will be removed in the future).
-- Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is back to status quo to resume full redundancy for the workloads.
+- Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is restore. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
 
 <a name="remote_copy_limitations"></a>
 ## Classic Peer Persistence Limitations
