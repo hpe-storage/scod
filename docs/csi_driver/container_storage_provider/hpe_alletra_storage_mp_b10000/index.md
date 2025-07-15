@@ -234,13 +234,13 @@ createhost -iscsi iqn-my-compute-node-3 iqn.1994-05.com.redhat:my-compute-node-3
 ```
 
 !!! important
-    Since HPE CSI Driver 3.0.0 the initiator host name need to be prefixed with the protocol, i.e "iqn-" for iSCSI and "fc-" for Fibre Channel.
+    Since HPE CSI Driver 3.0.0 the initiator host name need to be prefixed with the protocol, i.e "iqn-" for iSCSI and "wwn-" for Fibre Channel.
 
 Create the RCG and set the correct policy:
 
 ```text
 creatercopygroup -usr_cpg SSD_r6 my-target-FC:SSD_r6 my-csi-rcg my-target-FC:sync
-setrcopygroup pol active_active my-csi-rc
+setrcopygroup pol active_active my-csi-rcg
 ```
 
 Admit the hosts to the RCG:
