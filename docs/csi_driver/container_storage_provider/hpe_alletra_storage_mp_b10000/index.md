@@ -203,7 +203,7 @@ Before skipping to the [Common Peer Persistence Parameters](#common_peer_persist
 
 Explaining all the requirements for using Active Peer Persistence is beyond the scope of this document. Be understood with the [Active Peer Persistence limitations](#active_peer_persistence_limitations) with the HPE CSI Driver before proceeding.
 
-When using Active Peer Persistence, the CSP can't be allowed to manage the hosts on the backend arrays. While it's capable of creating hosts, the host needs to be admitted to RCGs manually to ensure the correct parameters are applied (see [Manual Host and RCG Creation](#manual_host_and_rcg_creation).
+When using Active Peer Persistence, the CSP can't be allowed to manage the hosts on the backend arrays. While it's capable of creating hosts, the host needs to be admitted to RCGs manually to ensure the correct parameters are applied (see [Manual Host and RCG Creation](#manual_host_and_rcg_creation)).
 
 !!! important
     The rest of this section assumes familiarity with the [HPE Active Peer Persistence technical white paper](https://www.hpe.com/psnow/doc/a00115612enw) and the terminology used therein.

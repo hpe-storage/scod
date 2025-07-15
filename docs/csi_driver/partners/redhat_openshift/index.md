@@ -264,7 +264,7 @@ Object references in OpenShift are not compatible with the NFS Server Provisione
 
 ## Optional NetworkPolicies
 
-If a `NetworkPolicy` is required for security reasons, HPE provide a boiler plate to get started.
+If a `NetworkPolicy` is required for security reasons, HPE provides a boiler plate to get started.
 
 - Download the [hpe-csi-driver-network-policy.yaml]({{ config.site_url}}csi_driver/partners/redhat_openshift/examples/network-policy/hpe-csi-driver-network-policy.yaml) manifest
 
