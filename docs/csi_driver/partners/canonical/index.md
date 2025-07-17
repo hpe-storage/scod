@@ -59,6 +59,18 @@ Go ahead and [Add an HPE Storage Backend](../../deployment.md#add_an_hpe_storage
 !!! hint
     When installing the chart on other Linux distributions than Ubuntu LTS, the "kubeletRootDir" will most likely differ.
 
+#### Running HPE CSI Driver on a Raspberry Pi with MicroK8s
+
+It's possible to image a Raspberry Pi with Ubuntu to run MicroK8s and provide `PersistentVolumes` from the HPE CSI Driver for Kubernetes. In order to do so, multipathing needs to be enabled.
+
+Ensure `/boot/firmware/cmdline.txt` contains:
+
+```text
+cgroup_enable=memory cgroup_memory=1 multipath=on
+```
+
+Reset the Raspberry Pi and proceed with the [MicroK8s](#microk8s) steps above.
+
 ### Integration Guides
 
 HPE and Canonical have partnered to create integration guides with Charmed Kubernetes for the different storage backends.
