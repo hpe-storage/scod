@@ -188,7 +188,7 @@ During the import volume process, any legacy (non-container volumes) defined in 
     • Support for `importVolumeName` is available from HPE CSI Driver 1.2.0+.
 
 <a name="remote_copy_with_peer_persistence_synchronous_replication_parameters"></a>
-### Peer Persistence Parameters
+### Peer Persistence Configuration
 
 The HPE Alletra Storage MP B10000 CSP supports two modes of performing synchrounous replication between two arrays, Active Peer Persistence (APP) and Classic Peer Persistence (CPP) using Remote Copy Groups (RCGs).
 
@@ -197,9 +197,38 @@ The HPE Alletra Storage MP B10000 CSP supports two modes of performing synchroun
 | APP  | HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;B10000 | Fully automated disaster recovery and workload failover with symmetric topology up to campus distance while requiring a third site for quorum. Restrictions apply, see [Active Peer Persistence Limitations](#active_peer_persistence_limitations) |
 | CPP  | HPE Alletra 9000<br />HPE Primera<br />HPE 3PAR | Data path resillience only, no workload failover. See [Classic Peer Persistence Limitations](#classic_peer_persistence_limitations) |
 
-Before skipping to the [Common Peer Persistence Parameters](#common_peer_persistence_parameters), review the requirements below.
+To enable replication within the HPE CSI Driver, the following steps must be completed:
 
-#### Active Peer Persistence Requirements
+* Create `Secrets` for both primary and target array. Refer to [Configuring Additional Storage Backends](../../deployment.md#configuring_additional_storage_backends).
+* Create a replication `HPEReplicationDeviceInfos` CRD.
+* Create a replication enabled `StorageClass`.
+
+A `CustomResourceDefinition` (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com` must be created to define the target array information. The `CRD` resource name will be used to define the `StorageClass` parameter "replicationDevices".
+
+```yaml
+apiVersion: storage.hpe.com/v2
+kind: HPEReplicationDeviceInfo
+metadata:
+  name: my-peer-persistence-target
+  namespace: hpe-storage
+spec:
+  target_array_details:
+  - targetCpg: <CPG name>
+    targetSnapCpg: <Snap CPG name> # optional
+    targetName: <Target array name>
+    targetSecret: <Target Secret name>
+    targetSecretNamespace: <Target Secret Namespace>
+```
+
+!!! info
+    The "targetCpg" and "targetSnapCpg" names might be difficult to find on newer systems. On those systems the default name is "SSD_r6", if multiple CPGs are present on the system, use `showcpg` in the CLI to list the CPGs. The "targetName" can be listed on the primary using `showrcopy targets`. The "targetSnapCpg" parameter is not applicable for HPE Alletra Storage MP B10000 and should be omitted.
+
+Next, review and perform the prerequisites for:
+
+- [Active Peer Persistence](#active_peer_persistence_prerequisites)
+- [Classic Peer Persistence](#classic_peer_persistence_prerequisites)
+
+#### Active Peer Persistence Prerequisites
 
 Explaining all the requirements for using Active Peer Persistence is beyond the scope of this document. Be understood with the [Active Peer Persistence limitations](#active_peer_persistence_limitations) with the HPE CSI Driver before proceeding.
 
@@ -277,8 +306,6 @@ Example output:
   1 total                  3
 ```
 
-##### Automatic Workload Failover
-
 It's highly desirable for an Active Peer Persistence protected workload to be rescheduled during a site outage. To allow Kubernetes to reschedule the workloads that ran on a partitioned host, the HPE CSI Driver Pod Monitor need to remove the `VolumeAttachment` from the partitioned host.
 
 Learn how to label `Pods` to be monitored by the HPE CSI Driver:
@@ -288,7 +315,13 @@ Learn how to label `Pods` to be monitored by the HPE CSI Driver:
 !!! hint
     This construct also applies to KubeVirt virtual machines, not just containers.
 
-#### Classic Peer Persistence Requirements
+##### StorageClass Parameters for Active Peer Persistence
+
+Due to an API limitation and the necessary manual steps to pre-create all the storage resources prior to creating PVCs, it's not currently recommended to add replication parameters directly in the `StorageClass`. Instead, PVCs are annotated with the necessary parameters, either during creation or afterwards.
+
+This section will be updated in a future revision, meanwhile, [Add Non-Replicated Volume to Remote Copy Group](#add_non-replicated_volume_to_remote_copy_group).
+
+#### Classic Peer Persistence Prerequisites
 
 If using existing RCGs for replication, the RCGs need to have the correct sync mode policy applied, "path_management". Periodic sync mode is not supported at this time.
 
@@ -303,66 +336,88 @@ Be understood with the [limitations](#remote_copy_limitations) of Classic Peer P
 
 For a tutorial on how to enable Classic Peer Persistence, check out the blog [Enabling Remote Copy using the HPE CSI Driver for Kubernetes on HPE Primera](https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on)
 
-#### Common Peer Persistence Parameters
-
-To enable replication within the HPE CSI Driver, the following steps must be completed:
-
-* Create `Secrets` for both primary and target array. Refer to [Configuring Additional Storage Backends](../../deployment.md#configuring_additional_storage_backends).
-* Create a replication `CustomResourceDefinition`, `HPEReplicationDeviceInfos`.
-* Create a replication enabled `StorageClass`.
-
-A `CustomResourceDefinition` (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com` must be created to define the target array information. The `CRD` object name will be used to define the `StorageClass` parameter "replicationDevices".
-
-```yaml
-apiVersion: storage.hpe.com/v2
-kind: HPEReplicationDeviceInfo
-metadata:
-  name: my-peer-persistence-target
-  namespace: hpe-storage
-spec:
-  target_array_details:
-  - targetCpg: <CPG name>
-    targetSnapCpg: <Snap CPG name> # optional
-    targetName: <Target array name>
-    targetSecret: <Target Secret name>
-    targetSecretNamespace: <Target Secret Namespace>
-```
-
-!!! info
-    The "targetCpg" and "targetSnapCpg" names might be difficult to find on newer systems. On those systems the default name is "SSD_r6", if multiple CPGs are present on the system, use `showcpg` in the CLI to list the CPGs. The "targetName" can be listed on the primary using `showrcopy targets`. The "targetSnapCpg" parameter is not applicable for HPE Alletra Storage MP B10000 and should be omitted.
+##### StorageClass Parameters for Classic Peer Persistence
 
 These `StorageClass` parameters are applicable only for replication, "remoteCopyGroup" and "replicationDevices" are mandatory. If the RCG defined in "remoteCopyGroup" doesn't exist on the array, then a new RCG will be created.
 
 | Parameter         | Option  | Description |
 | ----------------- | ------- | ----------- |
-| replicationPolicy | Text | Set to "active" for Active Peer Persistence and omit if using Classic Peer Persistence. |
 | remoteCopyGroup | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
 | replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
-| oneRcgPerPvc<sup>2</sup> | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
+| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
-<small><sup>1</sup> = Existing RCGs must have local CPG and target CPG configured along with the correct policy, "path_management" for Classic Peer Persistence and "active_active" for Active Peer Persistence.<br />
- <sup>2</sup> = Not compatible with Active Peer Persistence at this time.
+<small><sup>1</sup> = Existing RCGs must have local CPG and target CPG configured along with the correct policy, "path_management".<br />
 </small>
 
 !!! important
     RCGs created by the HPE CSI Driver applies the correct policies according to the replication mode supported by the system. Any changes to those policies need to be changed manually by a storage administrator and is highly discouraged.
 
-##### Add Non-Replicated Volume to Remote Copy Group
+#### Add Non-Replicated Volume to Remote Copy Group
 
-To add a non-replicated volume to an existing RCG, "allowMutations: description" at minimum must be defined within the `StorageClass`, for the sake of clarity, ensure the desired parameters are defined in the "allowMutations" list. See [Using Volume Mutations](../../using.md#using_volume_mutations) for more details.
+In order to add an existing PVC to a RCG, the `StorageClass` will utilize the [Volume Mutator](../../using.md#using_volume_mutations). [PVC overrides](../../using.md#using_pvc_overrides) may be used for creating PVCs with replication.
 
-Edit the non-replicated PVC and annotate the following parameters:
+!!! important
+    Using the either mutations or overrides is the recommended workflow for Active Peer Persistence.
+
+In the "parameter" section of the `StorageClass`, add the following (example):
+
+```text
+...
+paramters:
+  allowOverrides: replicationPolicy,remoteCopyGroup,replicationDevices
+  allowMutations: replicationPolicy,remoteCopyGroup,replicationDevices
+...
+```
+
+!!! tip
+    It's entirely possible to only use "allowOverrides" to prevent users to tamper with existing PVCs.
+
+Description of the parameters.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
 | replicationPolicy  | Text    | Set to "active" for Active Peer Persistence and omit or change to empty string if using Classic Peer Persistence. |
 | remoteCopyGroup    | Text    | Name of existing RCG. |
-| oneRcgPerPvc       | Boolean | Creates a dedicated RCG per `PVC`. (Optional) |
 | replicationDevices | Text    | Name of `HPEReplicationDeviceInfo` `CRD`. |
+| oneRcgPerPvc       | Boolean | Creates a dedicated RCG per `PVC`. (Optional) |
 
 !!! note
     "remoteCopyGroup" and "oneRcgPerPvc" parameters are mutually exclusive and cannot be added together when editing a `PVC`.
+
+Learn in the using section how to apply overrides and mutations in more detail, as an example for replication, this PVC, when either created or edited, add the underlying `PersistentVolume` to "my-csi-rcg" RCG using Active Peer Persistence using the "my-peer-persistence-target" `HPEReplicationDeviceInfo`.
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-replicated-pvc
+  annotations:
+    csi.hpe.com/replicationPolicy: active
+    csi.hpe.com/remoteCopyGroup: my-csi-rcg
+    csi.hpe.com/replicationDevices: my-peer-persistence-target
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 374Gi
+  storageClassName: hpe-standard
+```
+
+The same "edit" operation may be performed non-interactive with `kubectl`:
+
+```text
+kubectl annotate pvc/my-replicated-pvc \
+    csi.hpe.com/replicationPolicy=active \
+    csi.hpe.com/remoteCopyGroup=my-csi-rcg \
+    csi.hpe.com/replicationDevices=my-peer-persistence-target
+```
+
+The underlying `PersistentVolume` is now being replicated.
+
+!!! tip "Verification"
+    The "VolumeEditSuccessful" event will be visible on the PVC if the mutation is successful, `kubectl events --for pvc/my-replicated-pvc`.
 
 ## VolumeSnapshotClass Parameters
 
