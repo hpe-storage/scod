@@ -3,7 +3,7 @@ spec:
     spec:
       containers:
         - name: hpe-nfs
-          image: quay.io/hpestorage/nfs-provisioner:v3.0.7
+          image: quay.io/hpestorage/nfs-provisioner:v3.0.8
           readinessProbe:
             exec:
               command:

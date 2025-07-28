@@ -190,12 +190,10 @@ The next step is to create a `HPECSIDriver` object.
 ```yaml fct_label="HPE CSI Operator v3.0.0"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v3.0.0-sample.yaml" %}```
-```
 
 ```yaml fct_label="v2.5.2"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
-```
 
 ```yaml fct_label="v2.5.1"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml

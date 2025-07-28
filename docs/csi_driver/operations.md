@@ -310,7 +310,7 @@ Any prior deployed NFS servers may be upgraded to v2.4.1.
 
 #### Assumptions
 
-- HPE CSI Driver or Operator v2.4.1 installed.
+- HPE CSI Driver or Operator v2.4.1 (or later) installed.
 - All running NFS servers are running in the "hpe-nfs" `Namespace`.
 - Worker nodes with access to the Quay registry and SCOD.
 - Access to the commands `kubectl`, `yq` and `curl`.
