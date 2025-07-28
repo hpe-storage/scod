@@ -39,6 +39,8 @@ In the event of deploying the HPE CSI Driver in a secure air-gapped environment,
 
 Establish a working directory on a bastion Linux host that has HTTP access to the Internet, the private registry and the Kubernetes cluster where the CSI driver needs to be installed. The bastion host is assumed to have the `docker`, `helm` and `curl` command installed. It's also assumed throughout that the user executing `docker` has logged in to the private registry and that pulling images from the private registry is allowed anonymously by the Kubernetes compute nodes.
 
+While it seems like an obvious tactic to allowlist the different registries used by the Helm chart, the challenge here is that the registry names are usuallly multiple DNS A records that may change at any time.
+
 !!! note
     Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.
 
@@ -48,7 +50,7 @@ Create a working directory and set environment variables referenced throughout t
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=2.5.2
+export MY_CSI_DRIVER=3.0.0
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -150,10 +152,13 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml fct_label="HPE CSI Operator v2.5.2"
+```yaml fct_label="HPE CSI Operator v3.0.0"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml
+{% include "csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml" %}```
+
+```yaml fct_label="v2.5.2"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
-```
 
 ```yaml fct_label="v2.5.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
@@ -187,9 +192,9 @@ All parameters are mandatory and described below.
 | username    | Backend storage system username with the correct privileges to perform storage management.
 | password    | Backend storage system password.
 
-Example:
+Example `Secrets`, Alletra Storage MP B10000:
 
-```yaml fct_label="Alletra Storage MP B10000"
+```yaml fct_label="Alletra Storage MP B10000 Block"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -198,7 +203,21 @@ metadata:
 stringData:
   serviceName: alletrastoragemp-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20:443
+  backend: 192.168.1.110:443
+  username: 3paradm
+  password: 3pardata
+```
+
+```yaml fct_label="File Service"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-b10000-nfs-csp-svc
+  servicePort: "8080"
+  backend: 192.168.1.110
   username: 3paradm
   password: 3pardata
 ```
@@ -226,10 +245,12 @@ metadata:
 stringData:
   serviceName: alletra9000-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.20:443
+  backend: 192.168.1.110:443
   username: 3paradm
   password: 3pardata
 ```
+
+Legacy platforms:
 
 ```yaml fct_label="Nimble Storage"
 apiVersion: v1
@@ -240,7 +261,7 @@ metadata:
 stringData:
   serviceName: nimble-csp-svc
   servicePort: "8080"
-  backend: 192.168.1.2
+  backend: 192.168.1.110
   username: admin
   password: admin
 ```
@@ -254,7 +275,7 @@ metadata:
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.2:443
+  backend: 192.168.1.110:443
   username: 3paradm
   password: 3pardata
 ```
@@ -268,13 +289,13 @@ metadata:
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
-  backend: 10.10.0.2
+  backend: 192.168.1.110
   username: 3paradm
   password: 3pardata
 ```
 
 !!! caution "Improved Security"
-    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 derived platforms except 3PAR should include port 443 with the backend IP address (i.e "10.10.0.2:443") to prevent the CSP from using SSH.
+    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 (block) derived platforms except 3PAR should include port 443 with the backend IP address (i.e "192.168.1.110:443") to prevent the CSP from using SSH.
 
 Create the `Secret` using `kubectl`:
 
@@ -467,7 +488,7 @@ The manifests used below are renders from the latest Helm template with default 
 Deploy the CSI driver and sidecars for the relevant Kubernetes version.
 
 !!! important "Uninstalling the CSI driver when installed manually"
-    The manifests below create a number of objects, including `CustomResourceDefinitions` (CRDs) which may hold critical information about storage resources. Simply deleting the below manifests in order to uninstall the CSI driver may render `PersistentVolumes` unusable. 
+    The manifests below create a number of objects, including `CustomResourceDefinitions` (CRDs) which may hold critical information about storage resources. Simply deleting the below manifests in order to uninstall the CSI driver may render `PersistentVolumes` unusable.
 
 ### Common
 

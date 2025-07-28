@@ -51,7 +51,7 @@ The CSP requires access to a user with either `poweruser` or the `administrator`
 
 In array OS 6.0.0 and newer it's possible to create separate tenants using the `tenantadmin` CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.
 
-No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`. 
+No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 `StorageClass` to Folder mapping is needed, the "folder" parameter needs to be called out in the `StorageClass`.
 
 For reference, as of array OS 6.0.0, this is the `tenantadmin` command synopsis.
 
@@ -127,8 +127,13 @@ Backward compatibility with the HPE Nimble Storage FlexVolume driver is being ho
 
 Please see [using the HPE CSI Driver](../../using.md#base_storageclass_parameters) for base `StorageClass` examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.
 
-!!! note
-    These are optional parameters unless specified.
+Example default `StorageClass` ([download](examples/storageclass.yaml)):
+
+```yaml
+{% include "csi_driver/container_storage_provider/hpe_alletra_6000/examples/storageclass.yaml" %}```
+
+!!! hint
+    If all mutable parameters have values provided during provisioning of the `PersistentVolumes`, the [Volume Mutator](../../using.md#using_volume_mutations) will later allow changes if needed.
 
 ### Common Parameters for Provisioning and Cloning
 
@@ -150,7 +155,7 @@ These parameters are mutable between a parent volume and creating a clone from a
 
 <small>
  Restrictions applicable when using the [CSI volume mutator](../../using.md#using_volume_mutations):
- <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning. 
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning.
  <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
  <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
  <br /><sup>4</sup> = This parameter was removed in HPE CSI Driver 1.4.0 and replaced with [`VolumeGroupClasses`](#volumegroupclass_parameters).
