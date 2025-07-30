@@ -110,6 +110,7 @@ Consult the [compatibility and support](../../index.md#compatibility_and_support
 - The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.
 - When using an FC only array and provisioning RWX block volumes, the "multi_initiator" attribute won't get set properly on the volume. The workaround is to run `group --edit --iscsi_enabled yes` on the Array OS CLI.
 - iSCSI does not work and is not supported on routed data networks. The REST API traffic may be routed and is supported.
+- The CSP has been tested using iSCSI with up to 1200 `VolumeAttachments` per compute node. HPE recommends not exceeding 600 `VolumeAttachments` per node and leave headroom for emergencies as recovering a failed node will take hours to reschedule. Other limits may apply with other protocols (LUN limits of FC HBAs as an example) and it's always recommended to test the upper bounds before assuming the node resources are enough for both applications and infrastructure resources. A common problem is running out of file descriptors. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
 
 ## StorageClass Parameters
 

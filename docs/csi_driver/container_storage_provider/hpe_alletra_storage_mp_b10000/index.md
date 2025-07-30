@@ -79,6 +79,12 @@ Once the CSI driver is installed and running, [add an HPE storage backend](../..
 !!! note
     Remote Copy Groups managed by the CSP have not been tested with Virtual Domains at this time.
 
+### Limitations
+
+These are the generally known limitation of the CSP.
+
+- The CSP has been tested using iSCSI with up to 250 `VolumeAttachments` per compute node. HPE recommends not exceeding 200 `VolumeAttachments` per node and leave headroom for emergencies. It's always recommended to test the upper bounds before deploying to production. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
+
 ## VLUN Templates
 
 A VLUN template enables the export of a virtual volume as a VLUN to hosts. For more information, see the [HPE Primera OS Commmand Line Interface - Installation and Reference Guide](https://support.hpe.com/hpesc/public/docDisplay?docId=a00105286en_us&page=createvlun.html).
