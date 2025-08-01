@@ -84,6 +84,7 @@ Once the CSI driver is installed and running, [add an HPE storage backend](../..
 These are the generally known limitation of the CSP.
 
 - The CSP has been tested using iSCSI with up to 250 `VolumeAttachments` per compute node. HPE recommends not exceeding 200 `VolumeAttachments` per node and leave headroom for emergencies. It's always recommended to test the upper bounds before deploying to production. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
+- Compute node hostnames may not exceed 27 characters. The storage platform limitation is 31 characters. Since HPE CSI Driver 3.0.0, the node name has a 4 character protocol prefix such as "iqn-" or "wwn-". Further, the CSP truncates the domain name from the Kubernetes node name.
 
 ## VLUN Templates
 
