@@ -255,7 +255,7 @@ spec:
 ```
 
 !!! note
-    The RCG does have to exist at this point but is needed prior to creating PVCs.
+    The RCG does not have to exist at this point, but is needed prior to creating and annotating PVCs.
 
 Next, review and perform the prerequisites for:
 
