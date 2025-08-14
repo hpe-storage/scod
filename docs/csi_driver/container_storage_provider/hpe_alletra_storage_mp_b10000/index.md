@@ -208,6 +208,7 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 * Create `Secrets` for both primary and target array. Refer to [Configuring Additional Storage Backends](../../deployment.md#configuring_additional_storage_backends).
 * Create a replication `HPEReplicationDeviceInfos` CRD.
+* Create a replication `HPEReplicationMappings` CRD.
 * Create a replication enabled `StorageClass`.
 
 A `CustomResourceDefinition` (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com` must be created to define the target array information. The `CRD` resource name will be used to define the `StorageClass` parameter "replicationDevices".
@@ -229,6 +230,32 @@ spec:
 
 !!! info
     The "targetCpg" and "targetSnapCpg" names might be difficult to find on newer systems. On those systems the default name is "SSD_r6", if multiple CPGs are present on the system, use `showcpg` in the CLI to list the CPGs. The "targetName" can be listed on the primary using `showrcopy targets`. The "targetSnapCpg" parameter is not applicable for HPE Alletra Storage MP B10000 and should be omitted.
+
+A `CustomResourceDefinition` (CRD) of type `hpereplicationmappings.storage.hpe.com` must be created to define the replication relationship information.
+
+```yaml
+apiVersion: storage.hpe.com/v3
+kind: HPEReplicationMapping
+metadata:
+  name: hpe-csi-<Primary IP address>-<Target IP address>
+spec:
+  primary_array_details:
+    cpg: <Primary CPG name>
+    name: <Primary IP address>:443
+    secret: <Primary Secret name>
+    secretNamespace: <Primary Secret Namespace>
+  rcg_details:
+    rcgnames:
+    - <Existing RCG name>
+  target_array_details:
+    cpg: <Target CPG name>
+    name: <Target IP address>:443
+    secret: <Target Secret name>
+    secretNamespace: <Target Secret Namespace>
+```
+
+!!! note
+    The RCG does not have to exist at this point, but is needed prior to creating and annotating PVCs.
 
 Next, review and perform the prerequisites for:
 
