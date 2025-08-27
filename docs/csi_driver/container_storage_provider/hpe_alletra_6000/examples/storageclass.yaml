@@ -21,7 +21,7 @@ parameters:
   description: Volume created by the HPE CSI Driver for Kubernetes
   destroyOnDelete: "true"
   pool: default
-  folder: default
+  # folder: my-folder # This folder needs to exist prior to provisioning PVCs
   performancePolicy: default
   limitIops: "-1"
   limitMbps: "-1"
