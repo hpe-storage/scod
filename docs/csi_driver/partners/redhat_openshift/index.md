@@ -216,12 +216,12 @@ When uninstalling an operator managed by OLM, a Cluster Admin must decide whethe
 !!! important
     Do not modify or remove these `CRDs` or `APIServices` if you are upgrading or reinstalling the HPE CSI driver in order to prevent data loss.
 
-The following are `CRDs` installed by the HPE CSI driver.
+The following are `CRDs` installed by the HPE CSI Driver.
 
 ```text
-hpecsidrivers.storage.hpe.com
 hpenodeinfos.storage.hpe.com
 hpereplicationdeviceinfos.storage.hpe.com
+hpereplicationmappings.storage.hpe.com
 hpesnapshotgroupinfos.storage.hpe.com
 hpevolumegroupinfos.storage.hpe.com
 hpevolumeinfos.storage.hpe.com
@@ -233,7 +233,10 @@ volumegroupcontents.storage.hpe.com
 volumegroups.storage.hpe.com
 ```
 
-The following are `APIServices` installed by the HPE CSI driver.
+!!! hint
+    The `hpecsidrivers.storage.hpe.com` `CRD` is installed by the HPE CSI Operator and may be removed during reinstallation.
+
+The following are `APIServices` installed by the HPE CSI Driver.
 
 ```text
 v1.storage.hpe.com

@@ -972,6 +972,7 @@ These are some common issues and gotchas that are useful to know about when plan
 - The NFS servers provide a "ClusterIP" `Service`. It is possible to expose the NFS servers outside the cluster for external NFS clients. Understand the scope and limitations in [Auxillary Operations](operations.md#expose_nfs_services_outside_of_the_kubernetes_cluster).
 - If the NFS Server Provisioner is unable to bring up the `Deployment` for some reason, the operation is rolled back and restarted, this may cause unnecessary churn and always make sure there are plenty of resources available where the NFS servers are scheduled.
 - The liveness probe that will restart the NFS Deployment if the exported filesystem becomes read-only will get stuck if there's an all paths down situation. Provide redundant paths to avoid this issue and if it does get stuck, repair at least one data path.
+- The NFS `Pod` "fsGroup" is mapped to "nobody". This may be changed in the running NFS `Deployments` by following [these procedures](operations.md#change_default_fsgroup_for_nfs_servers) to match a frontend workload "fsGroup".
 
 See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisioner_resources) for further details.
 

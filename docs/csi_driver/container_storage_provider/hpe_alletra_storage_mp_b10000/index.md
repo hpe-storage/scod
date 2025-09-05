@@ -624,7 +624,6 @@ These are the current limitations of Active Peer Persistence when used with the 
 - Only symmetric host proximity is supported and running Active Peer Persistence beyond a campus distance (around 1km) is not recommended.
 - Only manual host and RCG creation is supported (this limitation will be removed in the future).
 - Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is restored. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
-- It is not possible to clone volumes protected with Active Peer Persistence using the HPE CSI Driver.
 
 <a name="remote_copy_limitations"></a>
 ## Classic Peer Persistence Limitations

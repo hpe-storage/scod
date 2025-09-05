@@ -280,74 +280,6 @@ spec:
 
 Enabling and setting up the CSI snapshotter and related `CRDs` is not necessary but it's recommended to be familiar with using [CSI snapshots](using.md#using_csi_snapshots).
 
-<a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a>
-## Upgrade NFS Servers
-
-In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually.
-
-### Upgrade to v3.0.0
-
-Any prior deployed NFS servers may be upgraded to v3.0.0.
-
-### Upgrade to v2.5.2
-
-Any prior deployed NFS servers may be upgraded to v2.5.2.
-
-### Upgrade to v2.5.0
-
-Any prior deployed NFS servers may be upgraded to v2.5.0.
-
-### Upgrade to v2.4.2
-
-No changes to NFS Server Provisioner image between v2.4.1 and v2.4.2.
-
-### Upgrade to v2.4.1
-
-Any prior deployed NFS servers may be upgraded to v2.4.1.
-
-!!! important
-    With v2.4.0 and onwards the NFS servers are deployed with default resource limits and in v2.5.0 resource requests were added. Those won't be applied on running NFS servers, only new ones.
-
-#### Assumptions
-
-- HPE CSI Driver or Operator v2.4.1 (or later) installed.
-- All running NFS servers are running in the "hpe-nfs" `Namespace`.
-- Worker nodes with access to the Quay registry and SCOD.
-- Access to the commands `kubectl`, `yq` and `curl`.
-- Cluster privileges to manipulate resources in the "hpe-nfs" `Namespace`.
-- None of the commands executed should return errors or have non-zero exit codes.
-
-!!! seealso
-    If NFS `Deployments` are scattered across `Namespaces`, use the [Validation](#validation) steps to find where they reside.
-
-#### Patch Running NFS Servers
-
-When patching the NFS `Deployments`, the `Pods` will restart and cause a pause in I/O for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
-
-Patch all NFS `Deployments` with the following.
-
-```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.0.0.yaml | \
-  kubectl patch -n hpe-nfs \
-  $(kubectl get deploy -n hpe-nfs -o name) \
-  --patch-file=/dev/stdin
-```
-
-!!! tip
-    If it's desired to patch one NFS `Deployment` at a time, replace the shell substituion with a `Deployment` name.
-
-### Validation
-
-This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.6 of the "nfs-provisioner" image after the uprade is complete.
-
-```text
-kubectl get deploy -A -o yaml | \
-  yq -r '.items[] | [] + { "Namespace": select(.spec.template.spec.containers[].name == "hpe-nfs").metadata.namespace, "Deployment": select(.spec.template.spec.containers[].name == "hpe-nfs").metadata.name, "Image": select(.spec.template.spec.containers[].name == "hpe-nfs").spec.template.spec.containers[].image }'
-```
-
-!!! note
-    The above line is very long.
-
 ## Manual Node Configuration
 
 With the release of HPE CSI Driver v2.4.0 it's possible to completely disable the node conformance and node configuration performed by the CSI node driver at startup. This transfers the responsibilty from the HPE CSI Driver to the Kubernetes cluster administrator to ensure worker nodes boot with a supported configuration.
@@ -464,6 +396,75 @@ While both disabling conformance and configuration parameters lends itself to a 
 yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-utils-iscsiuio nfs-utils
 -->
 
+
+<a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a>
+## Upgrade NFS Servers
+
+In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually.
+
+### Upgrade to v3.0.0
+
+Any prior deployed NFS servers may be upgraded to v3.0.0.
+
+### Upgrade to v2.5.2
+
+Any prior deployed NFS servers may be upgraded to v2.5.2.
+
+### Upgrade to v2.5.0
+
+Any prior deployed NFS servers may be upgraded to v2.5.0.
+
+### Upgrade to v2.4.2
+
+No changes to NFS Server Provisioner image between v2.4.1 and v2.4.2.
+
+### Upgrade to v2.4.1
+
+Any prior deployed NFS servers may be upgraded to v2.4.1.
+
+!!! important
+    With v2.4.0 and onwards the NFS servers are deployed with default resource limits and in v2.5.0 resource requests were added. Those won't be applied on running NFS servers, only new ones.
+
+#### Assumptions
+
+- HPE CSI Driver or Operator v2.4.1 (or later) installed.
+- All running NFS servers are running in the "hpe-nfs" `Namespace`.
+- Worker nodes with access to the Quay registry and SCOD.
+- Access to the commands `kubectl`, `yq` and `curl`.
+- Cluster privileges to manipulate resources in the "hpe-nfs" `Namespace`.
+- None of the commands executed should return errors or have non-zero exit codes.
+
+!!! seealso
+    If NFS `Deployments` are scattered across `Namespaces`, use the [Validation](#validation) steps to find where they reside.
+
+#### Patch Running NFS Servers
+
+When patching the NFS `Deployments`, the `Pods` will restart and cause a pause in I/O for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
+
+Patch all NFS `Deployments` with the following.
+
+```text
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.0.0.yaml | \
+  kubectl patch -n hpe-nfs \
+  $(kubectl get deploy -n hpe-nfs -o name) \
+  --patch-file=/dev/stdin
+```
+
+!!! tip
+    If it's desired to patch one NFS `Deployment` at a time, replace the shell substituion with a `Deployment` name.
+
+### Validation
+
+This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.6 of the "nfs-provisioner" image after the uprade is complete.
+
+```text
+kubectl get deploy -A -o yaml | \
+  yq -r '.items[] | [] + { "Namespace": select(.spec.template.spec.containers[].name == "hpe-nfs").metadata.namespace, "Deployment": select(.spec.template.spec.containers[].name == "hpe-nfs").metadata.name, "Image": select(.spec.template.spec.containers[].name == "hpe-nfs").spec.template.spec.containers[].image }'
+```
+
+!!! note
+    The above line is very long.
+
 ## Expose NFS Services Outside of the Kubernetes Cluster
 
 In certain situations it's practical to expose the NFS exports outside the Kubernetes cluster to allow external applications to access data as part of an ETL (Extract, Transform, Load) pipeline or similar.
@@ -549,6 +550,25 @@ mount -t nfs4 192.168.1.40:/export /mnt
 
 !!! note
     If the NFS server is rescheduled in the Kubernetes cluster, the load balancer IP address follows, and the client will recover and resume IO after a few minutes.
+
+## Change default fsGroup for NFS Servers
+
+The default "fsGroup" is mapped to "nobody" (gid=65534) which allows remote `Pods` run as the root user to write in the NFS export. This may not be desirable as best practices dictate that `Pods` should run with a user id larger than 99.
+
+To allow user `Pods` to write in the export, edit the running NFS deployment and change the "fsGroup" to the corresponding gid running in the remote `Pod`.
+
+```text
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-nfs
+spec:
+  template:
+    spec:
+      securityContext:
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+```
 
 ## Apply Custom Images to the Helm Chart and Operator
 
