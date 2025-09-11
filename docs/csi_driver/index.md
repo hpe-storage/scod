@@ -70,6 +70,9 @@ These are the combinations HPE has tested and can provide official support servi
 <a name="latest_release"></a>
 #### HPE CSI Driver for Kubernetes 3.0.0
 
+!!! caution
+    An issue has been identified when upgrading 2.5.2 to 3.0.0 with Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR. Only use 3.0.0 for those platform on clusters with no current workloads running. Contact support if this has already been done and see issues with unpublishing volumes. Upgrading from 2.5.2 directly to upcoming 3.0.1 is recommended.
+
 Release highlights:
 
 * Introducing support for Kubernetes 1.33 and OpenShift 4.19
