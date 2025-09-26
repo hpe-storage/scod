@@ -402,9 +402,9 @@ yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-uti
 
 In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually.
 
-### Upgrade to v3.0.0
+### Upgrade to v3.0.1
 
-Any prior deployed NFS servers may be upgraded to v3.0.0.
+Any prior deployed NFS servers may be upgraded to v3.0.1.
 
 ### Upgrade to v2.5.2
 

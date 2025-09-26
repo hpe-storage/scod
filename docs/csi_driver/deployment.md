@@ -50,7 +50,7 @@ Create a working directory and set environment variables referenced throughout t
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=3.0.0
+export MY_CSI_DRIVER=3.0.1
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -152,9 +152,9 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml fct_label="HPE CSI Operator v3.0.0"
-# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml
-{% include "csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml" %}```
+```yaml fct_label="HPE CSI Operator v3.0.1"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
+{% include "csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.5.2"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
