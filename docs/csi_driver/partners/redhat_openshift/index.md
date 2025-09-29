@@ -16,12 +16,12 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Certified               | 4.19                              | 3.0.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2, 3.0.0               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.17                              | 2.5.2, 3.0.0               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2, 3.0.0        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.0 | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.0 | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.19                              | 3.0.1                      | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2, 3.0.1               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.17                              | 2.5.2, 3.0.1               | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2, 3.0.1        | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1 | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 
@@ -187,9 +187,9 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` object.
 
-```yaml fct_label="HPE CSI Operator v3.0.0"
-# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.0-sample.yaml
-{% include "../../examples/deployment/hpecsidriver-v3.0.0-sample.yaml" %}```
+```yaml fct_label="HPE CSI Operator v3.0.1"
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
+{% include "../../examples/deployment/hpecsidriver-v3.0.1-sample.yaml" %}```
 
 ```yaml fct_label="v2.5.2"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
@@ -409,7 +409,7 @@ operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-drive
 Install a specific version after and including v2.5.0:
 
 ```text
-operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.0.0
+operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.0.1
 ```
 
 !!! important

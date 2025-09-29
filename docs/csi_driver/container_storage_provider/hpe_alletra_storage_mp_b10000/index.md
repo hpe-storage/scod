@@ -208,7 +208,6 @@ To enable replication within the HPE CSI Driver, the following steps must be com
 
 * Create `Secrets` for both primary and target array. Refer to [Configuring Additional Storage Backends](../../deployment.md#configuring_additional_storage_backends).
 * Create a replication `HPEReplicationDeviceInfos` CRD.
-* Create a replication `HPEReplicationMappings` CRD.
 * Create a replication enabled `StorageClass`.
 
 A `CustomResourceDefinition` (CRD) of type `hpereplicationdeviceinfos.storage.hpe.com` must be created to define the target array information. The `CRD` resource name will be used to define the `StorageClass` parameter "replicationDevices".
@@ -230,32 +229,6 @@ spec:
 
 !!! info
     The "targetCpg" and "targetSnapCpg" names might be difficult to find on newer systems. On those systems the default name is "SSD_r6", if multiple CPGs are present on the system, use `showcpg` in the CLI to list the CPGs. The "targetName" can be listed on the primary using `showrcopy targets`. The "targetSnapCpg" parameter is not applicable for HPE Alletra Storage MP B10000 and should be omitted.
-
-A `CustomResourceDefinition` (CRD) of type `hpereplicationmappings.storage.hpe.com` must be created to define the replication relationship information.
-
-```yaml
-apiVersion: storage.hpe.com/v3
-kind: HPEReplicationMapping
-metadata:
-  name: hpe-csi-<Primary IP address>-<Target IP address>
-spec:
-  primary_array_details:
-    cpg: <Primary CPG name>
-    name: <Primary IP address>:443
-    secret: <Primary Secret name>
-    secretNamespace: <Primary Secret Namespace>
-  rcg_details:
-    rcgnames:
-    - <Existing RCG name>
-  target_array_details:
-    cpg: <Target CPG name>
-    name: <Target IP address>:443
-    secret: <Target Secret name>
-    secretNamespace: <Target Secret Namespace>
-```
-
-!!! note
-    The RCG does not have to exist at this point, but is needed prior to creating and annotating PVCs.
 
 Next, review and perform the prerequisites for:
 
@@ -351,9 +324,24 @@ Learn how to label `Pods` to be monitored by the HPE CSI Driver:
 
 ##### StorageClass Parameters for Active Peer Persistence
 
-Due to an API limitation and the necessary manual steps to pre-create all the storage resources prior to creating PVCs, it's not currently recommended to add replication parameters directly in the `StorageClass`. Instead, PVCs are annotated with the necessary parameters, either during creation or afterwards.
+These `StorageClass` parameters are applicable only for replication, "primarySecretNamespace", "primarySecret", "remoteCopyGroup" and "replicationDevices" are mandatory. If the RCG defined in "remoteCopyGroup" doesn't exist on the array, then a new RCG will be created.
 
-This section will be updated in a future revision, meanwhile, [Add Non-Replicated Volume to Remote Copy Group](#add_non-replicated_volume_to_remote_copy_group).
+| Parameter                          | Option  | Description |
+| ---------------------------------- | ------- | ----------- |
+| primarySecretNamespace             | Text    | The `Namespace` for the primary array `Secret`. |
+| primarySecret                      | Text    | The name of the `Secret` for the primary array. |
+| remoteCopyGroup<sup>2</sup>        | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
+| replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
+| oneRcgPerPvc<sup>2</sup>           | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
+
+<small>
+ <sup>1</sup> = Existing RCGs must have local CPG and target CPG configured along with the correct policy, "active".<br />
+ <sup>2</sup> = Mutually exclusive.
+</small>
+
+!!! important
+    RCGs created by the HPE CSI Driver applies the correct policies according to the replication mode supported by the system. Any changes to those policies need to be changed manually by a storage administrator and is highly discouraged.
 
 #### Classic Peer Persistence Prerequisites
 
@@ -390,9 +378,6 @@ These `StorageClass` parameters are applicable only for replication, "remoteCopy
 #### Add Non-Replicated Volume to Remote Copy Group
 
 In order to add an existing PVC to a RCG, the `StorageClass` will utilize the [Volume Mutator](../../using.md#using_volume_mutations). [PVC overrides](../../using.md#using_pvc_overrides) may be used for creating PVCs with replication.
-
-!!! important
-    Using the either mutations or overrides is the recommended workflow for Active Peer Persistence.
 
 In the "parameter" section of the `StorageClass`, add the following (example):
 
@@ -452,6 +437,27 @@ The underlying `PersistentVolume` is now being replicated.
 
 !!! tip "Verification"
     The "VolumeEditSuccessful" event will be visible on the PVC if the mutation is successful, `kubectl events --for pvc/my-replicated-pvc`.
+
+#### Remove Non-Replicated Volume to Remote Copy Group
+
+In order to remove an existing PVC from a RCG, the `StorageClass` will utilize the [Volume Mutator](../../using.md#using_volume_mutations). [PVC overrides](../../using.md#using_pvc_overrides) may be used for removing PVCs from RCGs.
+
+The `StorageClass` where the replication was added from, need to have these parameters configured prior the PVC was created.
+
+```text
+...
+paramters:
+  allowOverrides: replicationPolicy,remoteCopyGroup,replicationDevices
+  allowMutations: replicationPolicy,remoteCopyGroup,replicationDevices
+...
+```
+
+```text
+kubectl annotate pvc/my-replicated-pvc \
+  csi.hpe.com/replicationDevices="" \
+  csi.hpe.com/remoteCopyGroup="" \
+  csi.hpe.com/replicationPolicy=""
+```
 
 ## VolumeSnapshotClass Parameters
 
@@ -622,7 +628,7 @@ These are the current limitations of Active Peer Persistence when used with the 
 - Pods (containers or VMs) needs to be labeled accordingly to be monitored by the HPE CSI Driver [Pod Monitor](../../monitor.md) to prevent multi-attach errors.
 - Only intra-cluster disaster recovery is supported.
 - Only symmetric host proximity is supported and running Active Peer Persistence beyond a campus distance (around 1km) is not recommended.
-- Only manual host and RCG creation is supported (this limitation will be removed in the future).
+- Only manual host creation is supported (this limitation will be removed in the future).
 - Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is restored. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
 
 <a name="remote_copy_limitations"></a>
