@@ -456,8 +456,7 @@ paramters:
 kubectl annotate pvc/my-replicated-pvc \
   csi.hpe.com/replicationDevices="" \
   csi.hpe.com/remoteCopyGroup="" \
-  csi.hpe.com/replicationPolicy="" \
-  --overwrite
+  csi.hpe.com/replicationPolicy=""
 ```
 
 ## VolumeSnapshotClass Parameters
