@@ -3,11 +3,11 @@
 {% block site_meta %}
     {{ super() }}
     {% if page %}<meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
-    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE primary storage. Tailored for IT ops, developers and technology partners. Including HPE Alletra Storage, Nimble Storage and Primera."/>{% endif %}
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>{% endif %}
     <meta property="og:locale" content="en_US"/>
     <meta property="og:url" content="https://scod.hpedev.io"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.jpg"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
     <meta property="og:image:width" content="1200"/>
     <meta property="og:image:height" content="630"/>
     {% endblock %}
@@ -16,7 +16,8 @@
 
 <footer>
   {%- block next_prev %}
-  {% if page and page.next_page or page.previous_page %}
+  {%- if config.theme.prev_next_buttons_location|lower in ['bottom', 'both']
+      and page and (page.next_page or page.previous_page) %}
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       {% if page.next_page %}
         <a href="{{ page.next_page.url|url }}" class="btn btn-neutral float-right" title="{{ page.next_page.title }}">Next <span class="icon icon-circle-arrow-right"></span></a>
