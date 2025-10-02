@@ -5,6 +5,8 @@ site_author: 'Hewlett Packard Enterprise'
 theme:
   name: readthedocs
   custom_dir: hpe_theme/
+  prev_next_buttons_location: none
+  logo: img/hpe.png
   analytics:
     gtag: 'G-PC28RTKKTW'
 repo_name: 'hpe-storage/scod'
