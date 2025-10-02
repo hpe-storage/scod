@@ -1,26 +1,26 @@
 @font-face {
     font-family: 'HPE Graphik Regular';
-    src: url('http://127.0.0.1:8000/css/HPE Graphik-Regular.otf');
+    src: url('https://scod.hpedev.io/css/HPE Graphik-Regular.otf');
 }
 
 @font-face {
     font-family: 'HPE Graphik Bold';
-    src: url('http://127.0.0.1:8000/css/HPE Graphik-Bold.otf');
+    src: url('https://scod.hpedev.io/css/HPE Graphik-Bold.otf');
 }
 
 @font-face {
     font-family: 'HPE Graphik Semibold';
-    src: url('http://127.0.0.1:8000/css/HPE Graphik-Semibold.otf');
+    src: url('https://scod.hpedev.io/css/HPE Graphik-Semibold.otf');
 }
 
 @font-face {
     font-family: 'HPE Graphik Medium';
-    src: url('http://127.0.0.1:8000/css/HPE Graphik-Medium.otf');
+    src: url('https://scod.hpedev.io/css/HPE Graphik-Medium.otf');
 }
 
 @font-face {
     font-family: 'HPE Simple Regular';
-    src: url('http://127.0.0.1:8000/css/HPESimple-Regular.otf');
+    src: url('https://scod.hpedev.io/css/HPESimple-Regular.otf');
 }
 
 body {
