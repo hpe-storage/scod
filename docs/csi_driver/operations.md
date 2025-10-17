@@ -439,7 +439,10 @@ Any prior deployed NFS servers may be upgraded to v2.4.1.
 
 #### Patch Running NFS Servers
 
-When patching the NFS `Deployments`, the `Pods` will restart and cause a pause in I/O for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
+When patching the NFS `Deployments`, the server `Pods` will restart and result in an I/O pause for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
+
+!!! caution
+    Patching NFS servers with XFS volumes prior to v3.0.0 will hang the NFS clients indefinitely due to lack of FSID support. Scale down clients before patching the servers.
 
 Patch all NFS `Deployments` with the following.
 
@@ -451,11 +454,11 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.0.
 ```
 
 !!! tip
-    If it's desired to patch one NFS `Deployment` at a time, replace the shell substituion with a `Deployment` name.
+    If it's desired to patch one NFS `Deployment` at a time, replace the shell substitution with a `Deployment` name.
 
 ### Validation
 
-This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.6 of the "nfs-provisioner" image after the uprade is complete.
+This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.6 of the "nfs-provisioner" image after the upgrade is complete.
 
 ```text
 kubectl get deploy -A -o yaml | \
