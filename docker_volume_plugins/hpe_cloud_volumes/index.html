@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/docker_volume_plugins/hpe_cloud_volumes/index.html" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Index - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Index";
+        var mkdocs_page_input_path = "docker_volume_plugins/hpe_cloud_volumes/index.md";
+        var mkdocs_page_url = "/docker_volume_plugins/hpe_cloud_volumes/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="admonition error">
+<p class="admonition-title">Expired content</p>
+<p>The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.</p>
+</div>
+<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>This is the documentation for <a href="https://hub.docker.com/plugins/cvblock">HPE Cloud Volumes Plugin for Docker</a>. It allows dynamic provisioning of Docker Volumes on standalone Docker Engine or Docker Swarm nodes.</p>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#plugin_privileges">Plugin privileges</a></li>
+<li><a href="#host_configuration_and_installation">Host configuration and installation</a></li>
+<li><a href="#making_changes">Making changes</a></li>
+</ul>
+</li>
+<li><a href="#configuration_files_and_options">Configuration files and options</a></li>
+<li><a href="#node_fencing">Node fencing</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#create_a_docker_volume">Create a Docker Volume</a></li>
+<li><a href="#clone_a_docker_volume">Clone a Docker Volume</a></li>
+<li><a href="#provisioning_docker_volumes">Provisioning Docker Volumes</a></li>
+<li><a href="#import_a_volume_to_docker">Import a Volume to Docker</a></li>
+<li><a href="#import_a_volume_snapshot_to_docker">Import a volume snapshot to Docker</a></li>
+<li><a href="#restore_an_offline_docker_volume_with_specified_snapshot">Restore an offline Docker Volume with specified snapshot</a></li>
+<li><a href="#list_volumes">List volumes</a></li>
+<li><a href="#remove_a_docker_volume">Remove a Docker Volume</a></li>
+</ul>
+</li>
+<li><a href="#uninstall">Uninstall</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a><ul>
+<li><a href="#log_file_location">Log file location</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Docker Engine 17.09 or greater</li>
+<li>If using Docker Enterprise Edition 2.x, the plugin is only supported in swarmmode</li>
+<li>Recent Red Hat, Debian or Ubuntu-based Linux distribution</li>
+<li>US regions only</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Release Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1.0</td>
+<td><a href="https://github.com/hpe-storage/common-host-utils/blob/master/cmd/dockervolumed/managedplugin/release-notes/v3.1.0.md">v3.1.0</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Docker does not support certified and managed Docker Volume plugins with Docker EE Kubernetes. If you want to use Kubernetes on Docker EE with HPE Nimble Storage, please use the <a href="https://github.com/hpe-storage/flexvolume-driver">HPE Volume Driver for Kubernetes FlexVolume Plugin</a> or the <a href="https://github.com/hpe-storage/csi-driver">HPE CSI Driver for Kubernetes</a> depending on your situation.</p>
+</div>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<p>HPE Cloud Volumes provides a Docker certified plugin delivered through the Docker Store. Certain features and capabilities are not available through the managed plugin. Please understand these limitations before deploying either of these plugins.</p>
+<p>The managed plugin does NOT provide:</p>
+<ul>
+<li>Support for Docker's release of Kubernetes in Docker Enterprise Edition 2.x</li>
+<li>Support for Windows Containers</li>
+</ul>
+<p>The managed plugin does provide a simple way to manage HPE Cloud Volumes integration on your Docker instances using Docker's interface to install and manage the plugin.</p>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<h3 id="plugin_privileges">Plugin privileges<a class="headerlink" href="#plugin_privileges" title="Permanent link">&para;</a></h3>
+<p>In order to create connections, attach devices and mount file systems, the plugin requires more privileges than a standard application container. These privileges are enumerated during installation. These permissions need to be granted for the plugin to operate correctly.</p>
+<p> <pre><code class=shell>Plugin &quot;cvblock&quot; is requesting the following privileges:
+ - network: [host]
+ - mount: [/dev]
+ - mount: [/run/lock]
+ - mount: [/sys]
+ - mount: [/etc]
+ - mount: [/var/lib]
+ - mount: [/var/run/docker.sock]
+ - mount: [/sbin/iscsiadm]
+ - mount: [/lib/modules]
+ - mount: [/usr/lib64]
+ - allow-all-devices: [true]
+ - capabilities: [CAP_SYS_ADMIN CAP_SYS_MODULE CAP_MKNOD]
+</code></pre></p>
+<h3 id="host_configuration_and_installation">Host configuration and installation<a class="headerlink" href="#host_configuration_and_installation" title="Permanent link">&para;</a></h3>
+<p>Setting up the plugin varies between Linux distributions.</p>
+<p>These procedures <strong>requires</strong> root privileges on the cloud instance.</p>
+<p>Red Hat 7.5+, CentOS 7.5+:</p>
+<p> <pre><code class=shell>yum install -y iscsi-initiator-utils device-mapper-multipath
+docker plugin install --disable --grant-all-permissions --alias cvblock store/hpestorage/cvblock:3.1.0
+docker plugin set cv PROVIDER_IP=cloudvolumes.hpe.com PROVIDER_USERNAME=&lt;access_key&gt; PROVIDER_PASSWORD=&lt;access_secret&gt;
+docker plugin enable cvblock
+systemctl daemon-reload
+systemctl enable iscsid multipathd
+systemctl start iscsid multipathd
+</code></pre></p>
+<p>Ubuntu 16.04 LTS and Ubuntu 18.04 LTS:</p>
+<p> <pre><code class=shell>apt-get install -y open-iscsi multipath-tools xfsprogs
+modprobe xfs
+sed -i&quot;&quot; -e &quot;\$axfs&quot; /etc/modules
+docker plugin install --disable --grant-all-permissions --alias cvblock store/hpestorage/cvblock:3.1.0
+docker plugin set cv PROVIDER_IP=cloudvolumes.hpe.com PROVIDER_USERNAME=&lt;access_key&gt; PROVIDER_PASSWORD=&lt;access_secret&gt; glibc_libs.source=/lib/x86_64-linux-gnu
+docker plugin enable cvblock
+systemctl daemon-reload
+systemctl restart open-iscsi multipath-tools
+</code></pre></p>
+<p>Debian 9.x (stable):</p>
+<p> <pre><code class=shell>apt-get install -y open-iscsi multipath-tools xfsprogs
+modprobe xfs
+sed -i&quot;&quot; -e &quot;\$axfs&quot; /etc/modules
+docker plugin install --disable --grant-all-permissions --alias cvblock store/hpestorage/cvblock:3.1.0
+docker plugin set cv PROVIDER_IP=cloudvolumes.hpe.com PROVIDER_USERNAME=&lt;access_key&gt; PROVIDER_PASSWORD=&lt;access_secret&gt; iscsiadm.source=/usr/bin/iscsiadm glibc_libs.source=/lib/x86_64-linux-gnu
+docker plugin enable cvblock
+systemctl daemon-reload
+systemctl restart open-iscsi multipath-tools
+</code></pre></p>
+<h3 id="making_changes">Making changes<a class="headerlink" href="#making_changes" title="Permanent link">&para;</a></h3>
+<p>The <code>docker plugin set</code> command can only be used on the plugin if it is disabled. To disable the plugin, use the <code>docker plugin disable</code> command. For example:</p>
+<p> <pre><code class=shell>docker plugin disable cvblock
+</code></pre></p>
+<p>List of parameters which are supported to be settable by the plugin</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROVIDER_IP</code></td>
+<td>HPE Cloud Volumes portal</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td><code>PROVIDER_USERNAME</code></td>
+<td>HPE Cloud Volumes username</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td><code>PROVIDER_PASSWORD</code></td>
+<td>HPE Cloud Volumes password</td>
+<td><code>""</code></td>
+</tr>
+<tr>
+<td><code>PROVIDER_REMOVE</code></td>
+<td>Unassociate Plugin from HPE Cloud Volumes</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>LOG_LEVEL</code></td>
+<td>Log level of the plugin (<code>info</code>, <code>debug</code>, or <code>trace</code>)</td>
+<td><code>debug</code></td>
+</tr>
+<tr>
+<td><code>SCOPE</code></td>
+<td>Scope of the plugin (<code>global</code> or <code>local</code>)</td>
+<td><code>global</code></td>
+</tr>
+</tbody>
+</table>
+<p>In the event of reassociating the plugin with a different HPE Cloud Volumes portal, certain procedures need to be followed:</p>
+<p>Disable the plugin</p>
+<p> <pre><code class=shell>docker plugin disable cvblock
+</code></pre></p>
+<p>Set new paramters</p>
+<p> <pre><code class=shell>docker plugin set cvblock PROVIDER_REMOVE=true
+</code></pre></p>
+<p>Enable the plugin</p>
+<p> <pre><code class=shell>docker plugin enable cvblock
+</code></pre></p>
+<p>Disable the plugin</p>
+<p> <pre><code class=shell>docker plugin disable cvblock
+</code></pre></p>
+<p>The plugin is now ready for re-configuration</p>
+<p> <pre><code class=shell>docker plugin set cvblock PROVIDER_IP=&lt; New portal address &gt; PROVIDER_USERNAME=admin PROVIDER_PASSWORD=admin PROVIDER_REMOVE=false
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>PROVIDER_REMOVE=false</code> parameter must be set if the plugin ever has been unassociated from a HPE Cloud Volumes portal.</p>
+</div>
+<h2 id="configuration_files_and_options">Configuration files and options<a class="headerlink" href="#configuration_files_and_options" title="Permanent link">&para;</a></h2>
+<p>The configuration directory for the plugin is <code>/etc/hpe-storage</code> on the host. Files in this directory are preserved between plugin upgrades. The <code>/etc/hpe-storage/volume-driver.json</code> file contains three sections, <code>global</code>, <code>defaults</code> and <code>overrides</code>. The global options are plugin runtime parameters and doesn't have any end-user configurable keys at this time.</p>
+<p>The <code>defaults</code> map allows the docker host administrator to set default options during volume creation. The docker user may override these default options with their own values for a specific option.</p>
+<p>The <code>overrides</code> map allows the docker host administrator to enforce a certain option for every volume creation. The docker user may not override the option and any attempt to do so will be silently ignored.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>defaults</code> and <code>overrides</code> are dynamically read during runtime while <code>global</code> changes require a plugin restart.</p>
+</div>
+<p>Example config file in <code>/etc/hpe-storage/volume-driver.json</code>:</p>
+<p> <pre><code class=json>{
+  &quot;global&quot;: {
+            &quot;snapPrefix&quot;: &quot;BaseFor&quot;,
+            &quot;initiators&quot;: [&quot;eth0&quot;],
+            &quot;automatedConnection&quot;: true,
+            &quot;existingCloudSubnet&quot;: &quot;10.1.0.0/24&quot;,
+            &quot;region&quot;: &quot;us-east-1&quot;,
+            &quot;privateCloud&quot;: &quot;vpc-data&quot;,
+            &quot;cloudComputeProvider&quot;: &quot;Amazon AWS&quot;
+  },
+  &quot;defaults&quot;: {
+            &quot;limitIOPS&quot;: 1000,
+            &quot;fsOwner&quot;: &quot;0:0&quot;,
+            &quot;fsMode&quot;: &quot;600&quot;,
+            &quot;description&quot;: &quot;Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin&quot;,
+            &quot;perfPolicy&quot;: &quot;Other&quot;,
+            &quot;protectionTemplate&quot;: &quot;twicedaily:4&quot;,
+            &quot;encryption&quot;: true,
+            &quot;volumeType&quot;: &quot;PF&quot;,
+            &quot;destroyOnRm&quot;: true
+  },
+  &quot;overrides&quot;: {
+  }
+}
+</code></pre></p>
+<p>For an exhaustive list of options use the <code>help</code> option from the docker CLI:</p>
+<p> <pre><code class=shell>$ docker volume create -d cvblock -o help
+</code></pre></p>
+<h2 id="node_fencing">Node fencing<a class="headerlink" href="#node_fencing" title="Permanent link">&para;</a></h2>
+<p>If you are considering using any Docker clustering technologies for your Docker deployment, it is important to understand the fencing mechanism used to protect data. Attaching the same Docker Volume to multiple containers on the same host is fully supported. Mounting the same volume on multiple hosts is not supported.</p>
+<p>Docker does not provide a fencing mechanism for nodes that have become disconnected from the Docker Swarm. This results in the isolated nodes continuing to run their containers. When the containers are rescheduled on a surviving node, the Docker Engine will request that the Docker Volume(s) be mounted. In order to prevent data corruption, the Docker Volume Plugin will stop serving the Docker Volume to the original node before mounting it on the newly requested node.</p>
+<p>During a mount request, the Docker Volume Plugin inspects the ACR (Access Control Record) on the volume. If the ACR does not match the initiator requesting to mount the volume, the ACR is removed and the volume taken offline. The volume is now fenced off and other nodes are unable to access any data in the volume.</p>
+<p>The volume then receives a new ACR matching the requesting initiator, and it is mounted for the container requesting the volume. This is done because the volumes are formatted with XFS, which is not a clustered filesystem and can be corrupted if the same volume is mounted to multiple hosts.</p>
+<p>The side effect of a fenced node is that I/O hangs indefinitely, and the initiator is rejected during login. If the fenced node rejoins the Docker Swarm using Docker SwarmKit, the swarm tries to shut down the services that were rescheduled elsewhere to maintain the desired replica set for the service. This operation will also hang indefinitely waiting for I/O.</p>
+<p>We recommend running a dedicated Docker host that does not host any other critical applications besides the Docker Engine. Doing this supports a safe way to reboot a node after a grace period and have it start cleanly when a hung task is detected. Otherwise, the node can remain in the hung state indefinitely.</p>
+<p>The following kernel parameters control the system behavior when a hung task is detected:</p>
+<p> <pre><code class=text># Reset after these many seconds after a panic
+kernel.panic = 5
+
+# I do consider hung tasks reason enough to panic
+kernel.hung_task_panic = 1
+
+# To not panic in vain, I'll wait these many seconds before I declare a hung task
+kernel.hung_task_timeout_secs = 150
+</code></pre></p>
+<p>Add these parameters to the <code>/etc/sysctl.d/99-hung_task_timeout.conf</code> file and reboot the system.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Docker SwarmKit declares a node as failed after five (5) seconds. Services are then rescheduled and up and running again in less than ten (10) seconds. The parameters noted above provide the system a way to manage other tasks that may appear to be hung and avoid a system panic.</p>
+</div>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<p>These are some basic examples on how to use the HPE Cloud Volumes Plugin for Docker.</p>
+<h3 id="create_a_docker_volume">Create a Docker Volume<a class="headerlink" href="#create_a_docker_volume" title="Permanent link">&para;</a></h3>
+<p>Using <code>docker volume create</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The plugin applies a set of default options when you <code>create</code> new volumes unless you override them using the <code>volume create -o key=value</code> option flags.</p>
+</div>
+<p>Create a Docker volume with a custom description:</p>
+<p> <pre><code class=shell>docker volume create -d cvblock -o description=&quot;My volume description&quot; --name myvol1 
+</code></pre></p>
+<p>(Optional) Inspect the new volume:</p>
+<p> <pre><code class=shell>docker volume inspect myvol1
+</code></pre></p>
+<p>(Optional) Attach the volume to an interactive container.</p>
+<p> <pre><code class=shell>docker run -it --rm -v myvol1:/data bash
+</code></pre></p>
+<p>The volume is mounted inside the container on <code>/data</code>.</p>
+<h3 id="clone_a_docker_volume">Clone a Docker Volume<a class="headerlink" href="#clone_a_docker_volume" title="Permanent link">&para;</a></h3>
+<p>Use the <code>docker volume create</code> command with the <code>cloneOf</code> option to clone a Docker volume to a new Docker volume.</p>
+<p>Clone the Docker volume named <code>myvol1</code> to a new Docker volume named <code>myvol1-clone</code>.</p>
+<p> <pre><code class=shell>docker volume create -d cvblock -o cloneOf=myvol1 --name=myvol1-clone
+</code></pre></p>
+<p>(Optional) Select a snapshot on which to base the clone.</p>
+<p> <pre><code class=shell>docker volume create -d cvblock -o snapshot=mysnap1 -o cloneOf=myvol1 --name=myvol2-clone
+</code></pre></p>
+<h3 id="provisioning_docker_volumes">Provisioning Docker Volumes<a class="headerlink" href="#provisioning_docker_volumes" title="Permanent link">&para;</a></h3>
+<p>There are several ways to provision a Docker volume depending on what tools are used:</p>
+<ul>
+<li>Docker Engine (CLI)</li>
+<li>Docker Compose file with either Docker UCP or Docker Engine</li>
+</ul>
+<p>The Docker Volume plugin leverages the existing Docker CLI and APIs, therefor all native Docker tools may be used to provision a volume.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The plugin applies a set of default volume create options. Unless you override the default options using the volume option flags, the defaults are applied when you create volumes. For example, the default volume size is 10GiB.  </p>
+</div>
+<p>Config file <code>volume-driver.json</code>, which is stored at <code>/etc/hpe-storage/volume-driver.json</code>:</p>
+<p> <pre><code class=json>{
+    &quot;global&quot;:   {},
+    &quot;defaults&quot;: {
+                 &quot;sizeInGiB&quot;:&quot;10&quot;,
+                 &quot;limitIOPS&quot;:&quot;-1&quot;,
+                 &quot;limitMBPS&quot;:&quot;-1&quot;,
+                 &quot;perfPolicy&quot;: &quot;DockerDefault&quot;,
+                },
+    &quot;overrides&quot;:{}
+}
+</code></pre></p>
+<h3 id="import_a_volume_to_docker">Import a Volume to Docker<a class="headerlink" href="#import_a_volume_to_docker" title="Permanent link">&para;</a></h3>
+<p>Take the volume you want to import offline before importing it. For information about how to take a volume offline, refer to the <a href="https://docs.cloudvolumes.hpe.com/help/">HPE Cloud Volumes documentation</a>. Use the <code>create</code> command with the <code>importVol</code> option to import an HPE Cloud Volume to Docker and name it.</p>
+<p>Import the HPE Cloud Volume named <code>mycloudvol</code> as a Docker volume named <code>myvol3-imported</code>.</p>
+<p> <pre><code class=shell>docker volume create –d cvblock -o importVol=mycloudvol --name=myvol3-imported
+</code></pre></p>
+<h3 id="import_a_volume_snapshot_to_docker">Import a volume snapshot to Docker<a class="headerlink" href="#import_a_volume_snapshot_to_docker" title="Permanent link">&para;</a></h3>
+<p>Use the create command with the <code>importVolAsClone</code> option to import a HPE Cloud Volume snapshot as a Docker volume. Optionally, specify a particular snapshot on the HPE Cloud Volume using the snapshot option.</p>
+<p>Import the HPE Cloud Volumes snapshot <code>aSnapshot</code> on the volume <code>importMe</code> as a Docker volume named <code>importedSnap</code>.</p>
+<p> <pre><code class=shell>docker volume create -d cvblock -o importVolAsClone=mycloudvol -o snapshot=mysnap1 --name=myvol4-clone
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If no snapshot is specified, the latest snapshot on the volume is imported.</p>
+</div>
+<h3 id="restore_an_offline_docker_volume_with_specified_snapshot">Restore an offline Docker Volume with specified snapshot<a class="headerlink" href="#restore_an_offline_docker_volume_with_specified_snapshot" title="Permanent link">&para;</a></h3>
+<p>It's important that the volume to be restored is in an offline state on the array.</p>
+<p>If the volume snapshot is not specified, the last volume snapshot is used.</p>
+<p> <pre><code class=shell>docker volume create -d cvblock -o importVol=myvol1.docker -o forceImport -o restore -o snapshot=mysnap1 --name=myvol1-restored
+</code></pre></p>
+<h3 id="list_volumes">List volumes<a class="headerlink" href="#list_volumes" title="Permanent link">&para;</a></h3>
+<p>List Docker volumes.</p>
+<p> <pre><code class=shell>docker volume ls
+DRIVER                     VOLUME NAME
+cvblock:latest              myvol1
+cvblock:latest              myvol1-clone
+</code></pre></p>
+<h3 id="remove_a_docker_volume">Remove a Docker Volume<a class="headerlink" href="#remove_a_docker_volume" title="Permanent link">&para;</a></h3>
+<p>When you remove volumes from Docker control they are set to the offline state on the array. Access to the volumes and related snapshots using the Docker Volume plugin can be reestablished.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To delete volumes from the HPE Cloud Volumes portal using the remove command, the volume should have been created with a <code>-o destroyOnRm</code> flag.</p>
+</div>
+<p><strong>Important:</strong> Be aware that when this option is set to true, volumes and all related snapshots are deleted from the group, and can no longer be accessed by the Docker Volume plugin.</p>
+<p>Remove the volume named <code>myvol1</code>.</p>
+<p> <pre><code class=shell>docker volume rm myvol1
+</code></pre></p>
+<h2 id="uninstall">Uninstall<a class="headerlink" href="#uninstall" title="Permanent link">&para;</a></h2>
+<p>The plugin can be removed using the <code>docker plugin rm</code> command. This command will not remove the configuration directory (<code>/etc/hpe-storage/</code>).</p>
+<p> <pre><code class=shell>docker plugin rm cvblock
+</code></pre></p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>The config directory is at <code>/etc/hpe-storage/</code>. When a plugin is installed and enabled, the HPE Cloud Volumes certificates are created in the config directory.</p>
+<p> <pre><code class=shell>ls -l /etc/hpe-storage/
+total 16
+-r-------- 1 root root 1159 Aug  2 00:20 container_provider_host.cert
+-r-------- 1 root root 1671 Aug  2 00:20 container_provider_host.key
+-r-------- 1 root root 1521 Aug  2 00:20 container_provider_server.cert
+</code></pre></p>
+<p>Additionally there is a config file <code>volume-driver.json</code> present at the same location. This file can be edited
+to set default parameters for create volumes for docker.</p>
+<h3 id="log_file_location">Log file location<a class="headerlink" href="#log_file_location" title="Permanent link">&para;</a></h3>
+<p>The docker plugin logs are located at <code>/var/log/hpe-docker-plugin.log</code></p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=docker_volume_plugins/hpe_cloud_volumes/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
