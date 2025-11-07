@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/metrics.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Metrics - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Metrics";
+        var mkdocs_page_input_path = "csi_driver/metrics.md";
+        var mkdocs_page_url = "/csi_driver/metrics.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Metrics</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#metrics_provided">Metrics Provided</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#volume_info">Volume Info</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#backend_info">Backend Info</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#deployment">Deployment</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#helm">Helm</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rancher">Rancher</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#advanced_install">Advanced Install</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#version_104">Version 1.0.4</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#configuring_advanced_install">Configuring Advanced Install</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grafana_dashboards">Grafana Dashboards</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+      <li class="breadcrumb-item active">Metrics</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="hpe_csi_info_metrics_provider_for_prometheus">HPE CSI Info Metrics Provider for Prometheus<a class="headerlink" href="#hpe_csi_info_metrics_provider_for_prometheus" title="Permanent link">&para;</a></h1>
+<p>The HPE CSI Driver for Kubernetes may be accompanied by a Prometheus metrics endpoint to provide metadata about the volumes provisioned by the CSI driver and supporting backends. It's conventionally deployed with <a href="https://hpe-storage.github.io/array-exporter">HPE Storage Array Exporter for Prometheus</a> to provide a richer set of metrics from the backend storage systems.</p>
+<div class="toc">
+<ul>
+<li><a href="#hpe_csi_info_metrics_provider_for_prometheus">HPE CSI Info Metrics Provider for Prometheus</a><ul>
+<li><a href="#metrics_provided">Metrics Provided</a><ul>
+<li><a href="#volume_info">Volume Info</a></li>
+<li><a href="#backend_info">Backend Info</a></li>
+</ul>
+</li>
+<li><a href="#deployment">Deployment</a><ul>
+<li><a href="#helm">Helm</a></li>
+<li><a href="#rancher">Rancher</a></li>
+<li><a href="#advanced_install">Advanced Install</a><ul>
+<li><a href="#version_104">Version 1.0.4</a></li>
+<li><a href="#configuring_advanced_install">Configuring Advanced Install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#grafana_dashboards">Grafana Dashboards</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="metrics_provided">Metrics Provided<a class="headerlink" href="#metrics_provided" title="Permanent link">&para;</a></h2>
+<p>The exporter provides two metrics, "hpestoragecsi_volume_info" and "hpestoragecsi_backend_info".</p>
+<h3 id="volume_info">Volume Info<a class="headerlink" href="#volume_info" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">hpestoragecsi_volume_info</td>
+<td style="text-align: left;">Gauge</td>
+<td style="text-align: left;">Indicates a volume whose provisioner is the HPE CSI Driver.</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+<p>This metric includes the following labels.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Label</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">backend</td>
+<td style="text-align: left;">Backend hostname or IP address as defined in the <code>Secret</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">pv</td>
+<td style="text-align: left;"><code>PersistentVolume</code> name.</td>
+</tr>
+<tr>
+<td style="text-align: left;">pvc</td>
+<td style="text-align: left;"><code>PersistentVolumeClaim</code> name.</td>
+</tr>
+<tr>
+<td style="text-align: left;">pvc_namespace</td>
+<td style="text-align: left;"><code>PersistentVolumeClaim</code> <code>Namespace</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">storage_class</td>
+<td style="text-align: left;"><code>StorageClass</code> used to provision the <code>PersistentVolume</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">volume</td>
+<td style="text-align: left;">Volume handle used by the backend storage system.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="backend_info">Backend Info<a class="headerlink" href="#backend_info" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">hpestoragecsi_backend_info</td>
+<td style="text-align: left;">Gauge</td>
+<td style="text-align: left;">Indicates a storage system for which the HPE CSI driver is a provisioner.</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+<p>This metric includes the following labels.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Label</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">backend</td>
+<td style="text-align: left;">Backend hostname or IP address as defined in the <code>Secret</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
+<p>The exporter may be installed either via Helm or through YAML manifests with the object definitions. It's recommended to use Helm as it's more convenient to manage the configuration of the deployment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It's recommended to add a "cluster" target label to the deployment. The label is used in the <a href="https://grafana.com/orgs/hpestorage/dashboards">provided Grafana dashboards</a>.</p>
+</div>
+<h3 id="helm">Helm<a class="headerlink" href="#helm" title="Permanent link">&para;</a></h3>
+<p>The Helm chart is available on Artifact Hub. Instructions on how to manage and install the chart is available within the chart documentation.</p>
+<ul>
+<li><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-info-metrics">HPE CSI Info Metrics Provider for Prometheus Helm chart</a></li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Note</p>
+<p>It's highly recommended to install the CSI Info Metrics Provider with Helm.</p>
+</div>
+<h3 id="rancher">Rancher<a class="headerlink" href="#rancher" title="Permanent link">&para;</a></h3>
+<p>Since Rancher v2.7 and HPE CSI Driver for Kubernetes v2.3.0 it's possible to install the HPE CSI Info Metrics Provider through the Apps interface in Rancher to use with Rancher Monitoring. Please see the <a href="partners/suse_rancher/index.html">Rancher</a> partner page for more information.</p>
+<h3 id="advanced_install">Advanced Install<a class="headerlink" href="#advanced_install" title="Permanent link">&para;</a></h3>
+<p>Before beginning an advanced install, determine how Prometheus will be deployed on the Kubernetes cluster as it will dictate how the scrape target will be configured with either a <code>Service</code> annotation or a <code>ServiceMonitor</code> CRD.</p>
+<p>Start by downloading the manifest, which needs to be modified before applying to the cluster.</p>
+<h4 id="version_104">Version 1.0.4<a class="headerlink" href="#version_104" title="Permanent link">&para;</a></h4>
+<p>Supports HPE CSI Driver for Kubernetes 2.0.0 and later.</p>
+<p> <pre><code class=text>wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.4/hpe-csi-info-metrics.yaml
+</code></pre></p>
+<p>Optional <code>ServiceMonitor</code> definition:</p>
+<p> <pre><code class=text>wget https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-info-metrics/v1.0.4/hpe-csi-info-metrics-service-monitor.yaml
+</code></pre></p>
+<h4 id="configuring_advanced_install">Configuring Advanced Install<a class="headerlink" href="#configuring_advanced_install" title="Permanent link">&para;</a></h4>
+<p>Update the main container parameters and optionally add service labels and annotations.</p>
+<p>In the "hpe-csi-info-metrics" <code>Deployment</code> at <code>.spec.template.spec.containers[0].args</code> in "hpe-csi-info-metrics.yaml":</p>
+<p> <pre><code class=text>          args:
+            - &quot;--telemetry.addr=:9099&quot;
+            - &quot;--telemetry.path=/metrics&quot;
+            # IMPORTANT: Uncomment this argument to confirm your
+            # acceptance of the HPE End User License Agreement at
+            # https://www.hpe.com/us/en/software/licensing.html
+            #- &quot;--accept-eula&quot;
+</code></pre></p>
+<p>Remove the <code>#</code> in front of <code>--accept-eula</code> to accept the <a href="https://www.hpe.com/us/en/software/licensing.html">HPE license restrictions</a>.</p>
+<p>In the "hpe-csi-info-metrics-service" <code>Service</code>:</p>
+<p> <pre><code class=yaml>metadata:
+  name: hpe-csi-info-metrics-service
+  namespace: hpe-storage
+  labels:
+    app: hpe-csi-info-metrics
+    # Optionally add labels, for example to be included in Prometheus
+    # metrics via a targetLabels setting in a ServiceMonitor spec
+    #cluster: my-cluster
+  # Optionally add annotations, for example to configure it as a
+  # scrape target when using the Prometheus Helm chart's default
+  # configuration.
+  #annotations:
+  #  &quot;prometheus.io/scrape&quot;: &quot;true&quot;
+</code></pre></p>
+<ul>
+<li>Apply and uncomment any custom labels. It's recommended to use a "cluster" label to use the <a href="https://grafana.com/orgs/hpestorage/dashboards">provided Grafana dashboards</a>.</li>
+<li>If Prometheus has been deployed without the Operator, uncomment the annotation.</li>
+</ul>
+<p>Apply the manifest:</p>
+<p> <pre><code class=text>kubectl apply -f hpe-csi-info-metrics.yaml
+</code></pre></p>
+<p>Optionally, if using the Prometheus Operator, add any additional labels in "hpe-csi-info-metrics-service-monitor.yaml":</p>
+<p> <pre><code class=text>  # Corresponding labels on the CSI Info Metrics service are added to
+  # the scraped metrics
+  #targetLabels:
+  #  - cluster
+</code></pre></p>
+<p>Apply the manifest:</p>
+<p> <pre><code class=text>kubectl apply -f hpe-csi-info-metrics-service-monitor.yaml
+</code></pre></p>
+<div class="admonition warning">
+<p class="admonition-title">Pro Tip!</p>
+<p>Avoid hand editing manifests by using the Helm chart.</p>
+</div>
+<h2 id="grafana_dashboards">Grafana Dashboards<a class="headerlink" href="#grafana_dashboards" title="Permanent link">&para;</a></h2>
+<p>Example Grafana dashboards, provided as is, are hosted on <a href="https://grafana.com/orgs/hpestorage/dashboards">grafana.com</a>.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/metrics.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="container_storage_provider/hpe_alletra_6000/index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="monitor.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

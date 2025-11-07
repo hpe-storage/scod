@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/container_storage_provider/hpe_alletra_6000/index.html" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>HPE Alletra 5000/6000 and Nimble Storage - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "HPE Alletra 5000/6000 and Nimble Storage";
+        var mkdocs_page_input_path = "csi_driver/container_storage_provider/hpe_alletra_6000/index.md";
+        var mkdocs_page_url = "/csi_driver/container_storage_provider/hpe_alletra_6000/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Container Storage Providers</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">HPE Alletra 5000/6000 and Nimble Storage</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#platform_requirements">Platform Requirements</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#setting_up_the_array">Setting Up the Array</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#storageclass_parameters">StorageClass Parameters</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#common_parameters_for_provisioning_and_cloning">Common Parameters for Provisioning and Cloning</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#provisioning_parameters">Provisioning Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#cloning_parameters">Cloning Parameters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#import_parameters">Import Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pod_inline_volume_parameters_local_ephemeral_volumes">Pod Inline Volume Parameters (Local Ephemeral Volumes)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#volumegroupclass_parameters">VolumeGroupClass Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#volumesnapshotclass_parameters">VolumeSnapshotClass Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#static_provisioning">Static Provisioning</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#persistent_volume">Persistent Volume</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#persistent_volume_claim">Persistent Volume Claim</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+          <li class="breadcrumb-item">Container Storage Providers</li>
+      <li class="breadcrumb-item active">HPE Alletra 5000/6000 and Nimble Storage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>The HPE Alletra 5000/6000 and Nimble Storage Container Storage Provider ("CSP") for Kubernetes is the reference implementation for the HPE CSI Driver for Kubernetes. The CSP abstracts the data management capabilities of the array for use by Kubernetes. The documentation found herein is mainly geared towards day-2 operations and reference documentation for the <code>StorageClass</code> and <code>VolumeSnapshotClass</code> parameters but also contains important array setup requirements.</p>
+<div class="admonition caution">
+<p class="admonition-title">Important</p>
+<p>For a successful deployment, it's important to understand the array platform requirements found within the <a href="../../index.html#compatibility_and_support">CSI driver</a> (compute node OS and Kubernetes versions) and the CSP.</p>
+</div>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#platform_requirements">Platform Requirements</a><ul>
+<li><a href="#setting_up_the_array">Setting Up the Array</a><ul>
+<li><a href="#network_requirements">Network Requirements</a></li>
+<li><a href="#single_tenant_deployment">Single Tenant Deployment</a></li>
+<li><a href="#multitenant_deployment">Multitenant Deployment</a><ul>
+<li><a href="#tenant_limitations">Tenant Limitations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a href="#storageclass_parameters">StorageClass Parameters</a><ul>
+<li><a href="#common_parameters_for_provisioning_and_cloning">Common Parameters for Provisioning and Cloning</a></li>
+<li><a href="#provisioning_parameters">Provisioning Parameters</a></li>
+<li><a href="#cloning_parameters">Cloning Parameters</a></li>
+<li><a href="#import_parameters">Import Parameters</a></li>
+</ul>
+</li>
+<li><a href="#pod_inline_volume_parameters_local_ephemeral_volumes">Pod Inline Volume Parameters (Local Ephemeral Volumes)</a></li>
+<li><a href="#volumegroupclass_parameters">VolumeGroupClass Parameters</a></li>
+<li><a href="#volumesnapshotclass_parameters">VolumeSnapshotClass Parameters</a></li>
+<li><a href="#static_provisioning">Static Provisioning</a><ul>
+<li><a href="#persistent_volume">Persistent Volume</a></li>
+<li><a href="#persistent_volume_claim">Persistent Volume Claim</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>There's a brief introduction on <a href="../../../learn/video_gallery/index.html#using_the_hpe_csi_driver_with_hpe_nimble_storage">how to use HPE Nimble Storage</a> with the HPE CSI Driver in the Video Gallery. It also applies broadly to HPE Alletra 5000/6000.</p>
+</div>
+<h2 id="platform_requirements">Platform Requirements<a class="headerlink" href="#platform_requirements" title="Permanent link">&para;</a></h2>
+<p>Always check the corresponding CSI driver version in <a href="../../index.html#compatibility_and_support">compatibility and support</a> for the required array Operating System ("OS") version for a particular release of the driver. If a certain feature is gated against a certain version of the array OS it will be called out where applicable.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The documentation reflected here always corresponds to the latest supported version and may contain references to future features and capabilities.</p>
+</div>
+<h3 id="setting_up_the_array">Setting Up the Array<a class="headerlink" href="#setting_up_the_array" title="Permanent link">&para;</a></h3>
+<p>How to deploy an HPE storage array is beyond the scope of this document. Please refer to <a href="https://infosight.hpe.com">HPE InfoSight</a> for further reading.</p>
+<div class="admonition error">
+<p class="admonition-title">Important</p>
+<p>The HPE Nimble Storage Linux Toolkit (NLT) is <strong>not</strong> compatible with the HPE CSI Driver for Kubernetes. Do not install NLT on Kubernetes compute nodes. It may be installed on Kubernetes control plane nodes if they use iSCSI or FC storage from the array.</p>
+</div>
+<h4 id="network_requirements">Network Requirements<a class="headerlink" href="#network_requirements" title="Permanent link">&para;</a></h4>
+<p>The following ports needs to be reachable from the CSP running on the Kubernetes cluster to the management interface of the array.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>443<sup>1</sup></td>
+<td>HTTPS</td>
+<td>Multitenant REST API</td>
+</tr>
+<tr>
+<td>5392</td>
+<td>HTTPS</td>
+<td>REST API</td>
+</tr>
+</tbody>
+</table>
+<p><small>
+ <sup>1</sup> = The CSP will probe for multitenancy first, even if the platform doesn't support it. Leaving port 443 accessible is highly recommended to prevent slow control plane operations.
+</small></p>
+<div class="admonition info">
+<p class="admonition-title">Data networks</p>
+<p>The data networks expects a flat network between the compute nodes and the array. Routing of iSCSI traffic is not supported by CSP.</p>
+</div>
+<h4 id="single_tenant_deployment">Single Tenant Deployment<a class="headerlink" href="#single_tenant_deployment" title="Permanent link">&para;</a></h4>
+<p>The CSP requires access to a user with either <code>poweruser</code> or the <code>administrator</code> role. It's recommended to use the <code>poweruser</code> role for least privilege practices.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It's highly recommended to deploy a multitenant setup.</p>
+</div>
+<h4 id="multitenant_deployment">Multitenant Deployment<a class="headerlink" href="#multitenant_deployment" title="Permanent link">&para;</a></h4>
+<p>In array OS 6.0.0 and newer it's possible to create separate tenants using the <code>tenantadmin</code> CLI to assign folders to a tenant. This creates a secure and logical separation of storage resources between Kubernetes clusters.</p>
+<p>No special configuration is needed on the Kubernetes cluster when using a tenant account or a regular user account. It's important to understand from a provisioning perspective that if the tenant account being used has been assigned multiple folders, the CSP will pick the folder with the most space available. If this is not desirable and a 1:1 <code>StorageClass</code> to Folder mapping is needed, the "folder" parameter needs to be called out in the <code>StorageClass</code>.</p>
+<p>For reference, as of array OS 6.0.0, this is the <code>tenantadmin</code> command synopsis.</p>
+<p> <pre><code class=text>$ tenantadmin --help
+Usage: tenantadmin [options]
+Manage Tenants.
+
+Available options are:
+  --help                           Program help.
+
+  --list                           List Tenants.
+
+  --info name                      Tenant info.
+
+  --add tenant_name                Add a tenant.
+    --folders folders              List of folder paths (comma separated
+                                   pool_name:fqn) the tenant will be able to
+                                   access (mandatory).
+
+  --remove name                    Remove a tenant.
+
+  --add_folder tenant_name         Add a folder path for tenant access.
+    --name folder_name             Name of the folder path (pool_name:fqn) to
+                                   be added (mandatory).
+
+  --remove_folder tenant_name      Remove a folder path from tenant access.
+    --name folder_name             Name of the folder path (pool_name:fqn) to
+                                   be removed (mandatory).
+
+  --passwd                         Change tenant's login password.
+    --tenant name                  Change a specific tenant's login password
+                                   (mandatory).
+</code></pre></p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The <code>tenantadmin</code> command may only be run by local array OS administrators. LDAP or Active Directory accounts, regardless of role, are not supported.</p>
+</div>
+<ul>
+<li>Visit the array admin guide on <a href="https://infosight.hpe.com">HPE InfoSight</a> to learn more about how to use the <code>tenantadmin</code> CLI.</li>
+</ul>
+<h5 id="tenant_limitations">Tenant Limitations<a class="headerlink" href="#tenant_limitations" title="Permanent link">&para;</a></h5>
+<p>Some features may be limited and restricted in a multitenant deployment, such as arbitrarily import volumes in folders from the array the tenant isn't a user of, here are a few less obvious limitations.</p>
+<ul>
+<li>CHAP is configured globally for the CSI driver. The CSI driver is contracted to create the CHAP user if it doesn't exist. It's important that the CHAP user does not exist prior when used with a tenant, as tenant may not share CHAP users among themselves or the admin account.</li>
+<li>Both port 443 and 5392 needs to be exposed to the Kubernetes cluster in multitenant deployments.</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>An in-depth tutorial on how to use multitenancy and the <code>tenantadmin</code> CLI is available on HPE Developer: <a href="https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/">Multitenancy for Kubernetes clusters using HPE Alletra 5000/6000 and Nimble Storage</a>. There's also a high level overview of multitenancy available as a <a href="https://www.youtube.com/watch?v=47txpSAGEZs">lightboard presentation on YouTube</a>.</p>
+</div>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<p>Consult the <a href="../../index.html#compatibility_and_support">compatibility and support</a> table for supported array OS versions. CSI and CSP specific limitations are listed below.</p>
+<ul>
+<li>Striped volumes on grouped arrays are not supported by the CSI driver.</li>
+<li>The CSP is not capable of provisioning or importing volumes protected by Peer Persistence.</li>
+<li>When using an FC only array and provisioning RWX block volumes, the "multi_initiator" attribute won't get set properly on the volume. The workaround is to run <code>group --edit --iscsi_enabled yes</code> on the Array OS CLI. Be aware of that editing the group will cause a momentary pause of I/O on existing FC data paths (it's less disruptive than a normal controller failover).</li>
+<li>iSCSI does not work and is not supported on routed data networks. The REST API traffic may be routed and is supported.</li>
+<li>The CSP has been tested using iSCSI with up to 1200 <code>VolumeAttachments</code> per compute node. HPE recommends not exceeding 600 <code>VolumeAttachments</code> per node and leave headroom for emergencies as recovering a failed node will take hours to reschedule. Other limits may apply with other protocols (LUN limits of FC HBAs as an example) and it's always recommended to test the upper bounds before assuming the node resources are enough for both applications and infrastructure resources. A common problem is running out of file descriptors. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver">Helm chart</a>.</li>
+</ul>
+<h2 id="storageclass_parameters">StorageClass Parameters<a class="headerlink" href="#storageclass_parameters" title="Permanent link">&para;</a></h2>
+<p>A <code>StorageClass</code> is used to provision or clone a persistent volume. It can also be used to import an existing volume or clone a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.</p>
+<ul>
+<li><a href="#common_parameters_for_provisioning_and_cloning">Common parameters for provisioning and cloning</a></li>
+<li><a href="#provisioning_parameters">Provisioning Parameters</a></li>
+<li><a href="#cloning_parameters">Cloning Parameters</a></li>
+<li><a href="#import_parameters">Import Parameters</a></li>
+<li><a href="#pod_inline_volume_parameters_local_ephemeral_volumes">Pod Inline Volume Parameters (Local Ephemeral Volumes)</a></li>
+<li><a href="#volumegroupclass_parameters">VolumeGroupClass Parameters</a></li>
+<li><a href="#volumesnapshotclass_parameters">VolumeSnapshotClass Parameters</a></li>
+</ul>
+<p>Backward compatibility with the HPE Nimble Storage FlexVolume driver is being honored to a certain degree. <code>StorageClass</code> API objects needs be rewritten and parameters need to be updated regardless.</p>
+<p>Please see <a href="../../using.html#base_storageclass_parameters">using the HPE CSI Driver</a> for base <code>StorageClass</code> examples. All parameters enumerated reflects the current version and may contain unannounced features and capabilities.</p>
+<p>Example default <code>StorageClass</code> (<a href="examples/storageclass.yaml">download</a>):</p>
+<p> <pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    # There can only be one default StorageClass per cluster
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+  name: hpe-standard
+parameters:
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/fstype: xfs
+  accessProtocol: iscsi
+  description: Volume created by the HPE CSI Driver for Kubernetes
+  destroyOnDelete: &quot;true&quot;
+  pool: default
+  # folder: my-folder # This folder needs to exist prior to provisioning PVCs
+  performancePolicy: default
+  limitIops: &quot;-1&quot;
+  limitMbps: &quot;-1&quot;
+  thick: &quot;false&quot;
+  dedupeEnabled: &quot;true&quot;
+  syncOnDetach: &quot;false&quot;
+  encrypted: &quot;false&quot;
+provisioner: csi.hpe.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If all mutable parameters have values provided during provisioning of the <code>PersistentVolumes</code>, the <a href="../../using.html#using_volume_mutations">Volume Mutator</a> will later allow changes if needed.</p>
+</div>
+<h3 id="common_parameters_for_provisioning_and_cloning">Common Parameters for Provisioning and Cloning<a class="headerlink" href="#common_parameters_for_provisioning_and_cloning" title="Permanent link">&para;</a></h3>
+<p>These parameters are mutable between a parent volume and creating a clone from a snapshot.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accessProtocol<sup>1</sup></td>
+<td>Text</td>
+<td>The access protocol to use when accessing the persistent volume ("fc" or "iscsi").  Defaults to "iscsi" when unspecified.</td>
+</tr>
+<tr>
+<td>destroyOnDelete</td>
+<td>Boolean</td>
+<td>Indicates the backing Nimble volume (including snapshots) should be destroyed when the PVC is deleted. Defaults to "false" which means volumes needs to be pruned manually.</td>
+</tr>
+<tr>
+<td>limitIops</td>
+<td>Integer</td>
+<td>The IOPS limit of the volume. The IOPS limit should be in the range 256 to 4294967294, or -1 for unlimited (default).</td>
+</tr>
+<tr>
+<td>limitMbps</td>
+<td>Integer</td>
+<td>The MB/s throughput limit for the volume between 1 and 4294967294, or -1 for unlimited (default).</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Text</td>
+<td>Text to be added to the volume's description on the array. Empty string by default.</td>
+</tr>
+<tr>
+<td>performancePolicy<sup>2</sup></td>
+<td>Text</td>
+<td>The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs". Defaults to the "default" performance policy.</td>
+</tr>
+<tr>
+<td>protectionTemplate<sup>4</sup></td>
+<td>Text</td>
+<td>The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily".</td>
+</tr>
+<tr>
+<td>folder</td>
+<td>Text</td>
+<td>The name of the folder in which to place the volume. Defaults to the root of the "default" pool.</td>
+</tr>
+<tr>
+<td>thick</td>
+<td>Boolean</td>
+<td>Indicates that the volume should be thick provisioned. Defaults to "false"</td>
+</tr>
+<tr>
+<td>dedupeEnabled<sup>3</sup></td>
+<td>Boolean</td>
+<td>Indicates that the volume should enable deduplication. Defaults to "true" when available.</td>
+</tr>
+<tr>
+<td>syncOnDetach</td>
+<td>Boolean</td>
+<td>Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node. Defaults to "false".</td>
+</tr>
+</tbody>
+</table>
+<p><small>
+ Restrictions applicable when using the <a href="../../using.html#using_volume_mutations">CSI volume mutator</a>:
+ <br /><sup>1</sup> = Parameter is immutable and can't be altered after provisioning/cloning.
+ <br /><sup>2</sup> = Performance policies may only be mutated between performance polices with the same block size.
+ <br /><sup>3</sup> = Deduplication may only be mutated within the same performance policy application category and block size.
+ <br /><sup>4</sup> = This parameter was removed in HPE CSI Driver 1.4.0 and replaced with <a href="#volumegroupclass_parameters"><code>VolumeGroupClasses</code></a>.
+</small></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Performance Policies, Folders and Protection Templates are array OS specific constructs that can be created on the array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on <a href="https://infosight.hpe.com">HPE InfoSight</a>.</p>
+</div>
+<h3 id="provisioning_parameters">Provisioning Parameters<a class="headerlink" href="#provisioning_parameters" title="Permanent link">&para;</a></h3>
+<p>These parameters are immutable for both volumes and clones once created, clones will inherit parent attributes.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>encrypted<sup>1</sup></td>
+<td>Boolean</td>
+<td>Indicates that the volume should be encrypted. Defaults to "false".</td>
+</tr>
+<tr>
+<td>pool</td>
+<td>Text</td>
+<td>The name of the pool in which to place the volume. Defaults to the "default" pool.</td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>1</sup> = If volume encryption is enabled on the array, the volumes provisioned by the CSI driver must adhere to encrypting volumes. If the array REST API is returning this HTTP 400 error response: <code>{ code: SM_encryption_group_cipher_override, text: Invalid group encryption cipher override., arguments: null}</code>, encrypted must be set to "true".</small></p>
+<h3 id="cloning_parameters">Cloning Parameters<a class="headerlink" href="#cloning_parameters" title="Permanent link">&para;</a></h3>
+<p>Cloning supports two modes of cloning. Either use <code>cloneOf</code> and reference a PVC in the current namespace or use <code>importVolAsClone</code> and reference an array volume name to clone and import to Kubernetes.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cloneOf</td>
+<td>Text</td>
+<td>The name of the PV to be cloned. <code>cloneOf</code> and <code>importVolAsClone</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>importVolAsClone</td>
+<td>Text</td>
+<td>The name of the array volume to clone and import. <code>importVolAsClone</code> and <code>cloneOf</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Text</td>
+<td>The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created.</td>
+</tr>
+<tr>
+<td>createSnapshot</td>
+<td>Boolean</td>
+<td>Indicates that a new snapshot of the volume should be taken matching the name provided in the <code>snapshot</code> parameter. If the <code>snapshot</code> parameter is not specified, a default name will be created.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="import_parameters">Import Parameters<a class="headerlink" href="#import_parameters" title="Permanent link">&para;</a></h3>
+<p>Importing volumes to Kubernetes requires the source array volume to be offline. In case of reverse replication, the upstream volume should be in offline state. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE CSI Driver.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>importVolumeName</td>
+<td>Text</td>
+<td>The name of the array volume to import.</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Text</td>
+<td>The name of the array snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored.</td>
+</tr>
+<tr>
+<td>takeover</td>
+<td>Boolean</td>
+<td>Indicates the current group will takeover ownership of the array volume and volume collection. This should be performed against a downstream replica.</td>
+</tr>
+<tr>
+<td>reverseReplication</td>
+<td>Boolean</td>
+<td>Reverses the replication direction so that writes to the array volume are replicated back to the group where it was replicated from.</td>
+</tr>
+<tr>
+<td>forceImport</td>
+<td>Boolean</td>
+<td>Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>In this <a href="https://developer.hpe.com/blog/lift-and-transform-apps-with-hpe-csi-driver-for-kubernetes/">HPE Developer blog post</a> you'll learn how to use the import parameters to lift and transform applications from traditional infrastructure to Kubernetes using the HPE CSI Driver.</p>
+</div>
+<h2 id="pod_inline_volume_parameters_local_ephemeral_volumes">Pod Inline Volume Parameters (Local Ephemeral Volumes)<a class="headerlink" href="#pod_inline_volume_parameters_local_ephemeral_volumes" title="Permanent link">&para;</a></h2>
+<p>These parameters are applicable only for Pod inline volumes and to be specified within Pod spec.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>csi.storage.k8s.io/ephemeral</td>
+<td>Boolean</td>
+<td>Indicates that the request is for ephemeral inline volume. This is a mandatory parameter and must be set to "true".</td>
+</tr>
+<tr>
+<td>inline-volume-secret-name</td>
+<td>Text</td>
+<td>A reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume call.</td>
+</tr>
+<tr>
+<td>inline-volume-secret-namespace</td>
+<td>Text</td>
+<td>The namespace of <code>inline-volume-secret-name</code> for ephemeral inline volume.</td>
+</tr>
+<tr>
+<td>size</td>
+<td>Text</td>
+<td>The size of ephemeral volume specified in MiB or GiB. If unspecified, a default value will be used.</td>
+</tr>
+<tr>
+<td>accessProtocol</td>
+<td>Text</td>
+<td>Storage access protocol to use, "iscsi" or "fc".</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>All parameters are <strong>required</strong> for inline ephemeral volumes.</p>
+</div>
+<h2 id="volumegroupclass_parameters">VolumeGroupClass Parameters<a class="headerlink" href="#volumegroupclass_parameters" title="Permanent link">&para;</a></h2>
+<p>If basic data protection is required and performed on the array, <code>VolumeGroups</code> needs to be created, even it's just a single volume that needs data protection using snapshots and replication. Learn more about <code>VolumeGroups</code> in the <a href="../../using.html#volume_groups">provisioning concepts documentation</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>description</td>
+<td>Text</td>
+<td>Text to be added to the volume collection description on the array. Empty by default.</td>
+</tr>
+<tr>
+<td>protectionTemplate</td>
+<td>Text</td>
+<td>The name of the protection template to assign to the volume collection. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30Daily-52Weekly", and "Retain-90Daily". Empty by default, meaning no array snapshots are performed on the <code>VolumeGroups</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">New feature</p>
+<p><code>VolumeGroupClasses</code> were introduced with version 1.4.0 of the CSI driver. Learn more in the <a href="../../using.html#volume_groups">Using section</a>.</p>
+</div>
+<h2 id="volumesnapshotclass_parameters">VolumeSnapshotClass Parameters<a class="headerlink" href="#volumesnapshotclass_parameters" title="Permanent link">&para;</a></h2>
+<p>These parametes are for <code>VolumeSnapshotClass</code> objects when using CSI snapshots. The external snapshotter needs to be deployed on the Kubernetes cluster and is usually performed by the Kubernetes vendor. Check <a href="../../using.html#enabling_csi_snapshots">enabling CSI snapshots</a> for more information.</p>
+<p>How to use <code>VolumeSnapshotClass</code> and <code>VolumeSnapshot</code> objects is elaborated on in <a href="../../using.html#using_csi_snapshots">using CSI snapshots</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>description</td>
+<td>Text</td>
+<td>Text to be added to the snapshot's description on the array.</td>
+</tr>
+<tr>
+<td>writable</td>
+<td>Boolean</td>
+<td>Indicates if the snapshot is writable on the array. Defaults to "false".</td>
+</tr>
+<tr>
+<td>online</td>
+<td>Boolean</td>
+<td>Indicates if the snapshot is set to online on the array. Defaults to "false".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="static_provisioning">Static Provisioning<a class="headerlink" href="#static_provisioning" title="Permanent link">&para;</a></h2>
+<p>Static provisioning of <code>PVs</code> and <code>PVCs</code> may be used when absolute control over physical volumes are required by the storage administrator. This CSP also supports importing volumes and clones of volumes using the <a href="#import_parameters">import parameters</a> in a <code>StorageClass</code>.</p>
+<h3 id="persistent_volume">Persistent Volume<a class="headerlink" href="#persistent_volume" title="Permanent link">&para;</a></h3>
+<p>Create a <code>PV</code> referencing an existing 10GiB volume on the array, replace <code>.spec.csi.volumeHandle</code> with the array volume ID. The volume ID can be retrieved from the array web interface URLs when a linked volume name is hovered. I.e in the URL <code>https://my-array/manage/storage/volume/0655a648f954b5cddb0000000000000000000002a7</code> the last path element is the volume ID.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If a filesystem can't be detected on the device a new filesystem will be created. If the volume contains data, make sure the data reside in a whole device filesystem.</p>
+</div>
+<p> <pre><code class=text>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-static-pv-1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  csi:
+    volumeHandle: &lt;insert volume ID here&gt;
+    driver: csi.hpe.com
+    fsType: xfs
+    volumeAttributes:
+      volumeAccessMode: mount
+      fsType: xfs
+    controllerPublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    nodePublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    controllerExpandSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Remove <code>.spec.csi.controllerExpandSecretRef</code> to disallow volume expansion.</p>
+</div>
+<h3 id="persistent_volume_claim">Persistent Volume Claim<a class="headerlink" href="#persistent_volume_claim" title="Permanent link">&para;</a></h3>
+<p>Now, a user may claim the static <code>PV</code> by creating a <code>PVC</code> referencing the <code>PV</code> name in <code>.spec.volumeName</code>.</p>
+<p> <pre><code class=text>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  volumeName: my-static-pv-1
+  storageClassName: &quot;&quot;
+</code></pre></p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/container_storage_provider/hpe_alletra_6000/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="../hpe_alletra_storage_mp_b10000_file_service/index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../metrics.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
