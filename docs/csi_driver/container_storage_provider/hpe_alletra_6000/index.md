@@ -171,8 +171,10 @@ These parameters are immutable for both volumes and clones once created, clones 
 
 | Parameter       | String         | Description |
 | --------------- | -------------- | ----------- |
-| encrypted       | Boolean        | Indicates that the volume should be encrypted. Defaults to "false". |
+| encrypted<sup>1</sup>       | Boolean        | Indicates that the volume should be encrypted. Defaults to "false". |
 | pool            | Text           | The name of the pool in which to place the volume. Defaults to the "default" pool. |
+
+<small><sup>1</sup> = If volume encryption is enabled on the array, the volumes provisioned by the CSI driver must adhere to encrypting volumes. If the array REST API is returning this HTTP 400 error response: `{ code: SM_encryption_group_cipher_override, text: Invalid group encryption cipher override., arguments: null}`, encrypted must be set to "true".</small>
 
 ### Cloning Parameters
 
@@ -245,7 +247,7 @@ Static provisioning of `PVs` and `PVCs` may be used when absolute control over p
 
 ### Persistent Volume
 
-Create a `PV` referencing an existing 10GiB volume on the array, replace `.spec.csi.volumeHandle` with the array volume ID.
+Create a `PV` referencing an existing 10GiB volume on the array, replace `.spec.csi.volumeHandle` with the array volume ID. The volume ID can be retrieved from the array web interface URLs when a linked volume name is hovered. I.e in the URL `https://my-array/manage/storage/volume/0655a648f954b5cddb0000000000000000000002a7` the last path element is the volume ID.
 
 !!! warning
     If a filesystem can't be detected on the device a new filesystem will be created. If the volume contains data, make sure the data reside in a whole device filesystem.

@@ -16,18 +16,19 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
+| Field&nbsp;Tested<sup>3</sup>| 4.20 EUS<sup>2</sup>         | 3.0.1                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.19                              | 3.0.1                      | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2, 3.0.1               | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.17                              | 2.5.2, 3.0.1               | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2, 3.0.1        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1 | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1 | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1 | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
 
 <small><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).</small><br />
 <small><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).</small></br />
-<!--small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method.</small-->
+<small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [unsupported Helm chart install](#unsupported_helm_chart_install) method. Formal certification will be part of the next release of the CSI driver.</small>
 
 Check the table above periodically for future releases.
 
@@ -436,4 +437,4 @@ It's not recommended to install the Helm chart unless it's listed as "Field Test
 - Install the Helm chart with the steps provided on [ArtifactHub](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). Pay attention to which version combination has been field tested.
 
 !!! caution "Unsupported"
-    Understand that this method is not supported by Red Hat and not recommended for production workloads or clusters.
+    Understand that this method is not supported by Red Hat and not recommended for production workloads or clusters from a Red Hat support perspective. HPE will support customers deploying the Helm chart on OpenShift as long as the underlying Kubernetes and OS version is supported by the HPE CSI Driver. See [Compatibility & Support](../../index.md#latest_release) for more details.
