@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/archive.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Unsupported Releases - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Unsupported Releases";
+        var mkdocs_page_input_path = "csi_driver/archive.md";
+        var mkdocs_page_url = "/csi_driver/archive.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Unsupported Releases</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="unsupported_releases">Unsupported Releases<a class="headerlink" href="#unsupported_releases" title="Permanent link">&para;</a></h1>
+<p>HPE supports up to three historic minor releases on supported versions of upstream and downstream Kubernetes. Releases are kept here for historic purposes.</p>
+<div class="toc">
+<ul>
+<li><a href="#unsupported_releases">Unsupported Releases</a><ul>
+<li><a href="#hpe_csi_driver_for_kubernetes_241">HPE CSI Driver for Kubernetes 2.4.1</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_240">HPE CSI Driver for Kubernetes 2.4.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_230">HPE CSI Driver for Kubernetes 2.3.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_220">HPE CSI Driver for Kubernetes 2.2.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_211">HPE CSI Driver for Kubernetes 2.1.1</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_210">HPE CSI Driver for Kubernetes 2.1.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_200">HPE CSI Driver for Kubernetes 2.0.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_140">HPE CSI Driver for Kubernetes 1.4.0</a></li>
+<li><a href="#hpe_csi_driveroperator_for_kubernetes_130">HPE CSI Driver/Operator for Kubernetes 1.3.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_120">HPE CSI Driver for Kubernetes 1.2.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_111">HPE CSI Driver for Kubernetes 1.1.1</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_110">HPE CSI Driver for Kubernetes 1.1.0</a></li>
+<li><a href="#hpe_csi_driver_for_kubernetes_100">HPE CSI Driver for Kubernetes 1.0.0</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h4 id="hpe_csi_driver_for_kubernetes_241">HPE CSI Driver for Kubernetes 2.4.1<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_241" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>HPE Alletra Storage MP support</li>
+<li>Kubernetes 1.29 support</li>
+<li>Full KubeVirt, OpenShift Virtualization and SUSE Harvester support for HPE Alletra Storage MP, Alletra 9000, Primera and 3PAR</li>
+<li>Full ARM64 support for HPE Alletra 5000/6000 and Nimble Storage</li>
+<li>Support for foreign <code>StorageClasses</code> with the NFS Server Provisioner</li>
+<li>SUSE Linux Enterprise Micro OS (SLE Micro) support</li>
+</ul>
+<p>Upgrade considerations:</p>
+<ul>
+<li>Existing claims provisioned with the NFS Server Provisioner <a href="operations.html#upgrade_to_v241">needs to be upgraded</a>.</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.26-1.29<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.4.1">v2.4.1</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.1">v2.4.1</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.1</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.12-4.15<br />
+      Ubuntu 16.04, 18.04, 20.04, 22.04<br />
+      SUSE Linux Enterprise Server 15 SP3, SP4, SP5 and SLE Micro<sup>4</sup> equivalents
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      Alletra Storage MP<sup>5</sup> 10.2.x - 10.3.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Alletra OS 5000/6000 6.0.0.x - 6.1.2.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocols</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Filesystems</th>
+    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.4.1.md">v2.4.1</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-hpe-alletra-storage-mp-to-hpe-csi-driver-for/ba-p/7205347">Introducing HPE Alletra Storage MP to HPE CSI Driver for Kubernetes</a>
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>&ast;</sup> = The HPE CSI Driver for Kubernetes is a block storage driver primarily. It includes an <a href="using.html#using_the_nfs_server_provisioner">NFS Server Provisioner</a> that allows "ReadWriteMany" <code>PersistentVolumeClaims</code>.<br/>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
+ <sup>3</sup> = Learn about each data platform's team <a href="../legal/support/index.html#container_storage_providers">support commitment</a>.<br/>
+ <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run <code>transactional-update -n pkg install multipath-tools open-iscsi nfs-client sg3_utils</code> and reboot if the CSI node driver doesn't start.<br/>
+ <sup>5</sup> = The HPE CSI Driver for Kubernetes only support HPE Alletra Storage MP when used with HPE GreenLake for Block Storage. Please see the <a href="https://support.vastdata.com/s/topic/0TOV40000000TtFOAU/vast-csi-driver">VAST CSI Driver</a> for HPE GreenLake for File Storage.<br/>
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_240">HPE CSI Driver for Kubernetes 2.4.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_240" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Kubernetes 1.27 and 1.28 support</li>
+<li>KubeVirt and OpenShift Virtualization support for Nimble/Alletra 5000/6000</li>
+<li>Enhanced scheduling for the NFS Server Provisioner</li>
+<li>Multiarch images (Linux ARM64/AMD64) for the CSI driver components and Alletra 9000 CSP</li>
+<li>Major updates to SIG Storage images</li>
+</ul>
+<p>Upgrade considerations:</p>
+<ul>
+<li>Existing claims provisioned with the NFS Server Provisioner <a href="operations.html#upgrade_to_v240">needs to be upgraded</a>.</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.25-1.28<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.4.0">v2.4.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.4.0">v2.4.0</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v2.4.0</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.12-4.14<br />
+      Ubuntu 16.04, 18.04, 20.04, 22.04<br />
+      SLES 15 SP3, SP4, SP5
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      <!-- Alletra Storage MP (block) 10.2.x<br /-->
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Alletra OS 5000/6000 6.0.0.x - 6.1.1.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.2.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocols</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Filesystems</th>
+    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.4.0.md>v2.4.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introduction-to-new-workload-paradigms-with-hpe-csi-driver-for/ba-p/7196554">Introduction to new workload paradigms with HPE CSI Driver for Kubernetes</a>
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>&ast;</sup> = The HPE CSI Driver for Kubernetes is a block storage driver primarily. It includes an <a href="using.html#using_the_nfs_server_provisioner">NFS Server Provisioner</a> that allows "ReadWriteMany" <code>PersistentVolumeClaims</code>.<br/>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.<br/>
+ <sup>3</sup> = Learn about each data platform's team <a href="../legal/support/index.html#container_storage_providers">support commitment</a>.<br/>
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_230">HPE CSI Driver for Kubernetes 2.3.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_230" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Introducing HPE Alletra 5000</li>
+<li>Security updates</li>
+<li>Support for Kubernetes 1.25-1.26 and Red Hat OpenShift 4.11-4.12</li>
+<li>Support for SLES 15 SP4, RHEL 9.1 and Ubuntu 22.04</li>
+</ul>
+<p>Upgrade considerations:</p>
+<ul>
+<li>Existing claims provisioned with the NFS Server Provisioner <a href="operations.html#upgrade_to_v230">needs to be upgraded</a>.</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.23-1.26<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.3.0">v2.3.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.3.0">v2.3.0</a> on OperatorHub<br />
+     v2.3.0</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      RHEL<sup>2</sup> 7.x, 8.x, 9.x, RHCOS 4.10-4.12<br />
+      Ubuntu 16.04, 18.04, 20.04, 22.04<br />
+      SLES 15 SP2, SP3, SP4
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      Alletra OS 5000/6000 6.0.0.x - 6.1.1.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.1.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.3.0.md>v2.3.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/support-and-security-updates-for-hpe-csi-driver-for-kubernetes/ba-p/7184293">Support and security updates for HPE CSI Driver for Kubernetes</a> (release blog)
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations. Lowest tested and known working version is Kubernetes 1.21.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.
+ <sup>3</sup> = Learn about each data platform's team <a href="../legal/support/index.html#container_storage_providers">support commitment</a>.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_220">HPE CSI Driver for Kubernetes 2.2.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_220" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Support for Kubernetes 1.24 and Red Hat OpenShift 4.10</li>
+<li>Added Tolerations, Affinity, Labels and Node Selectors to Helm chart</li>
+<li>Improved automatic recovery for the NFS Server Provisioner</li>
+<li>Added multipath handling for Alletra 9000, Primera and 3PAR</li>
+<li>Volume expansion of encrypted volumes</li>
+</ul>
+<p>Upgrade considerations:</p>
+<ul>
+<li>Existing <a href="operations.html#migrate_encrypted_volumes">encrypted volumes needs to be migrated</a> to allow expansion</li>
+<li>Existing claims provisioned with the NFS Server Provisioner <a href="operations.html#upgrade_to_v220">needs to be upgraded</a>.</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.21-1.24<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/2.2.0">v2.2.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v2.2.1">v2.2.1</a> on OperatorHub<br />
+     v2.2.1</a> via OpenShift console
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      RHEL<sup>2</sup> 7.x & 8.x, RHCOS 4.8 & 4.10<br />
+      Ubuntu 16.04, 18.04 & 20.04<br />
+      SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x - 6.1.0.x<br />
+      Alletra OS 9000 9.3.x - 9.5.x<br />
+      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.0.x<br />
+      Primera OS 4.3.x - 4.5.x<br />
+      3PAR OS 3.3.x
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.2.0.md>v2.2.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/Updates-and-Improvements-to-HPE-CSI-Driver-for-Kubernetes/ba-p/7170878">Updates and Improvements to HPE CSI Driver for Kubernetes</a> (release blog)
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, SUSE Rancher, Mirantis Kubernetes Engine and others; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.<br />
+ <sup>2</sup> = The HPE CSI Driver will recognize CentOS, AlmaLinux and Rocky Linux as RHEL derives and they are supported by HPE.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_211">HPE CSI Driver for Kubernetes 2.1.1<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_211" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Support for Kubernetes 1.23</li>
+<li>Upstream CSI sidecar updates</li>
+<li>Improved LUN discoverability in certain environments</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.20-1.23<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6 & 4.8, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.4.x<br />
+      Nimble OS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.3.x, 4.4.x<br />
+      3PAR OS 3.3.2
+    </td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.1.1.md>v2.1.1</a> on GitHub</td>
+  </tr>
+  <!--
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href=""></a> ()<br />
+    <a href=""></a> ()
+   </td>
+ </tr>
+ -->
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_210">HPE CSI Driver for Kubernetes 2.1.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_210" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Prometheus exporters</li>
+<li>Support for Red Hat OCP 4.8</li>
+<li>Support for Kubernetes 1.22</li>
+<li>Reliability/Stability enhancements<ul>
+<li>Peer Persistence Remote Copy enhancements</li>
+<li>Volume Mutator enhancements</li>
+<li>Logging enhancements</li>
+</ul>
+</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.20-1.22<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6 & 4.8, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.3.x, 9.4.x<br />
+      Nimble OS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x, 4.4.x<br />
+      3PAR OS 3.3.1, 3.3.2
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.1.0.md>v2.1.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-enhancements-with-monitoring-and/ba-p/7158137">HPE CSI Driver enhancements with monitoring and alerting</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/get-started-with-prometheus-and-grafana-on-docker-with-hpe-storage-array-exporter/">Get started with Prometheus and Grafana and HPE Storage Array Exporter</a> (tutorial)
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_200">HPE CSI Driver for Kubernetes 2.0.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_200" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Support for HPE Alletra 5000/6000 and 9000</li>
+<li>Host-based volume encryption</li>
+<li>Multitenancy for HPE Alletra 5000/6000 and Nimble Storage</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.18-1.21<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.x & 8.x, RHCOS 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP2
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      Alletra OS 6000 6.0.0.x<br />
+      Alletra OS 9000 9.3.0<br />
+      Nimble OS 5.0.10.x,  5.1.4.200-x, 5.2.1.x, 5.3.0.x, 5.3.1.x, 6.0.0.x<br />
+      Primera OS 4.0.x, 4.1.x, 4.2.x, 4.3.x<br />
+      3PAR OS 3.3.1, 3.3.2
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v2.0.0.md>v2.0.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-now-available-for-HPE-Alletra/ba-p/7136280">HPE CSI Driver for Kubernetes now available for HPE Alletra</a> (release blog)<br />
+    <a href="https://developer.hpe.com/blog/multitenancy-for-kubernetes-clusters-using-hpe-alletra-6000-and-nimble-storage/">Multitenancy for Kubernetes clusters using HPE Alletra 5000/6000 and Nimble</a> (tutorial)<br />
+    <a href="https://developer.hpe.com/blog/host-based-volume-encryption-with-hpe-csi-driver-for-kubernetes/">Host-based Volume Encryption with HPE CSI Driver for Kubernetes</a> (tutorial)
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_140">HPE CSI Driver for Kubernetes 1.4.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_140" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Kubernetes CSI Sidecars: Volume Group Provisioner and Volume Group Snapshotter</li>
+<li>NFS Server Provisioner GA</li>
+<li>HPE Primera Remote Copy Peer Persistence support</li>
+<li>Air-gap support for the Helm chart</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.17-1.20<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>CentOS and RHEL 7.7 & 8.1, RHCOS 4.4 & 4.6, Ubuntu 18.04 & 20.04, SLES 15 SP1
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.0-x, 5.1.4.200-x, 5.2.1.0-x, 5.3.0.0-x, 5.3.1.0-x<br />
+      3PAR OS 3.3.1+<br />
+      Primera OS 4.0+<br />
+    </td>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.4.0.md>v1.4.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/Around-the-Storage-Block/HPE-CSI-Driver-for-Kubernetes-v1-4-0-with-expanded-ecosystem-and/ba-p/7118180">HPE CSI Driver for Kubernetes v1.4.0 now available!</a> (release blog) <br />
+    <a href="https://developer.hpe.com/blog/7mBn6Yj89Wcg6VN6lzMO/synchronized-volume-snapshots-for-distributed-workloads-on-kubernetes">Synchronized Volume Snapshots for Distributed Workloads on Kubernetes</a> (tutorial)
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Runtime Enterprise, Rancher and Mirantis Kubernetes Engine; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.
+</small></p>
+<h4 id="hpe_csi_driveroperator_for_kubernetes_130">HPE CSI Driver/Operator for Kubernetes 1.3.0<a class="headerlink" href="#hpe_csi_driveroperator_for_kubernetes_130" title="Permanent link">&para;</a></h4>
+<p>Release highlights:</p>
+<ul>
+<li>Kubernetes CSI Sidecar: Volume Mutator</li>
+<li>Broader ecosystem support</li>
+<li>Native iSCSI CHAP configuration</li>
+</ul>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.15-1.18<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.3-4.4, Ubuntu 18.04, Ubuntu 20.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.x, 5.1.4.200-x, 5.2.1.x, 5.3.0.x<br />
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0, 4.2.0<sup>2</sup><br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.3.0.md>v1.3.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/hpe-csi-driver-for-kubernetes-1-3-0-now-available/ba-p/7099684">Around The Storage Block</a> (release)<br/>
+    <a href="https://developer.hpe.com/blog/ppPAlQ807Ah8QGMNl1YE/tutorial-enabling-remote-copy-using-the-hpe-csi-driver-for-kubernetes-on">HPE DEV</a> (Remote copy peer persistence tutorial)<br/>
+    <a href="https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe">HPE DEV</a> (Introducing the volume mutator)<br/>
+   </td>
+ </tr>
+</table>
+
+<p><small>
+ <sup>1</sup> = For HPE Ezmeral Container Platform and Rancher; Kubernetes clusters must be deployed within the currently supported range of "Worker OS" platforms listed in the above table. See <a href="partners/index.html">partner ecosystems</a> for other variations.<br />
+ <sup>2</sup> = Only FC is supported on Primera OS prior to 4.2.0.
+</small></p>
+<h4 id="hpe_csi_driver_for_kubernetes_120">HPE CSI Driver for Kubernetes 1.2.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_120" title="Permanent link">&para;</a></h4>
+<p>Release highlights: Support for raw block volumes and inline ephemeral volumes. NFS Server Provisioner in Tech Preview (beta).</p>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.14-1.18</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.10.x, 5.1.3.1000-x, 5.1.4.200-x, 5.2.1.x<br />
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.2.0.md>v1.2.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td><a href="https://community.hpe.com/t5/around-the-storage-block/hpe-csi-driver-for-kubernetes-1-2-0-available-now/ba-p/7091977">Around The Storage Block</a> (release)<br/>
+       <a href="https://developer.hpe.com/blog/EE2QnZBXXwi4o7X0E4M0/using-raw-block-and-ephemeral-inline-volumes-on-kubernetes">HPE DEV</a> (tutorial for raw block and inline volumes)<br/>
+       <a href="https://community.hpe.com/t5/around-the-storage-block/tech-preview-network-file-system-server-provisioner-for-hpe-csi/ba-p/7092948">Around The Storage Block</a> (NFS Server Provisioner)<br/>
+       <a href="https://developer.hpe.com/blog/xABwJY56qEfNGMEo1lDj/introducing-a-nfs-server-provisioner-and-pod-monitor-for-the-hpe-csi-dri">HPE DEV</a> (tutorial for NFS)
+   </td>
+ </tr>
+</table>
+
+<h4 id="hpe_csi_driver_for_kubernetes_111">HPE CSI Driver for Kubernetes 1.1.1<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_111" title="Permanent link">&para;</a></h4>
+<p>Release highlights: Support for HPE 3PAR and Primera Container Storage Provider.</p>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.13-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x<br/>
+      3PAR OS 3.3.1<br/>
+      Primera OS 4.0.0, 4.1.0 (FC only)<br/>
+    </td>
+  <tr>
+    <th>Release notes</th>
+    <td>N/A</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td><a href="https://community.hpe.com/t5/hpe-storage-tech-insiders/hpe-csi-driver-for-kubernetes-1-1-1-and-hpe-3par-and-hpe-primera/ba-p/7086675">HPE Storage Tech Insiders</a> (release), <a href="https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-">HPE DEV</a> (tutorial for "primera3par" CSP)</td>
+ </tr>
+</table>
+
+<h4 id="hpe_csi_driver_for_kubernetes_110">HPE CSI Driver for Kubernetes 1.1.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_110" title="Permanent link">&para;</a></h4>
+<p>Release highlights: Broader ecosystem support, official support for CSI snapshots and volume resize.</p>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.13-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, RHCOS 4.2-4.3, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x
+    </td>
+  </tr>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.1.0.md>v1.1.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td><a href=https://community.hpe.com/t5/HPE-Storage-Tech-Insiders/HPE-CSI-Driver-for-Kubernetes-1-1-0-Generally-Available/ba-p/7082995>HPE Storage Tech Insiders</a> (release), <a href=https://developer.hpe.com/blog/PklOy39w8NtX6M2RvAxW/hpe-csi-driver-for-kubernetes-snapshots-clones-and-volume-expansion>HPE DEV</a> (snapshots, clones, resize)</td>
+ </tr>
+</table>
+
+<h4 id="hpe_csi_driver_for_kubernetes_100">HPE CSI Driver for Kubernetes 1.0.0<a class="headerlink" href="#hpe_csi_driver_for_kubernetes_100" title="Permanent link">&para;</a></h4>
+<p>Release highlights: Initial GA release with support for Dynamic Provisioning.</p>
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.13-1.17</td>
+  </tr>
+  <tr>
+    <th>Worker OS</th>
+    <td>CentOS 7.6, RHEL 7.6, Ubuntu 16.04, Ubuntu 18.04
+  </tr>
+  <tr>
+    <th>Data protocol</th>
+    <td>Fibre Channel, iSCSI </td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>NimbleOS 5.0.8.x, 5.1.3.x, 5.1.4.x</td>
+  </tr>
+  <tr>
+    <th>Release notes</th>
+    <td><a href=https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v1.0.0.md>v1.0.0</a> on GitHub</td>
+  </tr>
+  <tr>
+   <th>Blogs</th>
+   <td><a href=https://community.hpe.com/t5/HPE-Storage-Tech-Insiders/HPE-CSI-Driver-for-Kubernetes-1-0-Released/ba-p/7076820>HPE Storage Tech Insiders</a> (release), <a href=https://developer.hpe.com/blog/n0J8kpk1DJf4y7xD2D4X/introducing-a-multi-vendor-csi-driver-for-kubernetes>HPE DEV</a> (architecture and introduction)</td>
+ </tr>
+</table>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/archive.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
