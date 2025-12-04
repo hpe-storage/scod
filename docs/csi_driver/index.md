@@ -474,7 +474,7 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 ## Known Limitations
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
-* When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similiar, iSCSI and NFS is the only supported data protocol for the HPE CSI Driver. The CSI driver does **not** support NPIV.
+* When using Kubernetes in virtual machines on VMware vSphere, OpenStack or similar, iSCSI and NFS is the only supported data protocol for the HPE CSI Driver. The CSI driver does **not** support NPIV.
 * Ephemeral, transient or non-persistent Kubernetes nodes are not supported unless the `/etc/hpe-storage` directory persists across node upgrades or reboots. The path is relocatable using a custom Helm chart or deployment manifest by altering the `mountPath` parameter for the directory.
 * The CSI driver support a fixed number of volumes per node. Inspect the current limitation by running `kubectl get csinodes -o yaml` and inspect `.spec.drivers.allocatable` for "csi.hpe.com". The "count" element contains how many volumes the node can attach from the HPE CSI Driver (default is 100). From v2.5.2 onwards this parameter is tunable in the Helm chart. Do NOT increase this value beyond what's been tested in the environment where the CSI driver is running. See each respective [CSP](container_storage_provider/index.md) limitations for more guidance.
 * The HPE CSI Driver uses host networking for the node driver. Some CNIs have flaky implementations which prevents the CSI driver components to communicate properly. Especially notorious is Flannel on K3s. Use Calico if possible for the widest compatibility.
@@ -491,7 +491,7 @@ It's not recommended to retro fit CHAP into an existing environment where `Persi
 
 ### CSI driver 2.5.0 and Above
 
-In 2.5.0 and later the CHAP credentials must be supplied by a separate `Secret`. The `Secret` may be supplied when installing the Helm Chart (the `Secret` must exist prior) or referened in the `StorageClass`.
+In 2.5.0 and later the CHAP credentials must be supplied by a separate `Secret`. The `Secret` may be supplied when installing the Helm Chart (the `Secret` must exist prior) or referenced in the `StorageClass`.
 
 ### One CHAP configuration per backend
 
@@ -511,7 +511,7 @@ How to enable iSCSI CHAP in the current version of the HPE CSI Driver is availab
 
 CHAP is an optional part of the initial deployment of the driver with parameters passed to Helm or the Operator. For object definitions, the `CHAP_USER` and `CHAP_PASSWORD` needs to be supplied to the `csi-node-driver`. The CHAP username and secret is picked up in the `hpenodeinfo` Custom Resource Definition (CRD). The CSP is under contract to create the user if it doesn't exist on the backend.
 
-CHAP is a good measure to prevent unauthorized access to iSCSI targets, it does not encrypt data on the wire. CHAP secrets should be at least twelve charcters in length.
+CHAP is a good measure to prevent unauthorized access to iSCSI targets, it does not encrypt data on the wire. CHAP secrets should be at least twelve characters in length.
 
 ### CSI driver 1.2.1 and Below
 
@@ -521,7 +521,7 @@ In version 1.2.1 and below, the CSI driver did not support CHAP natively. CHAP m
 
 Different features mature at different rates. Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs.
 
-The following guidelines appliy to which feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
+The following guidelines apply to which feature gates got introduced as alphas for the corresponding version of Kubernetes. For example, `ExpandCSIVolumes` got introduced in 1.14 but is still an alpha in 1.15, hence you need to enable that feature gate in 1.15 as well if you want to use it.
 
 ### Kubernetes 1.13
 
