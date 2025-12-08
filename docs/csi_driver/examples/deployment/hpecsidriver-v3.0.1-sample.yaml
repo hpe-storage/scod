@@ -35,7 +35,7 @@ spec:
     b10000FileService: false
     nimble: false
     primera: false
-  disableHostDeletion: false
+  disableHostDeletion: true
   disableNodeConfiguration: false
   disableNodeConformance: false
   disableNodeGetVolumeStats: false
