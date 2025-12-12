@@ -20,13 +20,15 @@ The official Helm chart for the HPE GreenLake for File Storage CSI Driver is hos
 The [Operator pattern](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running on Kubernetes.
 
 ### Red Hat OpenShift Container Platform
-
 <!--
 The HPE GreenLake for File Storage CSI Operator is a fully certified Operator for OpenShift. There are a few tweaks needed and there's a separate section for OpenShift.
 
 - See [Red Hat OpenShift](../partners/redhat_openshift/index.md) in the partner ecosystem section
 -->
-During the beta, it's possible to sideload the HPE GreenLake for File Storage CSI Operator using the Operator SDK.
+
+The HPE GreenLake for File Storage CSI Operator is available through the OpenShift console. It's also possible to sideload the HPE GreenLake for File Storage CSI Operator using the Operator SDK.
+
+#### Prerequisites
 
 The installation procedures assumes the "hpe-storage" `Namespace` exists:
 
@@ -46,16 +48,20 @@ oc apply -f {{ config.site_url}}csi_driver/partners/redhat_openshift/examples/sc
 Install the Operator:
 
 ```text
-operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/filex-csi-driver-operator-bundle-ocp:v1.0.0-beta3
+operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/filex-csi-driver-operator-bundle-ocp:v2.6.4
 ```
 
 The next step is to create a `HPEGreenLakeFileCSIDriver` resource, this can also be done in the OpenShift cluster console.
 
-```yaml fct_label="HPE GreenLake for File Storage CSI Operator v1.0.0-beta3"
+```yaml fct_label="HPE GreenLake for File Storage CSI Operator v2.6.4"
+# oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v2.6.4-sample.yaml
+{% include "filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v2.6.4-sample.yaml" %}```
+
+```yaml fct_label="v1.0.0-beta3"
 # oc apply -n hpe-storage -f {{ config.site_url }}filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta3-sample.yaml
 {% include "filex_csi_driver/examples/deployment/hpegreenlakefilecsidriver-v1.0.0-beta3-sample.yaml" %}```
 
-For reference, this is how the Operator is uninstalled:
+For reference, this is how the Operator is uninstalled when installed with the Operator SDK:
 
 ```text
 operator-sdk cleanup hpe-filex-csi-operator -n hpe-storage

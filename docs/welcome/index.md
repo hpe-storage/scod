@@ -59,7 +59,7 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
    <a href="../csi_driver">HPE CSI Driver for Kubernetes</a><sup>1</sup>
   </td>
   <td>
-   <a href="../filex_csi_driver">HPE GreenLake for File Storage CSI Driver</a><sup>2</sup>
+   <a href="../filex_csi_driver">HPE GreenLake for File Storage CSI Driver</a>
   </td>
   <td>
    <a href="../cosi_driver/">HPE COSI Driver for Kubernetes</a>
@@ -68,7 +68,6 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
 </table>
 
 <sup>1</sup> = HPE CSI Driver for Kubernetes also supports Alletra 5000/6000/9000, Primera, 3PAR and Nimble Storage.<br />
-<sup>2</sup> = Currently in beta.
 </small>
 
 !!! tip "Learn more"

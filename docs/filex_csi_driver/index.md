@@ -29,31 +29,31 @@ These are the combinations HPE has tested and can provide official support servi
     The HPE Greenlake for File Storage CSI Driver is currently **NOT** supported by HPE and is considered beta software.
 
 <a name="latest_release"></a>
-#### HPE GreenLake for File Storage CSI Driver v1.0.0-beta3
+#### HPE GreenLake for File Storage CSI Driver v2.6.4
 
 Release highlights:
 
-* Public beta release
+* Initial release
 
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>1.28-1.32<sup>1</sup></td>
+    <td>1.30-1.34<sup>1</sup></td>
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-greenlake-file-csi-driver/1.0.0-beta3">v1.0.0-beta3</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-greenlake-file-csi-driver/2.6.4">v2.6.4</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>Operators</th>
     <td>
-     <a href="https://catalog.redhat.com/software/container-stacks/detail/670e9898a6db4f1b3b89ff59">v1.0.0-beta3</a> via OpenShift console
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/670e9898a6db4f1b3b89ff59">v2.6.4</a> via OpenShift console
     </td>
   </tr>
   <tr>
     <th>Worker&nbsp;OS</th>
     <td>
-      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.14-4.17<br />
+      Red Hat Enterprise Linux<sup>2</sup> 7.x, 8.x, 9.x, Red Hat CoreOS 4.14-4.20<br />
       Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04<br />
       SUSE Linux Enterprise Server 15 SP4, SP5, SP6 and SLE Micro<sup>4</sup> equivalents
   </tr>
@@ -82,15 +82,11 @@ Release highlights:
  <sup>4</sup> = SLE Micro nodes may need to be conformed manually, run `transactional-update -n pkg install nfs-client` and reboot if the CSI node driver doesn't start.<br/>
 </small>
 
-<!--
-
 #### Release Archive
 
 HPE currently supports up to three minor releases of the HPE CSI Driver for Kubernetes.
 
 * [Unsupported releases](archive.md)
-
--->
 
 ## Known Limitations
 
