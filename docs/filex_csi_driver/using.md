@@ -41,7 +41,16 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
-```text fct_label="HPE GreenLake for File Storage CSI Driver v1.0.0-beta"
+```text fct_label="HPE GreenLake for File Storage CSI Driver v2.6.4"
+# Kubernetes 1.30-1.34
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.4 -b hpe-greenlake-for-file-csi-driver-v2.6.4
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+```
+
+```text fct_label="v1.0.0-beta"
 # Kubernetes 1.28-1.31
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
