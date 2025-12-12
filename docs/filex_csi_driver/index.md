@@ -25,9 +25,6 @@ Below is the official table for CSI features we track and deem readily available
 
 These are the combinations HPE has tested and can provide official support services around for each of the CSI driver releases.
 
-!!! caution "Disclaimer"
-    The HPE Greenlake for File Storage CSI Driver is currently **NOT** supported by HPE and is considered beta software.
-
 <a name="latest_release"></a>
 #### HPE GreenLake for File Storage CSI Driver v2.6.4
 
