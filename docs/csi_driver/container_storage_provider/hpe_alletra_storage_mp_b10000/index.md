@@ -42,7 +42,7 @@ The CSP requires access to a user with either `edit` or the `super` role. It's r
 
 ### Virtual Domains
 
-Virtual Domains are not yet fully supported by the CSP. From HPE CSI Driver v2.5.0, it's possible to manually create the Kubernetes hosts connecting to storage within the Virtual Domain. Once the hosts have been created, deploy the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true". The Virtual Domain user may create the hosts through the Virtual Domain if the "AllowDomainUsersAffectNoDomain" parameter is set to either "hostonly" or "yes" on the array.
+Virtual Domains are not yet fully implemented by the CSP. From HPE CSI Driver v2.5.0, it's possible to manually create the Kubernetes hosts connecting to storage within the Virtual Domain. Once the hosts have been created, deploy the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true". The Virtual Domain user may create the hosts through the Virtual Domain if the "AllowDomainUsersAffectNoDomain" parameter is set to either "hostonly" or "yes" on the array.
 
 #### Detailed steps to use Virtual Domains
 
@@ -66,8 +66,10 @@ Next, make sure domain users are allowed to create hosts outside the domain.
 cli% setsys AllowDomainUsersAffectNoDomain hostonly
 ```
 
-!!! tip
-    Hosts can be created manually at any point. Make sure the name of the host matches the name of each of the compute (worker) nodes in the Kubernetes cluster.
+Hosts can be created manually at any point using the `createhost` command or other means on the array either from the user domain directly or from the global domain.
+
+!!! caution "Important"
+    From HPE CSI Driver 3.0.0 and newer the hostnames needs to be prefixed with the protocol name, such as "iqn" for iSCSI, "fc" for Fibre Channel, i.e "iqn-myhost" where "myhost" is the host name found in the `HPENodeInfos` `CustomResourceDefinition`. The total string length may not exceed 27 characters.
 
 The next steps involve installing the HPE CSI Driver for Kubernetes with `disableHostDeletion` set to `true`. The steps to supply the parameter depends on if the Helm chart or Operator is being used.
 

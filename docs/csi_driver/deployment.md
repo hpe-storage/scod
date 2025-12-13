@@ -577,4 +577,7 @@ kubectl delete ns hpe-storage
 
 ## Downgrading the CSI driver
 
-Downgrading the CSI driver is currently not supported. It will work between certain minor versions. HPE does not test or document procedures to downgrade between incompatible versions.
+Downgrading the CSI driver is currently not supported. It will work between certain minor versions but it's generally not recommended to attempt without consulting. HPE does not test or document procedures to downgrade between incompatible versions. Issues may arise with host naming on the backend storage platforms, `CustomResourceDefinitions` and immutable fields on `PersistentVolumes`.
+
+!!! caution
+    It's important to consult with HPE support if a downgrade should be attempted.

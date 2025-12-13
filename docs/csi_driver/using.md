@@ -714,6 +714,9 @@ persistentvolumeclaim/my-pvc patched
 
 The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my-pvc` after a few moments.
 
+!!! tip "Good to know"
+    The CSI driver does a combined controller and node expansion of the `PersistentVolume` that is sometimes referred to as an "online" expansion. That means that the `PersistentVolume` needs to be attached to a node when the expansion request is issued to complete successfully.
+
 ### Using PVC Overrides
 
 The HPE CSI Driver allows the `PersistentVolumeClaim` to override the `StorageClass` parameters by annotating the `PersistentVolumeClaim`. Define the parameters allowed to be overridden in the `StorageClass` by setting the `allowOverrides` parameter:
