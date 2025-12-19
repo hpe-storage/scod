@@ -400,7 +400,10 @@ yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-uti
 <a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a>
 ## Upgrade NFS Servers
 
-In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually.
+In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. Downgrading NFS servers is not supported.
+
+!!! note
+    This is generally considered an optional step as existing NFS servers will continue to function across the CSI driver updates. It's only necessary if there are concerns about a particular CVE or explicit functionality being requested in a newer version of the CSI driver. Some functionality is not possible patch and would require recreating the entire NFS `Deployment`.
 
 ### Upgrade to v3.0.1
 
@@ -441,8 +444,8 @@ Any prior deployed NFS servers may be upgraded to v2.4.1.
 
 When patching the NFS `Deployments`, the server `Pods` will restart and result in an I/O pause for the NFS clients with active mounts. The clients will recover gracefully once the NFS `Pod` is running again.
 
-!!! caution
-    Patching NFS servers with XFS volumes prior to v3.0.0 will hang the NFS clients indefinitely due to lack of FSID support. Scale down clients before patching the servers.
+!!! caution "Recommended"
+    Live patching the NFS servers are generally considered safe within the same major version after version 3.0.0. The clients should only experience a short pause. However, it's recommended to scale down the client workloads to avoid stale NFS handles due to incompatibility between a particular delta.
 
 Patch all NFS `Deployments` with the following.
 

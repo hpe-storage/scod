@@ -57,6 +57,11 @@ plugins:
         'ezmeral/index.md': 'csi_driver/partners/hpe_ezmeral/install.md'
   - include-markdown:
   - macros:
+exclude_docs: |
+  .*.swp
+  *.tmp
+draft_docs: |
+  /sandbox/
 nav:
   - WELCOME:
     - 'Get started!': 'welcome/index.md'

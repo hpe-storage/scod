@@ -75,6 +75,9 @@ Release highlights:
 * Fixed an upgrade issue between 2.5.2 and 3.0.0. Go directly to 3.0.1 where applicable.
 * Addressed issues related to Active Peer Persistence with Alletra Storage MP B10000.
 
+!!! caution "Note"
+    The latest version of the Helm chart and Operator that has been published is 3.0.2 and does not add any new functionality besides OpenShift4.20 certification and minor bug fixes. Kubernetes 1.34 has been field tested with 3.0.2 and is supported.
+
 !!! tip "Good to know"
     This release only contains updates to the 3PAR CSP and only affects 3PAR derived platforms such as Primera, Alletra 9000 and Alletra Storage MP B10000. Customers on Nimble derived platforms do not need to update.
 
@@ -480,6 +483,7 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 * The HPE CSI Driver uses host networking for the node driver. Some CNIs have flaky implementations which prevents the CSI driver components to communicate properly. Especially notorious is Flannel on K3s. Use Calico if possible for the widest compatibility.
 * If automatic rolling node upgrades are required for the cluster it's recommended to isolate the HPE CSI Driver Controller and related CSPs to a node by itself and schedule the upgrade of that particular node last.
 * The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](container_storage_provider/index.md) have known limitations listed separately.
+* When attempting import of existing legacy volumes through the CSP specific "importVolumeName" and "importVolAsClone" features, it's important to understand that the CSI driver will attempt to use the largest existing partition on the device and attempt the mount. If the underlying host OS supports mounting the filesystem, the CSI driver will mount it with the following caveats. The "fsRepair" parameter will only work with ext3, ext4 and XFS. Any filesystem dependent kernel modules needed by the mount command needs to be installed by the system administrator of the worker nodes.
 
 ## iSCSI CHAP Considerations
 
