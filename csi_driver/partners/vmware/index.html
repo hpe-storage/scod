@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/partners/vmware/index.html" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>VMware - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "VMware";
+        var mkdocs_page_input_path = "csi_driver/partners/vmware/index.md";
+        var mkdocs_page_url = "/csi_driver/partners/vmware/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Partner Ecosystems</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">VMware</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#feature_comparison">Feature Comparison</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#important_considerations">Important Considerations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deployment">Deployment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#support">Support</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+          <li class="breadcrumb-item">Partner Ecosystems</li>
+      <li class="breadcrumb-item active">VMware</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="vmware_vsphere_container_storage_plug-in">VMware vSphere Container Storage Plug-in<a class="headerlink" href="#vmware_vsphere_container_storage_plug-in" title="Permanent link">&para;</a></h1>
+<p>VMware vSphere Container Storage Plug-in also known as the upstream vSphere CSI Driver exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. The term Cloud Native Storage (CNS) is the vCenter abstraction point and is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the CNS UI within vCenter.</p>
+<p>CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage Profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE primary storage (HPE GreenLake for Block Storage, Primera, Nimble Storage, Nimble Storage dHCI, and 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.</p>
+<div class="toc">
+<ul>
+<li><a href="#vmware_vsphere_container_storage_plug-in">VMware vSphere Container Storage Plug-in</a><ul>
+<li><a href="#feature_comparison">Feature Comparison</a></li>
+<li><a href="#important_considerations">Important Considerations</a></li>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#support">Support</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="feature_comparison">Feature Comparison<a class="headerlink" href="#feature_comparison" title="Permanent link">&para;</a></h3>
+<p>Volume parameters available to the vSphere Container Storage Plug-in will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the <a href="https://support.hpe.com/hpesc/public/docDisplay?docId=sd00001341en_us&amp;docLocale=en_US&amp;page=index.html">HPE Primera: VMware ESXi Implementation Guide</a> (includes HPE Alletra Storage MP B10000, Alletra 9000 and 3PAR) or <a href="https://www.hpe.com/psnow/doc/a00044881enw">VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide</a> (includes HPE Alletra 5000/6000 and dHCI) for list of available features.</p>
+<p>For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective <a href="../../container_storage_provider/index.html">CSP</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>HPE CSI Driver</th>
+<th>vSphere Container Storage Plug-in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vCenter Cloud Native Storage (CNS) UI Support</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Dynamic Block PV Provisioning (ReadWriteOnce access mode)</td>
+<td>GA</td>
+<td>GA (vVOL)</td>
+</tr>
+<tr>
+<td>Dynamic File Provisioning (ReadWriteMany access mode)</td>
+<td>GA</td>
+<td>GA (vSan Only)</td>
+</tr>
+<tr>
+<td>Volume Snapshots (CSI)</td>
+<td>GA</td>
+<td>GA (vSphere 7.0u3)</td>
+</tr>
+<tr>
+<td>Volume Cloning from VolumeSnapshot (CSI)</td>
+<td>GA</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Cloning from PVC (CSI)</td>
+<td>GA</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Expansion (CSI)</td>
+<td>GA</td>
+<td>GA (vSphere 7.0u2)</td>
+</tr>
+<tr>
+<td>RWO Raw Block Volume (CSI)</td>
+<td>GA</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>RWX/ROX Raw Block Volume (CSI)</td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Generic Ephemeral Volumes (CSI)</td>
+<td>GA</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Inline Ephemeral Volumes (CSI)</td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Topology (CSI)</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Health (CSI)</td>
+<td>No</td>
+<td>GA (vSan only)</td>
+</tr>
+<tr>
+<td>CSI Controller multiple replica support</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Windows support</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Encryption</td>
+<td>GA</td>
+<td>GA (via VMcrypt)</td>
+</tr>
+<tr>
+<td>Volume Mutator<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Volume Groups<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Snapshot Groups<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Peer Persistence Replication<sup>3</sup></td>
+<td>GA</td>
+<td>No<sup>4</sup></td>
+</tr>
+</tbody>
+</table>
+<p><small>
+ <sup>1</sup> = Feature comparison based upon HPE CSI Driver for Kubernetes 2.4.0 and the vSphere Container Storage Plug-in 3.1.2<br />
+ <sup>2</sup> = HPE and VMware fully support features listed as GA for their respective CSI drivers.<br />
+ <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR storage systems.<br />
+ <sup>4</sup> = Peer Persistence is an HPE Storage specific platform feature that isn't abstracted up to the vSphere Container Storage Plug-in. Peer Persistence works with the vSphere Container Storage Plug-in when using VMFS datastores.
+</small></p>
+<p>Please refer to <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-D4AAD99E-9128-40CE-B89C-AD451DA8379D.html">Compatibility Matrices for vSphere Container Storage Plug-in</a> for the most up-to-date information.</p>
+<h3 id="important_considerations">Important Considerations<a class="headerlink" href="#important_considerations" title="Permanent link">&para;</a></h3>
+<p>The HPE CSI Driver for Kubernetes is only supported on specific versions of worker node operating systems and Kubernetes versions, these requirements applies to any worker VM running on vSphere.</p>
+<p>Some Kubernetes distributions, when running on vSphere may <em>only</em> support the vSphere Container Storage Plug-in, such an example is VMware Tanzu. Ensure the Kubernetes distribution being used support 3rd party CSI drivers (such as the HPE CSI Driver) and fulfill the requirements in <a href="../../index.html#features_and_capabilities">Features and Capabilities</a> before deciding which CSI driver to use.</p>
+<p>HPE does not test or qualify the vSphere Container Storage Plug-in for any particular storage backend besides point solutions<sup>1</sup>. As long as the storage platform is supported by vSphere, VMware will <a href="#support">support</a> the vSphere Container Storage Plug-in.</p>
+<div class="admonition notice">
+<p class="admonition-title">VMware vSphere with Tanzu and HPE Alletra dHCI<sup>1</sup></p>
+<p>HPE provides a turnkey solution for Kubernetes using VMware Tanzu and HPE Alletra dHCI. <a href="https://www.hpe.com/psnow/doc/a00130343enw">Learn more</a>.</p>
+</div>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h3>
+<p>When considering to use block storage within Kubernetes clusters running on VMware, customers need to evaluate which data protocol (FC or iSCSI) is primarily used within their virtualized environment. This will help best determine which CSI driver can be deployed within your Kubernetes clusters.</p>
+<div class="admonition error">
+<p class="admonition-title">Important</p>
+<p>Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere Container Storage Plug-in to deliver block-based persistent storage from HPE GreenLake for Block Storage, Alletra, Primera, Nimble Storage, Nimble Storage dHCI or 3PAR arrays to Kubernetes clusters within VMware environments for customers who are using the Fibre Channel protocol.</p>
+<p>The HPE CSI Driver for Kubernetes does not support N_Port ID Virtualization (NPIV).</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th style="text-align: center;">HPE CSI Driver for Kubernetes</th>
+<th style="text-align: center;">vSphere Container Storage Plug-in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FC</td>
+<td style="text-align: center;"><strong>Not</strong> supported</td>
+<td style="text-align: center;">Supported<sup>&ast;</sup></td>
+</tr>
+<tr>
+<td>NVMe-oF</td>
+<td style="text-align: center;"><strong>Not</strong> supported</td>
+<td style="text-align: center;">Supported<sup>&ast;</sup></td>
+</tr>
+<tr>
+<td>iSCSI</td>
+<td style="text-align: center;">Supported</td>
+<td style="text-align: center;">Supported<sup>&ast;</sup></td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>&ast;</sup> = Limited to the SPBM implementation of the underlying storage array.</small></p>
+<p>Learn how to deploy the vSphere Container Storage Plug-in:</p>
+<ul>
+<li><a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-6DBD2645-FFCF-4076-80BE-AD44D7141521.html">Version 2.x</a><sup>1</sup> (Kubernetes 1.23-1.25)</li>
+<li><a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/3.0/vmware-vsphere-csp-getting-started/GUID-6DBD2645-FFCF-4076-80BE-AD44D7141521.html">Version 3.x</a> (Kubernetes 1.24 onwards)</li>
+</ul>
+<p><small><sup>1</sup> = The HPE authored deployment guide for vSphere Container Storage Plug-in 2.4 has been <a href="legacy.html">preserved here</a>.</small></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Most non-vanilla Kubernetes distributions when deployed on vSphere manage and support the vSphere Container Storage Plug-in directly. That includes Red Hat OpenShift, SUSE Rancher, Charmed Kubernetes (Canonical), Google Anthos and Amazon EKS Anywhere.</p>
+</div>
+<h3 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h3>
+<p>VMware provides enterprise grade support for the vSphere Container Storage Plug-in. Please use <a href="https://www.vmware.com/support/file-sr.html">VMware Support Services</a> to file a customer support ticket to engage the VMware global support team.</p>
+<p>For support information on the HPE CSI Driver for Kubernetes, visit <a href="../../../legal/support/index.html">Support</a>. For support with other HPE related technologies, visit the <a href="https://support.hpe.com/">Hewlett Packard Enterprise Support Center</a>.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/partners/vmware/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="../tkgi/index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../../cosi_driver/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

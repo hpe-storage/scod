@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/learn/containers101/index.html" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Overview - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Overview";
+        var mkdocs_page_input_path = "learn/containers101/index.md";
+        var mkdocs_page_url = "/learn/containers101/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Overview</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>Welcome to the "101" section of SCOD. The goal of this section is to create a learning resource for individuals who want to learn about emerging topics in a cloud native world where containers are the focal point. The content is slightly biased towards storage.</p>
+<h2 id="mission_statement">Mission Statement<a class="headerlink" href="#mission_statement" title="Permanent link">&para;</a></h2>
+<p>We aim to provide a learning resource collection that is generic enough to comprehend nuances in the different solutions and paradigms. Hewlett Packard Enterprise Products are highly likely referenced in some examples and resources. We can therefore not claim vendor neutrality nor a Switzerland opinion. External resources are the primary learning assets used to frame certain topics.</p>
+<p>Let's start the learning journey.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#mission_statement">Mission Statement</a></li>
+<li><a href="#cloud_native_computing">Cloud Native Computing</a><ul>
+<li><a href="#key_attributes">Key Attributes</a></li>
+<li><a href="#learning_resources">Learning Resources</a></li>
+<li><a href="#practical_exercises">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#cloud_native_tooling">Cloud Native Tooling</a><ul>
+<li><a href="#key_attributes_1">Key Attributes</a></li>
+<li><a href="#learning_resources_1">Learning Resources</a></li>
+<li><a href="#practical_exercises_1">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#cloud_native_storage">Cloud Native Storage</a><ul>
+<li><a href="#key_attributes_2">Key Attributes</a></li>
+<li><a href="#learning_resources_2">Learning Resources</a></li>
+<li><a href="#practical_exercises_2">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#containers_intro">Containers Intro</a><ul>
+<li><a href="#key_attributes_3">Key Attributes</a></li>
+<li><a href="#learning_resources_3">Learning Resources</a></li>
+<li><a href="#practical_exercises_3">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#container_tooling">Container Tooling</a><ul>
+<li><a href="#key_attributes_4">Key Attributes</a></li>
+<li><a href="#learning_resources_4">Learning Resources</a></li>
+<li><a href="#practical_exercises_4">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#container_storage">Container Storage</a><ul>
+<li><a href="#key_attributes_5">Key Attributes</a></li>
+<li><a href="#learning_resources_5">Learning Resources</a></li>
+</ul>
+</li>
+<li><a href="#practical_exercises_5">Practical Exercises</a></li>
+<li><a href="#devops">DevOps</a><ul>
+<li><a href="#key_attributes_6">Key Attributes</a></li>
+<li><a href="#learning_resources_6">Learning Resources</a></li>
+<li><a href="#practical_exercises_6">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#devops_tooling">DevOps Tooling</a><ul>
+<li><a href="#key_attributes_7">Key Attributes</a></li>
+<li><a href="#learning_resources_7">Learning Resources</a></li>
+<li><a href="#practical_exercises_7">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#devops_storage">DevOps Storage</a><ul>
+<li><a href="#key_attributes_8">Key Attributes</a></li>
+<li><a href="#learning_resources_8">Learning Resources</a></li>
+<li><a href="#practical_exercises_8">Practical Exercises</a></li>
+</ul>
+</li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="cloud_native_computing">Cloud Native Computing<a class="headerlink" href="#cloud_native_computing" title="Permanent link">&para;</a></h2>
+<p>The term "cloud native" stems from a software development model where resources are consumed as services. Compute, network and storage consumed through APIs, CLIs and web administration interfaces. Consumption is often modeled around paying only for what is being used.</p>
+<p>The applications deployed into Cloud Native Computing environments are often divided into small chunks that are operated independently, referred to as microservices. On the uprising is a broader adoption of a concept called serverless where your application runs only when called and is billed in milliseconds.</p>
+<p>Many public cloud vendors provide many already cloud native applications as services on their respective clouds. An example would be to consume a SQL database as a service rather than deploying and managing it by yourself.</p>
+<h3 id="key_attributes">Key Attributes<a class="headerlink" href="#key_attributes" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Cloud Native Computing.</p>
+<ul>
+<li>Resources are provisioned through complete self-service.</li>
+<li>API first strategies to promote interoperability and collaboration.</li>
+<li>Separation of concerns in microservice architectures.</li>
+<li>High degree of automation of resource provisioning and deprovisioning.</li>
+<li>Modern languges and frameworks.</li>
+<li>Infrastructure-as-a-Service (IAAS)</li>
+</ul>
+<h3 id="learning_resources">Learning Resources<a class="headerlink" href="#learning_resources" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Cloud Native Computing.</p>
+<ul>
+<li><strong>Webinar:</strong> <a href="https://www.cncf.io/webinars/what-is-cloud-native-and-why-does-it-exist/">What is Cloud Native and Why Does It Exist?</a><br />
+  A webinar by WeaveWorks endorsed by the <a href="https://landscape.cncf.io/">CNCF</a> (Cloud Native Computing Foundation).</li>
+<li><strong>Market Overview:</strong> <a href="https://landscape.cncf.io/">CNCF Cloud Native Interactive Landscape</a><br />
+  Many applications and vendors claim to be cloud native. This map is compiled by the CNCF.</li>
+<li><strong>Reference:</strong> <a href="https://12factor.net/">12factor.net</a><br />
+  A design pattern for microservice architectures.</li>
+<li><strong>Blog:</strong> <a href="https://hackernoon.com/the-rise-of-cloud-native-programming-languages-211a5081f1b2">The rise of cloud native programming languages</a><br />
+  A blog post that outlines the journey from bare-metal beyond serverless.</li>
+<li><strong>Blog:</strong> <a href="https://thenewstack.io/10-key-attributes-of-cloud-native-applications/">10 Key Attributes of Cloud-native Applications</a><br />
+  A blog post from <a href="https://thenewstack.io">thenewstack.io</a></li>
+</ul>
+<h3 id="practical_exercises">Practical Exercises<a class="headerlink" href="#practical_exercises" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of Cloud Native Computing.</p>
+<ul>
+<li>Sign-up on any of the public clouds. <ul>
+<li>Provision an instance and get remote access to the host OS of the instance. </li>
+<li>Deploy an "as-a-service" of an application technology you're familiar with.</li>
+<li>Connect a client from your instance to your provisioned service.</li>
+<li>Deploy either web server or Layer-4 load-balancer to give external access to your client application.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cloud_native_tooling">Cloud Native Tooling<a class="headerlink" href="#cloud_native_tooling" title="Permanent link">&para;</a></h2>
+<p>Tools to interact with infrastructure and applications come in many shapes and forms. A common pattern is to learn by visually creating and deleting resources to understand an end-state. Once a pattern has been established, either APIs, 3rd party or a custom CLI is used to manage the life-cycle of the deployment in a declarative manner by manipulating RESTful APIs. Also known as Infrastructure-as-Code.</p>
+<h3 id="key_attributes_1">Key Attributes<a class="headerlink" href="#key_attributes_1" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Cloud Native Computing Tooling.</p>
+<ul>
+<li>State stored in a Source Code Control System (SCCS).</li>
+<li>Changes made to state are peer reviewed and automatically tested in non-production environments before being merged and deployed.</li>
+<li>Industry standard IT automation tools are often used to implement changes. Ansible, Puppet, Salt and Chef are example tools.</li>
+<li>Public clouds often provide CLIs to manage resources. These are great to prepare, inspect and test deployments with.</li>
+<li>Configuration and deployment files are often written in a human and machine readable format, such as JSON, YAML or TOML.</li>
+</ul>
+<h3 id="learning_resources_1">Learning Resources<a class="headerlink" href="#learning_resources_1" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Cloud Native Computing Tooling.</p>
+<ul>
+<li><strong>Blog:</strong> <a href="https://dev.to/stereobooster/imperative-vs-declarative-1f09">Imperative vs Declarative</a><br />
+  A blog that highlights the fundamental differences between the two.</li>
+<li><strong>Reference:</strong> <a href="https://www.json.org/">json.org</a><br />
+  Definitive guide on JavaScript Object Notation (JSON) data structures.</li>
+<li><strong>Reference:</strong> <a href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html">YAML Syntax</a><br />
+  Simple guide for YAML Ain't Markup Language (YAML). </li>
+<li><strong>Reference:</strong> <a href="https://restfulapi.net/">RESTful API Tutorial</a><br />
+  Learn the design principles of REpresentational State Transfer (REST).</li>
+<li><strong>Screencast:</strong> <a href="https://www.youtube.com/watch?v=xew7CMkL7jY">Super-basic Introduction to Ansible</a><br />
+  The simplest of Ansible tutorials starting with nothing.</li>
+</ul>
+<h3 id="practical_exercises_1">Practical Exercises<a class="headerlink" href="#practical_exercises_1" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of Cloud Native Computing Tooling.</p>
+<ul>
+<li>Sign-up on AWS.<ul>
+<li>Install the <a href="https://aws.amazon.com/cli/">AWS CLI</a> and <a href="https://www.ansible.com/resources/get-started">Ansible</a> in a Linux instance.</li>
+<li>Configure <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#configuration">BOTO</a>.</li>
+<li>Use the Ansible <a href="https://docs.ansible.com/ansible/latest/modules/ec2_module.html#ec2-module">EC2 module</a> to create and delete an instance.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cloud_native_storage">Cloud Native Storage<a class="headerlink" href="#cloud_native_storage" title="Permanent link">&para;</a></h2>
+<p>Storage for cloud computing come in many shapes and forms. Compute instances boot off block devices provided by the IaaS through the hypervisor. More devices may be attached for application data to keep host OS and application separate. Most clouds allow these devices to be snapshotted, cloned and reattached to other instances. These block devices are normally offered with different backend media, such as flash or spinning disks. Depending on the use cases and budgets parameters may be tuned to be just right.</p>
+<p>For unstructured workloads, API driven object storage is the dominant technology due to the dramatic difference in cost and simplicity vs cloud provided block storage. An object is uploaded through an API endpoint with HTTP and automatically distributed (highly configurable) to provide high durability. The URL of the object will remain static for the duration of its lifetime. The main prohibitor for object storage adoption is that existing applications relying on POSIX filesystems need to be rewritten. </p>
+<h3 id="key_attributes_2">Key Attributes<a class="headerlink" href="#key_attributes_2" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Cloud Native Storage.</p>
+<ul>
+<li>Provisioned and attached via APIs through IaaS if using block storage.</li>
+<li>Data and metadata is managed with RESTful APIs if using object. No backend to manage. Consumers use standard URLs to retrieve data.</li>
+<li>Highly durable with object storage. Durability equal to a local RAID device for block storage.</li>
+<li>Some cloud providers offer Filesystem-as-a-Service, normally standard NFS or CIFS.</li>
+<li>Backup and recovery of application data still needs to managed like traditional storage for block. Multi-region multi-copy persistence for object storage.</li>
+</ul>
+<h3 id="learning_resources_2">Learning Resources<a class="headerlink" href="#learning_resources_2" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Cloud Native Storage.</p>
+<ul>
+<li><strong>Wikipedia:</strong> <a href="https://en.wikipedia.org/wiki/Object_storage">Object storage</a><br />
+  Digestible overview of Object Storage.</li>
+<li><strong>Tutorial:</strong> <a href="https://www.channelape.com/uncategorized/host-images-amazon-s3-cheap-5-minutes/">Host images on Amazon S3</a><br />
+  A five minute step-by-step guide how to host images on Amazon S3.</li>
+<li><strong>Reference:</strong> <a href="https://aws.amazon.com/ebs/features/">Amazon EBS features</a><br />
+  An overview of typical attributes for cloud provided block storage.</li>
+<li><strong>Reference:</strong> <a href="https://hpe.valuestoryapp.com/bvc/cloudvolumes">HPE Cloud Storage Cost Calculator</a><br />
+  Calculate the real costs of cloud storage based on highly dynamic data management environments.</li>
+</ul>
+<h3 id="practical_exercises_2">Practical Exercises<a class="headerlink" href="#practical_exercises_2" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of Cloud Native Storage.</p>
+<ul>
+<li>Setup a S3 compatible object storage server or use a public cloud.<ul>
+<li>Scality has a open source <a href="https://github.com/scality/cloudserver">S3 server</a> for non-production use.</li>
+<li>Configure <a href="https://s3tools.org/s3cmd">s3cmd</a> to upload and retrieve files from a bucket.</li>
+</ul>
+</li>
+<li>Analyze costs of 100TB of data for one year on Amazon S3 vs Azure Manage Disks.</li>
+</ul>
+<h2 id="containers_intro">Containers Intro<a class="headerlink" href="#containers_intro" title="Permanent link">&para;</a></h2>
+<p>A container is operating system-level virtualization and has been around for quite some time. By definition, the container share the kernel of the host and relies on certain abstractions to be useful. Docker the company made the technology approachable and incredibly more convenient than any predecessor. In the simplest of forms, a container image contains a virtual filesystem that contains only the dependencies the application needs. An example would be to include the Python interpreter if you wrote a program in Python. </p>
+<p>Containerized applications are primarily designed to run headless. In most cases these applications need to communicate with the outside world or allow inbound traffic depending on the application. Docker containers should be treated as transient, each instance starts in a known state and any data stored inside the virtual filesystem should be treated as ephemeral. This makes it extremely easy and convenient to upgrade and rollback a container. </p>
+<p>If data is required to persist between upgrades and rollbacks of the container, it needs to be stored outside of the container mapped from the host operating system.</p>
+<p>The wide adoption of containers are because they're lightweight, reproducible and run everywhere. Iterations of software delivery lifecycles may be cut down to seconds from weeks with the right processes and tools.</p>
+<p>Container images are layered per change made when the container is built. Each layer has a cryptographic hash and the layer itself can be shared between multiple containers readonly. When a new container is started from an image, the container runtime creates a COW (copy-on-write) filesystem where the particular container data is stored. This is in turn very effective as you only need one copy of a layer on the host. For example, if a bunch of applications are based off a Ubuntu base image, the base image only needs to be stored once on the host.</p>
+<h3 id="key_attributes_3">Key Attributes<a class="headerlink" href="#key_attributes_3" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Containers.</p>
+<ul>
+<li>Runs on modern architectures and operating systems. Not necessarily as a single source image. </li>
+<li>Headless services (webservers, databases etc) in microservice architectures.</li>
+<li>Often orchestrated on compute clusters like Kubernetes, Apache Mesos Marathon or Docker Swarm.</li>
+<li>Software vendors often provide official and well tested container images for their applications.</li>
+</ul>
+<h3 id="learning_resources_3">Learning Resources<a class="headerlink" href="#learning_resources_3" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Containers.</p>
+<ul>
+<li><strong>Interactive:</strong> <a href="https://training.play-with-docker.com/">Play with Docker</a><br />
+  Great interactive tutorials where you learn how to build, ship and run containers. Also has a follow-on interactive training on Kubernetes.</li>
+<li><strong>Tutorial:</strong> <a href="https://docker-curriculum.com/">Docker for beginners</a><br />
+  Comprehensive introduction to get started with Docker all the way to running it on a PaaS.</li>
+<li><strong>Cartoon:</strong> <a href="https://www.youtube.com/watch?v=4ht22ReBjno">The Illustrated Children's Guide to Kubernetes</a><br />
+  Illustrative and easy to grasp story of what Kubernetes is.</li>
+<li><strong>Bonus cartoon:</strong> <a href="https://www.youtube.com/watch?v=R9-SOzep73w">A Kubernetes story: Phippy goes to the zoo</a><br />
+  A high production quality cartoon explaining Kubernetes API objects.</li>
+<li><strong>Blog:</strong> <a href="https://www.freecodecamp.org/news/how-to-choose-the-right-container-orchestration-and-how-to-deploy-it-41844021c241/}">How to choose the right container orchestration and how to deploy it</a><br />
+  A brief overview of container orchestrators.</li>
+<li><strong>Standards:</strong> <a href="https://www.opencontainers.org/">opencontainers.org</a><br />
+  Components of a container system is standards based. The Open Container Initiative is the standards body.</li>
+<li><strong>Blog/reference:</strong> <a href="https://lwn.net/Articles/741897/">Demystifying container runtimes</a><br />
+  Discusses different container runtime engines. </li>
+</ul>
+<h3 id="practical_exercises_3">Practical Exercises<a class="headerlink" href="#practical_exercises_3" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of Containers.</p>
+<ul>
+<li>Install <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> or just Docker if using Linux.<ul>
+<li>Click through the <a href="https://docs.docker.com/get-started/">Get Started</a> tutorial.</li>
+<li>Advanced: Run any of the images built in the tutorial on a public cloud service.</li>
+</ul>
+</li>
+</ul>
+<h2 id="container_tooling">Container Tooling<a class="headerlink" href="#container_tooling" title="Permanent link">&para;</a></h2>
+<p>Most of the tooling around containers is centered around what particular container orchestrator or development environment is being utilized. Usage of the tools differ greatly depending on the role of the user. As an operator the toolkit includes both IaaS and managing the platform to perform upgrades, user management and peripheral services such as storage and ingress load balancers. </p>
+<p>While many popular platforms today are based on Kubernetes, the tooling has nuances. Upstream Kubernetes uses <code>kubectl</code>, Red Hat OpenShift uses the OpenShift CLI, <code>oc</code>. With other platforms such as Rancher, nearly all management can be done through a web UI.</p>
+<h3 id="key_attributes_4">Key Attributes<a class="headerlink" href="#key_attributes_4" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Container Tooling.</p>
+<ul>
+<li>Most tools are simple, yet powerful and follow UNIX principles of doing one thing and doing it well.</li>
+<li>The <code>docker</code> and <code>kubectl</code> CLIs are the two most dominant for low level management.</li>
+<li>Workload management usually relies on external tools for simplicity, such as <code>docker-compose</code>, <code>kompose</code> and <code>helm</code>.</li>
+<li>Some platforms have ancillary tools to marry the IaaS with the cluster orchestrator. Such an example is <code>rke</code> for Rancher and <code>gkectl</code> for GKE On-Prem.</li>
+<li>The public clouds have builtin container orchestrator and container management into their native CLIs, such as <code>aws</code> and <code>gcloud</code>.</li>
+<li>Client side tools normally rely on environment variables and user environment configuration files that store credentials, API endpoint locations and other security aspects.</li>
+</ul>
+<h3 id="learning_resources_4">Learning Resources<a class="headerlink" href="#learning_resources_4" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Container Tooling.</p>
+<ul>
+<li><strong>Reference:</strong> <a href="https://docs.docker.com/engine/reference/commandline/cli/">Use the Docker command line</a><br />
+  Docker CLI reference.</li>
+<li><strong>Reference:</strong> <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">The kubectl Cheat Sheet</a><br />
+  The kubectl cheat sheet.</li>
+<li><strong>Utility:</strong> <a href="https://kustomize.io/">kustomize.io</a><br />
+  Kubernetes native configuration managment.</li>
+<li><strong>Tutorial:</strong> <a href="https://www.opensource.sa/2019/06/20/the-ultimate-guide-to-podman-skopeo-and-buildah/">The Ultimate Guide to Podman, Skopeo and Buildah</a><br />
+  An alternative container toolchain to Docker using Podman, Buildah and Skopeo.</li>
+</ul>
+<h3 id="practical_exercises_4">Practical Exercises<a class="headerlink" href="#practical_exercises_4" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of Container Tooling.</p>
+<ul>
+<li>Install <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> or just Docker if using Linux.<ul>
+<li>Build a container image of an application you understand (docker build).</li>
+<li>Run the container image locally (docker run).</li>
+<li>Ship it to Docker Hub (docker push).</li>
+</ul>
+</li>
+<li>Create an Amazon EKS cluster or equivalent.<ul>
+<li>Retrieve the <code>kubeconfig</code> file.</li>
+<li>Run <code>kubectl get nodes</code> on your local machine.</li>
+<li>Start a <code>Pod</code> using the container image built in previous exercise.</li>
+</ul>
+</li>
+</ul>
+<h2 id="container_storage">Container Storage<a class="headerlink" href="#container_storage" title="Permanent link">&para;</a></h2>
+<p>Due to the ephemeral nature of a container, storage is predominantly served from the host the container is running on and is dependent on which container runtime is being used where data is stored. In the case of Docker, the overlay filesystems are under <code>/var/lib/docker</code>. If a certain path inside the container need to persist between upgrades, restarts on a different host or any other operation that will lose the locality of the data, the mount point needs to be replaced with a "bind" mount from the host.</p>
+<p>There are also container runtime technologies that are designed to persist the entire container, effectively treating the container more like a long-lived Virtual Machine. Examples are Canonical LXD, WeaveWorks Footloose and HPE BlueData. This is particularly important for applications that rely on its projected node info to remain static throughout its entire lifecycle.</p>
+<p>We can then begin to categorize containers into three main categories based on their lifecycle vs persistence needs.</p>
+<ul>
+<li><strong>Stateless Containers</strong><br />
+  No persistence needed across restarts/upgrades/rollbacks</li>
+<li><strong>Stateful Containers</strong><br />
+  Require certain mountpoints to persist across restarts/upgrades/rollbacks</li>
+<li><strong>Persistent Containers</strong><br />
+  Require static node identity information across restarts/upgrades/rollbacks</li>
+</ul>
+<p>Some modern Software-defined Storage solutions are offered to run alongside applications in a distributed fashion. Effectively enforcing multi-way replicas for reliability and eat into CPU and memory resources of the IaaS bill. This also introduces the dilemma of effectively locking the data into the container orchestrator and its compute nodes. Although it's convenient for developers to become self-entitled storage administrators. </p>
+<p>To stay in control of the data and remain mobile, storing data outside of the container orchestrator is preferable. Many container orchestrators provide plugins for external storage, some are built-in and some are supplied and supported by the storage vendor. Public clouds provide storage drivers for their IaaS storage services directly to the container orchestrator. This is widely popular pattern we're also seeing in BYO IaaS solutions such as VMware vSphere.</p>
+<h3 id="key_attributes_5">Key Attributes<a class="headerlink" href="#key_attributes_5" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of Container Storage.</p>
+<ul>
+<li>Ephemeral storage needs to be fast and expandable as environments scale with more diverse applications.</li>
+<li>Data for stateful containers  is ideally stored outside of the container orchestrator, either the IaaS or external highly-available storage.</li>
+<li>Persistent containers require niche storage solution tightly coupled with the container runtime and the container orchestrator or scheduler.</li>
+<li>Most storage solutions provide an "access mode" often referred to as ReadWriteOnce (RWO) which only allow one Pod (in the Kubernetes case or containers from the same host access the volume. To allow multiple Pods and containers from multiple hosts, a distributed filesystem or an NFS server (widely adopted) is required to provide ReadWriteMany (RWX) access.</li>
+</ul>
+<h3 id="learning_resources_5">Learning Resources<a class="headerlink" href="#learning_resources_5" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for Container Storage.</p>
+<ul>
+<li><strong>Talk:</strong> <a href="https://youtu.be/uSxlgK1bCuA">Kubernetes Storage Lingo 101</a><br />
+  A talk that lays out the nomenclature for storage in Kubernetes in an understandable way.</li>
+<li><strong>Reference:</strong> <a href="https://docs.docker.com/storage/volumes/">Docker: Volumes</a><br />
+  Fundamental reference on how to make mount points persist for containers.</li>
+<li><strong>Reference:</strong> <a href="https://kubernetes.io/docs/concepts/storage/volumes/">Kubernetes: Volumes</a><br />
+  Using volumes in Kubernetes Pods.</li>
+<li><strong>Podcast:</strong> <a href="https://softwareengineeringdaily.com/2019/06/10/kubernetes-storage-with-saad-ali/">Kubernetes Storage with Saad Ali</a><br />
+  Essential listen understand the difference between high-availability and automatic recovery.</li>
+</ul>
+<h2 id="practical_exercises_5">Practical Exercises<a class="headerlink" href="#practical_exercises_5" title="Permanent link">&para;</a></h2>
+<p>How to get hands-on experience of Container Storage.</p>
+<ul>
+<li>Use Docker Desktop.<ul>
+<li>Replace a mount point in an interactive container with a mount point from the host</li>
+</ul>
+</li>
+<li>Deploy a Amazon EKS or equivalent cluster.<ul>
+<li>Create a Persistent Volume Claim.</li>
+</ul>
+</li>
+<li>Run <code>kubectl get pv -o yaml</code> and match the Persistent Volume against the IaaS block volumes.</li>
+</ul>
+<h2 id="devops">DevOps<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<p>There are many interpretations of what DevOps "is". A bird's eye view is that there are people, processes and tools that come together to drive business outcomes through value streams. There are many core principles that could ultimately drive the outcome and no cookie cutter solution for any given organization. Breaking down problems into small pieces and creating safe systems to work in and eliminate toil are some of those principles. </p>
+<p>Agile development and lean manufacturing are both predecessors and role models for driving DevOps principles.</p>
+<h3 id="key_attributes_6">Key Attributes<a class="headerlink" href="#key_attributes_6" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of DevOps.</p>
+<ul>
+<li>Well-defined processes, safe and proportionally sized work units for each step in a value stream.</li>
+<li>Autonomy through tooling backed by well-defined processes.</li>
+<li>Operations, development and stakeholders unified behind common goals.</li>
+<li>Continuous improvement, robust feedback loops and problem "swarming" of value streams.</li>
+<li>All work in the value stream must be visible and measurable.</li>
+<li>From CEO and down buy-in to prevent failure of DevOps implementations. </li>
+<li>DevOps is essential to be successful when investing in a "digital transformation".</li>
+</ul>
+<h3 id="learning_resources_6">Learning Resources<a class="headerlink" href="#learning_resources_6" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for DevOps.</p>
+<ul>
+<li><strong>Opinions:</strong> <a href="http://www.itskeptic.org/content/define-devops">Define DevOps: What is DevOps</a><br />
+  Industry voices defining what DevOps is and means.</li>
+<li><strong>Blog:</strong> <a href="https://www.rundeck.com/blog/toil-finally-a-name-for-a-problem">Toil: Finally a Name For a Problem We've All Felt</a><br />
+  Broad definition of toil.</li>
+<li><strong>Hardbacks:</strong> <a href="https://itrevolution.com/devops-books/">DevOps Books</a><br />
+  Author Gene Kim has written novels and "cookbooks" of DevOps.</li>
+<li><strong>Reference:</strong> <a href="https://devopsinstitute.com/">The DevOps Institute</a><br />
+  Focuses on the human side of successfully implementing DevOps.</li>
+<li><strong>Talk:</strong> <a href="https://www.youtube.com/watch?v=CTDx627FRVg">Bank on Open Source for DevOps Success - Capital One</a><br />
+  How a disruptive company differentiate with DevOps at its core.</li>
+</ul>
+<h3 id="practical_exercises_6">Practical Exercises<a class="headerlink" href="#practical_exercises_6" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of DevOps.</p>
+<ul>
+<li>Getting practical with DevOps requires an organization and a value stream. <ul>
+<li>Listen to the <a href="https://soundcloud.com/itrevolution/sets/the-phoenix-project-part-2">The Phonenix Project</a> for a glimpse into how to implement DevOps.</li>
+</ul>
+</li>
+</ul>
+<h2 id="devops_tooling">DevOps Tooling<a class="headerlink" href="#devops_tooling" title="Permanent link">&para;</a></h2>
+<p>The tools in DevOps are centered around the processes and value streams that support the business. Said tools also promote visibility, openness and collaboration. Inherently following security patterns, audit trails and safety. No one person should be able to misuse one tool to cause major disturbance in a value stream without quick remediation plans.</p>
+<p>Many times CI/CD (Continuous Integration, Continuous Delivery and/or Deployment) is considered synonymous with DevOps. That is both right and wrong. If the value stream inherently contains software, yes. </p>
+<h3 id="key_attributes_7">Key Attributes<a class="headerlink" href="#key_attributes_7" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of DevOps Tooling.</p>
+<ul>
+<li>Just the right amount of privileges for a particular task.</li>
+<li>Issue/project tracking, kanban, source code control, CI/CD, logging and reporting are essential.</li>
+<li>Visibility and traceability is a key element, no work should be hidden. By person or machine.</li>
+</ul>
+<h3 id="learning_resources_7">Learning Resources<a class="headerlink" href="#learning_resources_7" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for DevOps Tooling.</p>
+<ul>
+<li><strong>Reference:</strong> <a href="https://xebialabs.com/periodic-table-of-devops-tools/">Periodic Table of DevOps Tools</a><br />
+  The most comprehensive chart of current and popular DevOps tools.</li>
+<li><strong>Blog:</strong> <a href="https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment">Continuous integration vs. continuous delivery vs. continuous deployment</a><br />
+  Distinguish the components of CI/CD and what each facet encompass.</li>
+<li><strong>Reference:</strong> <a href="https://www.agilealliance.org/glossary/kanban/">Kanban</a><br />
+  Understanding Kanban helps understanding flow of work to adjust tools to work for humans, not against them.</li>
+</ul>
+<h3 id="practical_exercises_7">Practical Exercises<a class="headerlink" href="#practical_exercises_7" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of DevOps Tooling.</p>
+<ul>
+<li>Study some of the tools available to perform automated tasks on complex systems.<ul>
+<li><a href="https://jenkins.io">Jenkins</a></li>
+<li><a href="https://rundeck.com">Rundeck</a></li>
+<li><a href="https://redhat.com/ansible">Ansible Tower</a></li>
+<li><a href="https://www.morpheusdata.com/">Morpheus Data</a></li>
+<li><a href="https://delphix.com">Delphix</a></li>
+</ul>
+</li>
+</ul>
+<p>The common denominator across these platforms is the observability and the ability to limit scope of controls through Role-based Access Control (RBAC). Ensuring the tasks are well-defined, automated, scoped and safe to operate.</p>
+<h2 id="devops_storage">DevOps Storage<a class="headerlink" href="#devops_storage" title="Permanent link">&para;</a></h2>
+<p>There aren't any particular storage paradigms (file/block/object) that are associated with DevOps. It's the implementation of the application and how it consumes storage that we vaguely may associate with DevOps. It's more of the practice that the right security controls are in place and whomever needs storage resource are fully self serviced. Human or machine.</p>
+<h3 id="key_attributes_8">Key Attributes<a class="headerlink" href="#key_attributes_8" title="Permanent link">&para;</a></h3>
+<p>These are some of the key elements of DevOps Storage.</p>
+<ul>
+<li>API driven through RBAC. Ensuring automation may put in place for the endpoint or person that needs access to the resource.</li>
+<li>Rich data management. If a value stream only needs a low performing read-only view of a certain dataset, resources supporting the value stream should only have read-only access with performance constrains.</li>
+<li>Agile and mobile. At will, data should be made available for a certain application or resource for its purpose. Whether it's in the public cloud, on-prem or as-a-service through safe and secure automation.</li>
+</ul>
+<h3 id="learning_resources_8">Learning Resources<a class="headerlink" href="#learning_resources_8" title="Permanent link">&para;</a></h3>
+<p>Curated list of learning resources for DevOps Storage.</p>
+<ul>
+<li><strong>Blog:</strong> <a href="https://devops.com/is-your-storage-too-slow-for-devops/">Is Your Storage Too Slow for DevOps?</a><br />
+  Characterization of DevOps Storage attributes.</li>
+</ul>
+<h3 id="practical_exercises_8">Practical Exercises<a class="headerlink" href="#practical_exercises_8" title="Permanent link">&para;</a></h3>
+<p>How to get hands-on experience of DevOps Storage.</p>
+<ul>
+<li>Familiarize yourself with a storage system's RESTful API and automation capabilities.<ul>
+<li>Deploy an <a href="https://www.ansible.com/products/tower/trial">Ansible Tower</a> trial.</li>
+<li>Write an Ansible playbook that creates a storage resource on said system.</li>
+<li>Create a job in Ansible Tower with the playbook and make it available to a restricted user.</li>
+</ul>
+</li>
+</ul>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>If you have any suggestions or comments, head over to <a href="https://github.com/hpe-storage/scod">GitHub</a> and file a PR or leave an issue. </p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=learn/containers101/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

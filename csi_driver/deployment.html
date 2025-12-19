@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/deployment.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Deployment - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Deployment";
+        var mkdocs_page_input_path = "csi_driver/deployment.md";
+        var mkdocs_page_url = "/csi_driver/deployment.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Deployment</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#delivery_vehicles">Delivery Vehicles</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#need_help_deciding">Need Help Deciding?</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helm">Helm</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#helm_for_air-gapped_environments">Helm for Air-gapped Environments</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#version_250_and_newer">Version 2.5.0 and newer</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#operator">Operator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#red_hat_openshift_container_platform">Red Hat OpenShift Container Platform</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upstream_kubernetes_and_others">Upstream Kubernetes and Others</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add_an_hpe_storage_backend">Add an HPE Storage Backend</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#secret_parameters">Secret Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuring_additional_storage_backends">Configuring Additional Storage Backends</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#create_a_storageclass_with_the_custom_secret">Create a StorageClass with the Custom Secret</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#advanced_install">Advanced Install</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#manual_csi_driver_install">Manual CSI Driver Install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#common">Common</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#advanced_uninstall">Advanced Uninstall</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#downgrading_the_csi_driver">Downgrading the CSI driver</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+      <li class="breadcrumb-item active">Deployment</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The HPE CSI Driver is deployed by using industry standard means, either a Helm chart or an Operator. An "advanced install" from object configuration files is provided as reference for partners, OEMs and users wanting to perform customizations and their own packaging or deployment methodologies.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#delivery_vehicles">Delivery Vehicles</a><ul>
+<li><a href="#need_help_deciding">Need Help Deciding?</a></li>
+</ul>
+</li>
+<li><a href="#helm">Helm</a><ul>
+<li><a href="#helm_for_air-gapped_environments">Helm for Air-gapped Environments</a><ul>
+<li><a href="#version_250_and_newer">Version 2.5.0 and newer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#operator">Operator</a><ul>
+<li><a href="#red_hat_openshift_container_platform">Red Hat OpenShift Container Platform</a></li>
+<li><a href="#upstream_kubernetes_and_others">Upstream Kubernetes and Others</a></li>
+</ul>
+</li>
+<li><a href="#add_an_hpe_storage_backend">Add an HPE Storage Backend</a><ul>
+<li><a href="#secret_parameters">Secret Parameters</a></li>
+</ul>
+</li>
+<li><a href="#configuring_additional_storage_backends">Configuring Additional Storage Backends</a><ul>
+<li><a href="#create_a_storageclass_with_the_custom_secret">Create a StorageClass with the Custom Secret</a></li>
+</ul>
+</li>
+<li><a href="#advanced_install">Advanced Install</a><ul>
+<li><a href="#manual_csi_driver_install">Manual CSI Driver Install</a></li>
+<li><a href="#common">Common</a></li>
+</ul>
+</li>
+<li><a href="#advanced_uninstall">Advanced Uninstall</a></li>
+<li><a href="#downgrading_the_csi_driver">Downgrading the CSI driver</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="delivery_vehicles">Delivery Vehicles<a class="headerlink" href="#delivery_vehicles" title="Permanent link">&para;</a></h2>
+<p>As different methods of installation are provided, it might not be too obvious which delivery vehicle is the right one.</p>
+<p><img alt="" src="img/helm.png" /></p>
+<h3 id="need_help_deciding">Need Help Deciding?<a class="headerlink" href="#need_help_deciding" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>I have a...</th>
+<th>Then you need...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vanilla upstream Kubernetes cluster on a supported host OS.</td>
+<td>The <a href="#helm">Helm chart</a></td>
+</tr>
+<tr>
+<td>Red Hat OpenShift 4.x cluster.</td>
+<td>The <a href="partners/redhat_openshift/index.html">certified CSI operator for OpenShift</a></td>
+</tr>
+<tr>
+<td>Supported environment with multiple backends.</td>
+<td><a href="#helm">Helm chart</a> with additional <a href="#secret_parameters">Secrets</a> and <a href="using.html#base_storageclass_parameters">StorageClasses</a></td>
+</tr>
+<tr>
+<td>HPE Ezmeral Runtime Enterprise environment.</td>
+<td>The <a href="#helm">Helm chart</a></td>
+</tr>
+<tr>
+<td>Operator Life-cycle Manager (OLM) environment.</td>
+<td>The <a href="#operator">CSI operator</a></td>
+</tr>
+<tr>
+<td>Unsupported host OS/Kubernetes cluster and like to tinker.</td>
+<td>The <a href="#advanced_install">advanced install</a></td>
+</tr>
+<tr>
+<td>Supported platform in an air-gapped environment</td>
+<td>The <a href="#helm">Helm chart</a> using the air-gapped procedure</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition error">
+<p class="admonition-title">Undecided?</p>
+<p>If it's not clear what you should use for your environment, the Helm chart is most likely the correct answer.</p>
+</div>
+<h2 id="helm">Helm<a class="headerlink" href="#helm" title="Permanent link">&para;</a></h2>
+<p><a href="https://helm.sh">Helm</a> is the package manager for Kubernetes. Software is being delivered in a format designated as a "chart". Helm is a <a href="https://helm.sh/docs/intro/install/">standalone CLI</a> that interacts with the Kubernetes API server using your <code>KUBECONFIG</code> file.</p>
+<p>The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver">Artifact Hub</a>. The chart only supports Helm 3 from version 1.3.0 of the HPE CSI Driver. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the CSI driver using Helm.</p>
+<ul>
+<li>Go to the chart on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver">Artifact Hub</a>.</li>
+</ul>
+<h3 id="helm_for_air-gapped_environments">Helm for Air-gapped Environments<a class="headerlink" href="#helm_for_air-gapped_environments" title="Permanent link">&para;</a></h3>
+<p>In the event of deploying the HPE CSI Driver in a secure air-gapped environment, Helm is the recommended method. For sake of completeness, it's also possible to follow the <a href="#advanced_install">advanced install</a> procedures and replace "quay.io" in the deployment manifests with the internal private registry location.</p>
+<p>Establish a working directory on a bastion Linux host that has HTTP access to the Internet, the private registry and the Kubernetes cluster where the CSI driver needs to be installed. The bastion host is assumed to have the <code>docker</code>, <code>helm</code> and <code>curl</code> command installed. It's also assumed throughout that the user executing <code>docker</code> has logged in to the private registry and that pulling images from the private registry is allowed anonymously by the Kubernetes compute nodes.</p>
+<p>While it seems like an obvious tactic to allowlist the different registries used by the Helm chart, the challenge here is that the registry names are usuallly multiple DNS A records that may change at any time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only the HPE CSI Driver 1.4.0 and later is supported using this methodology.</p>
+</div>
+<p>Create a working directory and set environment variables referenced throughout the procedure. Available versions are found in the <a href="https://github.com/hpe-storage/co-deployments/tree/master/yaml/csi-driver">co-deployments GitHub repo</a>.</p>
+<p> <pre><code class=text>mkdir hpe-csi-driver
+cd hpe-csi-driver
+export MY_REGISTRY=registry.enterprise.example.com
+export MY_CSI_DRIVER=3.0.1
+</code></pre></p>
+<p>Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-1><input name=tab-group-1 type=radio id=tab-group-1-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-1-0_text-panel role=tab><label for=tab-group-1-0_text class=code-tab-label data-lang=text id=tab-group-1-0_text-label>v2.5.0 and newer</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-1-0_text-panel aria-labelledby=tab-group-1-0_text-label><pre><code class=text>curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/refs/heads/master/helm/values/csi-driver/v${MY_CSI_DRIVER}/values.yaml \
+| grep \.io/ | awk '{print $2}' | sort | uniq &gt; images
+</code></pre></div><input name=tab-group-1 type=radio id=tab-group-1-1_text class=code-tab data-lang=text aria-controls=tab-group-1-1_text-panel role=tab><label for=tab-group-1-1_text class=code-tab-label data-lang=text id=tab-group-1-1_text-label>v2.4.2 and older</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-1-1_text-panel aria-labelledby=tab-group-1-1_text-label><pre><code class=text>curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/hpe-csi-k8s-1.29.yaml \
+        https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/nimble-csp.yaml \
+        https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/csi-driver/v${MY_CSI_DRIVER}/3par-primera-csp.yaml \
+| grep image: | awk '{print $2}' | sort | uniq &gt; images
+echo quay.io/hpestorage/nfs-provisioner:v3.0.5 &gt;&gt; images
+</code></pre></div></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In HPE CSI Driver 2.4.2 and earlier the NFS Server Provisioner image is not automatically pulled from the private registry once installed. Use the "nfsProvisionerImage" parameter in the <a href="using.html#base_storageclass_parameters"><code>StorageClass</code></a>.</p>
+</div>
+<p>The above command should not output anything. A list of images should be in the file "images".</p>
+<p>Pull, tag and push the images to the private registry.</p>
+<p> <pre><code class=text>cat images | xargs -n 1 docker pull
+awk '{ print $1&quot; &quot;$1 }' images | sed -E -e &quot;s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/&quot; | xargs -n 2 docker tag
+sed -E -e &quot;s/quay.io|registry.k8s.io/${MY_REGISTRY}/&quot; images | xargs -n 1 docker push
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Depending on what kind of private registry being used, the base repositories <code>hpestorage</code> and <code>sig-storage</code> might need to be created and given write access to the user pushing the images.</p>
+</div>
+<p>Next, install the chart as normal with the additional <code>registry</code> parameter. This is an example, please refer to the Helm <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#installing-the-chart">chart documentation</a> on ArtifactHub.</p>
+<p> <pre><code class=text>helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
+kubectl create ns hpe-storage
+</code></pre></p>
+<p>Version 2.4.2 or earlier.</p>
+<p> <pre><code class=text>helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage --version v2.4.2 --set registry=${MY_REGISTRY}
+</code></pre></p>
+<p>Version 2.5.0 or newer, skip to → <a href="#version_250_and_newer">Version 2.5.0 and newer</a>.</p>
+<h4 id="version_250_and_newer">Version 2.5.0 and newer<a class="headerlink" href="#version_250_and_newer" title="Permanent link">&para;</a></h4>
+<p>In version 2.5.0 and onwards, all images used by the HPE CSI Driver for Kubernetes Helm Chart are parameterized individually with the fully qualified URL.</p>
+<p>Use the procedure above to mirror the images to an internal registry. Once mirrored, replace the registry names in the reference <code>values.yaml</code> file.</p>
+<p> <pre><code class=text>curl -s https://raw.githubusercontent.com/hpe-storage/co-deployments/master/helm/values/csi-driver/v2.5.2/values.yaml | sed -E -e &quot;s/ quay.io| registry.k8s.io/ ${MY_REGISTRY}/g&quot; &gt; my-values.yaml
+</code></pre></p>
+<p>Use the <code>my-values.yaml</code> file to install the Helm Chart.</p>
+<p> <pre><code class=text>helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver \
+-n hpe-storage --version ${MY_CSI_DRIVER} \
+-f my-values.yaml
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the client running <code>helm</code> is in the air-gapped environment as well, the <a href="https://github.com/hpe-storage/co-deployments/tree/master/docs">docs</a> directory needs to be hosted on a web server in the air-gapped environment, and then use <code>helm repo add hpe-storage https://my-web-server.internal/docs</code> above instead.</p>
+</div>
+<h2 id="operator">Operator<a class="headerlink" href="#operator" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator pattern</a> is based on the idea that software should be instantiated and run with a set of custom controllers in Kubernetes. It creates a native experience for any software running on Kubernetes.</p>
+<p>The official HPE CSI Operator for Kubernetes is hosted on <a href="https://operatorhub.io/operator/hpe-csi-operator">OperatorHub.io</a>. The CSI Operator images are hosted both on quay.io and officially certified containers in the Red Hat Ecosystem Catalog.</p>
+<h3 id="red_hat_openshift_container_platform">Red Hat OpenShift Container Platform<a class="headerlink" href="#red_hat_openshift_container_platform" title="Permanent link">&para;</a></h3>
+<p>The HPE CSI Operator for Kubernetes is a fully certified Operator for OpenShift. There are a few tweaks needed and there's a separate section for OpenShift.</p>
+<ul>
+<li>See <a href="partners/redhat_openshift/index.html">Red Hat OpenShift</a> in the partner ecosystem section</li>
+</ul>
+<h3 id="upstream_kubernetes_and_others">Upstream Kubernetes and Others<a class="headerlink" href="#upstream_kubernetes_and_others" title="Permanent link">&para;</a></h3>
+<p>Follow the documentation from the respective upstream distributions on how to deploy an Operator. In most cases, the Operator Lifecyle Manager (OLM) needs to be installed separately (does NOT apply to OpenShift 4 and later).</p>
+<p>Visit the <a href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md">documentation</a> in the OLM GitHub repo to learn how to install OLM.</p>
+<p>Once OLM is operational, install the HPE CSI Operator.</p>
+<p> <pre><code class=text>kubectl create -f https://operatorhub.io/install/hpe-csi-operator.yaml
+</code></pre></p>
+<p>The Operator will be installed in <code>my-hpe-csi-operator</code> namespace. Watch it come up by inspecting the <code>ClusterServiceVersion</code> (CSV).</p>
+<p> <pre><code class=text>kubectl get csv -n my-hpe-csi-operator
+</code></pre></p>
+<p>Next, a <code>HPECSIDriver</code> object needs to be instantiated. Create a file named <code>hpe-csi-operator.yaml</code>, edit and apply (or copy the command from the top of the content).</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-9><input name=tab-group-9 type=radio id=tab-group-9-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-9-0_yaml-panel role=tab><label for=tab-group-9-0_yaml class=code-tab-label data-lang=yaml id=tab-group-9-0_yaml-label>HPE CSI Operator v3.0.1</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-9-0_yaml-panel aria-labelledby=tab-group-9-0_yaml-label><pre><code class=yaml># kubectl apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    b10000FileService: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.9.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.0
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.9
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.0
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.3.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.1
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.8
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.8
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.8
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.1
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+
+
+</code></pre></div><input name=tab-group-9 type=radio id=tab-group-9-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-9-1_yaml-panel role=tab><label for=tab-group-9-1_yaml class=code-tab-label data-lang=yaml id=tab-group-9-1_yaml-label>v2.5.2</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-9-1_yaml-panel aria-labelledby=tab-group-9-1_yaml-label><pre><code class=yaml># kubectl apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.2
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+
+
+</code></pre></div><input name=tab-group-9 type=radio id=tab-group-9-2_yaml class=code-tab data-lang=yaml aria-controls=tab-group-9-2_yaml-panel role=tab><label for=tab-group-9-2_yaml class=code-tab-label data-lang=yaml id=tab-group-9-2_yaml-label>v2.5.1</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-9-2_yaml-panel aria-labelledby=tab-group-9-2_yaml-label><pre><code class=yaml># kubectl apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.0
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.7
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.0
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.6
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.6
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.6
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.5
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.0
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+</code></pre></div><input name=tab-group-9 type=radio id=tab-group-9-3_yaml class=code-tab data-lang=yaml aria-controls=tab-group-9-3_yaml-panel role=tab><label for=tab-group-9-3_yaml class=code-tab-label data-lang=yaml id=tab-group-9-3_yaml-label>v2.4.2</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-9-3_yaml-panel aria-labelledby=tab-group-9-3_yaml-label><pre><code class=yaml># kubectl apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  imagePullPolicy: IfNotPresent
+  iscsi:
+    chapPassword: &quot;&quot;
+    chapUser: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet/
+  logLevel: info
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  registry: quay.io
+
+
+</code></pre></div></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The contents depends on which version of the CSI driver is installed. Please visit <a href="https://operatorhub.io/operator/hpe-csi-operator">OperatorHub</a> or <a href="https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator">ArtifactHub</a> for more details.</p>
+</div>
+<p>The CSI driver is now ready for use. Proceed to the next section to learn about <a href="#add_an_hpe_storage_backend">adding an HPE storage backend</a>.</p>
+<h2 id="add_an_hpe_storage_backend">Add an HPE Storage Backend<a class="headerlink" href="#add_an_hpe_storage_backend" title="Permanent link">&para;</a></h2>
+<p><a style="display: flex" id="add_a_hpe_storage_backend" class="headerlink" href="#add_a_hpe_storage_backend" title="Permanent link"></a>Once the CSI driver is deployed, two additional objects needs to be created to get started with dynamic provisioning of persistent storage, a <code>Secret</code> and a <code>StorageClass</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Naming the <code>Secret</code> and <code>StorageClass</code> is entirely up to the user, however, to keep up with the examples on SCOD, it's highly recommended to use the names illustrated here.</p>
+</div>
+<h3 id="secret_parameters">Secret Parameters<a class="headerlink" href="#secret_parameters" title="Permanent link">&para;</a></h3>
+<p>All parameters are mandatory and described below.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>serviceName</td>
+<td>This hostname or IP address where the Container Storage Provider (CSP) is running, usually a Kubernetes <code>Service</code>, such as "alletra6000-csp-svc" or "alletra9000-csp-svc"</td>
+</tr>
+<tr>
+<td>servicePort</td>
+<td>This is port the <code>serviceName</code> is listening to.</td>
+</tr>
+<tr>
+<td>backend</td>
+<td>This is the management hostname or IP address of the actual backend storage system, such as an Alletra 5000/6000 or 9000 array.</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Backend storage system username with the correct privileges to perform storage management.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Backend storage system password.</td>
+</tr>
+</tbody>
+</table>
+<p>Example <code>Secrets</code>, Alletra Storage MP B10000:</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-10><input name=tab-group-10 type=radio id=tab-group-10-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-10-0_yaml-panel role=tab><label for=tab-group-10-0_yaml class=code-tab-label data-lang=yaml id=tab-group-10-0_yaml-label>Alletra Storage MP B10000 Block</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-10-0_yaml-panel aria-labelledby=tab-group-10-0_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110:443
+  username: 3paradm
+  password: 3pardata
+</code></pre></div><input name=tab-group-10 type=radio id=tab-group-10-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-10-1_yaml-panel role=tab><label for=tab-group-10-1_yaml class=code-tab-label data-lang=yaml id=tab-group-10-1_yaml-label>File Service</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-10-1_yaml-panel aria-labelledby=tab-group-10-1_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-b10000-nfs-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110
+  username: 3paradm
+  password: 3pardata
+</code></pre></div><input name=tab-group-10 type=radio id=tab-group-10-2_yaml class=code-tab data-lang=yaml aria-controls=tab-group-10-2_yaml-panel role=tab><label for=tab-group-10-2_yaml class=code-tab-label data-lang=yaml id=tab-group-10-2_yaml-label>Alletra 5000/6000</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-10-2_yaml-panel aria-labelledby=tab-group-10-2_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra6000-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110
+  username: admin
+  password: admin
+</code></pre></div><input name=tab-group-10 type=radio id=tab-group-10-3_yaml class=code-tab data-lang=yaml aria-controls=tab-group-10-3_yaml-panel role=tab><label for=tab-group-10-3_yaml class=code-tab-label data-lang=yaml id=tab-group-10-3_yaml-label>Alletra 9000</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-10-3_yaml-panel aria-labelledby=tab-group-10-3_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra9000-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110:443
+  username: 3paradm
+  password: 3pardata
+</code></pre></div></div>
+<p>Legacy platforms:</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-11><input name=tab-group-11 type=radio id=tab-group-11-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-11-0_yaml-panel role=tab><label for=tab-group-11-0_yaml class=code-tab-label data-lang=yaml id=tab-group-11-0_yaml-label>Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-11-0_yaml-panel aria-labelledby=tab-group-11-0_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110
+  username: admin
+  password: admin
+</code></pre></div><input name=tab-group-11 type=radio id=tab-group-11-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-11-1_yaml-panel role=tab><label for=tab-group-11-1_yaml class=code-tab-label data-lang=yaml id=tab-group-11-1_yaml-label>Primera</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-11-1_yaml-panel aria-labelledby=tab-group-11-1_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110:443
+  username: 3paradm
+  password: 3pardata
+</code></pre></div><input name=tab-group-11 type=radio id=tab-group-11-2_yaml class=code-tab data-lang=yaml aria-controls=tab-group-11-2_yaml-panel role=tab><label for=tab-group-11-2_yaml class=code-tab-label data-lang=yaml id=tab-group-11-2_yaml-label>3PAR</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-11-2_yaml-panel aria-labelledby=tab-group-11-2_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110
+  username: 3paradm
+  password: 3pardata
+</code></pre></div></div>
+<div class="admonition caution">
+<p class="admonition-title">Improved Security</p>
+<p>From v2.5.2 onwards, all HPE Alletra Storage MP B10000 (block) derived platforms except 3PAR should include port 443 with the backend IP address (i.e "192.168.1.110:443") to prevent the CSP from using SSH.</p>
+</div>
+<p>Create the <code>Secret</code> using <code>kubectl</code>:</p>
+<p> <pre><code class=text>kubectl create -f secret.yaml
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In a real world scenario it's more practical to name the <code>Secret</code> something that makes sense for the organization. It could be the hostname of the backend or the role it carries, i.e "hpe-alletra-sanjose-prod".</p>
+</div>
+<p>Next step involves <a href="using.html#base_storageclass_parameters">creating a default StorageClass</a>.</p>
+<h2 id="configuring_additional_storage_backends">Configuring Additional Storage Backends<a class="headerlink" href="#configuring_additional_storage_backends" title="Permanent link">&para;</a></h2>
+<p>It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple <code>StorageClass</code> and <code>Secret</code> API objects to represent an environment with multiple systems.</p>
+<p>There's a <a href="../learn/video_gallery/index.html#managing_multiple_hpe_storage_backends_using_the_hpe_csi_driver">brief tutorial available</a> in the Video Gallery that walks through these steps.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make note of the Kubernetes <code>Namespace</code> or OpenShift project name used during the deployment. In the following examples, we will be using the "hpe-storage" <code>Namespace</code>.</p>
+</div>
+<p>To view the current <code>Secrets</code> in the "hpe-storage" <code>Namespace</code> (assuming default names):</p>
+<p> <pre><code class=text>kubectl -n hpe-storage get secret/hpe-backend
+NAME                     TYPE          DATA      AGE
+hpe-backend              Opaque        5         2m
+</code></pre></p>
+<p>This <code>Secret</code> is used by the CSI sidecars in the <code>StorageClass</code> to authenticate to a specific backend for CSI operations. In order to add a new <code>Secret</code> or manage access to multiple backends, additional <code>Secrets</code> will need to be created per backend.</p>
+<div class="admonition note">
+<p class="admonition-title">Secret Requirements</p>
+<ul>
+<li>Each <code>Secret</code> name must be unique.</li>
+<li><strong>servicePort</strong> should be set to <strong>8080</strong>.</li>
+</ul>
+</div>
+<p>To create a new <code>Secret</code>, specify the name, <code>Namespace</code>, backend username, backend password and the backend IP address to be used by the CSP and save it as <code>custom-secret.yaml</code> (a detailed description of the parameters are <a href="#secret_parameters">available above</a>).</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-14><input name=tab-group-14 type=radio id=tab-group-14-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-14-0_yaml-panel role=tab><label for=tab-group-14-0_yaml class=code-tab-label data-lang=yaml id=tab-group-14-0_yaml-label>HPE Alletra Storage MP B10000</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-14-0_yaml-panel aria-labelledby=tab-group-14-0_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 10.10.0.20
+  username: 3paradm
+  password: 3pardata
+</code></pre></div><input name=tab-group-14 type=radio id=tab-group-14-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-14-1_yaml-panel role=tab><label for=tab-group-14-1_yaml class=code-tab-label data-lang=yaml id=tab-group-14-1_yaml-label>HPE Alletra 5000/6000</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-14-1_yaml-panel aria-labelledby=tab-group-14-1_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra6000-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.110
+  username: admin
+  password: admin
+</code></pre></div><input name=tab-group-14 type=radio id=tab-group-14-2_yaml class=code-tab data-lang=yaml aria-controls=tab-group-14-2_yaml-panel role=tab><label for=tab-group-14-2_yaml class=code-tab-label data-lang=yaml id=tab-group-14-2_yaml-label>HPE Alletra 9000</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-14-2_yaml-panel aria-labelledby=tab-group-14-2_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: alletra9000-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 10.10.0.20
+  username: 3paradm
+  password: 3pardata
+</code></pre></div><input name=tab-group-14 type=radio id=tab-group-14-3_yaml class=code-tab data-lang=yaml aria-controls=tab-group-14-3_yaml-panel role=tab><label for=tab-group-14-3_yaml class=code-tab-label data-lang=yaml id=tab-group-14-3_yaml-label>HPE Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-14-3_yaml-panel aria-labelledby=tab-group-14-3_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.2
+  username: admin
+  password: admin
+</code></pre></div><input name=tab-group-14 type=radio id=tab-group-14-4_yaml class=code-tab data-lang=yaml aria-controls=tab-group-14-4_yaml-panel role=tab><label for=tab-group-14-4_yaml class=code-tab-label data-lang=yaml id=tab-group-14-4_yaml-label>HPE Primera and 3PAR</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-14-4_yaml-panel aria-labelledby=tab-group-14-4_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 10.10.0.2
+  username: 3paradm
+  password: 3pardata
+</code></pre></div></div>
+<p>Create the <code>Secret</code> using <code>kubectl</code>:</p>
+<p> <pre><code class=text>kubectl create -f custom-secret.yaml
+</code></pre></p>
+<p>You should now see the <code>Secret</code> in the "hpe-storage" <code>Namespace</code>:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage get secret/custom-secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         1m
+</code></pre></p>
+<h3 id="create_a_storageclass_with_the_custom_secret">Create a StorageClass with the Custom Secret<a class="headerlink" href="#create_a_storageclass_with_the_custom_secret" title="Permanent link">&para;</a></h3>
+<p>To use the new <code>Secret</code> "custom-secret", create a new <code>StorageClass</code> using the <code>Secret</code> and the necessary <code>StorageClass</code> parameters. Please see the requirements section of the respective <a href="container_storage_provider/index.html">CSP</a>.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-17><input name=tab-group-17 type=radio id=tab-group-17-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-17-0_yaml-panel role=tab><label for=tab-group-17-0_yaml class=code-tab-label data-lang=yaml id=tab-group-17-0_yaml-label>K8s 1.15+</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-17-0_yaml-panel aria-labelledby=tab-group-17-0_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-custom
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  description: &quot;Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes&quot;
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+</code></pre></div><input name=tab-group-17 type=radio id=tab-group-17-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-17-1_yaml-panel role=tab><label for=tab-group-17-1_yaml class=code-tab-label data-lang=yaml id=tab-group-17-1_yaml-label>K8s 1.14</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-17-1_yaml-panel aria-labelledby=tab-group-17-1_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-custom
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/resizer-secret-name: custom-secret
+  csi.storage.k8s.io/resizer-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  description: &quot;Volume created by using a custom Secret with the HPE CSI Driver for Kubernetes&quot;
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+</code></pre></div></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don't forget to call out the <code>StorageClass</code> explicitly when creating <code>PVCs</code> from non-default <code>StorageClasses</code>.</p>
+</div>
+<p>Next, <a href="using.html#create_a_persistentvolumeclaim_from_a_storageclass">Create a PersistentVolumeClaim from a StorageClass</a>.</p>
+<h2 id="advanced_install">Advanced Install<a class="headerlink" href="#advanced_install" title="Permanent link">&para;</a></h2>
+<p>This guide is primarily written to accommodate a highly manual installation on upstream Kubernetes or partner OEMs engaged with HPE to bundle the HPE CSI Driver in a custom distribution. Installation steps may vary for different vendors and flavors of Kubernetes.</p>
+<p>The following example walks through deployment of the <strong>latest</strong> CSI driver.</p>
+<div class="admonition caution">
+<p class="admonition-title">Critical</p>
+<p>It's highly recommended to use either the Helm chart or Operator to install the HPE CSI Driver for Kubernetes and the associated Container Storage Providers. Only venture down manual installation if your requirements can't be met by the <a href="deployment.html#helm">Helm chart</a> or <a href="deployment.html#operator">Operator</a>.</p>
+</div>
+<p>The manifests used below are renders from the latest Helm template with default parameters.</p>
+<h3 id="manual_csi_driver_install">Manual CSI Driver Install<a class="headerlink" href="#manual_csi_driver_install" title="Permanent link">&para;</a></h3>
+<p>Deploy the CSI driver and sidecars for the relevant Kubernetes version.</p>
+<div class="admonition important">
+<p class="admonition-title">Uninstalling the CSI driver when installed manually</p>
+<p>The manifests below create a number of objects, including <code>CustomResourceDefinitions</code> (CRDs) which may hold critical information about storage resources. Simply deleting the below manifests in order to uninstall the CSI driver may render <code>PersistentVolumes</code> unusable.</p>
+</div>
+<h3 id="common">Common<a class="headerlink" href="#common" title="Permanent link">&para;</a></h3>
+<p>These object configuration files are common for all versions of Kubernetes.</p>
+<p>All components below are deployed in the "hpe-storage" <code>Namespace</code>.</p>
+<p> <pre><code class=text>kubectl create ns hpe-storage
+</code></pre></p>
+<p>Clone the "co-deployments" repo.</p>
+<p> <pre><code class=text>git clone https://github.com/hpe-storage/co-deployments
+cd co-deployments
+</code></pre></p>
+<p>Worker node IO settings and <code>CRDs</code>:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-linux-config.yaml
+kubectl apply -f yaml/csi-driver/edge/csi-driver-crd.yaml
+kubectl apply -f yaml/csi-driver/edge/crds/
+</code></pre></p>
+<p>Container Storage Provider:</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-21><input name=tab-group-21 type=radio id=tab-group-21-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-21-0_text-panel role=tab><label for=tab-group-21-0_text class=code-tab-label data-lang=text id=tab-group-21-0_text-label>HPE Alletra 5000/6000 and Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-21-0_text-panel aria-labelledby=tab-group-21-0_text-label><pre><code class=text>kubectl -n hpe-storage apply -f yaml/csi-driver/edge/nimble-csp.yaml
+</code></pre></div><input name=tab-group-21 type=radio id=tab-group-21-1_text class=code-tab data-lang=text aria-controls=tab-group-21-1_text-panel role=tab><label for=tab-group-21-1_text class=code-tab-label data-lang=text id=tab-group-21-1_text-label>HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-21-1_text-panel aria-labelledby=tab-group-21-1_text-label><pre><code class=text>kubectl -n hpe-storage apply -f yaml/csi-driver/edge/3par-primera-csp.yaml
+</code></pre></div></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The above instructions assumes you have an array with a supported platform OS installed. Please see the requirements section of the respective <a href="container_storage_provider/index.html">CSP</a>.</p>
+</div>
+<p>Install the CSI driver:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-rbac.yaml
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-controller.yaml
+kubectl -n hpe-storage apply -f yaml/csi-driver/edge/hpe-csi-node.yaml
+</code></pre></p>
+<p>Next step: <a href="#add_an_hpe_storage_backend">Add an HPE Storage Backend</a>.</p>
+<h2 id="advanced_uninstall">Advanced Uninstall<a class="headerlink" href="#advanced_uninstall" title="Permanent link">&para;</a></h2>
+<p>The following steps outline how to uninstall the CSI driver that has been deployed using the <a href="#advanced_install">Advanced Install</a> above and assumes the shell is in the "co-deployments" directory.</p>
+<p>Uninstall Worker node settings:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-linux-config.yaml
+</code></pre></p>
+<p>Uninstall relevant Container Storage Provider:</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-24><input name=tab-group-24 type=radio id=tab-group-24-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-24-0_text-panel role=tab><label for=tab-group-24-0_text class=code-tab-label data-lang=text id=tab-group-24-0_text-label>HPE Alletra 5000/6000 and Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-24-0_text-panel aria-labelledby=tab-group-24-0_text-label><pre><code class=text>kubectl -n hpe-storage delete -f yaml/csi-driver/edge/nimble-csp.yaml
+</code></pre></div><input name=tab-group-24 type=radio id=tab-group-24-1_text class=code-tab data-lang=text aria-controls=tab-group-24-1_text-panel role=tab><label for=tab-group-24-1_text class=code-tab-label data-lang=text id=tab-group-24-1_text-label>HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-24-1_text-panel aria-labelledby=tab-group-24-1_text-label><pre><code class=text>kubectl -n hpe-storage delete -f yaml/csi-driver/edge/3par-primera-csp.yaml
+</code></pre></div></div>
+<p>Uninstall the CSI driver:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-controller.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-node.yaml
+kubectl -n hpe-storage delete -f yaml/csi-driver/edge/hpe-csi-rbac.yaml
+</code></pre></p>
+<p>If no longer needed, delete the "hpe-storage" <code>Namespace</code>.</p>
+<p> <pre><code class=text>kubectl delete ns hpe-storage
+</code></pre></p>
+<div class="admonition error">
+<p class="admonition-title">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR users</p>
+<p>If you are reinstalling the HPE CSI Driver, <strong>DO NOT</strong> remove the <code>crd/hpevolumeinfos.storage.hpe.com</code> resource. This <code>CustomResourceDefinition</code> contains important volume metadata used by the HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR CSP.</p>
+</div>
+<h2 id="downgrading_the_csi_driver">Downgrading the CSI driver<a class="headerlink" href="#downgrading_the_csi_driver" title="Permanent link">&para;</a></h2>
+<p>Downgrading the CSI driver is currently not supported. It will work between certain minor versions but it's generally not recommended to attempt without consulting. HPE does not test or document procedures to downgrade between incompatible versions. Issues may arise with host naming on the backend storage platforms, <code>CustomResourceDefinitions</code> and immutable fields on <code>PersistentVolumes</code>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>It's important to consult with HPE support if a downgrade should be attempted.</p>
+</div>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/deployment.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="using.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

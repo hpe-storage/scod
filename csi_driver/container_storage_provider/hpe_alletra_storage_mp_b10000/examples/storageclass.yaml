@@ -1,0 +1,30 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    # There can only be one default StorageClass per cluster
+    storageclass.kubernetes.io/is-default-class: "true"
+  name: hpe-standard
+parameters:
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: hpe-backend
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/fstype: xfs
+  accessProtocol: iscsi
+  description: Volume created by the HPE CSI Driver for Kubernetes
+  cpg: SSD_r6
+  snapCpg: SSD_r6
+  hostSeesVLUN: "true"
+  provisioningType: tpvv
+  # compression: "true" # For 3PAR only
+provisioner: csi.hpe.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true

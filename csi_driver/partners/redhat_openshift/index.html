@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/partners/redhat_openshift/index.html" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Red Hat OpenShift - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Red Hat OpenShift";
+        var mkdocs_page_input_path = "csi_driver/partners/redhat_openshift/index.md";
+        var mkdocs_page_url = "/csi_driver/partners/redhat_openshift/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Partner Ecosystems</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Red Hat OpenShift</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#openshift_4">OpenShift 4</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#certified_combinations">Certified combinations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#security_model">Security model</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#deployment">Deployment</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nfs_server_provisioner_considerations">NFS Server Provisioner Considerations</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#non-standard_hpe-nfs_namespace">Non-standard hpe-nfs Namespace</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#operators_requesting_nfs_persistent_volume_claims">Operators Requesting NFS Persistent Volume Claims</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#optional_networkpolicies">Optional NetworkPolicies</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#backend">Backend</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#control-plane_endpoints">Control-Plane Endpoints</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#custom_nfs_server_provisioner_namespace">Custom NFS Server Provisioner Namespace</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#storageprofile_for_openshift_virtualization_source_pvcs">StorageProfile for OpenShift Virtualization Source PVCs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#live_vm_migrations_for_alletra_storage_mp_b10000">Live VM migrations for Alletra Storage MP B10000</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unsupported_version_of_the_operator_install">Unsupported Version of the Operator Install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unsupported_helm_chart_install">Unsupported Helm Chart Install</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#steps_to_install">Steps to install.</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+          <li class="breadcrumb-item">Partner Ecosystems</li>
+      <li class="breadcrumb-item active">Red Hat OpenShift</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p><img src="img/redhat-certified.png" align="right" width="256" hspace="12" vspace="2" />
+HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.</p>
+<p>Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This packaged experience differs slightly on how you would deploy and use the HPE CSI Driver and this page serves as the authoritative source for all things block based HPE primary storage and Red Hat OpenShift.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#openshift_4">OpenShift 4</a><ul>
+<li><a href="#certified_combinations">Certified combinations</a></li>
+<li><a href="#security_model">Security model</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#deployment">Deployment</a><ul>
+<li><a href="#upgrading">Upgrading</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#openshift_web_console">OpenShift web console</a></li>
+<li><a href="#openshift_cli">OpenShift CLI</a></li>
+<li><a href="#additional_information">Additional information</a></li>
+<li><a href="#uninstall_the_hpe_csi_operator">Uninstall the HPE CSI Operator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#nfs_server_provisioner_considerations">NFS Server Provisioner Considerations</a><ul>
+<li><a href="#non-standard_hpe-nfs_namespace">Non-standard hpe-nfs Namespace</a></li>
+<li><a href="#operators_requesting_nfs_persistent_volume_claims">Operators Requesting NFS Persistent Volume Claims</a></li>
+</ul>
+</li>
+<li><a href="#optional_networkpolicies">Optional NetworkPolicies</a><ul>
+<li><a href="#backend">Backend</a></li>
+<li><a href="#control-plane_endpoints">Control-Plane Endpoints</a></li>
+<li><a href="#custom_nfs_server_provisioner_namespace">Custom NFS Server Provisioner Namespace</a></li>
+</ul>
+</li>
+<li><a href="#storageprofile_for_openshift_virtualization_source_pvcs">StorageProfile for OpenShift Virtualization Source PVCs</a></li>
+<li><a href="#live_vm_migrations_for_alletra_storage_mp_b10000">Live VM migrations for Alletra Storage MP B10000</a></li>
+<li><a href="#unsupported_version_of_the_operator_install">Unsupported Version of the Operator Install</a></li>
+<li><a href="#unsupported_helm_chart_install">Unsupported Helm Chart Install</a><ul>
+<li><a href="#steps_to_install">Steps to install.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="openshift_4">OpenShift 4<a class="headerlink" href="#openshift_4" title="Permanent link">&para;</a></h2>
+<p>Software deployed on OpenShift 4 follows the <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/operator/">Operator pattern</a>. CSI drivers are no exception.</p>
+<h3 id="certified_combinations">Certified combinations<a class="headerlink" href="#certified_combinations" title="Permanent link">&para;</a></h3>
+<p>Software delivered through the HPE and Red Hat partnership follows a <a href="https://redhat-connect.gitbook.io/openshift-badges/badges/container-storage-interface-csi-1">rigorous certification process</a> and only qualify what's listed as "Certified" in the below table.</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Red Hat OpenShift</th>
+<th>HPE CSI Operator</th>
+<th>Container Storage Providers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certified</td>
+<td>4.20 EUS<sup>2</sup></td>
+<td>3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.19</td>
+<td>3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.18 EUS<sup>2</sup></td>
+<td>2.5.2, 3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.17</td>
+<td>2.5.2, 3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.16 EUS<sup>2</sup></td>
+<td>2.5.1, 2.5.2, 3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>EOL<sup>1</sup></td>
+<td>4.15</td>
+<td>2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.14 EUS<sup>2</sup></td>
+<td>2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1, 3.0.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>EOL<sup>1</sup></td>
+<td>4.13</td>
+<td>2.4.0, 2.4.1, 2.4.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+<tr>
+<td>Certified</td>
+<td>4.12 EUS<sup>2</sup></td>
+<td>2.3.0, 2.4.0, 2.4.1, 2.4.2</td>
+<td><a href="../../container_storage_provider/index.html">All</a></td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>1</sup> = End of life support per <a href="https://access.redhat.com/support/policy/updates/openshift">Red Hat OpenShift Life Cycle Policy</a>.</small><br />
+<small><sup>2</sup> = Red Hat OpenShift <a href="https://access.redhat.com/support/policy/updates/openshift-eus">Extended Update Support</a>.</small></br />
+<small><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the <a href="#unsupported_helm_chart_install">unsupported Helm chart install</a> method. Formal certification will be part of the next release of the CSI driver.</small></p>
+<p>Check the table above periodically for future releases.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Pointers</p>
+<ul>
+<li>Other combinations may work but will not be supported.</li>
+<li>Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.</li>
+<li>Instructions on this page only reflect the current stable version of the HPE CSI Operator and OpenShift.</li>
+<li><strong>Do not attempt</strong> to boot or image OpenShift Virtualization virtual machines from <code>StorageClasses</code> with "nfsResources: 'true'", it's not supported and it won't work. Use "RWX" <code>volumeMode: Block</code> <code>PVCs</code>.</li>
+</ul>
+</div>
+<h3 id="security_model">Security model<a class="headerlink" href="#security_model" title="Permanent link">&para;</a></h3>
+<p>By default, OpenShift prevents containers from running as root. Containers are run using an arbitrarily assigned user ID. Due to these security restrictions, containers that run on Docker and Kubernetes might not run successfully on Red Hat OpenShift without modification.</p>
+<p>Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.</p>
+<p>For more information on OpenShift security, see <a href="https://docs.openshift.com/container-platform/4.17/authentication/managing-security-context-constraints.html">Managing security context constraints</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the <code>fsMode: "0770"</code> parameter to the <code>StorageClass</code> with RWO claims or <code>fsMode: "0777"</code> for RWX claims.</p>
+</div>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<p>Since the CSI Operator only provides "Basic Install" capabilities. The following limitations apply:</p>
+<ul>
+<li>The <code>ConfigMap</code> "hpe-linux-config" that controls host configuration is immutable</li>
+<li>The NFS Server Provisioner can not be used with Operators deploying <code>PersistentVolumeClaims</code> as part of the installation. See <a href="https://github.com/hpe-storage/csi-driver/issues/295">#295</a> on GitHub.</li>
+<li>Deploying the NFS Server Provisioner to a <code>Namespace</code> other than "hpe-nfs" requires a separate SCC applied to the <code>Namespace</code>. See <a href="#nfs_server_provisioner_considerations">NFS Server Provisioner Considerations</a>.</li>
+</ul>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h3>
+<p>The HPE CSI Operator for OpenShift needs to be installed through the interfaces provided by Red Hat.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There's a tutorial available on YouTube accessible through the <a href="../../../learn/video_gallery/index.html#install_the_hpe_csi_operator_for_kubernetes_on_red_hat_openshift">Video Gallery</a> on how to install and use the HPE CSI Operator on Red Hat OpenShift.</p>
+</div>
+<h4 id="upgrading">Upgrading<a class="headerlink" href="#upgrading" title="Permanent link">&para;</a></h4>
+<p>In situations where the operator needs to be upgraded, follow the prerequisite steps in the Helm chart on Artifact Hub.</p>
+<ul>
+<li><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#upgrading-the-chart">Upgrading the chart</a></li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Automatic Updates</p>
+<p>Do not under any circumstance enable "Automatic Updates" for the HPE CSI Operator for OpenShift.</p>
+</div>
+<p>Once the steps have been followed for the particular version transition:</p>
+<ul>
+<li>Uninstall the <code>HPECSIDriver</code> instance</li>
+<li>Delete the "hpecsidrivers.storage.hpe.com" <code>CRD</code><br />:
+  <code>oc delete crd/hpecsidrivers.storage.hpe.com</code></li>
+<li><a href="#uninstall_the_hpe_csi_operator">Uninstall</a> the HPE CSI Operator for OpenShift</li>
+<li>Proceed to installation through the <a href="#openshift_web_console">OpenShift Web Console</a> or <a href="#openshift_cli">OpenShift CLI</a></li>
+<li>Reapply the <a href="#scc">SCC</a> to ensure there hasn't been any changes.</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Good to know</p>
+<p>Deleting the <code>HPECSIDriver</code> instance and uninstalling the CSI Operator does not affect any running workloads, <code>PersistentVolumeClaims</code>, <code>StorageClasses</code> or other resources created by the HPE CSI Operator. In-flight operations and new requests will be retried once the new <code>HPECSIDriver</code> has been instantiated.</p>
+</div>
+<h4 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h4>
+<p>The HPE CSI Driver needs to run in privileged mode and needs access to host ports, host network and should be able to mount hostPath volumes. Hence, before deploying HPE CSI Operator on OpenShift, please create the following <code>SecurityContextConstraints</code> (SCC) to allow the CSI driver to be running with these privileges.</p>
+<p> <pre><code class=text>oc new-project hpe-storage --display-name=&quot;HPE CSI Operator for OpenShift&quot;
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The rest of this implementation guide assumes the default "hpe-storage" <code>Namespace</code>. If a different <code>Namespace</code> is desired. Update the <code>ServiceAccount</code> <code>Namespace</code> in the SCC below.</p>
+</div>
+<div id="scc" />
+<p>Deploy or <a href="https://scod.hpedev.io/csi_driver/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml">download</a> the SCC:</p>
+<p> <pre><code class=text>oc apply -f https://scod.hpedev.io/csi_driver/partners/redhat_openshift/examples/scc/hpe-csi-scc.yaml
+securitycontextconstraints.security.openshift.io/hpe-csi-controller-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-node-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-csp-scc created
+securitycontextconstraints.security.openshift.io/hpe-csi-nfs-scc created
+</code></pre></p>
+<h4 id="openshift_web_console">OpenShift web console<a class="headerlink" href="#openshift_web_console" title="Permanent link">&para;</a></h4>
+<p>Once the SCC has been applied to the project, login to the OpenShift web console as "kubeadmin" and navigate to <strong>Operators -&gt; OperatorHub</strong>.</p>
+<p><img alt="Search for HPE" src="img/webcon-1.png" />
+<em>Search for 'HPE CSI' in the search field and select the non-marketplace version.</em></p>
+<p><img alt="Click Install" src="img/webcon-2.png" />
+<em>Click 'Install'.</em></p>
+<p><img alt="Click Install" src="img/webcon-3.png" />
+<em>Select the Namespace where the SCC was applied, select 'Manual' Update Approval, click 'Install'.</em></p>
+<p><img alt="Click Approve" src="img/webcon-3-1.png" />
+<em>Click 'Approve' to finalize installation of the Operator</em></p>
+<p><img alt="Operator installed" src="img/webcon-4.png" />
+<em>The HPE CSI Operator is now installed, select 'View Operator'.</em></p>
+<p><img alt="Create a new instance" src="img/webcon-5.png" />
+<em>Click 'Create Instance'.</em></p>
+<p><img alt="Configure instance" src="img/webcon-6.png" />
+<em>Normally, no customizations are needed, scroll all the way down and click 'Create'.</em></p>
+<p>By navigating to the Developer view, it should now be possible to inspect the CSI driver and Operator topology.</p>
+<p><img alt="Operator Topology" src="img/webcon-7.png" /></p>
+<p>The CSI driver is now ready for use. Next, an <a href="../../deployment.html#add_an_hpe_storage_backend">HPE storage backend needs to be added</a> along with a <a href="../../using.html#base_storageclass_parameters"><code>StorageClass</code></a>.</p>
+<h4 id="openshift_cli">OpenShift CLI<a class="headerlink" href="#openshift_cli" title="Permanent link">&para;</a></h4>
+<p>This provides an example Operator deployment using <code>oc</code>. If you want to use the web console, proceed to the <a href="#openshift_web_console">previous section</a>.</p>
+<p>It's assumed the SCC has been applied to the project and have <code>kube:admin</code> privileges. As an example, we'll deploy to the <code>hpe-storage</code> project as described in previous steps.</p>
+<p>First, an <code>OperatorGroup</code> needs to be created.</p>
+<p> <pre><code class=yaml>apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: hpe-csi-driver-for-kubernetes
+  namespace: hpe-storage
+spec:
+  targetNamespaces:
+  - hpe-storage
+</code></pre></p>
+<p>Next, create a <code>Subscription</code> to the Operator.</p>
+<p> <pre><code class=yaml>apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: hpe-csi-operator
+  namespace: hpe-storage
+spec:
+  channel: stable
+  installPlanApproval: Manual
+  name: hpe-csi-operator
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
+</code></pre></p>
+<p>Next, approve the installation.</p>
+<p> <pre><code class=text>oc -n hpe-storage patch $(oc get installplans -n hpe-storage -o name) -p '{&quot;spec&quot;:{&quot;approved&quot;:true}}' --type merge
+</code></pre></p>
+<p>The Operator will now be installed on the OpenShift cluster. Before instantiating a CSI driver, watch the roll-out of the Operator.</p>
+<p> <pre><code class=text>oc rollout status deploy/hpe-csi-driver-operator -n hpe-storage
+Waiting for deployment &quot;hpe-csi-driver-operator&quot; rollout to finish: 0 of 1 updated replicas are available...
+deployment &quot;hpe-csi-driver-operator&quot; successfully rolled out
+</code></pre></p>
+<p>The next step is to create a <code>HPECSIDriver</code> object.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-6><input name=tab-group-6 type=radio id=tab-group-6-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-6-0_yaml-panel role=tab><label for=tab-group-6-0_yaml class=code-tab-label data-lang=yaml id=tab-group-6-0_yaml-label>HPE CSI Operator v3.0.2</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-6-0_yaml-panel aria-labelledby=tab-group-6-0_yaml-label><pre><code class=yaml># oc apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v3.0.2-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    b10000FileService: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.9.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.2
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.9
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.2
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.3.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.1
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.8
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.8
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.8
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.1
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+
+
+</code></pre></div><input name=tab-group-6 type=radio id=tab-group-6-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-6-1_yaml-panel role=tab><label for=tab-group-6-1_yaml class=code-tab-label data-lang=yaml id=tab-group-6-1_yaml-label>v3.0.1</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-6-1_yaml-panel aria-labelledby=tab-group-6-1_yaml-label><pre><code class=yaml># oc apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    b10000FileService: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    b10000FileServiceCSP: quay.io/hpestorage/alletrastoragemp-b10000-nfs-csp:v1.0.0
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.9.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v3.0.0
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.9
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v3.0.0
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.14.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.3.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.1
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.8
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.8
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.8
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.8
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v3.0.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v3.0.1
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+
+
+</code></pre></div><input name=tab-group-6 type=radio id=tab-group-6-2_yaml class=code-tab data-lang=yaml aria-controls=tab-group-6-2_yaml-panel role=tab><label for=tab-group-6-2_yaml class=code-tab-label data-lang=yaml id=tab-group-6-2_yaml-label>v2.5.2</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-6-2_yaml-panel aria-labelledby=tab-group-6-2_yaml-label><pre><code class=yaml># oc apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  disablePreInstallHooks: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.8
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.2
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.1.0
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.12.0
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.7
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.7
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.7
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.6
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.2
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.2
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  maxVolumesPerNode: 100
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+
+
+</code></pre></div><input name=tab-group-6 type=radio id=tab-group-6-3_yaml class=code-tab data-lang=yaml aria-controls=tab-group-6-3_yaml-panel role=tab><label for=tab-group-6-3_yaml class=code-tab-label data-lang=yaml id=tab-group-6-3_yaml-label>v2.5.1</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-6-3_yaml-panel aria-labelledby=tab-group-6-3_yaml-label><pre><code class=yaml># oc apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableHostDeletion: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  disableNodeMonitor: false
+  imagePullPolicy: IfNotPresent
+  images:
+    csiAttacher: registry.k8s.io/sig-storage/csi-attacher:v4.6.1
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v2.5.0
+    csiExtensions: quay.io/hpestorage/csi-extensions:v1.2.7
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v2.5.0
+    csiNodeDriverRegistrar: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.1
+    csiProvisioner: registry.k8s.io/sig-storage/csi-provisioner:v5.0.1
+    csiResizer: registry.k8s.io/sig-storage/csi-resizer:v1.11.1
+    csiSnapshotter: registry.k8s.io/sig-storage/csi-snapshotter:v8.0.1
+    csiVolumeGroupProvisioner: quay.io/hpestorage/volume-group-provisioner:v1.0.6
+    csiVolumeGroupSnapshotter: quay.io/hpestorage/volume-group-snapshotter:v1.0.6
+    csiVolumeMutator: quay.io/hpestorage/volume-mutator:v1.3.6
+    nfsProvisioner: quay.io/hpestorage/nfs-provisioner:v3.0.5
+    nimbleCSP: quay.io/hpestorage/alletra-6000-and-nimble-csp:v2.5.0
+    primera3parCSP: quay.io/hpestorage/alletra-9000-primera-and-3par-csp:v2.5.0
+  iscsi:
+    chapSecretName: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet
+  logLevel: info
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations: []
+</code></pre></div><input name=tab-group-6 type=radio id=tab-group-6-4_yaml class=code-tab data-lang=yaml aria-controls=tab-group-6-4_yaml-panel role=tab><label for=tab-group-6-4_yaml class=code-tab-label data-lang=yaml id=tab-group-6-4_yaml-label>v2.4.2</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-6-4_yaml-panel aria-labelledby=tab-group-6-4_yaml-label><pre><code class=yaml># oc apply -n hpe-storage -f https://scod.hpedev.io/csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
+apiVersion: storage.hpe.com/v1
+kind: HPECSIDriver
+metadata:
+  name: hpecsidriver-sample
+spec:
+  # Default values copied from &lt;project_dir&gt;/helm-charts/hpe-csi-driver/values.yaml
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  disable:
+    alletra6000: false
+    alletra9000: false
+    alletraStorageMP: false
+    nimble: false
+    primera: false
+  disableNodeConfiguration: false
+  disableNodeConformance: false
+  disableNodeGetVolumeStats: false
+  imagePullPolicy: IfNotPresent
+  iscsi:
+    chapPassword: &quot;&quot;
+    chapUser: &quot;&quot;
+  kubeletRootDir: /var/lib/kubelet/
+  logLevel: info
+  node:
+    affinity: {}
+    labels: {}
+    nodeSelector: {}
+    tolerations: []
+  registry: quay.io
+
+
+</code></pre></div></div>
+<p>The CSI driver is now ready for use. Next, an <a href="../../deployment.html#add_an_hpe_storage_backend">HPE storage backend needs to be added</a> along with a <a href="../../using.html#base_storageclass_parameters"><code>StorageClass</code></a>.</p>
+<h4 id="additional_information">Additional information<a class="headerlink" href="#additional_information" title="Permanent link">&para;</a></h4>
+<p>At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the <a href="https://docs.openshift.com/container-platform/4.19/operators/index.html">official Red Hat OpenShift documentation</a>.</p>
+<h4 id="uninstall_the_hpe_csi_operator">Uninstall the HPE CSI Operator<a class="headerlink" href="#uninstall_the_hpe_csi_operator" title="Permanent link">&para;</a></h4>
+<p>When uninstalling an operator managed by OLM, a Cluster Admin must decide whether or not to remove the <code>CustomResourceDefinitions</code> (CRD), <code>APIServices</code>, and resources related to these types owned by the operator. By design, when OLM uninstalls an operator it does not remove any of the operator’s owned <code>CRDs</code>, <code>APIServices</code>, or <code>CRs</code> in order to prevent data loss.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do not modify or remove these <code>CRDs</code> or <code>APIServices</code> if you are upgrading or reinstalling the HPE CSI driver in order to prevent data loss.</p>
+</div>
+<p>The following are <code>CRDs</code> installed by the HPE CSI Driver.</p>
+<p> <pre><code class=text>hpenodeinfos.storage.hpe.com
+hpereplicationdeviceinfos.storage.hpe.com
+hpereplicationmappings.storage.hpe.com
+hpesnapshotgroupinfos.storage.hpe.com
+hpevolumegroupinfos.storage.hpe.com
+hpevolumeinfos.storage.hpe.com
+snapshotgroupclasses.storage.hpe.com
+snapshotgroupcontents.storage.hpe.com
+snapshotgroups.storage.hpe.com
+volumegroupclasses.storage.hpe.com
+volumegroupcontents.storage.hpe.com
+volumegroups.storage.hpe.com
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <code>hpecsidrivers.storage.hpe.com</code> <code>CRD</code> is installed by the HPE CSI Operator and may be removed during reinstallation.</p>
+</div>
+<p>The following are <code>APIServices</code> installed by the HPE CSI Driver.</p>
+<p> <pre><code class=text>v1.storage.hpe.com
+v2.storage.hpe.com
+</code></pre></p>
+<p>Please refer to the OLM Lifecycle Manager documentation on how to safely <a href="https://olm.operatorframework.io/docs/tasks/uninstall-operator/">Uninstall your operator</a>.</p>
+<h2 id="nfs_server_provisioner_considerations">NFS Server Provisioner Considerations<a class="headerlink" href="#nfs_server_provisioner_considerations" title="Permanent link">&para;</a></h2>
+<p>When deploying NFS servers on OpenShift there's currently two things to keep in mind for a successful deployment. Also, be understood with the <a href="../../using.html#limitations_and_considerations_for_the_nfs_server_provisioner">Limitations and Considerations for the NFS Server Provisioner</a> in general.</p>
+<h3 id="non-standard_hpe-nfs_namespace">Non-standard hpe-nfs Namespace<a class="headerlink" href="#non-standard_hpe-nfs_namespace" title="Permanent link">&para;</a></h3>
+<p>If NFS servers are deployed in a different <code>Namespace</code> than the default "hpe-nfs" by using the "nfsNamespace" <code>StorageClass</code> parameter, the "hpe-csi-nfs-scc" SCC needs to be updated to include the <code>Namespace</code> <code>ServiceAccount</code>.</p>
+<p>This example adds "my-namespace" NFS server <code>ServiceAccount</code> to the SCC:</p>
+<p> <pre><code class=text>oc patch scc hpe-csi-nfs-scc --type=json -p='[{&quot;op&quot;: &quot;add&quot;, &quot;path&quot;: &quot;/users/-&quot;, &quot;value&quot;: &quot;system:serviceaccount:my-namespace:hpe-csi-nfs-sa&quot; }]'
+</code></pre></p>
+<h3 id="operators_requesting_nfs_persistent_volume_claims">Operators Requesting NFS Persistent Volume Claims<a class="headerlink" href="#operators_requesting_nfs_persistent_volume_claims" title="Permanent link">&para;</a></h3>
+<p>Object references in OpenShift are not compatible with the NFS Server Provisioner. If a user deploys an Operator of any kind that creates a NFS server backed <code>PVC</code>, the operation will fail. Instead, pre-provision the <code>PVC</code> manually for the Operator instance to use.</p>
+<h2 id="optional_networkpolicies">Optional NetworkPolicies<a class="headerlink" href="#optional_networkpolicies" title="Permanent link">&para;</a></h2>
+<p>If a <code>NetworkPolicy</code> is required for security reasons, HPE provides a boiler plate to get started.</p>
+<ul>
+<li>Download the <a href="https://scod.hpedev.io/csi_driver/partners/redhat_openshift/examples/network-policy/hpe-csi-driver-network-policy.yaml">hpe-csi-driver-network-policy.yaml</a> manifest</li>
+</ul>
+<p>In order to apply the <code>NetworkPolicies</code>, a few things needs to be configured.</p>
+<p>There's currently one egress policy for the "hpe-storage" <code>Namespace</code> and an ingress/egress policy for the default NFS Server Provisioner <code>Namespace</code>, "hpe-nfs".</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Do not apply the policies without configuring at least the backend(s), otherwise the CSP won't be able to reach the backend(s).</p>
+</div>
+<h3 id="backend">Backend<a class="headerlink" href="#backend" title="Permanent link">&para;</a></h3>
+<p>Uncomment the particular backend that is serving the OpenShift cluster. Add more backends as needed. Also include any replication targets if applicable. In this example we're using an Alletra 5000 at IP address "192.168.1.67".</p>
+<p> <pre><code class=yaml>  # Primera, Alletra 9000 and Alletra Storage MP B10000
+  #- to:
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 443
+  #    protocol: TCP
+
+  # Nimble Storage and Alletra 5000/6000
+  - to:
+    - ipBlock:
+        cidr: 192.168.1.67/32
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 5392
+      protocol: TCP
+
+  # 3PAR
+  #- to:
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 8080
+  #    protocol: TCP
+  #  - port: 443
+  #    protocol: TCP
+  #  - port: 22
+  #    protocol: TCP
+</code></pre></p>
+<h3 id="control-plane_endpoints">Control-Plane Endpoints<a class="headerlink" href="#control-plane_endpoints" title="Permanent link">&para;</a></h3>
+<p>In order for the CSI driver and NFS Server Provisioner to communicate with the OpenShift control-plane, the endpoints needs to be configured. It's possible to leave the endpoints at "0.0.0.0/0" with the caveat that port "6443" is reachable to any arbitrary destination.</p>
+<p>Retrieve the endpoints for the cluster with the following:</p>
+<p> <pre><code class=text>$ oc get endpoints kubernetes -n default
+NAME         ENDPOINTS                                                  AGE
+kubernetes   192.168.1.166:6443,192.168.1.190:6443,192.168.1.222:6443   13d
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both policies have control-plane endpoints configured.</p>
+</div>
+<h3 id="custom_nfs_server_provisioner_namespace">Custom NFS Server Provisioner Namespace<a class="headerlink" href="#custom_nfs_server_provisioner_namespace" title="Permanent link">&para;</a></h3>
+<p>By default, the NFS Server Provisioner deploys NFS servers in the "hpe-nfs" <code>Namespace</code>. If users are allowed to deploy in their own <code>Namespaces</code> or a custom <code>Namespace</code> is used, the "hpe-nfs-policy" <code>NetworkPolicy</code> needs to be deployed in the <code>Namespace</code> accordingly.</p>
+<h2 id="storageprofile_for_openshift_virtualization_source_pvcs">StorageProfile for OpenShift Virtualization Source PVCs<a class="headerlink" href="#storageprofile_for_openshift_virtualization_source_pvcs" title="Permanent link">&para;</a></h2>
+<p>If OpenShift Virtualization is being used and Live Migration is desired for virtual machines <code>PVCs</code> cloned from the "openshift-virtualization-os-images" <code>Namespace</code>, the <code>StorageProfile</code> needs to be updated to "ReadWriteMany".</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>These steps are not necessary on recent OpenShift EUS (v4.12.11 onwards) releases as the default <code>StorageProfile</code> for "csi.hpe.com" has been corrected upstream.</p>
+</div>
+<p>If the default <code>StorageClass</code> is named "hpe-standard", issue the following command:</p>
+<p> <pre><code class=text>oc edit -n openshift-cnv storageprofile hpe-standard
+</code></pre></p>
+<p>Replace the <code>spec: {}</code> with the following:</p>
+<p> <pre><code class=yaml>spec:
+  claimPropertySets:
+  - accessModes:
+    - ReadWriteMany
+    volumeMode: Block
+</code></pre></p>
+<p>Ensure there are no errors. Recreate the OS images:</p>
+<p> <pre><code class=text>oc delete pvc -n openshift-virtualization-os-images --all
+</code></pre></p>
+<p>Inspect the <code>PVCs</code> and ensure they are re-created with "RWX":</p>
+<p> <pre><code class=text>oc get pvc -n openshift-virtualization-os-images -w
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The "accessMode" transformation for block volumes from RWO PVC to RWX clone has been resolved in HPE CSI Driver v2.5.0. Regardless, using source RWX PVs will simplify the workflows for users.</p>
+</div>
+<h2 id="live_vm_migrations_for_alletra_storage_mp_b10000">Live VM migrations for Alletra Storage MP B10000<a class="headerlink" href="#live_vm_migrations_for_alletra_storage_mp_b10000" title="Permanent link">&para;</a></h2>
+<p>With HPE CSI Operator for OpenShift v2.4.2 and older there's an issue that prevents live migrations of VMs that has <code>PVCs</code> attached that has been clones from an OS image residing on Alletra Storage MP B10000 backends including 3PAR, Primera and Alletra 9000.</p>
+<p>Identify the <code>PVC</code> that that has been cloned from an OS image. The VM name is "centos7-silver-bedbug-14" in this case.</p>
+<p> <pre><code class=text>oc get vm/centos7-silver-bedbug-14 -o jsonpath='{.spec.template.spec.volumes}' | jq
+</code></pre></p>
+<p>In this instance, the <code>dataVolume</code> is the same name as the VM. Grab the <code>PV</code> name from the <code>PVC</code> name.</p>
+<p> <pre><code class=text>MY_PV_NAME=$(oc get pvc/centos7-silver-bedbug-14 -o jsonpath='{.spec.volumeName}')
+</code></pre></p>
+<p>Next, patch the <code>hpevolumeinfo</code> <code>CRD</code>.</p>
+<p> <pre><code class=text>oc patch hpevolumeinfo/${MY_PV_NAME} --type=merge --patch '{&quot;spec&quot;: {&quot;record&quot;: {&quot;MultiInitiator&quot;: &quot;true&quot;}}}'
+</code></pre></p>
+<p>The VM is now ready to be migrated.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If there are multiple <code>dataVolumes</code>, each one needs to be patched.</p>
+</div>
+<h2 id="unsupported_version_of_the_operator_install">Unsupported Version of the Operator Install<a class="headerlink" href="#unsupported_version_of_the_operator_install" title="Permanent link">&para;</a></h2>
+<p>In the event on older version of the Operator needs to be installed, the bundle can be installed directly by <a href="https://console.redhat.com/openshift/downloads">installing the Operator SDK</a>. Make sure a recent version of the <code>operator-sdk</code> binary is available and that no HPE CSI Driver is currently installed on the cluster.</p>
+<p>Install a specific version prior and including v2.4.2:</p>
+<p> <pre><code class=text>operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle:v2.4.2
+</code></pre></p>
+<p>Install a specific version after and including v2.5.0:</p>
+<p> <pre><code class=text>operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.0.2
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Once the Operator is installed, a <code>HPECSIDriver</code> instance needs to be created. Follow the steps using the <a href="#openshift_web_console">web console</a> or the <a href="#openshift_cli">CLI</a> to create an instance.</p>
+</div>
+<p>When the unsupported install isn't needed any longer, run:</p>
+<p> <pre><code class=text>operator-sdk cleanup -n hpe-storage hpe-csi-operator
+</code></pre></p>
+<h2 id="unsupported_helm_chart_install">Unsupported Helm Chart Install<a class="headerlink" href="#unsupported_helm_chart_install" title="Permanent link">&para;</a></h2>
+<p>In the event Red Hat releases a new version of OpenShift between HPE CSI Driver releases or if interest arises to run the HPE CSI Driver on an uncertified version of OpenShift, it's possible to install the CSI driver using the Helm chart instead.</p>
+<p>It's not recommended to install the Helm chart unless it's listed as "Field Tested" in the <a href="#certified_combinations">support matrix</a> above.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Helm chart install is also only current method to use beta releases of the HPE CSI Driver.</p>
+</div>
+<h3 id="steps_to_install">Steps to install.<a class="headerlink" href="#steps_to_install" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Follow the steps in the <a href="#prerequisites">prerequisites</a> to apply the <code>SCC</code> in the <code>Namespace</code> (Project) you wish to install the driver.</li>
+<li>Install the Helm chart with the steps provided on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver">ArtifactHub</a>. Pay attention to which version combination has been field tested.</li>
+</ul>
+<div class="admonition caution">
+<p class="admonition-title">Unsupported</p>
+<p>Understand that this method is not supported by Red Hat and not recommended for production workloads or clusters from a Red Hat support perspective. HPE will support customers deploying the Helm chart on OpenShift as long as the underlying Kubernetes and OS version is supported by the HPE CSI Driver. See <a href="../../index.html#latest_release">Compatibility &amp; Support</a> for more details.</p>
+</div>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/partners/redhat_openshift/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="../mirantis/index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../suse_virtualization/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

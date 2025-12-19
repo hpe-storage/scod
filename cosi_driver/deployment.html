@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/cosi_driver/deployment.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Deployment - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Deployment";
+        var mkdocs_page_input_path = "cosi_driver/deployment.md";
+        var mkdocs_page_url = "/cosi_driver/deployment.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Deployment</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#delivery_vehicles">Delivery Vehicles</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#helm">Helm</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add_an_hpe_storage_backend">Add an HPE Storage Backend</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#secret_parameters">Secret Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating_and_locating_resources">Creating and Locating Resources</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#next_steps">Next Steps</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE COSI DRIVER FOR KUBERNETES</li>
+      <li class="breadcrumb-item active">Deployment</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The HPE COSI Driver for Kubernetes is deployed by using industry standard means, a Helm chart.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#delivery_vehicles">Delivery Vehicles</a><ul>
+<li><a href="#helm">Helm</a></li>
+</ul>
+</li>
+<li><a href="#add_an_hpe_storage_backend">Add an HPE Storage Backend</a><ul>
+<li><a href="#secret_parameters">Secret Parameters</a></li>
+<li><a href="#creating_and_locating_resources">Creating and Locating Resources</a></li>
+</ul>
+</li>
+<li><a href="#next_steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="delivery_vehicles">Delivery Vehicles<a class="headerlink" href="#delivery_vehicles" title="Permanent link">&para;</a></h2>
+<p>Helm is currently the only supported delivery vehicle for the deployment of the HPE COSI Driver.</p>
+<h3 id="helm">Helm<a class="headerlink" href="#helm" title="Permanent link">&para;</a></h3>
+<p><a href="https://helm.sh">Helm</a> is the package manager for Kubernetes. Software is being delivered in a format designated as a "chart". Helm is a <a href="https://helm.sh/docs/intro/install/">standalone CLI</a> that interacts with the Kubernetes API server using your <code>KUBECONFIG</code> file.</p>
+<p>The official <a href="https://github.com/hpe-storage/co-deployments/tree/master/helm/charts/hpe-cosi-driver">Helm chart</a> for the HPE COSI Driver for Kubernetes is hosted on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver">Artifact Hub</a>. The chart supports Helm 3 from version 1.0.0 of the HPE COSI Driver. In an effort to avoid duplicate documentation, please see the chart for instructions on how to deploy the COSI driver using Helm.</p>
+<ul>
+<li>Go to the chart on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver">Artifact Hub</a>.</li>
+</ul>
+<h2 id="add_an_hpe_storage_backend">Add an HPE Storage Backend<a class="headerlink" href="#add_an_hpe_storage_backend" title="Permanent link">&para;</a></h2>
+<p>Once the COSI driver is deployed, you must create a <code>Secret</code> with the following details before you can use the <a href="using.html">COSI API resources</a>.</p>
+<h3 id="secret_parameters">Secret Parameters<a class="headerlink" href="#secret_parameters" title="Permanent link">&para;</a></h3>
+<p>All parameters are mandatory and described below.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accessKey</td>
+<td>The access key of the S3 user with bucket creation, bucket-tagging and deletion permissions.</td>
+</tr>
+<tr>
+<td>secretKey</td>
+<td>The secret key for the S3 user who has bucket creation, bucket-tagging and deletion permissions.</td>
+</tr>
+<tr>
+<td>endpoint</td>
+<td>The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.</td>
+</tr>
+<tr>
+<td>glcpUserClientId</td>
+<td>The HPE Green Lake API client ID.</td>
+</tr>
+<tr>
+<td>glcpUserSecretKey</td>
+<td>The HPE Green Lake API client secret.</td>
+</tr>
+<tr>
+<td>dsccZone</td>
+<td>The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.</td>
+</tr>
+<tr>
+<td>clusterSerialNumber</td>
+<td>The backend storage system cluster serial number.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.</p>
+</div>
+<p>Example <code>Secret</code> manifest named "hpe-object-backend.yaml":</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-object-backend
+  namespace: default
+stringData:
+  accessKey: testuser
+  secretKey: testkey
+  endpoint: http://192.168.1.100:8080
+  glcpUserClientId: 00000000-0000-0000-0000-000000000000
+  glcpUserSecretKey: 00000000000000000000000000000000
+  dsccZone: us1.data.cloud.hpe.com
+  clusterSerialNumber: 0000000000
+</code></pre></p>
+<p>Create the <code>Secret</code>.</p>
+<p> <pre><code class=text>kubectl create -f hpe-object-backend.yaml
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">See Also</p>
+<p>The COSI source code repository contains a parameterized script that can assist in creating a correctly formatted <code>Secret</code>. See <a href="https://github.com/hpe-storage/cosi-driver/tree/main/scripts/cosi_secret">github.com/hpe-storage/cosi-driver/scripts/cosi_secret</a> for more details.</p>
+</div>
+<h3 id="creating_and_locating_resources">Creating and Locating Resources<a class="headerlink" href="#creating_and_locating_resources" title="Permanent link">&para;</a></h3>
+<ol>
+<li>To create the S3 user:<ul>
+<li>Follow the steps in the HPE documentation to <a href="https://support.hpe.com/hpesc/docDisplay?docId=sd00004219en_us&amp;page=objstr_access_policies_create_dscc.html">create an access policy</a>.<ul>
+<li>Choose <em>All Buckets</em>.</li>
+<li>Add custom actions for the policy: <code>CreateBucket</code>, <code>DeleteBucket</code>, <code>PutBucketTagging</code>.</li>
+</ul>
+</li>
+<li>To create the user, refer to the <a href="https://support.hpe.com/hpesc/docDisplay?docId=sd00004219en_us&amp;page=objstr_users_create_dscc.html">HPE documentation</a> for this purpose and select the access policy created in the previous step.<ul>
+<li>Save the user name and password. These will be used as the S3 access key and S3 secret key respectively in the COSI secret.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>To create the HPE Green Lake API client ID and secret, refer to the following <a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&amp;page=GUID-23E6EE78-AAB7-472C-8D16-7169938BE628.html">HPE documentation</a>.</li>
+<li>To locate the Data Services Cloud Console zone FQDN:<ul>
+<li>Log into HPE Data Services Cloud Console.</li>
+<li>On the <em>Services</em> page, click <em>My Services</em> to view all services available in your workspace.</li>
+<li>Select the service that your HPE Alletra Storage MP X10000 device is assigned to and click <em>Launch</em>.</li>
+<li>After the service is launched, save the value of the URL from the browser. E.g.: <code>https://console-us1.data.cloud.hpe.com</code>.</li>
+<li>After dropping the prefix <code>https://console-</code>, the Data Services Cloud Console zone FQDN value to be used in the <code>Secret</code> should have the following format: <code>us1.data.cloud.hpe.com</code>.</li>
+<li>Supported Data Services Cloud Console zone FQDNs as of January 2025 are:<ul>
+<li>us1.data.cloud.hpe.com</li>
+<li>jp1.data.cloud.hpe.com</li>
+<li>eu1.data.cloud.hpe.com</li>
+<li>uk1.data.cloud.hpe.com</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>To locate the S3 endpoint:<ul>
+<li>Log into HPE Data Services Cloud Console.</li>
+<li>Launch the service that your HPE Alletra Storage MP X10000 device is assigned to.</li>
+<li>Select <em>Data Ops Manager</em>.</li>
+<li>From the menu on the left, select <em>Systems</em>. From the list click on the name of the system you want to use for COSI operations.</li>
+<li>Click on the <em>Networking</em> tab. Under the <em>Frontend Network</em> section, save the value of the <em>Network DNS Subdomains</em> field.</li>
+<li>The S3 endpoint can be constructed from the <em>Network DNS Subdomains</em> value by using the format: <code>http://&lt;Network DNS Subdomains&gt;</code>.</li>
+</ul>
+</li>
+<li>To locate the cluster serial number of the HPE Alletra Storage MP X10000 system, refer to the following <a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&amp;page=GUID-616CE4D4-C31A-4BFE-8F41-887C2B0B9046.html">HPE documentation</a>.</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In a real world scenario it's more practical to name the <code>Secret</code> something that makes sense for the organization. It could be the hostname of the backend or the role it carries; i.e., "hpe-alletra-sanjose-prod".</p>
+</div>
+<h2 id="next_steps">Next Steps<a class="headerlink" href="#next_steps" title="Permanent link">&para;</a></h2>
+<p>Next you need to create <a href="using.html#configure_a_bucketclass">a BucketClass</a>.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=cosi_driver/deployment.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="using.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

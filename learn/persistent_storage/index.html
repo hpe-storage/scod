@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/learn/persistent_storage/index.html" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Persistent Storage for Kubernetes - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Persistent Storage for Kubernetes";
+        var mkdocs_page_input_path = "learn/persistent_storage/index.md";
+        var mkdocs_page_url = "/learn/persistent_storage/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Persistent Storage for Kubernetes</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#kubernetes_cluster">Kubernetes cluster</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#control_plane">Control plane</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nodes">Nodes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#kubernetes_objects">Kubernetes Objects</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pods">Pods</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#persistent_volumes">Persistent Volumes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#namespaces">Namespaces</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deployments">Deployments</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#services">Services</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lab_1_tour_your_cluster">Lab 1: Tour your cluster</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#overview_of_kubectl">Overview of kubectl</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#syntax">Syntax</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getting_to_know_your_cluster">Getting to know your cluster:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lab_2_deploy_your_first_pod_stateless">Lab 2: Deploy your first Pod (Stateless)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lab_3_install_the_hpe_csi_driver_for_kubernetes">Lab 3: Install the HPE CSI Driver for Kubernetes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installing_the_helm_chart">Installing the Helm chart</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating_a_secret">Creating a Secret</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating_a_storageclass">Creating a StorageClass</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lab_4_creating_a_persistent_volume_using_hpe_storage">Lab 4: Creating a Persistent Volume using HPE Storage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating_a_persistentvolumeclaim">Creating a PersistentVolumeClaim</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lab_5_deploying_a_stateful_application_using_hpe_storage_wordpress">Lab 5: Deploying a Stateful Application using HPE Storage (WordPress)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#optional_lab_advanced_configuration">Optional Lab: Advanced Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#configuring_additional_storage_backends">Configuring additional storage backends</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#create_a_storageclass_with_the_new_secret">Create a StorageClass with the new Secret</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creating_a_persistentvolumeclaim_1">Creating a PersistentVolumeClaim</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cleanup_optional">Cleanup (Optional)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">LEARN</li>
+      <li class="breadcrumb-item active">Persistent Storage for Kubernetes</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>This is a free learning resource from HPE which walks you through various exercises to get you familiar with Kubernetes and provisioning Persistent storage using HPE Nimble Storage and HPE Primera storage systems. This guide is by no means a comprehensive overview of the capabilities of Kubernetes but rather a getting started guide for individuals who wants to learn how to use Kubernetes with persistent storage.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#kubernetes_cluster">Kubernetes cluster</a><ul>
+<li><a href="#control_plane">Control plane</a></li>
+<li><a href="#nodes">Nodes</a></li>
+</ul>
+</li>
+<li><a href="#kubernetes_objects">Kubernetes Objects</a><ul>
+<li><a href="#pods">Pods</a></li>
+<li><a href="#persistent_volumes">Persistent Volumes</a></li>
+<li><a href="#namespaces">Namespaces</a></li>
+<li><a href="#deployments">Deployments</a></li>
+<li><a href="#services">Services</a></li>
+</ul>
+</li>
+<li><a href="#lab_1_tour_your_cluster">Lab 1: Tour your cluster</a><ul>
+<li><a href="#overview_of_kubectl">Overview of kubectl</a></li>
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#getting_to_know_your_cluster">Getting to know your cluster:</a></li>
+</ul>
+</li>
+<li><a href="#lab_2_deploy_your_first_pod_stateless">Lab 2: Deploy your first Pod (Stateless)</a></li>
+<li><a href="#lab_3_install_the_hpe_csi_driver_for_kubernetes">Lab 3: Install the HPE CSI Driver for Kubernetes</a><ul>
+<li><a href="#installing_the_helm_chart">Installing the Helm chart</a></li>
+<li><a href="#creating_a_secret">Creating a Secret</a></li>
+<li><a href="#creating_a_storageclass">Creating a StorageClass</a></li>
+</ul>
+</li>
+<li><a href="#lab_4_creating_a_persistent_volume_using_hpe_storage">Lab 4: Creating a Persistent Volume using HPE Storage</a><ul>
+<li><a href="#creating_a_persistentvolumeclaim">Creating a PersistentVolumeClaim</a></li>
+</ul>
+</li>
+<li><a href="#lab_5_deploying_a_stateful_application_using_hpe_storage_wordpress">Lab 5: Deploying a Stateful Application using HPE Storage (WordPress)</a></li>
+<li><a href="#optional_lab_advanced_configuration">Optional Lab: Advanced Configuration</a><ul>
+<li><a href="#configuring_additional_storage_backends">Configuring additional storage backends</a></li>
+<li><a href="#create_a_storageclass_with_the_new_secret">Create a StorageClass with the new Secret</a></li>
+<li><a href="#creating_a_persistentvolumeclaim_1">Creating a PersistentVolumeClaim</a></li>
+</ul>
+</li>
+<li><a href="#cleanup_optional">Cleanup (Optional)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><img alt="" src="img/kubernetes_cluster.png" /> <br /> <br /></p>
+<h2 id="kubernetes_cluster">Kubernetes cluster<a class="headerlink" href="#kubernetes_cluster" title="Permanent link">&para;</a></h2>
+<p>In Kubernetes, nodes within a cluster pool together their resources (memory and CPU) to distribute workloads. A cluster is comprised of control plane and worker nodes that allow you to run your containerized workloads.</p>
+<h5 id="control_plane">Control plane<a class="headerlink" href="#control_plane" title="Permanent link">&para;</a></h5>
+<p>The Kubernetes control plane is responsible for maintaining the desired state of your cluster. When you interact with Kubernetes, such as by using the <code>kubectl</code> command-line interface, you’re communicating with your cluster’s Kubernetes API services running on the control plane. Control plane refers to a collection of processes managing the cluster state. </p>
+<h5 id="nodes">Nodes<a class="headerlink" href="#nodes" title="Permanent link">&para;</a></h5>
+<p>Kubernetes runs your workload by placing containers into <code>Pods</code> to run on <strong>Nodes</strong>. A node may be a virtual or physical machine, depending on the cluster. Each node is managed by the control plane and contains the services necessary to run <code>Pods</code>.</p>
+<h2 id="kubernetes_objects">Kubernetes Objects<a class="headerlink" href="#kubernetes_objects" title="Permanent link">&para;</a></h2>
+<p>Programs running on Kubernetes are packaged as containers which can run on Linux or Windows. A container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.</p>
+<h5 id="pods">Pods<a class="headerlink" href="#pods" title="Permanent link">&para;</a></h5>
+<p>A <code>Pod</code> is the basic execution unit of a Kubernetes application–the smallest and simplest unit in the Kubernetes object model that you create or deploy. A <code>Pod</code> encapsulates an application’s container (or, in some cases, multiple containers), storage resources, a unique network IP, and options that govern how the container(s) should run.</p>
+<h5 id="persistent_volumes">Persistent Volumes<a class="headerlink" href="#persistent_volumes" title="Permanent link">&para;</a></h5>
+<p>Because programs running on your cluster aren’t guaranteed to run on a specific node, data can’t be saved to any arbitrary place in the file system. If a program tries to save data to a file for later, but is then relocated onto a new node, the file will no longer be where the program expects it to be.</p>
+<p>To store data permanently, Kubernetes uses a <code>PersistentVolume</code>. Local, external storage via SAN arrays, or cloud drives can be attached to the cluster as a <code>PersistentVolume</code>.</p>
+<h5 id="namespaces">Namespaces<a class="headerlink" href="#namespaces" title="Permanent link">&para;</a></h5>
+<p><img alt="" src="img/namespaces.png" /> <br /> <br />
+Kubernetes supports multiple virtual clusters backed by the same physical cluster. These virtual clusters are called <code>Namespaces</code>. <code>Namespaces</code> are intended for use in environments with many users spread across multiple teams, or projects. <code>Namespaces</code> are a way to divide cluster resources between multiple users.</p>
+<h5 id="deployments">Deployments<a class="headerlink" href="#deployments" title="Permanent link">&para;</a></h5>
+<p>A <code>Deployment</code> provides declarative updates for <code>Pods</code>. You declare a desired state for your <code>Pods</code> in your <code>Deployment</code> and Kubernetes will manage it for you automatically.</p>
+<h5 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h5>
+<p>A Kubernetes <code>Service</code> object defines a policy for external clients to access an application within a cluster. By default, the container runtime uses host-private networking, so containers can talk to other containers only if they are on the same machine. In order for containers to communicate across nodes, there must be allocated ports on the machine’s own IP address, which are then forwarded or proxied to the containers. Coordinating port allocations is very difficult to do at scale, and exposes users to cluster-level issues outside of their control. Kubernetes assumes that <code>Pods</code> can communicate with other <code>Pods</code>, regardless of which host they land on. Kubernetes gives every <code>Pod</code> its own cluster-private IP address, through a Kubernetes Service object, so you do not need to explicitly create links between <code>Pods</code> or map container ports to host ports. This means that containers within a <code>Pod</code> can all reach each other’s ports on localhost, and all <code>Pods</code> in a cluster can see each other without NAT.</p>
+<hr />
+<h2 id="lab_1_tour_your_cluster">Lab 1: Tour your cluster<a class="headerlink" href="#lab_1_tour_your_cluster" title="Permanent link">&para;</a></h2>
+<p>All of this information presented here is taken from the official documentation found on <a href="https://kubernetes.io/docs/">kubernetes.io/docs</a>.</p>
+<h3 id="overview_of_kubectl">Overview of kubectl<a class="headerlink" href="#overview_of_kubectl" title="Permanent link">&para;</a></h3>
+<p>The Kubernetes command-line tool, <code>kubectl</code>, allows you to run commands against Kubernetes clusters. You can use <code>kubectl</code> to deploy applications, inspect and manage cluster resources, and view logs. For a complete list of <code>kubectl</code> operations, see <a href="https://kubernetes.io/docs/reference/kubectl/overview/">Overview of kubectl</a> on kubernetes.io.</p>
+<p>For more information on how to install and setup <code>kubectl</code> on Linux, Windows or MacOS, see <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install and Set Up kubectl</a> on kubernetes.io.</p>
+<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h3>
+<p>Use the following syntax to run <code>kubectl</code> commands from your terminal window:</p>
+<p><code>kubectl [command] [TYPE] [NAME] [flags]</code></p>
+<p>where <code>command</code>, <code>TYPE</code>, <code>NAME</code>, and <code>flags</code> are:</p>
+<ul>
+<li>
+<p><code>command</code>: Specifies the operation that you want to perform on one or more resources, for example create, get, describe, delete.</p>
+</li>
+<li>
+<p><code>TYPE</code>: Specifies the resource type. Resource types are case-insensitive and you can specify the singular, plural, or abbreviated forms. For example, the following commands produce the same output:</p>
+</li>
+<li>
+<p><code>NAME</code>: Specifies the name of the resource. Names are case-sensitive. If the name is omitted, details for all resources are displayed, for example <code>kubectl get pods</code>.</p>
+</li>
+</ul>
+<p>Get object example command: </p>
+<p> <pre><code class=text>kubectl get nodes
+kubectl get node &lt;node_name&gt;
+</code></pre></p>
+<p>Describe object example command:</p>
+<p> <pre><code class=text>kubectl describe node &lt;node_name&gt;
+</code></pre></p>
+<p>Create object example command</p>
+<p> <pre><code class=text>kubectl create -f &lt;file_name or URL&gt;
+</code></pre></p>
+<p>The below YAML declarations are meant to be created with <code>kubectl create</code>. Either copy the content to a file on the host where <code>kubectl</code> is being executed, or copy &amp; paste into the terminal, like this:</p>
+<p> <pre><code class=text>kubectl create -f- (press Enter)
+&lt; paste the YAML &gt;
+(CTRL-D for Linux) or (^D for Mac users)
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Kubernetes Cheat Sheet</p>
+<p>Find more available commands at <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">Kubernetes Cheat Sheet</a> on kubernetes.io.</p>
+</div>
+<h3 id="getting_to_know_your_cluster">Getting to know your cluster:<a class="headerlink" href="#getting_to_know_your_cluster" title="Permanent link">&para;</a></h3>
+<p>Let's run through some simple <code>kubectl</code> commands to get familiar with your cluster.</p>
+<p>First we need to open a terminal window, the following commands can be run from a Windows, Linux or Mac. In this guide, we will be using the Window Subsystem for Linux (WSL) which allows us to have a Linux terminal within Windows.</p>
+<p>To start a WSL terminal session, click the Ubuntu icon in the Windows taskbar.</p>
+<p><img alt="" src="img/wsl_terminal_ubuntu.png" /></p>
+<p>It will open a terminal window. We will be working within this terminal through out this lab.</p>
+<p><img alt="" src="img/wsl_terminal2_ubuntu.png" /></p>
+<p>In order to communicate with the Kubernetes cluster, <code>kubectl</code> looks for a file named config in the <code>$HOME/.kube</code> directory. You can specify other <code>kubeconfig</code> files by setting the <code>KUBECONFIG</code> environment variable or by setting the <code>--kubeconfig</code> flag.</p>
+<p>You will need to request the <code>kubeconfig</code> file from your cluster administrator and copy the file to your local <code>$HOME/.kube/</code> directory. You may need to create this directory.</p>
+<p>Once you have the <code>kubeconfig</code> file, you can view the config file:</p>
+<p> <pre><code class=text>kubectl config view
+</code></pre></p>
+<p>Check that <code>kubectl</code> and the config file are properly configured by getting the cluster state.</p>
+<p> <pre><code class=text>kubectl cluster-info
+</code></pre></p>
+<p>If you see a URL response, <code>kubectl</code> is correctly configured to access your cluster.</p>
+<p>The output is <strong>similar</strong> to this:</p>
+<p> <pre><code class=text>$ kubectl cluster-info
+Kubernetes control plane is running at https://192.168.1.50:6443
+KubeDNS is running at https://192.168.1.50:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+</code></pre></p>
+<p>Now let's look at the nodes within our cluster.</p>
+<p> <pre><code class=text>kubectl get nodes
+</code></pre></p>
+<p>You should see output similar to below. As you can see, each node has a role <strong>control-plane</strong> or as <strong>worker</strong> nodes (&lt;none&gt;).</p>
+<p> <pre><code class=text>$ kubectl get nodes
+NAME          STATUS   ROLES                  AGE     VERSION
+kube-group1   Ready    control-plane,master   2d18h   v1.21.5
+...
+</code></pre></p>
+<p>You can list pods.</p>
+<p> <pre><code class=text>kubectl get pods
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Quiz</p>
+<p>Did you see any <code>Pods</code> listed when you ran <code>kubectl get pods</code>?  <strong>Why?</strong> <br /> <br /> If you don't see any <code>Pods</code> listed, it is because there are no <code>Pods</code> deployed within the "default" <code>Namespace</code>. Now run, <code>kubectl get pods --all-namespaces</code>. <strong>Does it look any different?</strong> <br /> <br /> Pay attention to the first column, <code>NAMESPACES</code>. In our case, we are working in the "default" <code>Namespace</code>. Depending on the type of application and your user access level, applications can be deployed within one or more <code>Namespaces</code>. <br /> <br />If you don't see the object (deployment, pod, services, etc) you are looking for, double-check the <code>Namespace</code> it was deployed under and use the <code>-n &lt;namespace&gt;</code> flag to view objects in other <code>Namespaces</code>.</p>
+</div>
+<p>Once complete, type "Clear" to clear your terminal window.</p>
+<hr />
+<h2 id="lab_2_deploy_your_first_pod_stateless">Lab 2: Deploy your first Pod (Stateless)<a class="headerlink" href="#lab_2_deploy_your_first_pod_stateless" title="Permanent link">&para;</a></h2>
+<p>A <code>Pod</code> is a collection of containers sharing a network and mount namespace and is the basic unit of deployment in Kubernetes. All containers in a <code>Pod</code> are scheduled on the same node. In our first demo we will deploy a stateless application that has no persistent storage attached. Without persistent storage, any modifications done to the application will be lost if that application is stopped or deleted.</p>
+<p>Here is a sample NGINX webserver deployment.</p>
+<p> <pre><code class=yaml>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: nginx
+  name: first-nginx-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx-first-pod
+  template:
+    metadata:
+      labels:
+        run: nginx-first-pod
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+</code></pre></p>
+<p>Open a WSL terminal session, if you don't have one open already.</p>
+<p><img alt="" src="img/wsl_terminal_ubuntu.png" /></p>
+<p>At the prompt, we will start by deploying the NGINX example above, by running:</p>
+<p> <pre><code class=text>kubectl create -f https://scod.hpedev.io/learn/persistent_storage/yaml/nginx-stateless-deployment.yaml
+</code></pre></p>
+<p>We can see the <code>Deployment</code> was successfully created and the NGINX <code>Pod</code> is running.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>Pod</code> names will be unique to your deployment.</p>
+</div>
+<p> <pre><code class=text>$ kubectl get deployments.apps
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+first-nginx-pod   1/1     1            1           38s
+
+$ kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+first-nginx-pod-8d7bb985-rrdv8   1/1     Running   0          10s
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In a <code>Deployment</code>, a <code>Pod</code> name is generated using the <code>Deployment</code> name and then a randomized hash (i.e. <code>first-nginx-pod-8d7bb985-kql7t</code>) to ensure that each <code>Pod</code> has a unique name. During this lab exercise, make sure to reference the correct object names that are generated in each exercise.</p>
+</div>
+<p>We can inspect the <code>Pod</code> further using the <strong>kubectl describe</strong> command. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use tab completion to help with Kubernetes commands and objects. Start typing the first few letters of the command or Kubernetes object (i.e <code>Pod</code>) name and hit <strong>TAB</strong> and it should autofill the name.</p>
+</div>
+<p> <pre><code class=text>kubectl describe pod &lt;pod_name&gt; 
+</code></pre></p>
+<p>The output should be similar to this. Note, the <code>Pod</code> name will be unique to your deployment.</p>
+<p> <pre><code class=text>Name:         first-nginx-pod-8d7bb985-rrdv8
+Namespace:    default
+Priority:     0
+Node:         kube-group1/10.90.200.11
+Start Time:   Mon, 01 Nov 2021 13:37:59 -0500
+Labels:       pod-template-hash=8d7bb985
+              run=nginx-first-pod
+Annotations:  cni.projectcalico.org/podIP: 192.168.162.9/32
+              cni.projectcalico.org/podIPs: 192.168.162.9/32
+Status:       Running
+IP:           192.168.162.9
+IPs:
+  IP:           192.168.162.9
+Controlled By:  ReplicaSet/first-nginx-pod-8d7bb985
+Containers:
+  nginx:
+    Container ID:   docker://3610d71c054e6b8fdfffbf436511fda048731a456b9460ae768ae7db6e831398
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:644a70516a26004c97d0d85c7fe1d0c3a67ea8ab7ddf4aff193d9f301670cf36
+    Port:           &lt;none&gt;
+    Host Port:      &lt;none&gt;
+    State:          Running
+      Started:      Mon, 01 Nov 2021 13:38:06 -0500
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-w7sbw (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  kube-api-access-w7sbw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              &lt;none&gt;
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  5m14s  default-scheduler  Successfully assigned default/first-nginx-pod-8d7bb985-rrdv8 to kube-group1
+  Normal  Pulling    5m13s  kubelet            Pulling image &quot;nginx&quot;
+  Normal  Pulled     5m7s   kubelet            Successfully pulled image &quot;nginx&quot; in 5.95086952s
+  Normal  Created    5m7s   kubelet            Created container nginx
+  Normal  Started    5m7s   kubelet            Started container nginx
+</code></pre></p>
+<p>Looking under the "Events" section is a great place to start when checking for issues or errors during <code>Pod</code> creation.</p>
+<p>At this stage, the NGINX application is only accessible from within the cluster. Use <code>kubectl port-forward</code> to expose the <code>Pod</code> temporarily outside of the cluster to your workstation.</p>
+<p> <pre><code class=text>kubectl port-forward &lt;pod_name&gt; 80:80
+</code></pre></p>
+<p>The output should be similar to this:</p>
+<p> <pre><code class=text>kubectl port-forward first-nginx-pod-8d7bb985-rrdv8 80:80
+Forwarding from 127.0.0.1:80 -&gt; 8080
+Forwarding from [::1]:80 -&gt; 8080
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have something already running locally on port 80, modify the <code>port-forward</code> to an unused port (i.e. 5000:80). <code>Port-forward</code> is meant for temporarily exposing an application outside of a Kubernetes cluster. For a more permanent solution, look into Ingress Controllers.</p>
+</div>
+<p>Finally, open a browser and go to <strong>http://127.0.0.1</strong> and you should see the following.</p>
+<p><img alt="" src="img/welcome-nginx.png" /></p>
+<p>You have successfully deployed your first Kubernetes pod. </p>
+<p>With the <code>Pod</code> running, you can log in and explore the <code>Pod</code>. </p>
+<p>To do this, open a <strong>second</strong> terminal, by clicking on the WSL terminal icon again. The first terminal should have <code>kubectl port-forward</code> still running.</p>
+<p><img alt="" src="img/wsl_terminal_ubuntu.png" /></p>
+<p>Run:</p>
+<p> <pre><code class=text>kubectl exec -it &lt;pod_name&gt; -- /bin/bash
+</code></pre></p>
+<p>You can explore the <code>Pod</code> and run various commands. Some commands might not be available within the <code>Pod</code>. Why would that be?</p>
+<p> <pre><code class=text>root@first-nginx-pod-8d7bb985-rrdv8:/# df -h
+Filesystem               Size  Used Avail Use% Mounted on
+overlay                   46G  8.0G   38G  18% /
+tmpfs                     64M     0   64M   0% /dev
+tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/mapper/centos-root   46G  8.0G   38G  18% /etc/hosts
+shm                       64M     0   64M   0% /dev/shm
+tmpfs                    1.9G   12K  1.9G   1% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                    1.9G     0  1.9G   0% /proc/acpi
+tmpfs                    1.9G     0  1.9G   0% /proc/scsi
+tmpfs                    1.9G     0  1.9G   0% /sys/firmware
+
+</code></pre></p>
+<p>While inside the container, you can also modify the webpage.</p>
+<p> <pre><code class=text>echo &quot;&lt;h1&gt;Hello from the HPE Storage Hands on Labs&lt;/h1&gt;&quot; &gt; /usr/share/nginx/html/index.html
+</code></pre></p>
+<p>Now switch back over to the browser and refresh the page (http://127.0.0.1), you should see the updated changes to the webpage.</p>
+<p>Once ready, switch back over to your second terminal, type <strong>exit</strong> to logout of the NGINX container and close that terminal. Back in your original terminal, use <strong>Ctrl+C</strong> to exit the port-forwarding.</p>
+<p>Since this is a stateless application, we will now demonstrate what happens if the NGINX <code>Pod</code> is lost. </p>
+<p>To do this, simply delete the <code>Pod</code>.</p>
+<p> <pre><code class=text>kubectl delete pod &lt;pod_name&gt;
+</code></pre></p>
+<p>Now run <code>kubectl get pods</code> to see that a new NGINX <code>Pod</code> has been created.</p>
+<p>Lets use <code>kubectl port-forward</code> again to look at the NGINX application.</p>
+<p> <pre><code class=text>kubectl port-forward &lt;new_pod_name&gt; 80:80
+</code></pre></p>
+<p>Back in your browser, refresh the page (http://127.0.0.1) and you should the webpage has reverted back to its default state.</p>
+<p><img alt="" src="img/welcome-nginx.png" /></p>
+<p>Back in the terminal, use <strong>Ctrl+C</strong> to exit the port-forwarding and once ready, type <strong>clear</strong> to refresh your terminal.</p>
+<p>The NGINX application has reverted back to default because we didn't store the modifications we made to a location that would persist beyond the life of the container. There are many applications where persistence isn't critical (i.e. Google uses stateless containers for your browser web searches) as they perform computations that are either stored into an external database or passed to subsequent processes. </p>
+<p>As mission-critical workloads move into Kubernetes, the need for stateful containers is increasingly important. The following exercises will go through how to provision persistent storage to applications using the HPE CSI Driver for Kubernetes backed by HPE Primera or Nimble Storage.</p>
+<hr />
+<h2 id="lab_3_install_the_hpe_csi_driver_for_kubernetes">Lab 3: Install the HPE CSI Driver for Kubernetes<a class="headerlink" href="#lab_3_install_the_hpe_csi_driver_for_kubernetes" title="Permanent link">&para;</a></h2>
+<p>To get started with the deployment of the HPE CSI Driver for Kbuernetes, the CSI driver is deployed using industry standard means, either a Helm chart or an Operator. For this tutorial, we will be using Helm to the deploy the HPE CSI driver for Kubernetes.</p>
+<p>The official Helm chart for the HPE CSI Driver for Kubernetes is hosted on <a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver">Artifact Hub</a>. There, you will find the configuration and installation instructions for the chart.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a href="https://helm.sh">Helm</a> is the package manager for Kubernetes. Software is delivered in a format called a "chart". Helm is a <a href="https://helm.sh/docs/intro/install/">standalone CLI</a> that interacts with the Kubernetes API server using your <code>KUBECONFIG</code> file.</p>
+</div>
+<h3 id="installing_the_helm_chart">Installing the Helm chart<a class="headerlink" href="#installing_the_helm_chart" title="Permanent link">&para;</a></h3>
+<p>Open a WSL terminal session, if you don't have one open already.</p>
+<p><img alt="" src="img/wsl_terminal_ubuntu.png" /></p>
+<p>To install the chart with the name <code>my-hpe-csi-driver</code>, add the HPE CSI Driver for Kubernetes Helm repo.</p>
+<p> <pre><code class=text>helm repo add hpe-storage https://hpe-storage.github.io/co-deployments
+helm repo update
+</code></pre></p>
+<p>Install the latest chart.</p>
+<p> <pre><code class=text>kubectl create ns hpe-storage
+helm install my-hpe-csi-driver hpe-storage/hpe-csi-driver -n hpe-storage
+</code></pre></p>
+<p>Wait a few minutes as the deployment finishes.</p>
+<p>Verify that everything is up and running correctly by listing out the <code>Pods</code>.</p>
+<p> <pre><code class=text>kubectl get pods -n hpe-storage
+</code></pre></p>
+<p>The output is <strong>similar</strong> to this:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>Pod</code> names will be unique to your deployment.</p>
+</div>
+<p> <pre><code class=text>$ kubectl get pods -n hpe-storage
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/hpe-csi-controller-6f9b8c6f7b-n7zcr   9/9     Running   0          7m41s
+pod/hpe-csi-node-npp59                    2/2     Running   0          7m41s
+pod/nimble-csp-5f6cc8c744-rxgfk           1/1     Running   0          7m41s
+pod/primera3par-csp-7f78f498d5-4vq9r      1/1     Running   0          7m41s
+</code></pre></p>
+<p>If all of the components show in <strong>Running</strong> state, then the HPE CSI Driver for Kubernetes and the corresponding Container Storage Providers (CSP) for HPE Alletra, Primera and Nimble Storage have been successfully deployed.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>With the HPE CSI Driver deployed, the rest of this guide is designed to demonstrate the usage of the CSI driver with HPE Primera or Nimble Storage. You will need to choose which storage system (HPE Primera or Nimble Storage) to use for the rest of the exercises. While the HPE CSI Driver supports connectivity to multiple backends, configurating multiple backends is outside of the scope of this lab guide.</p>
+</div>
+<h3 id="creating_a_secret">Creating a Secret<a class="headerlink" href="#creating_a_secret" title="Permanent link">&para;</a></h3>
+<p>Once the HPE CSI Driver has been deployed, a <code>Secret</code> needs to be created in order for the CSI driver to communicate to the HPE Primera or Nimble Storage. This <code>Secret</code>, which contains the storage system IP and credentials, is used by the CSI driver sidecars within the <code>StorageClass</code> to authenticate to a specific backend for various CSI operations. For more information, see <a href="https://scod.hpedev.io/csi_driver/deployment.html#add_an_hpe_storage_backend">adding an HPE storage backend</a> </p>
+<p>Here is an example <code>Secret</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: custom-secret
+  namespace: hpe-storage 
+stringData:
+  serviceName: primera3par-csp-svc 
+  servicePort: &quot;8080&quot;
+  backend: 10.10.0.2
+  username: &lt;user&gt;
+  password: &lt;password&gt;
+</code></pre></p>
+<p>Download and modify, using the text editor of your choice, the <code>Secret</code> file with the <strong>backend</strong> IP per your environment.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-27><input name=tab-group-27 type=radio id=tab-group-27-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-27-0_text-panel role=tab><label for=tab-group-27-0_text class=code-tab-label data-lang=text id=tab-group-27-0_text-label>Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-27-0_text-panel aria-labelledby=tab-group-27-0_text-label><pre><code class=text>wget https://raw.githubusercontent.com/hpe-storage/scod/master/docs/learn/persistent_storage/yaml/nimble-secret.yaml
+</code></pre></div><input name=tab-group-27 type=radio id=tab-group-27-1_text class=code-tab data-lang=text aria-controls=tab-group-27-1_text-panel role=tab><label for=tab-group-27-1_text class=code-tab-label data-lang=text id=tab-group-27-1_text-label>HPE Primera</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-27-1_text-panel aria-labelledby=tab-group-27-1_text-label><pre><code class=text>wget https://raw.githubusercontent.com/hpe-storage/scod/master/docs/learn/persistent_storage/yaml/primera-secret.yaml
+</code></pre></div></div>
+<p>Save the file and create the <code>Secret</code> within the cluster.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-28><input name=tab-group-28 type=radio id=tab-group-28-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-28-0_text-panel role=tab><label for=tab-group-28-0_text class=code-tab-label data-lang=text id=tab-group-28-0_text-label>Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-28-0_text-panel aria-labelledby=tab-group-28-0_text-label><pre><code class=text>kubectl create -f nimble-secret.yaml
+</code></pre></div><input name=tab-group-28 type=radio id=tab-group-28-1_text class=code-tab data-lang=text aria-controls=tab-group-28-1_text-panel role=tab><label for=tab-group-28-1_text class=code-tab-label data-lang=text id=tab-group-28-1_text-label>HPE Primera</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-28-1_text-panel aria-labelledby=tab-group-28-1_text-label><pre><code class=text>kubectl create -f primera-secret.yaml
+</code></pre></div></div>
+<p>The <code>Secret</code> should now be available in the "hpe-storage" <code>Namespace</code>:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage get secret/custom-secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         1m
+</code></pre></p>
+<p>If you made a mistake when creating the <code>Secret</code>, simply delete the object (<code>kubectl -n hpe-storage delete secret/custom-secret</code>) and repeat the steps above.</p>
+<h3 id="creating_a_storageclass">Creating a StorageClass<a class="headerlink" href="#creating_a_storageclass" title="Permanent link">&para;</a></h3>
+<p>Now we will create a <code>StorageClass</code> that will be used in the following exercises. A <code>StorageClass</code> (SC) specifies which storage provisioner to use (in our case the HPE CSI Driver) and the volume parameters (such as Protection Templates, Performance Policies, CPG, etc.) for the volumes that we want to create which can be used to differentiate between storage levels and usages. </p>
+<p>This concept is sometimes called “profiles” in other storage systems. A cluster can have multiple <code>StorageClasses</code> allowing users to create storage claims tailored for their specific application requirements.</p>
+<p>We will start by creating a <code>StorageClass</code> called <strong>hpe-standard</strong>. We will use the <strong>custom-secret</strong> created in the previous step and specify the <strong>hpe-storage</strong> <code>namespace</code> where the CSI driver was deployed.</p>
+<p>Here is an example <code>StorageClasses</code> for HPE Primera and Nimble Storage systems and some of the available volume parameters that can be defined. See the respective <a href="../../csi_driver/container_storage_provider/index.html">CSP</a> for more elaborate examples.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-30><input name=tab-group-30 type=radio id=tab-group-30-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-30-0_yaml-panel role=tab><label for=tab-group-30-0_yaml class=code-tab-label data-lang=yaml id=tab-group-30-0_yaml-label>HPE Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-30-0_yaml-panel aria-labelledby=tab-group-30-0_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-standard
+  annotations:
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  performancePolicy: &quot;SQL Server&quot;
+  description: &quot;Volume from HPE CSI Driver&quot;
+  accessProtocol: iscsi
+  limitIops: &quot;76800&quot;
+  allowOverrides: description,limitIops,performancePolicy
+allowVolumeExpansion: true
+</code></pre></div><input name=tab-group-30 type=radio id=tab-group-30-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-30-1_yaml-panel role=tab><label for=tab-group-30-1_yaml class=code-tab-label data-lang=yaml id=tab-group-30-1_yaml-label>HPE Primera</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-30-1_yaml-panel aria-labelledby=tab-group-30-1_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-standard
+  annotations:
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: custom-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: custom-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: custom-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: custom-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: custom-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  cpg: SSD_r6
+  provisioningType: tpvv
+  accessProtocol: iscsi
+  allowOverrides: cpg,provisioningType
+allowVolumeExpansion: true
+</code></pre></div></div>
+<p>Create the <code>StorageClass</code> within the cluster</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-31><input name=tab-group-31 type=radio id=tab-group-31-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-31-0_text-panel role=tab><label for=tab-group-31-0_text class=code-tab-label data-lang=text id=tab-group-31-0_text-label>Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-31-0_text-panel aria-labelledby=tab-group-31-0_text-label><pre><code class=text>kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/nimble-storageclass.yaml
+</code></pre></div><input name=tab-group-31 type=radio id=tab-group-31-1_text class=code-tab data-lang=text aria-controls=tab-group-31-1_text-panel role=tab><label for=tab-group-31-1_text class=code-tab-label data-lang=text id=tab-group-31-1_text-label>Primera</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-31-1_text-panel aria-labelledby=tab-group-31-1_text-label><pre><code class=text>kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/primera-storageclass.yaml
+</code></pre></div></div>
+<p>We can verify the <code>StorageClass</code> is now available.</p>
+<p> <pre><code class=text>kubectl get sc
+NAME                     PROVISIONER   AGE
+hpe-standard (default)   csi.hpe.com   2m
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can create multiple <code>StorageClasses</code> to match the storage requirements of your applications. We set <strong>hpe-standard</strong> <code>StorageClass</code> as default using the annotation <code>storageclass.kubernetes.io/is-default-class: "true"</code>. There can only be one <strong>default</strong> <code>StorageClass</code> per cluster, for any additional <code>StorageClasses</code> set this to <strong>false</strong>. To learn more about configuring a default <code>StorageClass</code>, see <a href="https://kubernetes.io/docs/tasks/administer-cluster/change-default-storage-class/">Default StorageClass</a> on kubernetes.io. </p>
+</div>
+<hr />
+<h2 id="lab_4_creating_a_persistent_volume_using_hpe_storage">Lab 4: Creating a Persistent Volume using HPE Storage<a class="headerlink" href="#lab_4_creating_a_persistent_volume_using_hpe_storage" title="Permanent link">&para;</a></h2>
+<p>With the HPE CSI Driver for Kubernetes deployed and a <code>StorageClass</code> available, we can now provision persistent volumes.</p>
+<ul>
+<li>
+<p>A <code>PersistentVolumeClaim</code> (PVC) is a request for storage by a user. Claims can request storage of a specific size and access modes (e.g., they can be mounted ReadWriteOnce, ReadOnlyMany or ReadWriteMany). The <code>accessMode</code> will be dependent on the type of storage system and the application requirements. Block storage like HPE Primera and Nimble Storage, provision volumes using <code>ReadWriteOnce</code> access mode where the volume can only be mounted to a single node within the cluster at a time. Any applications running on that node can access that volume. Applications deployed across multiple nodes within a cluster that require shared access (<code>ReadWriteMany</code>) to the same <code>PersistentVolume</code> will need to use NFS or a distribute storage system such as MapR, Gluster or Ceph.</p>
+</li>
+<li>
+<p>A <code>PersistentVolume</code> (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using <code>Storage Classes</code>.</p>
+</li>
+</ul>
+<h3 id="creating_a_persistentvolumeclaim">Creating a PersistentVolumeClaim<a class="headerlink" href="#creating_a_persistentvolumeclaim" title="Permanent link">&para;</a></h3>
+<p>With a <code>StorageClass</code> available, we can request an amount of storage for our application using a <code>PersistentVolumeClaim</code>. Here is a sample <code>PVC</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We don't have a <code>StorageClass</code> (SC) explicitly defined within this <code>PVC</code> therefore it will use the default <code>StorageClass</code>. You can use <code>spec.storageClassName</code> to override the default <code>SC</code> with another one available to the cluster.</p>
+</div>
+<p>Create the <code>PersistentVolumeClaim</code>.</p>
+<p> <pre><code class=text>kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/my-pvc.yaml
+</code></pre></p>
+<p>We can see the <strong>my-pvc</strong> <code>PersistentVolumeClaim</code> was created.</p>
+<p> <pre><code class=text>kubectl get pvc
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>Persistent Volume</code> name is a randomly generated name by Kubernetes. For consistent naming for your stateful applications, check out <a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSet</a> deployment model. These names can be used to track the volume back to the storage system. It is important to note that HPE Primera has a 30 character limit on volume names therefore the name will be truncated. For example: <code>pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8</code> will be truncated to <code>pvc-70d5caf8-7558-40e6-a8b7-77d</code> on an HPE Primera system.</p>
+</div>
+<p>We can inspect the <code>PVC</code> further for additional information including event logs for troubleshooting.</p>
+<p> <pre><code class=text>kubectl describe pvc my-pvc
+</code></pre></p>
+<p>Check the <strong>Events</strong> section to see if there were any issues during creation.</p>
+<p>The output is similar to this:</p>
+<p> <pre><code class=text>$ kubectl describe pvc my-pvc
+Name:          my-pvc
+Namespace:     default
+StorageClass:  hpe-standard
+Status:        Bound
+Volume:        pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8
+Labels:        &lt;none&gt;
+Annotations:   pv.kubernetes.io/bind-completed: yes
+               pv.kubernetes.io/bound-by-controller: yes
+               volume.beta.kubernetes.io/storage-provisioner: csi.hpe.com
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:      50Gi
+Access Modes:  RWO
+VolumeMode:    Filesystem
+Mounted By:    &lt;none&gt;
+Events:        &lt;none&gt;
+</code></pre></p>
+<p>We can also inspect the <code>PersistentVolume</code> (PV) in a similar manner. Note, the volume name will be unique to your deployment.</p>
+<p> <pre><code class=text>kubectl describe pv &lt;volume_name&gt;
+</code></pre></p>
+<p>The output is similar to this:</p>
+<p> <pre><code class=text>$ kubectl describe pv pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8
+Name:            pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8
+Labels:          &lt;none&gt;
+Annotations:     pv.kubernetes.io/provisioned-by: csi.hpe.com
+Finalizers:      [kubernetes.io/pv-protection]
+StorageClass:    hpe-standard
+Status:          Bound
+Claim:           default/my-pvc
+Reclaim Policy:  Delete
+Access Modes:    RWO
+VolumeMode:      Filesystem
+Capacity:        50Gi
+Node Affinity:   &lt;none&gt;
+Message:
+Source:
+    Type:              CSI (a Container Storage Interface (CSI) volume source)
+    Driver:            csi.hpe.com
+    VolumeHandle:      063aba3d50ec99d866000000000000000000000001
+    ReadOnly:          false
+    VolumeAttributes:      accessProtocol=iscsi
+                           allowOverrides=description,limitIops,performancePolicy
+                           description=Volume from HPE CSI Driver
+                           fsType=xfs
+                           limitIops=76800
+                           performancePolicy=SQL Server
+                           storage.kubernetes.io/csiProvisionerIdentity=1583271972595-8081-csi.hpe.com
+                           volumeAccessMode=mount
+Events:                &lt;none&gt;
+</code></pre></p>
+<p>With the <code>describe</code> command, you can see the volume parameters used to create this volume. In this case, Nimble Storage parameters <code>performancePolicy</code>, <code>limitIops</code>, etc.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If the PVC is stuck in <strong>Pending</strong> state, double check the <code>Secret</code> and <code>Namespace</code> are correct within the <code>StorageClass</code>(sc) and that the volume parameters are valid. If necessary delete the object (sc or pvc) (<code>kubectl delete &lt;object_type&gt; &lt;object_name&gt;</code>) and repeat the steps above.</p>
+</div>
+<p>Let's recap what we have learned.</p>
+<ol>
+<li>We created a default <code>StorageClass</code> for our volumes.</li>
+<li>We created a <code>PVC</code> that created a volume from the storageClass.</li>
+<li>We can use <strong>kubectl get</strong> to list the <code>StorageClass</code>, <code>PVC</code> and <code>PV</code>.</li>
+<li>We can use <strong>kubectl describe</strong> to get details on the <code>StorageClass</code>, <code>PVC</code> or <code>PV</code></li>
+</ol>
+<p>At this point, we have validated the deployment of the HPE CSI Driver and are ready to deploy an application with persistent storage.</p>
+<hr />
+<h2 id="lab_5_deploying_a_stateful_application_using_hpe_storage_wordpress">Lab 5: Deploying a Stateful Application using HPE Storage (WordPress)<a class="headerlink" href="#lab_5_deploying_a_stateful_application_using_hpe_storage_wordpress" title="Permanent link">&para;</a></h2>
+<p>To begin, we will create two <code>PersistentVolumes</code> for the WordPress application using the default <strong>hpe-standard</strong> <code>StorageClass</code> we created previously. If you don't have the <strong>hpe-standard</strong> <code>StorageClass</code> available, please refer to the <a href="#creating_a_storageclass">StorageClass</a> section for instructions on creating a <code>StorageClass</code>.</p>
+<p>Create a <code>PersistentVolumeClaim</code> for the MariaDB database that will used by WordPress.</p>
+<p> <pre><code class=text>kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/wordpress-mariadb-pvc.yaml
+</code></pre></p>
+<p>Next let's make another volume for the WordPress application.</p>
+<p> <pre><code class=text>kubectl create -f http://scod.hpedev.io/learn/persistent_storage/yaml/my-wordpress-pvc.yaml
+</code></pre></p>
+<p>Now verify the <code>PersistentVolumes</code> were created successfully. The output should be similar to the following. Note, the volume names will be unique to your deployment.</p>
+<p> <pre><code class=text>kubectl get pvc
+NAME                          STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+data-my-wordpress-mariadb-0   Bound     pvc-1abdb7d7-374e-45b3-8fa1-534131ec7ec6   50Gi       RWO            hpe-standard   1m
+my-wordpress                  Bound     pvc-ff6dc8fd-2b14-4726-b608-be8b27485603   20Gi       RWO            hpe-standard   1m
+</code></pre></p>
+<p>The above output means that the HPE CSI Driver has successfully provisioned two volumes based upon the default <strong>hpe-standard</strong> <code>StorageClass</code>. At this stage, the volumes are not attached (exported) to any nodes yet. They will only be attached (exported) to a node once a scheduled workload requests the <code>PersistentVolumeClaims</code>. </p>
+<p>We will use Helm again to deploy WordPress using the <code>PersistentVolumeClaims</code> we just created. When WordPress is deployed, the volumes will be attached, formatted and mounted.</p>
+<p>The first step is to add the WordPress chart to Helm. The output should be similar to below.</p>
+<p> <pre><code class=text>helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm search repo bitnami/wordpress
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+bitnami/wordpress       11.0.13         5.7.2           Web publishing platform for building blogs and ...
+</code></pre></p>
+<p>Next, deploy WordPress by setting the deployment parameter <code>persistence.existingClaim=&lt;existing_PVC&gt;</code> to the <code>PVC</code> <strong>my-wordpress</strong> created in the previous step.</p>
+<p> <pre><code class=text>helm install my-wordpress bitnami/wordpress --version 9.2.1 --set service.type=ClusterIP,wordpressUsername=admin,wordpressPassword=adminpassword,mariadb.mariadbRootPassword=secretpassword,persistence.existingClaim=my-wordpress,allowEmptyPassword=false 
+</code></pre></p>
+<p>Check to verify that WordPress and MariaDB were deployed and are in the <strong>Running</strong> state. This may take a few minutes. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>Pod</code> names will be unique to your deployment.</p>
+</div>
+<p> <pre><code class=text>kubectl get pods
+NAME                            READY     STATUS    RESTARTS   AGE
+my-wordpress-69b7976c85-9mfjv   1/1       Running   0          2m
+my-wordpress-mariadb-0          1/1       Running   0          2m
+</code></pre></p>
+<p>Finally take a look at the WordPress site. Again, we can use <code>kubectl port-forward</code> to access the WordPress application and verify everything is working correctly.</p>
+<p> <pre><code class=text>kubectl port-forward svc/my-wordpress 80:80
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have something already running locally on port 80, modify the port-forward to an unused port (i.e. 5000:80).</p>
+</div>
+<p>Open a browser on your workstation to <strong>http://127.0.0.1</strong> and you should see, <strong>"Hello World!"</strong>.</p>
+<p>Access the admin console at: <strong>http://127.0.0.1/admin</strong> using the <strong>"admin/adminpassword"</strong> we specified when deploying the Helm Chart. </p>
+<p><img alt="" src="img/wordpress.png" /></p>
+<p>Create a new blog post so you have data stored in the WordPress application.</p>
+<p><strong>Happy Blogging!</strong></p>
+<p>Once ready, hit "<strong>Ctrl+C</strong>" in your terminal to stop the <code>port-forward</code>.</p>
+<p>Verify the Wordpress application is using the <strong>my-wordpress</strong> and <strong>data-my-wordpress-mariadb-0</strong> <code>PersistentVolumeClaims</code>.</p>
+<p> <pre><code class=text>kubectl get pods -o=jsonpath='{.items[*].spec.volumes[*].persistentVolumeClaim.claimName}'
+</code></pre></p>
+<p>With the WordPress application using persistent storage for the database and the application data, in the event of a crash of the WordPress application, the <code>PVC</code> will be remounted to the new <code>Pod</code>.</p>
+<p>Delete the WordPress <code>Pod</code>.</p>
+<p> <pre><code class=text>kubectl delete pod &lt;my-wordpress_pod_name&gt;
+</code></pre></p>
+<p>For example.</p>
+<p> <pre><code class=text>$ kubectl delete pod my-wordpress-69b7976c85-9mfjv
+pod &quot;my-wordpress-69b7976c85-9mfjv&quot; deleted
+</code></pre></p>
+<p>Now if run <code>kubectl get pods</code> and you should see the WordPress <code>Pod</code> recreating itself with a new name. This may take a few minutes.</p>
+<p>Output should be similar to the following as the WordPress container is recreating.</p>
+<p> <pre><code class=text>$ kubectl get pods
+NAME                             READY   STATUS              RESTARTS   AGE
+my-wordpress-mariadb-0           1/1     Running             1          10m
+my-wordpress-7856df6756-m2nw8    0/1     ContainerCreating   0          33s
+</code></pre></p>
+<p>Once the WordPress <code>Pod</code> is in <code>Ready</code> state, we can verify that the Wordpress application is still using the <strong>my-wordpress</strong> and <strong>data-my-wordpress-mariadb-0</strong> <code>PersistentVolumeClaims</code>.</p>
+<p> <pre><code class=text>kubectl get pods -o=jsonpath='{.items[*].spec.volumes[*].persistentVolumeClaim.claimName}'
+</code></pre></p>
+<p>And finally, run <code>kubectl port-forward</code> again to see the changes made to the WordPress application survived deleting the application <code>Pod</code>.</p>
+<p> <pre><code class=text>kubectl port-forward svc/my-wordpress 80:80
+</code></pre></p>
+<p>Open a browser on your workstation to <strong>http://127.0.0.1</strong> and you should see your WordPress site running.</p>
+<p>This completes the tutorial of using the HPE CSI Driver with HPE storage to create Persistent Volumes within Kubernetes. This is just the beginning of the capabilities of the HPE Storage integrations within Kubernetes. We recommend exploring <a href="https://scod.hpedev.io">SCOD</a> further and the specific HPE Storage CSP (<a href="http://scod.hpedev.io/container_storage_provider/hpe_nimble_storage/index.html">Nimble</a>, <a href="http://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html">Primera, and 3PAR</a>) to learn more.</p>
+<h2 id="optional_lab_advanced_configuration">Optional Lab: Advanced Configuration<a class="headerlink" href="#optional_lab_advanced_configuration" title="Permanent link">&para;</a></h2>
+<h3 id="configuring_additional_storage_backends">Configuring additional storage backends<a class="headerlink" href="#configuring_additional_storage_backends" title="Permanent link">&para;</a></h3>
+<p>It's not uncommon to have multiple HPE primary storage systems within the same environment, either the same family or different ones. This section walks through the scenario of managing multiple <code>StorageClass</code> and <code>Secret</code> API objects to represent an environment with multiple systems.</p>
+<p>To view the current <code>Secrets</code> in the <strong>hpe-storage</strong> <code>Namespace</code> (assuming default names):</p>
+<p> <pre><code class=text>kubectl -n hpe-storage get secret
+NAME                     TYPE          DATA      AGE
+custom-secret            Opaque        5         10m
+</code></pre></p>
+<p>This <code>Secret</code> is used by the CSI sidecars in the <code>StorageClass</code> to authenticate to a specific backend for CSI operations. In order to add a new <code>Secret</code> or manage access to multiple backends, additional <code>Secrets</code> will need to be created per backend. </p>
+<p>In the previous steps, if you connected to Nimble Storage, create a new <code>Secret</code> for the Primera array or if you connected to Primera array above then create a <code>Secret</code> for the Nimble Storage.</p>
+<div class="admonition note">
+<p class="admonition-title">Secret Requirements</p>
+<ul>
+<li>Each <code>Secret</code> name must be unique.</li>
+<li><strong>servicePort</strong> should be set to <strong>8080</strong>.</li>
+</ul>
+</div>
+<p>Using your text editor of choice, create a new <code>Secret</code>, specify the name, <code>Namespace</code>, backend username, backend password and the backend IP address to be used by the CSP and save it as <code>gold-secret.yaml</code>.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-54><input name=tab-group-54 type=radio id=tab-group-54-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-54-0_yaml-panel role=tab><label for=tab-group-54-0_yaml class=code-tab-label data-lang=yaml id=tab-group-54-0_yaml-label>HPE Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-54-0_yaml-panel aria-labelledby=tab-group-54-0_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: gold-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: nimble-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.2
+  username: admin
+  password: admin
+</code></pre></div><input name=tab-group-54 type=radio id=tab-group-54-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-54-1_yaml-panel role=tab><label for=tab-group-54-1_yaml class=code-tab-label data-lang=yaml id=tab-group-54-1_yaml-label>HPE Primera</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-54-1_yaml-panel aria-labelledby=tab-group-54-1_yaml-label><pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: gold-secret
+  namespace: hpe-storage
+stringData:
+  serviceName: primera3par-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 10.10.0.2
+  username: 3paradm
+  password: 3pardata
+</code></pre></div></div>
+<p>Create the <code>Secret</code> using <code>kubectl</code>:</p>
+<p> <pre><code class=text>kubectl create -f gold-secret.yaml
+</code></pre></p>
+<p>You should now see the <code>Secret</code> in the "hpe-storage" <code>Namespace</code>:</p>
+<p> <pre><code class=text>kubectl -n hpe-storage get secret
+NAME                     TYPE          DATA      AGE
+gold-secret              Opaque        5         1m
+custom-secret            Opaque        5         15m
+</code></pre></p>
+<h3 id="create_a_storageclass_with_the_new_secret">Create a StorageClass with the new Secret<a class="headerlink" href="#create_a_storageclass_with_the_new_secret" title="Permanent link">&para;</a></h3>
+<p>To use the new <code>gold-secret</code>, create a new <code>StorageClass</code> using the <code>Secret</code> and the necessary <code>StorageClass</code> parameters. Please see the requirements section of the respective <a href="../../csi_driver/container_storage_provider/index.html">CSP</a>.</p>
+<p>We will start by creating a <code>StorageClass</code> called <strong>hpe-gold</strong>. We will use the <code>gold-secret</code> created in the previous step and specify the <strong>hpe-storage</strong> <code>Namespace</code> where the CSI driver was deployed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that at most one <code>StorageClass</code> can be marked as default. If two or more of them are marked as default, a <code>PersistentVolumeClaim</code> without <code>storageClassName</code> explicitly specified cannot be created.</p>
+</div>
+<div class=md-fenced-code-tabs id=tab-tab-group-57><input name=tab-group-57 type=radio id=tab-group-57-0_yaml checked=checked class=code-tab data-lang=yaml aria-controls=tab-group-57-0_yaml-panel role=tab><label for=tab-group-57-0_yaml class=code-tab-label data-lang=yaml id=tab-group-57-0_yaml-label>HPE Nimble Storage</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-57-0_yaml-panel aria-labelledby=tab-group-57-0_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-gold
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: gold-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: gold-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: gold-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: gold-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: gold-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  performancePolicy: &quot;SQL Server&quot;
+  description: &quot;Volume from HPE CSI Driver&quot;
+  accessProtocol: iscsi
+  limitIops: &quot;76800&quot;
+  allowOverrides: description,limitIops,performancePolicy
+allowVolumeExpansion: true
+</code></pre></div><input name=tab-group-57 type=radio id=tab-group-57-1_yaml class=code-tab data-lang=yaml aria-controls=tab-group-57-1_yaml-panel role=tab><label for=tab-group-57-1_yaml class=code-tab-label data-lang=yaml id=tab-group-57-1_yaml-label>HPE Primera</label><div class=code-tabpanel role=tabpanel data-lang=yaml id=tab-group-57-1_yaml-panel aria-labelledby=tab-group-57-1_yaml-label><pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-gold
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  csi.storage.k8s.io/provisioner-secret-name: gold-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: gold-secret
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-name: gold-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: gold-secret
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: gold-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  cpg: SSD_r6
+  provisioningType: tpvv
+  accessProtocol: iscsi
+  allowOverrides: cpg,provisioningType
+allowVolumeExpansion: true
+</code></pre></div></div>
+<p>We can verify the StorageClass is now available.</p>
+<p> <pre><code class=text>kubectl get sc
+NAME                     PROVISIONER   AGE
+hpe-standard (default)   csi.hpe.com   15m
+hpe-gold                 csi.hpe.com   1m
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don't forget to call out the <code>StorageClass</code> explicitly when creating <code>PVCs</code> from non-default <code>StorageClasses</code>.</p>
+</div>
+<h3 id="creating_a_persistentvolumeclaim_1">Creating a PersistentVolumeClaim<a class="headerlink" href="#creating_a_persistentvolumeclaim_1" title="Permanent link">&para;</a></h3>
+<p>With a <code>StorageClass</code> available, we can request an amount of storage for our application using a <code>PersistentVolumeClaim</code>. Using your text editor of choice, create a new <code>PVC</code> and save it as <code>gold-pvc.yaml</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gold-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: hpe-gold
+</code></pre></p>
+<p>Create the <code>PersistentVolumeClaim</code>.</p>
+<p> <pre><code class=text>kubectl create -f gold-pvc.yaml
+</code></pre></p>
+<p>We can see the <strong>my-pvc</strong> <code>PersistentVolumeClaim</code> was created.</p>
+<p> <pre><code class=text>kubectl get pvc
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+my-pvc                        Bound    pvc-70d5caf8-7558-40e6-a8b7-77dfcf8ddcd8   50Gi       RWO            hpe-standard   72m
+gold-pvc                      Bound    pvc-7a74d656-0b14-42a2-9437-e374a5d3bd68   50Gi       RWO            hpe-gold       1m
+</code></pre></p>
+<p>You can see that the new <code>PVC</code> is using the new <code>StorageClass</code> which is backed by the additional storage backend allowing you to add additional flexibility to your containerized workloads and match the persistent storage requirements to the application.</p>
+<h2 id="cleanup_optional">Cleanup (Optional)<a class="headerlink" href="#cleanup_optional" title="Permanent link">&para;</a></h2>
+<p>As others will be using this lab at a later time, we can clean up the objects that were deployed during this lab exercise. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These steps may take a few minutes to complete. Please be patient and don't cancel out the process.</p>
+</div>
+<p>Remove WordPress &amp; NGINX deployments.</p>
+<p> <pre><code class=text>helm uninstall my-wordpress &amp;&amp; kubectl delete all --all
+</code></pre></p>
+<p>Delete the <code>PersistentVolumeClaims</code> and related objects.</p>
+<p> <pre><code class=text>kubectl delete pvc --all &amp;&amp; kubectl delete sc --all
+</code></pre></p>
+<p>Remove the HPE CSI Driver for Kubernetes. </p>
+<p> <pre><code class=text>helm uninstall my-hpe-csi-driver -n hpe-storage
+</code></pre></p>
+<p>It takes a couple minutes to cleanup the objects from the CSI driver. You can check the status:</p>
+<p> <pre><code class=text>watch kubectl get all -n hpe-storage
+</code></pre></p>
+<p>Once everything is removed, <strong>Ctrl+C</strong> to exit and finally you can remove the <code>Namespace</code>.</p>
+<p> <pre><code class=text>kubectl delete ns hpe-storage
+</code></pre></p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=learn/persistent_storage/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="../../filex_csi_driver/using.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../introduction_to_containers/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

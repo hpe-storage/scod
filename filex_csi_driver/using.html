@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/filex_csi_driver/using.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Using - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Using";
+        var mkdocs_page_input_path = "filex_csi_driver/using.md";
+        var mkdocs_page_url = "/filex_csi_driver/using.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Using</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#pvc_access_modes">PVC Access Modes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#enabling_csi_snapshots">Enabling CSI Snapshots</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#base_storageclass_parameters">Base StorageClass Parameters</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#nfs_protocol_version">NFS Protocol Version</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#provisioning_concepts">Provisioning Concepts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#create_a_persistentvolumeclaim_from_a_storageclass">Create a PersistentVolumeClaim from a StorageClass</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#using_csi_snapshots">Using CSI Snapshots</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#expanding_pvcs">Expanding PVCs</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#further_reading">Further Reading</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE GREENLAKE FOR FILE STORAGE</li>
+      <li class="breadcrumb-item active">Using</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>At this point the CSI driver should be installed and configured.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Most examples below assumes there's a <code>Secret</code> named "hpe-file-backend" in the "hpe-storage" <code>Namespace</code>. Learn how to add <code>Secrets</code> in the <a href="deployment.html#add_a_storage_backend">Deployment section</a>.</p>
+</div>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#pvc_access_modes">PVC Access Modes</a></li>
+<li><a href="#enabling_csi_snapshots">Enabling CSI Snapshots</a></li>
+<li><a href="#base_storageclass_parameters">Base StorageClass Parameters</a><ul>
+<li><a href="#nfs_protocol_version">NFS Protocol Version</a></li>
+</ul>
+</li>
+<li><a href="#provisioning_concepts">Provisioning Concepts</a><ul>
+<li><a href="#create_a_persistentvolumeclaim_from_a_storageclass">Create a PersistentVolumeClaim from a StorageClass</a></li>
+<li><a href="#using_csi_snapshots">Using CSI Snapshots</a></li>
+<li><a href="#expanding_pvcs">Expanding PVCs</a></li>
+</ul>
+</li>
+<li><a href="#further_reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="pvc_access_modes">PVC Access Modes<a class="headerlink" href="#pvc_access_modes" title="Permanent link">&para;</a></h2>
+<p>The HPE GreenLake File Storage CSI Driver is primarily a <code>ReadWriteMany</code> (RWX) CSI implementation for file based storage. The CSI driver also supports <code>ReadWriteOnce</code> (RWO) and <code>ReadOnlyMany</code> (ROX).</p>
+<table>
+<thead>
+<tr>
+<th>Access Mode</th>
+<th>Abbreviation</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ReadWriteOnce</td>
+<td>RWO</td>
+<td>For high performance <code>Pods</code> where access to the PVC is exclusive to one host at a time.</td>
+</tr>
+<tr>
+<td>ReadWriteOncePod</td>
+<td>RWOP</td>
+<td>Exclusive access by a single <code>Pod</code>. Not currently supported by the CSI driver.</td>
+</tr>
+<tr>
+<td>ReadWriteMany</td>
+<td>RWX</td>
+<td>For shared filesystems where multiple <code>Pods</code> in the same <code>Namespace</code> need simultaneous access to a PVC across multiple nodes.</td>
+</tr>
+<tr>
+<td>ReadOnlyMany</td>
+<td>ROX</td>
+<td>Read-only representation of RWX.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="admonition-title">ReadWriteOnce and access by multiple Pods</p>
+<p><code>Pods</code> that require access to the same "ReadWriteOnce" (RWO) PVC needs to reside on the same node and <code>Namespace</code> by using <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/">selectors</a> or <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/">affinity scheduling rules</a> applied when deployed. If not configured correctly, the <code>Pod</code> will fail to start and will throw a "Multi-Attach" error in the event log if the PVC is already attached to a <code>Pod</code> that has been scheduled on a different node within the cluster.</p>
+</div>
+<h2 id="enabling_csi_snapshots">Enabling CSI Snapshots<a class="headerlink" href="#enabling_csi_snapshots" title="Permanent link">&para;</a></h2>
+<p>Support for <code>VolumeSnapshotClasses</code> and <code>VolumeSnapshots</code> is available from Kubernetes 1.17+. The snapshot CRDs and the common snapshot controller needs to be installed manually. As per Kubernetes TAG Storage, these should not be installed as part of a CSI driver and should be deployed by the Kubernetes cluster vendor or user.</p>
+<p>Ensure the snapshot CRDs and common snapshot controller hasn't been installed already.</p>
+<p> <pre><code class=text>kubectl get crd volumesnapshots.snapshot.storage.k8s.io \
+  volumesnapshotcontents.snapshot.storage.k8s.io \
+  volumesnapshotclasses.snapshot.storage.k8s.io
+</code></pre></p>
+<p>Vendors may package, name and deploy the common snapshot controller using their own naming conventions. Run the command below and look for workload names that contain "snapshot".</p>
+<p> <pre><code class=text>kubectl get sts,deploy -A
+</code></pre></p>
+<p>If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-2><input name=tab-group-2 type=radio id=tab-group-2-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-2-0_text-panel role=tab><label for=tab-group-2-0_text class=code-tab-label data-lang=text id=tab-group-2-0_text-label>HPE GreenLake for File Storage CSI Driver v2.6.4</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-2-0_text-panel aria-labelledby=tab-group-2-0_text-label><pre><code class=text># Kubernetes 1.30-1.34
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.4 -b hpe-greenlake-for-file-csi-driver-v2.6.4
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+</code></pre></div><input name=tab-group-2 type=radio id=tab-group-2-1_text class=code-tab data-lang=text aria-controls=tab-group-2-1_text-panel role=tab><label for=tab-group-2-1_text class=code-tab-label data-lang=text id=tab-group-2-1_text-label>v1.0.0-beta</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-2-1_text-panel aria-labelledby=tab-group-2-1_text-label><pre><code class=text># Kubernetes 1.28-1.31
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.0.1 -b hpe-greenlake-for-file-csi-driver-v1.0.0-beta
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
+</code></pre></div></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <a href="#provisioning_concepts">provisioning</a> section contains examples on how to create a <code>VolumeSnapshotClass</code> and <code>VolumeSnapshot</code> objects.</p>
+</div>
+<h2 id="base_storageclass_parameters">Base StorageClass Parameters<a class="headerlink" href="#base_storageclass_parameters" title="Permanent link">&para;</a></h2>
+<p>This serve as a base <code>StorageClass</code> using the most common scenario.</p>
+<p> <pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: hpe-file-standard
+  annotations:
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+provisioner: filex.csi.hpe.com
+parameters:
+  csi.storage.k8s.io/provisioner-secret-name: hpe-file-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-file-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-file-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-name: hpe-file-backend
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  root_export: /my-volumes
+  view_policy: my-view-policy-1
+  vip_pool_name: my-pool-1
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Replace "hpe-file-backend" with a <code>Secret</code> relevant to the backend being referenced. See <a href="deployment.html#secret_parameters">Deployment</a> on how to create a <code>Secret</code>.<br /></p>
+</div>
+<p>HPE GreenLake for File Storage CSI Driver <code>StorageClass</code> parameters.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>root_export</td>
+<td>Yes</td>
+<td>Text</td>
+<td>Folder on the appliance to create new <code>PersistentVolumes</code> in.</td>
+</tr>
+<tr>
+<td>view_policy</td>
+<td>Yes</td>
+<td>Text</td>
+<td>Existing View Policy on the appliance.</td>
+</tr>
+<tr>
+<td>vip_pool_name</td>
+<td>No<sup>&ast;</sup></td>
+<td>Text</td>
+<td>Existing VIP Pool on the appliance.</td>
+</tr>
+<tr>
+<td>vip_pool_fqdn</td>
+<td>No<sup>&ast;</sup></td>
+<td>Text</td>
+<td>Existing DNS name with multiple <code>A</code> records that maps to IP addresses in a VIP Pool.</td>
+</tr>
+<tr>
+<td>use_local_ip_for_mount</td>
+<td>No</td>
+<td>Text</td>
+<td>Hard coded IP address for the NFS server. Has no effect if vip_pool_name or vip_pool_fqdn is set.</td>
+</tr>
+<tr>
+<td>qos_policy</td>
+<td>No</td>
+<td>Text</td>
+<td>Existing QoS Policy on the appliance.</td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>&ast;</sup> = Mutually exclusive.</small></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Guidance on how to create the necessary resources such as a VIP Pool, View Policy, and QoS Policy on the appliance, check out the official <a href="https://support.hpe.com/hpesc/public/docDisplay?docId=sd00002658en_us">HPE GreenLake for File Storage: Cluster Administrator Guide</a></p>
+</div>
+<h3 id="nfs_protocol_version">NFS Protocol Version<a class="headerlink" href="#nfs_protocol_version" title="Permanent link">&para;</a></h3>
+<p>The CSI driver will by default mount NFS exports with version 3. To use version 4.1, add <code>nfsvers=4</code> to "mountOptions" in the <code>StorageClass</code>.</p>
+<p> <pre><code class=yaml>mountOptions:
+  - nfsvers=4
+</code></pre></p>
+<h2 id="provisioning_concepts">Provisioning Concepts<a class="headerlink" href="#provisioning_concepts" title="Permanent link">&para;</a></h2>
+<p>These instructions are provided as an example on how to use common Kubernetes resources with the CSI driver.</p>
+<ul>
+<li><a href="#create_a_persistentvolumeclaim_from_a_storageclass">Create a PersistentVolumeClaim from a StorageClass</a></li>
+<li><a href="#using_csi_snapshots">Using CSI Snapshots</a></li>
+<li><a href="#expanding_pvcs">Expanding PVCs</a></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">New to Kubernetes?</p>
+<p>There's a basic tutorial of how dynamic provisioning of persistent storage on Kubernetes works in the <a href="../learn/video_gallery/index.html#dynamic_provisioning_of_persistent_storage_on_kubernetes">Video Gallery</a>.</p>
+</div>
+<h3 id="create_a_persistentvolumeclaim_from_a_storageclass">Create a PersistentVolumeClaim from a StorageClass<a class="headerlink" href="#create_a_persistentvolumeclaim_from_a_storageclass" title="Permanent link">&para;</a></h3>
+<p>The steps in the HPE CSI Driver for Kubernetes section of SCOD outlines the basic concepts of <a href="../csi_driver/using.html#create_a_persistentvolumeclaim_from_a_storageclass">creating a PVC from a <code>StorageClass</code></a>. Skip the steps creating a HPE CSI Driver for Kubernetes <code>StorageClass</code>.</p>
+<h3 id="using_csi_snapshots">Using CSI Snapshots<a class="headerlink" href="#using_csi_snapshots" title="Permanent link">&para;</a></h3>
+<p>CSI introduces snapshots as native objects in Kubernetes that allows end-users to provision <code>VolumeSnapshot</code> objects from an existing <code>PersistentVolumeClaim</code>. New PVCs may then be created using the snapshot as a source.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Ensure <a href="#enabling_csi_snapshots">CSI snapshots are enabled</a>.
+<br />There's a <a href="../learn/video_gallery/index.html#using_the_hpe_csi_driver_to_create_csi_snapshots_and_clones">tutorial in the Video Gallery</a> on how to use CSI snapshots and clones.</p>
+</div>
+<p>Start by creating a <code>VolumeSnapshotClass</code> referencing the <code>Secret</code> and defining additional snapshot parameters.</p>
+<p> <pre><code class=yaml>apiVersion: snapshot.storage.k8s.io/v1
+driver: filex.csi.hpe.com
+deletionPolicy: Delete
+kind: VolumeSnapshotClass
+metadata:
+  name: hpe-file-snapshot
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: &quot;true&quot;
+parameters:
+  csi.storage.k8s.io/snapshotter-secret-name: hpe-file-backend
+  csi.storage.k8s.io/snapshotter-secret-namespace: hpe-storage
+  csi.storage.k8s.io/snapshotter-list-secret-name: hpe-file-backend
+  csi.storage.k8s.io/snapshotter-list-secret-namespace: hpe-storage
+</code></pre></p>
+<p>Once a <code>VolumeSnapshotClass</code> has been created, follow the steps outlined in the HPE CSI Driver section for <a href="../csi_driver/using.html#using_csi_snapshots">using CSI snapshots</a>.</p>
+<h3 id="expanding_pvcs">Expanding PVCs<a class="headerlink" href="#expanding_pvcs" title="Permanent link">&para;</a></h3>
+<p>Instructions on how to expand an existing PVC is available in the HPE CSI Driver section for <a href="../csi_driver/using.html#expanding_pvcs">expanding PVCs</a>.</p>
+<h2 id="further_reading">Further Reading<a class="headerlink" href="#further_reading" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://kubernetes.io/docs/concepts/storage/volumes/">official Kubernetes documentation</a> contains comprehensive documentation on how to markup <code>PersistentVolumeClaim</code> and <code>StorageClass</code> resources to tweak certain behaviors. Including <code>volumeBindingMode</code> and <code>mountOptions</code>.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=filex_csi_driver/using.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="deployment.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../learn/persistent_storage/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

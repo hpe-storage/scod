@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/operations.html" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Auxiliary Operations - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Auxiliary Operations";
+        var mkdocs_page_input_path = "csi_driver/operations.md";
+        var mkdocs_page_url = "/csi_driver/operations.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Auxiliary Operations</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#migrate_encrypted_volumes">Migrate Encrypted Volumes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#assumptions">Assumptions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prepare_the_workload_and_persistent_volume_claims">Prepare the Workload and Persistent Volume Claims</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#create_a_new_persistent_volume_claim_and_update_retain_policies">Create a new Persistent Volume Claim and Update Retain Policies</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy_persistent_volume_claim_and_reset">Copy Persistent Volume Claim and Reset</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#pvcs_with_volumemode_filesystem">PVCs with volumeMode: Filesystem</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#pvcs_with_volumemode_block">PVCs with volumeMode: Block</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#restart_the_workload">Restart the Workload</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#optional_workflow_with_filesystem_persistent_volume_claims">Optional Workflow with Filesystem Persistent Volume Claims</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#manual_node_configuration">Manual Node Configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#stages_of_initialization">Stages of Initialization</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#disablenodeconformance">disableNodeConformance</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#disablenodeconfiguration">disableNodeConfiguration</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mandatory_configuration">Mandatory Configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#iscsi_configuration">iSCSI Configuration</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#iscsidconf">iscsid.conf</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multipath_configuration">Multipath Configuration</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#multipathconf">multipath.conf</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#important_considerations">Important Considerations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#upgrade_nfs_servers">Upgrade NFS Servers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade_to_v301">Upgrade to v3.0.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade_to_v252">Upgrade to v2.5.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade_to_v250">Upgrade to v2.5.0</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade_to_v242">Upgrade to v2.4.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade_to_v241">Upgrade to v2.4.1</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#assumptions_1">Assumptions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#patch_running_nfs_servers">Patch Running NFS Servers</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#validation">Validation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#expose_nfs_services_outside_of_the_kubernetes_cluster">Expose NFS Services Outside of the Kubernetes Cluster</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#from_clusterip_to_loadbalancer">From ClusterIP to LoadBalancer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#metallb_example">MetalLB Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mount_the_nfs_server_from_an_nfs_client">Mount the NFS Server from an NFS Client</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#change_default_fsgroup_for_nfs_servers">Change default fsGroup for NFS Servers</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#apply_custom_images_to_the_helm_chart_and_operator">Apply Custom Images to the Helm Chart and Operator</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#helm">Helm</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#via_command-line">Via Command-Line</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#via_valuesyaml">Via values.yaml</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operator">Operator</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+      <li class="breadcrumb-item active">Auxiliary Operations</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The documentation in this section illustrates officially HPE supported procedures to perform maintenance tasks on the CSI driver outside the scope of deploying and uninstalling the driver.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#migrate_encrypted_volumes">Migrate Encrypted Volumes</a><ul>
+<li><a href="#assumptions">Assumptions</a></li>
+<li><a href="#prepare_the_workload_and_persistent_volume_claims">Prepare the Workload and Persistent Volume Claims</a><ul>
+<li><a href="#create_a_new_persistent_volume_claim_and_update_retain_policies">Create a new Persistent Volume Claim and Update Retain Policies</a><ul>
+<li><a href="#important_validation_steps">Important Validation Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#copy_persistent_volume_claim_and_reset">Copy Persistent Volume Claim and Reset</a><ul>
+<li><a href="#pvcs_with_volumemode_filesystem">PVCs with volumeMode: Filesystem</a></li>
+<li><a href="#pvcs_with_volumemode_block">PVCs with volumeMode: Block</a></li>
+</ul>
+</li>
+<li><a href="#restart_the_workload">Restart the Workload</a></li>
+<li><a href="#optional_workflow_with_filesystem_persistent_volume_claims">Optional Workflow with Filesystem Persistent Volume Claims</a></li>
+</ul>
+</li>
+<li><a href="#manual_node_configuration">Manual Node Configuration</a><ul>
+<li><a href="#stages_of_initialization">Stages of Initialization</a><ul>
+<li><a href="#disablenodeconformance">disableNodeConformance</a></li>
+<li><a href="#disablenodeconfiguration">disableNodeConfiguration</a></li>
+</ul>
+</li>
+<li><a href="#mandatory_configuration">Mandatory Configuration</a></li>
+<li><a href="#iscsi_configuration">iSCSI Configuration</a><ul>
+<li><a href="#iscsidconf">iscsid.conf</a></li>
+</ul>
+</li>
+<li><a href="#multipath_configuration">Multipath Configuration</a><ul>
+<li><a href="#multipathconf">multipath.conf</a></li>
+</ul>
+</li>
+<li><a href="#important_considerations">Important Considerations</a></li>
+</ul>
+</li>
+<li><a href="#upgrade_nfs_servers">Upgrade NFS Servers</a><ul>
+<li><a href="#upgrade_to_v301">Upgrade to v3.0.1</a></li>
+<li><a href="#upgrade_to_v252">Upgrade to v2.5.2</a></li>
+<li><a href="#upgrade_to_v250">Upgrade to v2.5.0</a></li>
+<li><a href="#upgrade_to_v242">Upgrade to v2.4.2</a></li>
+<li><a href="#upgrade_to_v241">Upgrade to v2.4.1</a><ul>
+<li><a href="#assumptions_1">Assumptions</a></li>
+<li><a href="#patch_running_nfs_servers">Patch Running NFS Servers</a></li>
+</ul>
+</li>
+<li><a href="#validation">Validation</a></li>
+</ul>
+</li>
+<li><a href="#expose_nfs_services_outside_of_the_kubernetes_cluster">Expose NFS Services Outside of the Kubernetes Cluster</a><ul>
+<li><a href="#from_clusterip_to_loadbalancer">From ClusterIP to LoadBalancer</a></li>
+<li><a href="#metallb_example">MetalLB Example</a></li>
+<li><a href="#mount_the_nfs_server_from_an_nfs_client">Mount the NFS Server from an NFS Client</a></li>
+</ul>
+</li>
+<li><a href="#change_default_fsgroup_for_nfs_servers">Change default fsGroup for NFS Servers</a></li>
+<li><a href="#apply_custom_images_to_the_helm_chart_and_operator">Apply Custom Images to the Helm Chart and Operator</a><ul>
+<li><a href="#helm">Helm</a><ul>
+<li><a href="#via_command-line">Via Command-Line</a></li>
+<li><a href="#via_valuesyaml">Via values.yaml</a></li>
+</ul>
+</li>
+<li><a href="#operator">Operator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="migrate_encrypted_volumes">Migrate Encrypted Volumes<a class="headerlink" href="#migrate_encrypted_volumes" title="Permanent link">&para;</a></h2>
+<p>Persistent volumes created with v2.1.1 or below using <a href="using.html#using_volume_encryption">volume encryption</a>, the CSI driver use LUKS2 (WikiPedia: <a href="https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup">Linux Unified Key Setup</a>) and can't expand the <code>PersistentVolumeClaim</code>. With v2.2.0 and above, LUKS1 is used and the CSI driver is capable of expanding the <code>PVC</code>.</p>
+<p>This procedure migrate (copy) data from LUKS2 to LUKS1 PVCs to allow expansion of the volume.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It's not a limitation of LUKS2 to not allow expansion but rather how the CSI driver interact with the host.</p>
+</div>
+<h3 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h3>
+<p>These are the assumptions made throughout this procedure.</p>
+<ul>
+<li>Data to be migrated has a good backup to restore to, not just a snapshot.</li>
+<li>HPE CSI Driver for Kubernetes v2.3.0 or later installed.</li>
+<li>Worker nodes with access to the Quay registry and SCOD.</li>
+<li>Access to the commands <code>kubectl</code>, <code>curl</code>, <code>jq</code> and <code>yq</code>.</li>
+<li>Cluster privileges to manipulate <code>PersistentVolumes</code>.</li>
+<li>None of the commands executed should return errors or have non-zero exit codes.</li>
+<li>Only <code>ReadWriteOnce</code> <code>PVCs</code> are covered.</li>
+<li>No custom <code>PVC</code> annotations.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are many different ways to copy <code>PVCs</code>. These steps outlines and uses one particular method developed and tested by HPE and similar workflows may be applied with other tools and procedures.</p>
+</div>
+<h3 id="prepare_the_workload_and_persistent_volume_claims">Prepare the Workload and Persistent Volume Claims<a class="headerlink" href="#prepare_the_workload_and_persistent_volume_claims" title="Permanent link">&para;</a></h3>
+<p>First, identify the <code>PersistentVolume</code> to migrate from and set shell variables.</p>
+<p> <pre><code class=text>export OLD_SRC_PVC=&lt;insert your existing PVC name here&gt;
+export OLD_SRC_PV=$(kubectl get pvc -o json | \
+       jq -r &quot;.items[] | \
+        select(.metadata.name | \
+        test(\&quot;${OLD_SRC_PVC}\&quot;))&quot;.spec.volumeName)
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Ensure these shell variables are set at all times.</p>
+</div>
+<p>In order to copy data out of a <code>PVC</code>, the running workload needs to be disassociated with the <code>PVC</code>. It's not possible to scale the replicas to zero, the exception being <code>ReadWriteMany</code> <code>PVCs</code> which could lead to data inconsistency problems. These procedures assumes application consistency by having the workload shut down.</p>
+<p>It's out of scope for this procedure to demonstrate how to shut down a particular workload. Ensure there are no <code>volumeattachments</code> associated with the <code>PersistentVolume</code>.</p>
+<p> <pre><code class=text>kubectl get volumeattachment -o json | \
+ jq -r &quot;.items[] | \
+  select(.spec.source.persistentVolumeName | \
+  test(\&quot;${OLD_SRC_PV}\&quot;))&quot;.spec.source
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For large <code>volumeMode: Filesystem</code> <code>PVCs</code> where copying data may take days, it's recommended to use the <a href="#optional_workflow_with_filesystem_persistent_volume_claims">Optional Workflow with Filesystem Persistent Volume Claims</a> that utilizes the <code>PVC</code> <code>dataSource</code> capability.</p>
+</div>
+<h4 id="create_a_new_persistent_volume_claim_and_update_retain_policies">Create a new Persistent Volume Claim and Update Retain Policies<a class="headerlink" href="#create_a_new_persistent_volume_claim_and_update_retain_policies" title="Permanent link">&para;</a></h4>
+<p>Create a new <code>PVC</code> named "new-pvc" with enough space to host the data from the old source <code>PVC</code>.</p>
+<p> <pre><code class=text>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: new-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+  volumeMode: Filesystem
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If the source <code>PVC</code> is a raw block volume, ensure <code>volumeMode: Block</code> is set on the new <code>PVC</code>.</p>
+</div>
+<p>Edit and set the shell variables for the newly created <code>PVC</code>.</p>
+<p> <pre><code class=text>export NEW_DST_PVC_SIZE=32Gi
+export NEW_DST_PVC_VOLMODE=Filesystem
+export NEW_DST_PVC=new-pvc
+export NEW_DST_PV=$(kubectl get pvc -o json | \
+       jq -r &quot;.items[] | \
+       select(.metadata.name | \
+       test(\&quot;${NEW_DST_PVC}\&quot;))&quot;.spec.volumeName)
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <code>PVC</code> name "new-pvc" is a placeholder name. When the procedure is done, the <code>PVC</code> will have its original name restored.</p>
+</div>
+<h5 id="important_validation_steps">Important Validation Steps<a class="headerlink" href="#important_validation_steps" title="Permanent link">&para;</a></h5>
+<p>At this point, there should be six shell variables declared. Example:</p>
+<p> <pre><code class=text>$ env | grep _PV
+NEW_DST_PVC_SIZE=32Gi
+NEW_DST_PVC=new-pvc
+OLD_SRC_PVC=old-pvc &lt;-- This should be the original name of the PVC
+NEW_DST_PVC_VOLMODE=Filesystem
+NEW_DST_PV=pvc-ad7a05a9-c410-4c63-b997-51fb9fc473bf
+OLD_SRC_PV=pvc-ca7c2f64-641d-4265-90f8-4aed888bd2c5
+</code></pre></p>
+<p>Regardless of the <code>retainPolicy</code> set in the <code>StorageClass</code>, ensure the <code>persistentVolumeReclaimPolicy</code> is set to "Retain" for both <code>PVs</code>.</p>
+<p> <pre><code class=text>kubectl patch pv/${OLD_SRC_PV} pv/${NEW_DST_PV} \
+ -p '{&quot;spec&quot;:{&quot;persistentVolumeReclaimPolicy&quot;:&quot;Retain&quot;}}'
+</code></pre></p>
+<div class="admonition caution">
+<p class="admonition-title">Data Loss Warning</p>
+<p>It's <strong>EXTREMELY</strong> important no errors are returned from the above command. It <strong>WILL</strong> lead to data loss.</p>
+</div>
+<p>Validate the "persistentVolumeReclaimPolicy".</p>
+<p> <pre><code class=text>kubectl get pv/${OLD_SRC_PV} pv/${NEW_DST_PV} -o json | \
+ jq -r &quot;.items[] | \
+  select(.metadata.name)&quot;.spec.persistentVolumeReclaimPolicy
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The above command should output nothing but two lines with the word "Retain" on it.</p>
+</div>
+<h3 id="copy_persistent_volume_claim_and_reset">Copy Persistent Volume Claim and Reset<a class="headerlink" href="#copy_persistent_volume_claim_and_reset" title="Permanent link">&para;</a></h3>
+<p>In this phase, the data will be copied from the original <code>PVC</code> to the new <code>PVC</code> with a <code>Job</code> submitted to the cluster. Different tools are being used to perform the copy operation, ensure to pick the correct <code>volumeMode</code>.</p>
+<h4 id="pvcs_with_volumemode_filesystem">PVCs with volumeMode: Filesystem<a class="headerlink" href="#pvcs_with_volumemode_filesystem" title="Permanent link">&para;</a></h4>
+<p> <pre><code class=text>curl -s https://scod.hpedev.io/csi_driver/examples/operations/pvc-copy-file.yaml | \
+  yq &quot;( select(.spec.template.spec.volumes[] | \
+    select(.name == \&quot;src-pv\&quot;) | \
+    .persistentVolumeClaim.claimName = \&quot;${OLD_SRC_PVC}\&quot;)
+    &quot; | kubectl apply -f-
+</code></pre></p>
+<p>Wait for the <code>Job</code> to complete.</p>
+<p> <pre><code class=text>kubectl get job.batch/pvc-copy-file -w
+</code></pre></p>
+<p>Once the <code>Job</code> has completed, validate exit status and log files.</p>
+<p> <pre><code class=text>kubectl get job.batch/pvc-copy-file -o jsonpath='{.status.succeeded}'
+kubectl logs job.batch/pvc-copy-file
+</code></pre></p>
+<p>Delete the <code>Job</code> from the cluster.</p>
+<p> <pre><code class=text>kubectl delete job.batch/pvc-copy-file
+</code></pre></p>
+<p>Proceed to <a href="#restart_the_workload">restart the workload</a>.</p>
+<h4 id="pvcs_with_volumemode_block">PVCs with volumeMode: Block<a class="headerlink" href="#pvcs_with_volumemode_block" title="Permanent link">&para;</a></h4>
+<p> <pre><code class=text>curl -s https://scod.hpedev.io/csi_driver/examples/operations/pvc-copy-block.yaml | \
+  yq &quot;( select(.spec.template.spec.volumes[] | \
+    select(.name == \&quot;src-pv\&quot;) | \
+    .persistentVolumeClaim.claimName = \&quot;${OLD_SRC_PVC}\&quot;)
+    &quot; | kubectl apply -f-
+</code></pre></p>
+<p>Wait for the <code>Job</code> to complete.</p>
+<p> <pre><code class=text>kubectl get job.batch/pvc-copy-block -w
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Data is copied block for block, verbatim, regardless of how much application data is stored in the block devices.</p>
+</div>
+<p>Once the <code>Job</code> has completed, validate exit status and log files.</p>
+<p> <pre><code class=text>kubectl get job.batch/pvc-copy-block -o jsonpath='{.status.succeeded}'
+kubectl logs job.batch/pvc-copy-block
+</code></pre></p>
+<p>Delete the <code>Job</code> from the cluster.</p>
+<p> <pre><code class=text>kubectl delete job.batch/pvc-copy-block
+</code></pre></p>
+<p>Proceed to <a href="#restart_the_workload">restart the workload</a>.</p>
+<h3 id="restart_the_workload">Restart the Workload<a class="headerlink" href="#restart_the_workload" title="Permanent link">&para;</a></h3>
+<p>This step requires both the old source <code>PVC</code> and the new destination <code>PVC</code> to be deleted. Once again, ensure the correct <code>persistentVolumeReclaimPolicy</code> is set on the <code>PVs</code>.</p>
+<p> <pre><code class=text>kubectl get pv/${OLD_SRC_PV} pv/${NEW_DST_PV} -o json | \
+ jq -r &quot;.items[] | \
+  select(.metadata.name)&quot;.spec.persistentVolumeReclaimPolicy
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The above command should output nothing but two lines with the word "Retain" on it, if not revisit <a href="#important_validation_steps">Important Validation Steps</a> to apply the policy and ensure environment variables are set correctly.</p>
+</div>
+<p>Delete the <code>PVCs</code>.</p>
+<p> <pre><code class=text>kubectl delete pvc/${OLD_SRC_PVC} pvc/${NEW_DST_PVC}
+</code></pre></p>
+<p>Next, allow the new <code>PV</code> to be reclaimed.</p>
+<p> <pre><code class=text>kubectl patch pv ${NEW_DST_PV} -p '{&quot;spec&quot;:{&quot;claimRef&quot;: null }}'
+</code></pre></p>
+<p>Next, create a <code>PVC</code> with the old source name and ensure it matches the size of the new destination <code>PVC</code>.</p>
+<p> <pre><code class=text>curl -s https://scod.hpedev.io/csi_driver/examples/operations/pvc-copy.yaml | \
+  yq &quot;.spec.volumeName = \&quot;${NEW_DST_PV}\&quot; | \
+    .metadata.name = \&quot;${OLD_SRC_PVC}\&quot; | \
+    .spec.volumeMode = \&quot;${NEW_DST_PVC_VOLMODE}\&quot; | \
+    .spec.resources.requests.storage = \&quot;${NEW_DST_PVC_SIZE}\&quot; \
+    &quot; | kubectl apply -f-
+</code></pre></p>
+<p>Verify the new <code>PVC</code> is "Bound" to the correct <code>PV</code>.</p>
+<p> <pre><code class=text>kubectl get pvc/${OLD_SRC_PVC} -o json | \
+  jq -r &quot;. | \
+    select(.spec.volumeName == \&quot;${NEW_DST_PV}\&quot;).metadata.name&quot;
+</code></pre></p>
+<p>If the command is successful, it should output your original <code>PVC</code> name.</p>
+<p>At this point the original workload should be deployed, verified and resumed.</p>
+<p>Optionally, the old source <code>PV</code> may be removed.</p>
+<p> <pre><code class=text>kubectl delete pv/${OLD_SRC_PV}
+</code></pre></p>
+<h3 id="optional_workflow_with_filesystem_persistent_volume_claims">Optional Workflow with Filesystem Persistent Volume Claims<a class="headerlink" href="#optional_workflow_with_filesystem_persistent_volume_claims" title="Permanent link">&para;</a></h3>
+<p>If there's a lot of content (millions of files, terabytes of data) that needs to be transferred in a <code>volumeMode: Filesystem</code> <code>PVC</code> it's recommended to transfer content incrementally. This is achieved by substituting the "old-pvc" with a <code>dataSource</code> clone of the running workload and perform the copy from the clone onto the "new-pvc".</p>
+<p>After the first transfer completes, the copy job may be recreated as many times as needed with a fresh clone of "old-pvc" until the downtime window has shrunk to an acceptable duration. For the final transfer, the actual source <code>PVC</code> will be used instead of the clone.</p>
+<p>This is an example <code>PVC</code>.</p>
+<p> <pre><code class=text>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clone-of-pvc
+spec:
+  dataSource:
+    name: this-is-the-current-prod-pvc
+    kind: PersistentVolumeClaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The capacity of the <code>dataSource</code> clone must match the original <code>PVC</code>.</p>
+</div>
+<p>Enabling and setting up the CSI snapshotter and related <code>CRDs</code> is not necessary but it's recommended to be familiar with using <a href="using.html#using_csi_snapshots">CSI snapshots</a>.</p>
+<h2 id="manual_node_configuration">Manual Node Configuration<a class="headerlink" href="#manual_node_configuration" title="Permanent link">&para;</a></h2>
+<p>With the release of HPE CSI Driver v2.4.0 it's possible to completely disable the node conformance and node configuration performed by the CSI node driver at startup. This transfers the responsibilty from the HPE CSI Driver to the Kubernetes cluster administrator to ensure worker nodes boot with a supported configuration.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This feature is mainly for users who require 100% control of the worker nodes.</p>
+</div>
+<h3 id="stages_of_initialization">Stages of Initialization<a class="headerlink" href="#stages_of_initialization" title="Permanent link">&para;</a></h3>
+<p>There are two stages of initialization the administrator can control through parameters in the Helm chart.</p>
+<h4 id="disablenodeconformance">disableNodeConformance<a class="headerlink" href="#disablenodeconformance" title="Permanent link">&para;</a></h4>
+<p>The node conformance runs with the entrypoint of the node driver container. The conformance inserts and runs a systemd service on the node that installs all required packages on the node to allow nodes to attach block storage devices and mount NFS exports. It starts all the required services and configure an important udev rule on the worker node.</p>
+<p>This flag was intended to allow administrators to run the CSI driver on nodes with an unsupported or unconfigured package manager.</p>
+<p>If node conformance needs to be disabled for any reason, these packages and services needs to be installed and running prior to installing the HPE CSI Driver:</p>
+<ul>
+<li>iSCSI (not necessary when using FC)</li>
+<li>Multipath</li>
+<li>XFS programs/utilities</li>
+<li>NFSv4 client</li>
+</ul>
+<p>Package names and services vary greatly between different Linux distributions and it's the system administrator's duty to ensure these are available to the HPE CSI Driver.</p>
+<h4 id="disablenodeconfiguration">disableNodeConfiguration<a class="headerlink" href="#disablenodeconfiguration" title="Permanent link">&para;</a></h4>
+<p>When disabling node configuration the CSI node driver will not touch the node at all. Besides indirectly disabling node conformance, all attempts to write configuration files or manipulate services during runtime are disabled.</p>
+<h3 id="mandatory_configuration">Mandatory Configuration<a class="headerlink" href="#mandatory_configuration" title="Permanent link">&para;</a></h3>
+<p>These steps are <strong>REQUIRED</strong> for disabling either node configuration or conformance.</p>
+<p>On each current and future worker node in the cluster:</p>
+<p> <pre><code class=text># Don't let udev automatically scan targets(all luns) on Unit Attention.
+# This will prevent udev scanning devices which we are attempting to remove.
+
+if [ -f /lib/udev/rules.d/90-scsi-ua.rules ]; then
+    sed -i 's/^[^#]*scan-scsi-target/#&amp;/' /lib/udev/rules.d/90-scsi-ua.rules
+    udevadm control --reload-rules
+fi
+</code></pre></p>
+<h3 id="iscsi_configuration">iSCSI Configuration<a class="headerlink" href="#iscsi_configuration" title="Permanent link">&para;</a></h3>
+<p>Skip this step if only Fibre Channel is being used. This step is only required when node configuration is disabled.</p>
+<h4 id="iscsidconf">iscsid.conf<a class="headerlink" href="#iscsidconf" title="Permanent link">&para;</a></h4>
+<p>This example is taken from a Rocky Linux 9.2 node with the HPE parameters applied. Certain parameters may differ for other distributions of either iSCSI or the host OS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The location of this file varies between Linux and iSCSI distributions.</p>
+</div>
+<p>Ensure <code>iscsid</code> is stopped.</p>
+<p> <pre><code class=text>systemctl stop iscsid
+</code></pre></p>
+<p><a href="https://scod.hpedev.io/csi_driver/examples/operations/iscsid.conf">Download</a>: /etc/iscsi/iscsid.conf</p>
+<p> <pre><code class=text>iscsid.startup = /bin/systemctl start iscsid.socket iscsiuio.socket
+node.startup = manual
+node.leading_login = No
+node.session.timeo.replacement_timeout = 10
+node.conn[0].timeo.login_timeout = 15
+node.conn[0].timeo.logout_timeout = 15
+node.conn[0].timeo.noop_out_interval = 5
+node.conn[0].timeo.noop_out_timeout = 10
+node.session.err_timeo.abort_timeout = 15
+node.session.err_timeo.lu_reset_timeout = 30
+node.session.err_timeo.tgt_reset_timeout = 30
+node.session.initial_login_retry_max = 8
+node.session.cmds_max = 512
+node.session.queue_depth = 256
+node.session.xmit_thread_priority = -20
+node.session.iscsi.InitialR2T = No
+node.session.iscsi.ImmediateData = Yes
+node.session.iscsi.FirstBurstLength = 262144
+node.session.iscsi.MaxBurstLength = 16776192
+node.conn[0].iscsi.MaxRecvDataSegmentLength = 262144
+node.conn[0].iscsi.MaxXmitDataSegmentLength = 0
+discovery.sendtargets.iscsi.MaxRecvDataSegmentLength = 32768
+node.conn[0].iscsi.HeaderDigest = None
+node.session.nr_sessions = 1
+node.session.reopen_max = 0
+node.session.iscsi.FastAbort = Yes
+node.session.scan = auto
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Pro tip!</p>
+<p>When nodes are provisioned from some sort of templating system with iSCSI pre-installed, it's notoriously common that nodes are provisioned with identical IQNs. This will lead to device attachment problems that aren't obvious to the user. Make sure each node has a unique IQN.</p>
+</div>
+<p>Ensure <code>iscsid</code> is running and enabled:</p>
+<p> <pre><code class=text>systemctl enable --now iscsid
+</code></pre></p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>Some Linux distributions requires the <code>iscsi_tcp</code> kernel module to be loaded. Where kernel modules are loaded varies between Linux distributions.</p>
+</div>
+<h3 id="multipath_configuration">Multipath Configuration<a class="headerlink" href="#multipath_configuration" title="Permanent link">&para;</a></h3>
+<p>This step is only required when node configuration is disabled.</p>
+<h4 id="multipathconf">multipath.conf<a class="headerlink" href="#multipathconf" title="Permanent link">&para;</a></h4>
+<p>The defaults section of the configuration file is merely a preference, make sure to leave the device and blacklist stanzas intact when potentially adding more entries from foreign devices.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The location of this file varies between Linux and iSCSI distributions.</p>
+</div>
+<p>Ensure <code>multipathd</code> is stopped.</p>
+<p> <pre><code class=text>systemctl stop multipathd
+</code></pre></p>
+<p><a href="https://scod.hpedev.io/csi_driver/examples/operations/multipath.conf">Download</a>: /etc/multipath.conf</p>
+<p> <pre><code class=text>defaults {
+    user_friendly_names yes
+    find_multipaths     no
+    uxsock_timeout      10000
+}
+blacklist {
+    devnode &quot;^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*&quot;
+    devnode &quot;^hd[a-z]&quot;
+    device {
+        product &quot;.*&quot;
+        vendor  &quot;.*&quot;
+    }
+}
+blacklist_exceptions {
+    property &quot;(ID_WWN|SCSI_IDENT_.*|ID_SERIAL)&quot;
+    device {
+        vendor  &quot;Nimble&quot;
+        product &quot;Server&quot;
+    }
+    device {
+        product &quot;VV&quot;
+        vendor  &quot;3PARdata&quot;
+    }
+    device {
+        vendor  &quot;TrueNAS&quot;
+        product &quot;iSCSI Disk&quot;
+    }
+    device {
+        vendor  &quot;FreeNAS&quot;
+        product &quot;iSCSI Disk&quot;
+    }
+}
+devices {
+    device {
+        product              &quot;Server&quot;
+        rr_min_io_rq         1
+        dev_loss_tmo         infinity
+        path_checker         tur
+        rr_weight            uniform
+        no_path_retry        30
+        path_selector        &quot;service-time 0&quot;
+        failback             immediate
+        fast_io_fail_tmo     5
+        vendor               &quot;Nimble&quot;
+        hardware_handler     &quot;1 alua&quot;
+        path_grouping_policy group_by_prio
+        prio                 alua
+    }
+    device {
+        path_grouping_policy group_by_prio
+        path_checker         tur
+        rr_weight            &quot;uniform&quot;
+        prio                 alua
+        failback             immediate
+        hardware_handler     &quot;1 alua&quot;
+        no_path_retry        18
+        fast_io_fail_tmo     10
+        path_selector        &quot;round-robin 0&quot;
+        vendor               &quot;3PARdata&quot;
+        dev_loss_tmo         infinity
+        detect_prio          yes
+        features             &quot;0&quot;
+        rr_min_io_rq         1
+        product              &quot;VV&quot;
+    }
+    device {
+        path_selector        &quot;queue-length 0&quot;
+        rr_weight            priorities
+        uid_attribute        ID_SERIAL
+        vendor               &quot;TrueNAS&quot;
+        product              &quot;iSCSI Disk&quot;
+        path_grouping_policy group_by_prio
+    }
+    device {
+        path_selector        &quot;queue-length 0&quot;
+        hardware_handler     &quot;1 alua&quot;
+        rr_weight            priorities
+        uid_attribute        ID_SERIAL
+        vendor               &quot;FreeNAS&quot;
+        product              &quot;iSCSI Disk&quot;
+        path_grouping_policy group_by_prio
+    }
+}
+</code></pre></p>
+<p>Ensure <code>multipathd</code> is running and enabled:</p>
+<p> <pre><code class=text>systemctl enable --now multipathd
+</code></pre></p>
+<h3 id="important_considerations">Important Considerations<a class="headerlink" href="#important_considerations" title="Permanent link">&para;</a></h3>
+<p>While both disabling conformance and configuration parameters lends itself to a more predictable behaviour when deploying nodes from templates with less runtime configuration, it's still not a complete solution for having immutable nodes. The CSI node driver creates a unique identity for the node and stores it in <code>/etc/hpe-storage/node.gob</code>. This file must persist across reboots and redeployments of the node OS image. Immutable Linux distributions such as CoreOS persist the <code>/etc</code> directory, some don't.</p>
+<!--
+yum install -y iscsi-initiator-utils device-mapper-multipath iscsi-initiator-utils-iscsiuio nfs-utils
+-->
+
+<p><a name="upgrade_to_v240"></a><a name="upgrade_to_v230"></a><a name="upgrade_to_v220"></a></p>
+<h2 id="upgrade_nfs_servers">Upgrade NFS Servers<a class="headerlink" href="#upgrade_nfs_servers" title="Permanent link">&para;</a></h2>
+<p>In the event the CSI driver contains updates to the NFS Server Provisioner, any running NFS server needs to be updated manually. Downgrading NFS servers is not supported.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is generally considered an optional step as existing NFS servers will continue to function across the CSI driver updates. It's only necessary if there are concerns about a particular CVE or explicit functionality being requested in a newer version of the CSI driver. Some functionality is not possible patch and would require recreating the entire NFS <code>Deployment</code>.</p>
+</div>
+<h3 id="upgrade_to_v301">Upgrade to v3.0.1<a class="headerlink" href="#upgrade_to_v301" title="Permanent link">&para;</a></h3>
+<p>Any prior deployed NFS servers may be upgraded to v3.0.1.</p>
+<h3 id="upgrade_to_v252">Upgrade to v2.5.2<a class="headerlink" href="#upgrade_to_v252" title="Permanent link">&para;</a></h3>
+<p>Any prior deployed NFS servers may be upgraded to v2.5.2.</p>
+<h3 id="upgrade_to_v250">Upgrade to v2.5.0<a class="headerlink" href="#upgrade_to_v250" title="Permanent link">&para;</a></h3>
+<p>Any prior deployed NFS servers may be upgraded to v2.5.0.</p>
+<h3 id="upgrade_to_v242">Upgrade to v2.4.2<a class="headerlink" href="#upgrade_to_v242" title="Permanent link">&para;</a></h3>
+<p>No changes to NFS Server Provisioner image between v2.4.1 and v2.4.2.</p>
+<h3 id="upgrade_to_v241">Upgrade to v2.4.1<a class="headerlink" href="#upgrade_to_v241" title="Permanent link">&para;</a></h3>
+<p>Any prior deployed NFS servers may be upgraded to v2.4.1.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>With v2.4.0 and onwards the NFS servers are deployed with default resource limits and in v2.5.0 resource requests were added. Those won't be applied on running NFS servers, only new ones.</p>
+</div>
+<h4 id="assumptions_1">Assumptions<a class="headerlink" href="#assumptions_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>HPE CSI Driver or Operator v2.4.1 (or later) installed.</li>
+<li>All running NFS servers are running in the "hpe-nfs" <code>Namespace</code>.</li>
+<li>Worker nodes with access to the Quay registry and SCOD.</li>
+<li>Access to the commands <code>kubectl</code>, <code>yq</code> and <code>curl</code>.</li>
+<li>Cluster privileges to manipulate resources in the "hpe-nfs" <code>Namespace</code>.</li>
+<li>None of the commands executed should return errors or have non-zero exit codes.</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>If NFS <code>Deployments</code> are scattered across <code>Namespaces</code>, use the <a href="#validation">Validation</a> steps to find where they reside.</p>
+</div>
+<h4 id="patch_running_nfs_servers">Patch Running NFS Servers<a class="headerlink" href="#patch_running_nfs_servers" title="Permanent link">&para;</a></h4>
+<p>When patching the NFS <code>Deployments</code>, the server <code>Pods</code> will restart and result in an I/O pause for the NFS clients with active mounts. The clients will recover gracefully once the NFS <code>Pod</code> is running again.</p>
+<div class="admonition caution">
+<p class="admonition-title">Recommended</p>
+<p>Live patching the NFS servers are generally considered safe within the same major version after version 3.0.0. The clients should only experience a short pause. However, it's recommended to scale down the client workloads to avoid stale NFS handles due to incompatibility between a particular delta.</p>
+</div>
+<p>Patch all NFS <code>Deployments</code> with the following.</p>
+<p> <pre><code class=text>curl -s https://scod.hpedev.io/csi_driver/examples/operations/patch-nfs-server-3.0.0.yaml | \
+  kubectl patch -n hpe-nfs \
+  $(kubectl get deploy -n hpe-nfs -o name) \
+  --patch-file=/dev/stdin
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If it's desired to patch one NFS <code>Deployment</code> at a time, replace the shell substitution with a <code>Deployment</code> name.</p>
+</div>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h3>
+<p>This command will list all "hpe-nfs" <code>Deployments</code> across the entire cluster. Each <code>Deployment</code> should be using v3.0.6 of the "nfs-provisioner" image after the upgrade is complete.</p>
+<p> <pre><code class=text>kubectl get deploy -A -o yaml | \
+  yq -r '.items[] | [] + { &quot;Namespace&quot;: select(.spec.template.spec.containers[].name == &quot;hpe-nfs&quot;).metadata.namespace, &quot;Deployment&quot;: select(.spec.template.spec.containers[].name == &quot;hpe-nfs&quot;).metadata.name, &quot;Image&quot;: select(.spec.template.spec.containers[].name == &quot;hpe-nfs&quot;).spec.template.spec.containers[].image }'
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above line is very long.</p>
+</div>
+<h2 id="expose_nfs_services_outside_of_the_kubernetes_cluster">Expose NFS Services Outside of the Kubernetes Cluster<a class="headerlink" href="#expose_nfs_services_outside_of_the_kubernetes_cluster" title="Permanent link">&para;</a></h2>
+<p>In certain situations it's practical to expose the NFS exports outside the Kubernetes cluster to allow external applications to access data as part of an ETL (Extract, Transform, Load) pipeline or similar.</p>
+<p>Since this is an untested feature with questionable security standards, HPE does not recommend using this facility in production at this time. Reach out to your HPE account representative if this is a critical feature for your workloads.</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>The exports on the NFS servers does not have any network Access Control Lists (ACL) without root squash. Anyone with an NFS client that can reach the load balancer IP address have full access to the filesystem.</p>
+</div>
+<h3 id="from_clusterip_to_loadbalancer">From ClusterIP to LoadBalancer<a class="headerlink" href="#from_clusterip_to_loadbalancer" title="Permanent link">&para;</a></h3>
+<p>The NFS server <code>Service</code> must be transformed into a "LoadBalancer".</p>
+<p>In this example we'll assume a "RWX" <code>PersistentVolumeClaim</code> named "my-pvc-1" and NFS resources deployed in the default <code>Namespace</code>, "hpe-nfs".</p>
+<p>Retrieve NFS UUID</p>
+<p> <pre><code class=text>export UUID=$(kubectl get pvc my-pvc-1 -o jsonpath='{.spec.volumeName}{&quot;\n&quot;}' | awk -Fpvc- '{print $2}')
+</code></pre></p>
+<p>Patch the NFS <code>Service</code>:</p>
+<p> <pre><code class=text>kubectl patch -n hpe-nfs svc/hpe-nfs-${UUID} -p '{&quot;spec&quot;:{&quot;type&quot;: &quot;LoadBalancer&quot;}}'
+</code></pre></p>
+<p>The <code>Service</code> will be assigned an external IP address by the load balancer deployed in the cluster. If there is no load balancer deployed, a MetalLB example is provided below.</p>
+<h3 id="metallb_example">MetalLB Example<a class="headerlink" href="#metallb_example" title="Permanent link">&para;</a></h3>
+<p>Deploying MetalLB is outside the scope of this document. In this example, MetalLB was deployed on OpenShift 4.16 (Kubernetes v1.29) using the Operator provided by Red Hat in the "metallb-system" <code>Namespace</code>.</p>
+<p>Determine the IP address range that will be assigned to the load balancers. In this example, 192.168.1.40 to 192.168.1.60 is being used. Note that the worker nodes in this cluster already have reachable IP addresses in the 192.168.1.0/24 network, which is a requirement.</p>
+<p>Create the MetalLB instances, IP address pool and Layer 2 advertisement.</p>
+<p> <pre><code class=text>---
+apiVersion: metallb.io/v1beta1
+kind: MetalLB
+metadata:
+  name: metallb
+  namespace: metallb-system
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  namespace: metallb-system
+  name: hpe-nfs-servers
+spec:
+  protocol: layer2
+  addresses:
+  - 192.168.1.40-192.168.1.60
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+   - hpe-nfs-servers
+</code></pre></p>
+<p>Shortly, the external IP address of the NFS <code>Service</code> patched in the previous steps should have an IP address assigned.</p>
+<p> <pre><code class=text>NAME           TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S) 
+hpe-nfs-UUID   LoadBalancer   172.30.217.203   192.168.1.40    &lt;long list of ports&gt;
+</code></pre></p>
+<h3 id="mount_the_nfs_server_from_an_nfs_client">Mount the NFS Server from an NFS Client<a class="headerlink" href="#mount_the_nfs_server_from_an_nfs_client" title="Permanent link">&para;</a></h3>
+<p>Mounting the NFS export externally is now possible.</p>
+<p>As root:</p>
+<p> <pre><code class=text>mount -t nfs4 192.168.1.40:/export /mnt
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the NFS server is rescheduled in the Kubernetes cluster, the load balancer IP address follows, and the client will recover and resume IO after a few minutes.</p>
+</div>
+<h2 id="change_default_fsgroup_for_nfs_servers">Change default fsGroup for NFS Servers<a class="headerlink" href="#change_default_fsgroup_for_nfs_servers" title="Permanent link">&para;</a></h2>
+<p>The default "fsGroup" is mapped to "nobody" (gid=65534) which allows remote <code>Pods</code> run as the root user to write in the NFS export. This may not be desirable as best practices dictate that <code>Pods</code> should run with a user id larger than 99.</p>
+<p>To allow user <code>Pods</code> to write in the export, edit the running NFS deployment and change the "fsGroup" to the corresponding gid running in the remote <code>Pod</code>.</p>
+<p> <pre><code class=text>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpe-nfs
+spec:
+  template:
+    spec:
+      securityContext:
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+</code></pre></p>
+<h2 id="apply_custom_images_to_the_helm_chart_and_operator">Apply Custom Images to the Helm Chart and Operator<a class="headerlink" href="#apply_custom_images_to_the_helm_chart_and_operator" title="Permanent link">&para;</a></h2>
+<p>Container images that comprise the CSI driver can be individually replaced supply a fix, workaround or address a particular Common Vulnerability and Exposure (CVE).</p>
+<p>It's preferred to perform these actions while using the Helm chart or Operator. Images may be changed directly in running <code>Deployments</code> and <code>DaemonSets</code> while the CSI driver is deployed with either YAML manifests or the Helm chart. The Operator will not tolerate runtime changes and the <code>HPECSIDriver</code> resource needs to be updated for the change to take.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The examples below demonstrates how to replace the CSI node and controller driver only. HPE may ask to replace any number of images comprising the HPE CSI Driver, such as a CSP or upstream sidecar.</p>
+</div>
+<h3 id="helm">Helm<a class="headerlink" href="#helm" title="Permanent link">&para;</a></h3>
+<p>Parameters supplied to a Helm can be inserted either on the command-line or using a "values" YAML file. For an overview of parameters and in this case container images that needs to be manipulated, dump the values file for the chart.</p>
+<p> <pre><code class=text>helm show values hpe-storage/hpe-csi-driver
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Clarification</p>
+<p>The above command will dump the values for the latest chart in the repository. It will not contain any locally installed values. To pull the values of an installed CSI driver chart, use <code>helm get values -n hpe-storage my-hpe-csi-driver</code>.</p>
+</div>
+<p>The section of the values file that concerns container image manipulation is <code>.images</code>.</p>
+<h4 id="via_command-line">Via Command-Line<a class="headerlink" href="#via_command-line" title="Permanent link">&para;</a></h4>
+<p>Imagine there's a patch release from engineering to address a particular issue, say "CON-1234" in the CSI driver images.</p>
+<p> <pre><code class=text>helm install --create-namespace -n hpe-storage my-hpe-csi-driver \
+--set images.csiNodeDriver=quay.io/hpestorage/csi-driver:v0.0.0-CON-1234 \
+--set images.csiControllerDriver=quay.io/hpestorage/csi-driver:v0.0.0-CON-1234 \
+hpe-storage/hpe-csi-driver
+</code></pre></p>
+<h4 id="via_valuesyaml">Via values.yaml<a class="headerlink" href="#via_valuesyaml" title="Permanent link">&para;</a></h4>
+<p>Since the built-in values provide sane defaults, it's only necessary to manipulate the keys and values that are relevant to the change. If there are other changes that are necessary for this particular install, supply those parameters as well.</p>
+<p> <pre><code class=yaml>---
+images:
+  csiNodeDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+  csiControllerDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+</code></pre></p>
+<p>Install the chart with the contents above in a <code>values.yaml</code> file:</p>
+<p> <pre><code class=text>helm install --create-namespace -nhpe-storage my-hpe-csi-driver \
+-f values.yaml \
+hpe-storage/hpe-csi-driver
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are generic circumstances to illustrate the relevant steps to apply custom parameters. Be aware of the particular parameters the CSI driver has been installed with for your situation.</p>
+</div>
+<h3 id="operator">Operator<a class="headerlink" href="#operator" title="Permanent link">&para;</a></h3>
+<p>The Operator manages the Helm chart with a <code>HPECSIDriver</code> resource in the chosen <code>Namespace</code>, usually "hpe-storage". Changes can be made to the <code>HPECSIDriver</code> resource during runtime using either "edit" or "patch" commands but it's recommended to manipulate the source YAML file.</p>
+<p>Similar to the Helm chart, the <code>.spec.images</code> section needs to be manipulated.</p>
+<p> <pre><code class=yaml>---
+spec:
+  images:
+    csiNodeDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+    csiControllerDriver: quay.io/hpestorage/csi-driver:v0.0.0-CON-1234
+</code></pre></p>
+<p>Visit the <a href="deployment.html#upstream_kubernetes_and_others">Deployment section</a> for instructions on how to apply the <code>HPECSIDriver</code> resource.</p>
+<div class="admonition tip">
+<p class="admonition-title">Good to Know</p>
+<p>It's recommended to run the CSI driver with the bundled images and only apply changes when instructed by HPE. Customers may replace images as they desire but may need to revert installations when engaging with HPE support.</p>
+</div>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/operations.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="monitor.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="diagnostics.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

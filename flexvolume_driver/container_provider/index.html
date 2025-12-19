@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/flexvolume_driver/container_provider/index.html" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Index - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Index";
+        var mkdocs_page_input_path = "flexvolume_driver/container_provider/index.md";
+        var mkdocs_page_url = "/flexvolume_driver/container_provider/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../csi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../csi_driver/partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <div class="admonition error">
+<p class="admonition-title">Expired content</p>
+<p>The documentation described on this page may be obsolete and contain references to unsupported and deprecated software. Please reach out to your HPE representative if you think you need any of the components referenced within.</p>
+</div>
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<p>The HPE Volume Driver for Kubernetes FlexVolume Plugin leverages HPE Nimble Storage or HPE Cloud Volumes to provide scalable and persistent storage for stateful applications.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Using HPE Nimble Storage with Kubernetes 1.13 and newer, please use the <a href="https://github.com/hpe-storage/csi-driver">HPE CSI Driver for Kubernetes</a>.</p>
+</div>
+<p>Source code and developer documentation is available in the <a href="https://github.com/hpe-storage/flexvolume-driver">hpe-storage/flexvolume-driver</a> GitHub repo.</p>
+<div class="toc">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#platform_requirements">Platform requirements</a><ul>
+<li><a href="#hpe_nimble_storage_platform_requirements">HPE Nimble Storage Platform Requirements</a></li>
+<li><a href="#hpe_cloud_volumes_platform_requirements">HPE Cloud Volumes Platform Requirements</a></li>
+</ul>
+</li>
+<li><a href="#deploying_to_kubernetes">Deploying to Kubernetes</a><ul>
+<li><a href="#step_1_create_a_secret">Step 1: Create a secret</a><ul>
+<li><a href="#hpe_nimble_storage">HPE Nimble Storage</a></li>
+<li><a href="#hpe_cloud_volumes">HPE Cloud Volumes</a></li>
+</ul>
+</li>
+<li><a href="#step_2_create_a_configmap">Step 2. Create a ConfigMap</a><ul>
+<li><a href="#hpe_nimble_storage_1">HPE Nimble Storage</a></li>
+<li><a href="#hpe_cloud_volumes_1">HPE Cloud Volumes</a></li>
+</ul>
+</li>
+<li><a href="#step_3_deploy_the_flexvolume_driver_and_dynamic_provisioner">Step 3. Deploy the FlexVolume driver and dynamic provisioner</a><ul>
+<li><a href="#hpe_nimble_storage_2">HPE Nimble Storage</a></li>
+<li><a href="#hpe_cloud_volumes_2">HPE Cloud Volumes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#using">Using</a><ul>
+<li><a href="#sample_storageclass">Sample StorageClass</a></li>
+<li><a href="#test_and_verify_volume_provisioning">Test and verify volume provisioning</a></li>
+<li><a href="#use_case_specific_examples">Use case specific examples</a><ul>
+<li><a href="#data_protection">Data protection</a></li>
+<li><a href="#clone_and_throttle_for_devs">Clone and throttle for devs</a></li>
+<li><a href="#clone_a_non-containerized_volume">Clone a non-containerized volume</a></li>
+<li><a href="#import_cutover_a_volume">Import (cutover) a volume</a></li>
+<li><a href="#using_overrides">Using overrides</a></li>
+</ul>
+</li>
+<li><a href="#creating_clones_of_pvcs">Creating clones of PVCs</a></li>
+</ul>
+</li>
+<li><a href="#storageclass_parameters">StorageClass parameters</a><ul>
+<li><a href="#hpe_nimble_storage_storageclass_parameters">HPE Nimble Storage StorageClass parameters</a><ul>
+<li><a href="#common_parameters_for_provisioning_and_cloning">Common parameters for Provisioning and Cloning</a></li>
+<li><a href="#provisioning_parameters">Provisioning parameters</a></li>
+<li><a href="#cloning_parameters">Cloning parameters</a></li>
+<li><a href="#import_parameters">Import parameters</a></li>
+</ul>
+</li>
+<li><a href="#hpe_cloud_volumes_storageclass_parameters">HPE Cloud Volumes StorageClass parameters</a><ul>
+<li><a href="#common_parameters_for_provisioning_and_cloning_1">Common parameters for Provisioning and Cloning</a></li>
+<li><a href="#provisioning_parameters_1">Provisioning parameters</a></li>
+<li><a href="#cloning_parameters_1">Cloning parameters</a></li>
+<li><a href="#import_parameters_1">Import parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#diagnostics">Diagnostics</a><ul>
+<li><a href="#troubleshooting_flexvolume_driver">Troubleshooting FlexVolume driver</a><ul>
+<li><a href="#locations">Locations</a></li>
+<li><a href="#override_defaults">Override defaults</a></li>
+<li><a href="#connectivity">Connectivity</a></li>
+</ul>
+</li>
+<li><a href="#flexvolume_and_dynamic_provisioner_driver_logs">FlexVolume and dynamic provisioner driver logs</a></li>
+<li><a href="#log_collector">Log Collector</a></li>
+</ul>
+</li>
+<li><a href="#advanced_configuration">Advanced Configuration</a><ul>
+<li><a href="#set_defaults_at_the_compute_node_level">Set defaults at the compute node level</a></li>
+<li><a href="#global_options">Global options</a><ul>
+<li><a href="#common">Common</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="platform_requirements">Platform requirements<a class="headerlink" href="#platform_requirements" title="Permanent link">&para;</a></h2>
+<p>The FlexVolume driver supports multiple backends that are based on a "container provider" architecture. Currently, Nimble and Cloud Volumes are supported.</p>
+<h3 id="hpe_nimble_storage_platform_requirements">HPE Nimble Storage Platform Requirements<a class="headerlink" href="#hpe_nimble_storage_platform_requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Driver</th>
+<th>HPE Nimble Storage Version</th>
+<th>Release Notes</th>
+<th>Blog</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v3.0.0</td>
+<td>5.0.8.x and 5.1.3.x onwards</td>
+<td><a href="https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.0.0.md">v3.0.0</a></td>
+<td><a href="https://community.hpe.com/t5/HPE-Storage-Tech-Insiders/Released-HPE-Volume-Driver-for-Kubernetes-FlexVolume-Plugin-3-0/ba-p/7063875">HPE Storage Tech Insiders</a></td>
+</tr>
+<tr>
+<td>v3.1.0</td>
+<td>5.0.8.x and 5.1.3.x onwards</td>
+<td><a href="https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md">v3.1.0</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>OpenShift Container Platform 3.9, 3.10 and 3.11.</li>
+<li>Kubernetes 1.10 and above.</li>
+<li>Redhat/CentOS 7.5+</li>
+<li>Ubuntu 16.04/18.04 LTS</li>
+</ul>
+<p><strong>Note:</strong> Synchronous replication (Peer Persistence) is not supported by the HPE Volume Driver for Kubernetes FlexVolume Plugin.</p>
+<h3 id="hpe_cloud_volumes_platform_requirements">HPE Cloud Volumes Platform Requirements<a class="headerlink" href="#hpe_cloud_volumes_platform_requirements" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Driver</th>
+<th>Release Notes</th>
+<th>Blog</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v3.1.0</td>
+<td><a href="https://github.com/hpe-storage/flexvolume-driver/blob/master/release-notes/v3.1.0.md">v3.1.0</a></td>
+<td><a href="https://developer.hpe.com/blog/using-hpe-cloud-volumes-with-amazon-eks">Using HPE Cloud Volumes with Amazon EKS</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Amazon EKS 1.12/1.13</li>
+<li>Microsoft Azure AKS 1.12/1.13</li>
+<li>US regions only</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>HPE Cloud Volumes was introduced in HPE CSI Driver for Kubernetes v1.5.0. Make sure to check if your cloud is supported by the <a href="../../csi_driver/index.html">CSI driver</a> first.</p>
+</div>
+<h2 id="deploying_to_kubernetes">Deploying to Kubernetes<a class="headerlink" href="#deploying_to_kubernetes" title="Permanent link">&para;</a></h2>
+<p>The recommended way to deploy and manage the HPE Volume Driver for Kubernetes FlexVolume Plugin is to use Helm. Please see the <a href="https://github.com/hpe-storage/co-deployments">co-deployments</a> repository for further information.</p>
+<p>Use the following steps for a manual installation.</p>
+<h3 id="step_1_create_a_secret">Step 1: Create a secret<a class="headerlink" href="#step_1_create_a_secret" title="Permanent link">&para;</a></h3>
+<h4 id="hpe_nimble_storage">HPE Nimble Storage<a class="headerlink" href="#hpe_nimble_storage" title="Permanent link">&para;</a></h4>
+<p>Replace the <code>password</code> string (<code>YWRtaW4=</code>) below with a base64 encoded version of your password and replace the <code>backend</code> with your array IP address and save it as <code>hpe-secret.yaml</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-secret
+  namespace: kube-system
+stringData:
+  backend: 192.168.1.1
+  username: admin
+  protocol: &quot;iscsi&quot;
+data:
+  # echo -n &quot;admin&quot; | base64
+  password: YWRtaW4=
+</code></pre></p>
+<h4 id="hpe_cloud_volumes">HPE Cloud Volumes<a class="headerlink" href="#hpe_cloud_volumes" title="Permanent link">&para;</a></h4>
+<p>Replace the <code>username</code> and <code>password</code> strings (<code>YWRtaW4=</code>) with a base64 encoded version of your HPE Cloud Volumes "access_key" and "access_secret". Also, replace the <code>backend</code> with HPE Cloud Volumes portal fully qualified domain name (FQDN) and save it as <code>hpe-secret.yaml</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-secret
+  namespace: kube-system
+stringData:
+  backend: cloudvolumes.hpe.com
+  protocol: &quot;iscsi&quot;
+  serviceName: cv-cp-svc
+  servicePort: &quot;8080&quot;
+data:
+  # echo -n &quot;&lt;my very confidential access key&gt;&quot; | base64
+  username: YWRtaW4=
+  # echo -n &quot;&lt;my very confidential secret key&gt;&quot; | base64
+  password: YWRtaW4=
+</code></pre></p>
+<p>Create the secret:</p>
+<p> <pre><code class=yaml>kubectl create -f hpe-secret.yaml
+secret &quot;hpe-secret&quot; created
+</code></pre></p>
+<p>You should now see the HPE secret in the <code>kube-system</code> namespace.</p>
+<p> <pre><code class=shell>kubectl get secret/hpe-secret -n kube-system
+NAME                  TYPE                                  DATA      AGE
+hpe-secret            Opaque                                5         3s
+</code></pre></p>
+<h3 id="step_2_create_a_configmap">Step 2. Create a ConfigMap<a class="headerlink" href="#step_2_create_a_configmap" title="Permanent link">&para;</a></h3>
+<p>The <code>ConfigMap</code> is used to set and tweak defaults for both the FlexVolume driver and Dynamic Provisioner.</p>
+<h4 id="hpe_nimble_storage_1">HPE Nimble Storage<a class="headerlink" href="#hpe_nimble_storage_1" title="Permanent link">&para;</a></h4>
+<p>Edit the below default parameters as required for FlexVolume driver and save it as <code>hpe-config.yaml</code>.</p>
+<p> <pre><code class=yaml>kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hpe-config
+  namespace: kube-system
+data:
+  volume-driver.json: |-
+    {
+      &quot;global&quot;:   {},
+      &quot;defaults&quot;: {
+                 &quot;limitIOPS&quot;:&quot;-1&quot;,
+                 &quot;limitMBPS&quot;:&quot;-1&quot;,
+                 &quot;perfPolicy&quot;: &quot;Other&quot;
+                },
+      &quot;overrides&quot;:{}
+    }
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Please see <a href="#advanced_configuration">Advanced</a> for more <code>volume-driver.json</code> configuration options.</p>
+</div>
+<h4 id="hpe_cloud_volumes_1">HPE Cloud Volumes<a class="headerlink" href="#hpe_cloud_volumes_1" title="Permanent link">&para;</a></h4>
+<p>Edit the below parameters as required with your public cloud info and save it as <code>hpe-config.yaml</code>.</p>
+<p> <pre><code class=yaml>kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hpe-config
+  namespace: kube-system
+data:
+  volume-driver.json: |-
+    {
+      &quot;global&quot;: {
+                &quot;snapPrefix&quot;: &quot;BaseFor&quot;,
+                &quot;initiators&quot;: [&quot;eth0&quot;],
+                &quot;automatedConnection&quot;: true,
+                &quot;existingCloudSubnet&quot;: &quot;10.1.0.0/24&quot;,
+                &quot;region&quot;: &quot;us-east-1&quot;,
+                &quot;privateCloud&quot;: &quot;vpc-data&quot;,
+                &quot;cloudComputeProvider&quot;: &quot;Amazon AWS&quot;
+      },
+      &quot;defaults&quot;: {
+                &quot;limitIOPS&quot;: 1000,
+                &quot;fsOwner&quot;: &quot;0:0&quot;,
+                &quot;fsMode&quot;: &quot;600&quot;,
+                &quot;description&quot;: &quot;Volume provisioned by the HPE Volume Driver for Kubernetes FlexVolume Plugin&quot;,
+                &quot;perfPolicy&quot;: &quot;Other&quot;,
+                &quot;protectionTemplate&quot;: &quot;twicedaily:4&quot;,
+                &quot;encryption&quot;: true,
+                &quot;volumeType&quot;: &quot;PF&quot;,
+                &quot;destroyOnRm&quot;: true
+      },
+      &quot;overrides&quot;: {
+      }
+    }
+</code></pre></p>
+<p>Create the <code>ConfigMap</code>:</p>
+<p> <pre><code class=shell>kubectl create -f hpe-config.yaml
+configmap/hpe-config created
+</code></pre></p>
+<h3 id="step_3_deploy_the_flexvolume_driver_and_dynamic_provisioner">Step 3. Deploy the FlexVolume driver and dynamic provisioner<a class="headerlink" href="#step_3_deploy_the_flexvolume_driver_and_dynamic_provisioner" title="Permanent link">&para;</a></h3>
+<p>Deploy the driver as a <code>DaemonSet</code> and the dynamic provisioner as a <code>Deployment</code>.</p>
+<h4 id="hpe_nimble_storage_2">HPE Nimble Storage<a class="headerlink" href="#hpe_nimble_storage_2" title="Permanent link">&para;</a></h4>
+<p>Version 3.0.0:</p>
+<p> <pre><code class>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-nimble-storage/hpe-flexvolume-driver-v3.0.0.yaml
+</code></pre></p>
+<p>Version 3.1.0:</p>
+<p> <pre><code class>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-nimble-storage/hpe-flexvolume-driver-v3.1.0.yaml
+</code></pre></p>
+<h4 id="hpe_cloud_volumes_2">HPE Cloud Volumes<a class="headerlink" href="#hpe_cloud_volumes_2" title="Permanent link">&para;</a></h4>
+<p>Container-Provider Service:</p>
+<p> <pre><code class=shell>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-cloud-volumes/hpecv-cp-v3.1.0.yaml
+</code></pre></p>
+<p>The FlexVolume driver have different declarations depending on the Kubernetes distribution.</p>
+<p>Amazon EKS:</p>
+<p> <pre><code class=shell>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-cloud-volumes/hpecv-aws-flexvolume-driver-v3.1.0.yaml
+</code></pre></p>
+<p>Microsoft Azure AKS:</p>
+<p> <pre><code class=shell>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-cloud-volumes/hpecv-azure-flexvolume-driver-v3.1.0.yaml
+</code></pre></p>
+<p>Generic:</p>
+<p> <pre><code class=shell>kubectl create -f https://raw.githubusercontent.com/hpe-storage/co-deployments/master/yaml/flexvolume-driver/hpe-cloud-volumes/hpecv-flexvolume-driver-v3.1.0.yaml
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The declarations for HPE Volume Driver for Kubernetes FlexVolume Plugin can be found in the <a href="https://github.com/hpe-storage/co-deployments/tree/master/yaml/flexvolume-driver">co-deployments</a> repository.</p>
+</div>
+<p>Check to see all <code>hpe-flexvolume-driver</code> <code>Pods</code> (one per compute node) and the <code>hpe-dynamic-provisioner</code> Pod are running.</p>
+<p> <pre><code class=shell>kubectl get pods -n kube-system
+NAME                                            READY   STATUS    RESTARTS   AGE
+hpe-flexvolume-driver-2rdt4                     1/1     Running   0          45s
+hpe-flexvolume-driver-md562                     1/1     Running   0          44s
+hpe-flexvolume-driver-x4k96                     1/1     Running   0          44s
+hpe-dynamic-provisioner-59f9d495d4-hxh29        1/1     Running   0          24s
+</code></pre></p>
+<p>For HPE Cloud Volumes, check that <code>hpe-cv-cp</code> pod is running as well.</p>
+<p> <pre><code class=shell>kubectl get pods -n kube-system -l=app=cv-cp
+NAME                                READY   STATUS    RESTARTS   AGE
+hpe-cv-cp-2rdt4                     1/1     Running   0          45s
+</code></pre></p>
+<h2 id="using">Using<a class="headerlink" href="#using" title="Permanent link">&para;</a></h2>
+<p>Get started using the FlexVolume driver by setting up <code>StorageClass</code>, <code>PVC</code> API objects. See <a href="#using">Using</a> for examples.</p>
+<p>These instructions are provided as an example on how to use the HPE Volume Driver for Kubernetes FlexVolume Plugin with a HPE Nimble Storage Array.</p>
+<p>The below YAML declarations are meant to be created with <code>kubectl create</code>. Either copy the content to a file on the host where <code>kubectl</code> is being executed, or copy &amp; paste into the terminal, like this:</p>
+<p> <pre><code class=shell>kubectl create -f-
+&lt; paste the YAML &gt;
+^D (CTRL + D)
+</code></pre></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Some of the examples supported by the HPE Volume Driver for Kubernetes FlexVolume Plugin are available for <a href="https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-nimble-storage">HPE Nimble Storage</a> or <a href="https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-cloud-volumes">HPE Cloud Volumes</a> in the GitHub repo.</p>
+</div>
+<p>To get started, create a <code>StorageClass</code> API object referencing the <code>hpe-secret</code> and defining additional (optional) <code>StorageClass</code> parameters:</p>
+<h3 id="sample_storageclass">Sample StorageClass<a class="headerlink" href="#sample_storageclass" title="Permanent link">&para;</a></h3>
+<p>Sample storage classes can be found for <a href="https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-nimble-storage/sc-nimble.yaml">HPE Nimble Storage</a> and <a href="https://github.com/hpe-storage/flexvolume-driver/tree/master/examples/kubernetes/hpe-cloud-volumes/sc-cv.yaml">HPE Cloud Volumes</a>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>See <code>StorageClass</code> parameters for <a href="#hpe_nimble_storage_storageclass_parameters">HPE Nimble Storage</a> and <a href="#hpe_cloud_volumes_storageclass_parameters">HPE Clound Volumes</a> for a comprehensive overview.</p>
+</div>
+<h3 id="test_and_verify_volume_provisioning">Test and verify volume provisioning<a class="headerlink" href="#test_and_verify_volume_provisioning" title="Permanent link">&para;</a></h3>
+<p>Create a <code>StorageClass</code> with volume parameters as required.</p>
+<p> <pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-nimble
+provisioner: hpe.com/nimble
+parameters:
+  description: &quot;Volume from HPE FlexVolume driver&quot;
+  perfPolicy: &quot;Other Workloads&quot;
+  limitIOPS: &quot;76800&quot;
+</code></pre></p>
+<p>Create a <code>PersistentVolumeClaim</code>. This makes sure a volume is created and provisioned on your behalf:</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nimble
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: sc-nimble
+</code></pre></p>
+<p>Check that a new <code>PersistentVolume</code> is created based on your claim:</p>
+<p> <pre><code class=shell>kubectl get pv
+NAME                                            CAPACITY     ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM               STORAGECLASS   REASON   AGE
+sc-nimble-13336da3-7ca3-11e9-826c-00505693581f  10Gi         RWO            Delete           Bound    default/pvc-nimble  sc-nimble               3s
+</code></pre></p>
+<p>The above output means that the FlexVolume driver successfully provisioned a new volume and bound to the requesting <code>PVC</code> to a new <code>PV</code>. The volume is not attached to any node yet. It will only be attached to a node if a workload is scheduled to a specific node. Now let us create a <code>Pod</code> that refers to the above volume. When the <code>Pod</code> is created, the volume will be attached, formatted and mounted to the specified container:</p>
+<p> <pre><code class=yaml>kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-nimble
+spec:
+  containers:
+    - name: pod-nimble-con-1
+      image: nginx
+      command: [&quot;bin/sh&quot;]
+      args: [&quot;-c&quot;, &quot;while true; do date &gt;&gt; /data/mydata.txt; sleep 1; done&quot;]
+      volumeMounts:
+        - name: export1
+          mountPath: /data
+    - name: pod-nimble-cont-2
+      image: debian
+      command: [&quot;bin/sh&quot;]
+      args: [&quot;-c&quot;, &quot;while true; do date &gt;&gt; /data/mydata.txt; sleep 1; done&quot;]
+      volumeMounts:
+        - name: export1
+          mountPath: /data
+  volumes:
+    - name: export1
+      persistentVolumeClaim:
+        claimName: pvc-nimble
+</code></pre></p>
+<p>Check if the pod is running successfully:</p>
+<p> <pre><code class=shell>kubectl get pod pod-nimble
+NAME         READY   STATUS    RESTARTS   AGE
+pod-nimble   2/2     Running   0          2m29s
+</code></pre></p>
+<h3 id="use_case_specific_examples">Use case specific examples<a class="headerlink" href="#use_case_specific_examples" title="Permanent link">&para;</a></h3>
+<p>This <code>StorageClass</code> examples help guide combinations of options when provisioning volumes.</p>
+<h4 id="data_protection">Data protection<a class="headerlink" href="#data_protection" title="Permanent link">&para;</a></h4>
+<p>This <code>StorageClass</code> creates thinly provisioned volumes with deduplication turned on. It will also apply the Performance Policy "SQL Server" along with a Protection Template. The Protection Template needs to be defined on the array.</p>
+<p> <pre><code class=yaml>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+    name: oltp-prod
+provisioner: hpe.com/nimble
+parameters:
+    thick: &quot;false&quot;
+    dedupe: &quot;true&quot;
+    perfPolicy: &quot;SQL Server&quot;
+    protectionTemplate: &quot;Retain-48Hourly-30Daily-52Weekly&quot;
+</code></pre></p>
+<h4 id="clone_and_throttle_for_devs">Clone and throttle for devs<a class="headerlink" href="#clone_and_throttle_for_devs" title="Permanent link">&para;</a></h4>
+<p>This <code>StorageClass</code> will create clones of a "production" volume and throttle the performance of each clone to 1000 IOPS. When the PVC is deleted, it will be permanently deleted from the backend array.</p>
+<p> <pre><code class=yaml>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: oltp-dev-clone-of-prod
+provisioner: hpe.com/nimble
+parameters:
+  limitIOPS: &quot;1000&quot;
+  cloneOf: &quot;oltp-prod-1adee106-110b-11e8-ac84-00505696c45f&quot;
+  destroyOnRm: &quot;true&quot;
+</code></pre></p>
+<h4 id="clone_a_non-containerized_volume">Clone a non-containerized volume<a class="headerlink" href="#clone_a_non-containerized_volume" title="Permanent link">&para;</a></h4>
+<p>This <code>StorageClass</code> will clone a standard backend volume (without container metadata on it) from a particular pool on the backend.</p>
+<p> <pre><code class=yaml>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: import-clone-legacy-prod
+rovisioner: hpe.com/nimble
+parameters:
+  pool: &quot;flash&quot;
+  importVolAsClone: &quot;production-db-vol&quot;
+  destroyOnRm: &quot;true&quot;
+</code></pre></p>
+<h4 id="import_cutover_a_volume">Import (cutover) a volume<a class="headerlink" href="#import_cutover_a_volume" title="Permanent link">&para;</a></h4>
+<p>This <code>StorageClass</code> will import an existing Nimble volume to Kubernetes. The source volume needs to be offline for the import to succeed.</p>
+<p> <pre><code class=yaml>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: import-clone-legacy-prod
+provisioner: hpe.com/nimble
+parameters:
+  pool: &quot;flash&quot;
+  importVol: &quot;production-db-vol&quot;
+</code></pre></p>
+<h4 id="using_overrides">Using overrides<a class="headerlink" href="#using_overrides" title="Permanent link">&para;</a></h4>
+<p>The HPE Dynamic Provisioner for Kubernetes understands a set of annotation keys a user can set on a <code>PVC</code>. If the corresponding keys exists in the list of the <code>allowOverrides</code> key in the <code>StorageClass</code>, the end-user can tweak certain aspects of the provisioning workflow. This opens up for very advanced data services.</p>
+<p>StorageClass object:</p>
+<p> <pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-sc
+provisioner: hpe.com/nimble
+parameters:
+  description: &quot;Volume provisioned by StorageClass my-sc&quot;
+  dedupe: &quot;false&quot;
+  destroyOnRm: &quot;true&quot;
+  perfPolicy: &quot;Windows File Server&quot;
+  folder: &quot;myfolder&quot;
+  allowOverrides: snapshot,limitIOPS,perfPolicy
+</code></pre></p>
+<p>PersistentVolumeClaim object:</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: my-pvc
+ annotations:
+    hpe.com/description: &quot;This is my custom description&quot;
+    hpe.com/limitIOPS: &quot;8000&quot;
+    hpe.com/perfPolicy: &quot;SQL Server&quot;
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: my-sc
+</code></pre></p>
+<p>This will create a <code>PV</code> of 8000 IOPS with the Performance Policy of "SQL Server" and a custom volume description.</p>
+<h3 id="creating_clones_of_pvcs">Creating clones of PVCs<a class="headerlink" href="#creating_clones_of_pvcs" title="Permanent link">&para;</a></h3>
+<p>Using a <code>StorageClass</code> to clone a <code>PV</code> is practical when there's needs to clone across namespaces (for example from prod to test or stage). If a user wants to clone any arbitrary volume, it becomes a bit tedious to create a <code>StorageClass</code> for each clone. The annotation <code>hpe.com/CloneOfPVC</code> allows a user to clone any <code>PVC</code> within a namespace.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: my-pvc-clone
+ annotations:
+    hpe.com/cloneOfPVC: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: my-sc
+</code></pre></p>
+<h2 id="storageclass_parameters">StorageClass parameters<a class="headerlink" href="#storageclass_parameters" title="Permanent link">&para;</a></h2>
+<p>This section highlights all the available <code>StorageClass</code> parameters that are supported.</p>
+<h3 id="hpe_nimble_storage_storageclass_parameters">HPE Nimble Storage StorageClass parameters<a class="headerlink" href="#hpe_nimble_storage_storageclass_parameters" title="Permanent link">&para;</a></h3>
+<p>A <code>StorageClass</code> is used to provision or clone an HPE Nimble Storage-backed persistent volume. It can also be used to import an existing HPE Nimble Storage volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.</p>
+<p>A sample <a href="https://raw.githubusercontent.com/hpe-storage/flexvolume-driver/master/examples/kubernetes/hpe-nimble-storage/sc-nimble.yaml">StorageClass</a> is provided.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are optional parameters.</p>
+</div>
+<h4 id="common_parameters_for_provisioning_and_cloning">Common parameters for Provisioning and Cloning<a class="headerlink" href="#common_parameters_for_provisioning_and_cloning" title="Permanent link">&para;</a></h4>
+<p>These parameters are mutable betweeen a parent volume and creating a clone from a snapshot.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nameSuffix</td>
+<td>Text</td>
+<td>Suffix to append to Nimble volumes. Defaults to .docker</td>
+</tr>
+<tr>
+<td>destroyOnRm</td>
+<td>Boolean</td>
+<td>Indicates the backing Nimble volume (including snapshots) should be destroyed when the PVC is deleted.</td>
+</tr>
+<tr>
+<td>limitIOPS</td>
+<td>Integer</td>
+<td>The IOPS limit of the volume. The IOPS limit should be in the range 256 to 4294967294, or -1 for unlimited (default).</td>
+</tr>
+<tr>
+<td>limitMBPS</td>
+<td>Integer</td>
+<td>The MB/s throughput limit for the volume.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Text</td>
+<td>Text to be added to the volume's description on the Nimble array.</td>
+</tr>
+<tr>
+<td>perfPolicy</td>
+<td>Text</td>
+<td>The name of the performance policy to assign to the volume. Default example performance policies include "Backup Repository", "Exchange 2003 data store", "Exchange 2007 data store", "Exchange 2010 data store", "Exchange log", "Oracle OLTP", "Other Workloads", "SharePoint", "SQL Server", "SQL Server 2012", "SQL Server Logs".</td>
+</tr>
+<tr>
+<td>protectionTemplate</td>
+<td>Text</td>
+<td>The name of the protection template to assign to the volume. Default examples of protection templates include "Retain-30Daily", "Retain-48Hourly-30aily-52Weekly", and "Retain-90Daily".</td>
+</tr>
+<tr>
+<td>folder</td>
+<td>Text</td>
+<td>The name of the Nimble folder in which to place the volume.</td>
+</tr>
+<tr>
+<td>thick</td>
+<td>Boolean</td>
+<td>Indicates that the volume should be thick provisioned.</td>
+</tr>
+<tr>
+<td>dedupeEnabled</td>
+<td>Boolean</td>
+<td>Indicates that the volume should enable deduplication.</td>
+</tr>
+<tr>
+<td>syncOnUnmount</td>
+<td>Boolean</td>
+<td>Indicates that a snapshot of the volume should be synced to the replication partner each time it is detached from a node.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Performance Policies, Folders and Protection Templates are Nimble specific constructs that can be created on the Nimble array itself to address particular requirements or workloads. Please consult with the storage admin or read the admin guide found on <a href="https://infosight.hpe.com">HPE InfoSight</a>.</p>
+</div>
+<h4 id="provisioning_parameters">Provisioning parameters<a class="headerlink" href="#provisioning_parameters" title="Permanent link">&para;</a></h4>
+<p>These parameters are immutable for clones once a volume has been created.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fsOwner</td>
+<td>userId:groupId</td>
+<td>The user id and group id that should own the root directory of the filesystem.</td>
+</tr>
+<tr>
+<td>fsMode</td>
+<td>Octal digits</td>
+<td>1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem.</td>
+</tr>
+<tr>
+<td>encryption</td>
+<td>Boolean</td>
+<td>Indicates that the volume should be encrypted.</td>
+</tr>
+<tr>
+<td>pool</td>
+<td>Text</td>
+<td>The name of the pool in which to place the volume.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cloning_parameters">Cloning parameters<a class="headerlink" href="#cloning_parameters" title="Permanent link">&para;</a></h4>
+<p>Cloning supports two modes of cloning. Either use <code>cloneOf</code> and reference a PVC in the current namespace or use <code>importVolAsClone</code> and reference a Nimble volume name to clone and import to Kubernetes.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cloneOf</td>
+<td>Text</td>
+<td>The name of the PV to be cloned. <code>cloneOf</code> and <code>importVolAsClone</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>importVolAsClone</td>
+<td>Text</td>
+<td>The name of the Nimble volume to clone and import. <code>importVolAsClone</code> and <code>cloneOf</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Text</td>
+<td>The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created.</td>
+</tr>
+<tr>
+<td>createSnapshot</td>
+<td>Boolean</td>
+<td>Indicates that a new snapshot of the volume should be taken matching the name provided in the <code>snapshot</code> parameter. If the <code>snapshot</code> parameter is not specified, a default name will be created.</td>
+</tr>
+<tr>
+<td>snapshotPrefix</td>
+<td>Text</td>
+<td>A prefix to add to the beginning of the snapshot name.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="import_parameters">Import parameters<a class="headerlink" href="#import_parameters" title="Permanent link">&para;</a></h4>
+<p>Importing volumes to Kubernetes requires the source Nimble volume to be offline. All previous Access Control Records and Initiator Groups will be stripped from the volume when put under control of the HPE Volume Driver for Kubernetes FlexVolume Plugin.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>importVol</td>
+<td>Text</td>
+<td>The name of the Nimble volume to import.</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Text</td>
+<td>The name of the Nimble snapshot to restore the imported volume to after takeover. If not specified, the volume will not be restored.</td>
+</tr>
+<tr>
+<td>restore</td>
+<td>Boolean</td>
+<td>Restores the volume to the last snapshot taken on the volume.</td>
+</tr>
+<tr>
+<td>takeover</td>
+<td>Boolean</td>
+<td>Indicates the current group will takeover ownership of the Nimble volume and volume collection. This should be performed against a downstream replica.</td>
+</tr>
+<tr>
+<td>reverseRepl</td>
+<td>Boolean</td>
+<td>Reverses the replication direction so that writes to the Nimble volume are replicated back to the group where it was replicated from.</td>
+</tr>
+<tr>
+<td>forceImport</td>
+<td>Boolean</td>
+<td>Forces the import of a volume that is not owned by the group and is not part of a volume collection. If the volume is part of a volume collection, use takeover instead.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>HPE Nimble Docker Volume workflows works with a 1-1 mapping between volume and volume collection.</p>
+</div>
+<h3 id="hpe_cloud_volumes_storageclass_parameters">HPE Cloud Volumes StorageClass parameters<a class="headerlink" href="#hpe_cloud_volumes_storageclass_parameters" title="Permanent link">&para;</a></h3>
+<p>A <code>StorageClass</code> is used to provision or clone an HPE Cloud Volumes-backed persistent volume. It can also be used to import an existing HPE Cloud Volumes volume or clone of a snapshot into the Kubernetes cluster. The parameters are grouped below by those same workflows.</p>
+<p>A sample <a href="https://raw.githubusercontent.com/hpe-storage/flexvolume-driver/master/examples/kubernetes/hpe-nimble-storage/sc-cv.yaml">StorageClass</a> is provided.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These are optional parameters.</p>
+</div>
+<h4 id="common_parameters_for_provisioning_and_cloning_1">Common parameters for Provisioning and Cloning<a class="headerlink" href="#common_parameters_for_provisioning_and_cloning_1" title="Permanent link">&para;</a></h4>
+<p>These parameters are mutable betweeen a parent volume and creating a clone from a snapshot.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nameSuffix</td>
+<td>Text</td>
+<td>Suffix to append to Cloud Volumes.</td>
+</tr>
+<tr>
+<td>destroyOnRm</td>
+<td>Boolean</td>
+<td>Indicates the backing Cloud volume (including snapshots) should be destroyed when the PVC is deleted.</td>
+</tr>
+<tr>
+<td>limitIOPS</td>
+<td>Integer</td>
+<td>The IOPS limit of the volume. The IOPS limit should be in the range 300 to 50000.</td>
+</tr>
+<tr>
+<td>perfPolicy</td>
+<td>Text</td>
+<td>The name of the performance policy to assign to the volume. Default example performance policies include "Other, Exchange, Oracle, SharePoint, SQL, Windows File Server".</td>
+</tr>
+<tr>
+<td>protectionTemplate</td>
+<td>Text</td>
+<td>The name of the protection template to assign to the volume. Default examples of protection templates include "daily:3, daily:7, daily:14, hourly:6, hourly:12, hourly:24, twicedaily:4, twicedaily:8, twicedaily:14, weekly:2, weekly:4, weekly:8, monthly:3, monthly:6, monthly:12 or none".</td>
+</tr>
+<tr>
+<td>volumeType</td>
+<td>Text</td>
+<td>Cloud Volume type. Supported types are PF and GPF.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="provisioning_parameters_1">Provisioning parameters<a class="headerlink" href="#provisioning_parameters_1" title="Permanent link">&para;</a></h4>
+<p>These parameters are immutable for clones once a volume has been created.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fsOwner</td>
+<td>userId:groupId</td>
+<td>The user id and group id that should own the root directory of the filesystem.</td>
+</tr>
+<tr>
+<td>fsMode</td>
+<td>Octal digits</td>
+<td>1 to 4 octal digits that represent the file mode to be applied to the root directory of the filesystem.</td>
+</tr>
+<tr>
+<td>encryption</td>
+<td>Boolean</td>
+<td>Indicates that the volume should be encrypted.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cloning_parameters_1">Cloning parameters<a class="headerlink" href="#cloning_parameters_1" title="Permanent link">&para;</a></h4>
+<p>Cloning supports two modes of cloning. Either use <code>cloneOf</code> and reference a PVC in the current namespace or use <code>importVolAsClone</code> and reference a Cloud volume name to clone and import to Kubernetes.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cloneOf</td>
+<td>Text</td>
+<td>The name of the PV to be cloned. <code>cloneOf</code> and <code>importVolAsClone</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>importVolAsClone</td>
+<td>Text</td>
+<td>The name of the Cloud Volume volume to clone and import. <code>importVolAsClone</code> and <code>cloneOf</code> are mutually exclusive.</td>
+</tr>
+<tr>
+<td>snapshot</td>
+<td>Text</td>
+<td>The name of the snapshot to base the clone on. This is optional. If not specified, a new snapshot is created.</td>
+</tr>
+<tr>
+<td>createSnapshot</td>
+<td>Boolean</td>
+<td>Indicates that a new snapshot of the volume should be taken matching the name provided in the <code>snapshot</code> parameter. If the <code>snapshot</code> parameter is not specified, a default name will be created.</td>
+</tr>
+<tr>
+<td>snapshotPrefix</td>
+<td>Text</td>
+<td>A prefix to add to the beginning of the snapshot name.</td>
+</tr>
+<tr>
+<td>replStore</td>
+<td>Text</td>
+<td>Replication store name. Should be used with importVolAsClone parameter to clone a replica volume</td>
+</tr>
+</tbody>
+</table>
+<h4 id="import_parameters_1">Import parameters<a class="headerlink" href="#import_parameters_1" title="Permanent link">&para;</a></h4>
+<p>Importing volumes to Kubernetes requires the source Cloud volume to be not attached to any nodes. All previous Access Control Records will be stripped from the volume when put under control of the HPE Volume Driver for Kubernetes FlexVolume Plugin.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>importVol</td>
+<td>Text</td>
+<td>The name of the Cloud volume to import.</td>
+</tr>
+<tr>
+<td>forceImport</td>
+<td>Boolean</td>
+<td>Forces the import of a volume that is provisioned by another K8s cluster but not attached to any nodes.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagnostics">Diagnostics<a class="headerlink" href="#diagnostics" title="Permanent link">&para;</a></h2>
+<p>This section outlines a few troubleshooting steps for the HPE Volume Driver for Kubernetes Plugin. This product is supported by HPE, please consult with your support organization (Nimble, Cloud Volumes etc) prior attempting any configuration changes.</p>
+<h3 id="troubleshooting_flexvolume_driver">Troubleshooting FlexVolume driver<a class="headerlink" href="#troubleshooting_flexvolume_driver" title="Permanent link">&para;</a></h3>
+<p>The FlexVolume driver is a binary executed by the kubelet to perform mount/unmount/attach/detach operations as workloads request storage resources. The binary relies on communicating with a socket on the host where the volume plugin responsible for the MUAD operations perform control-plane or data-plane operations against the backend system hosting the actual volumes.</p>
+<h4 id="locations">Locations<a class="headerlink" href="#locations" title="Permanent link">&para;</a></h4>
+<p>The driver has a configuration file where certain defaults can be tweaked to accommodate a certain behavior. Under normal circumstances, this file does not need any tweaking.</p>
+<p>The name and the location of the binary varies based on Kubernetes distribution (the default 'exec' path) and what backend driver is being used. In a typical scenario, using Nimble, this is expected:</p>
+<ul>
+<li>Binary: <code>/usr/libexec/kubernetes/kubelet-plugins/volume/exec/hpe.com~nimble/nimble</code></li>
+<li>Config file: <code>/usr/libexec/kubernetes/kubelet-plugins/volume/exec/hpe.com~nimble/nimble.json</code></li>
+</ul>
+<h4 id="override_defaults">Override defaults<a class="headerlink" href="#override_defaults" title="Permanent link">&para;</a></h4>
+<p>By default, it contains only the path to the socket file for the volume plugin:</p>
+<p> <pre><code class=json>{
+    &quot;dockerVolumePluginSocketPath&quot;: &quot;/etc/hpe-storage/nimble.sock&quot;
+}
+</code></pre></p>
+<p>Valid options for the FlexVolume driver can be inspected by executing the binary on the host with the <code>config</code> argument:</p>
+<p> <pre><code class=text>/usr/libexec/kubernetes/kubelet-plugins/volume/exec/hpe.com~nimble/nimble config
+Error processing option 'logFilePath' - key:logFilePath not found
+Error processing option 'logDebug' - key:logDebug not found
+Error processing option 'supportsCapabilities' - key:supportsCapabilities not found
+Error processing option 'stripK8sFromOptions' - key:stripK8sFromOptions not found
+Error processing option 'createVolumes' - key:createVolumes not found
+Error processing option 'listOfStorageResourceOptions' - key:listOfStorageResourceOptions not found
+Error processing option 'factorForConversion' - key:factorForConversion not found
+Error processing option 'enable1.6' - key:enable1.6 not found
+
+Driver=nimble Version=v2.5.1-50fbff2aa14a693a9a18adafb834da33b9e7cc89
+Current Config:
+  dockerVolumePluginSocketPath = /etc/hpe-storage/nimble.sock
+           stripK8sFromOptions = true
+                   logFilePath = /var/log/dory.log
+                      logDebug = false
+                 createVolumes = false
+                     enable1.6 = false
+           factorForConversion = 1073741824
+  listOfStorageResourceOptions = [size sizeInGiB]
+          supportsCapabilities = true
+</code></pre></p>
+<p>An example tweak could be to enable debug logging and enable support for Kubernetes 1.6 (which we don't officially support). The config file would then end up like this:</p>
+<p> <pre><code class=json>{
+    &quot;dockerVolumePluginSocketPath&quot;: &quot;/etc/hpe-storage/nimble.sock&quot;,
+    &quot;logDebug&quot;: true,
+    &quot;enable1.6&quot;: true
+}
+</code></pre></p>
+<p>Execute the binary again (<code>nimble config</code>) to ensure the parameters and config file gets parsed correctly. Since the config file is read on each FlexVolume operation, no restart of anything is needed.</p>
+<p>See <a href="#advanced_configuration">Advanced</a> for more parameters for the <code>driver.json</code> file.</p>
+<h4 id="connectivity">Connectivity<a class="headerlink" href="#connectivity" title="Permanent link">&para;</a></h4>
+<p>To verify the FlexVolume binary can actually communicate with the backend volume plugin, issue a faux mount request:</p>
+<p> <pre><code class>/usr/libexec/kubernetes/kubelet-plugins/volume/exec/hpe.com~nimble/nimble mount no/op '{&quot;name&quot;:&quot;myvol1&quot;}'
+</code></pre></p>
+<p>If the FlexVolume driver can successfully communicate with the volume plugin socket:</p>
+<p> <pre><code class=json>{&quot;status&quot;:&quot;Failure&quot;,&quot;message&quot;:&quot;configured to NOT create volumes&quot;}
+</code></pre></p>
+<p>In the case of any other output, check if the backend volume plugin is alive with <code>curl</code>:</p>
+<p> <pre><code class=shell>curl --unix-socket /etc/hpe-storage/nimble.sock -d '{}' http://localhost/VolumeDriver.Capabilities
+</code></pre></p>
+<p>It should output:</p>
+<p> <pre><code class=json>{&quot;capabilities&quot;:{&quot;scope&quot;:&quot;global&quot;},&quot;Err&quot;:&quot;&quot;}
+</code></pre></p>
+<h3 id="flexvolume_and_dynamic_provisioner_driver_logs">FlexVolume and dynamic provisioner driver logs<a class="headerlink" href="#flexvolume_and_dynamic_provisioner_driver_logs" title="Permanent link">&para;</a></h3>
+<p>Log files associated with the HPE Volume Driver for Kubernetes FlexVolume Plugin logs data to the standard output stream. If the logs need to be retained for long term, use a standard logging solution. Some of the logs on the host are persisted which follow standard logrotate policies.</p>
+<p>FlexVolume driver logs:</p>
+<p> <pre><code class=shell>kubectl logs -f daemonset.apps/hpe-flexvolume-driver -n kube-system
+</code></pre></p>
+<p>The logs are persisted at <code>/var/log/hpe-docker-plugin.log</code> and <code>/var/log/dory.log</code></p>
+<p>Dynamic Provisioner logs:</p>
+<p> <pre><code class=shell>kubectl logs -f  deployment.apps/hpe-dynamic-provisioner -n kube-system
+</code></pre></p>
+<p>The logs are persisted at <code>/var/log/hpe-dynamic-provisioner.log</code></p>
+<h3 id="log_collector">Log Collector<a class="headerlink" href="#log_collector" title="Permanent link">&para;</a></h3>
+<p>Log collector script <code>hpe-logcollector.sh</code> can be used to collect diagnostic logs using kubectl</p>
+<p>Download the script as follows:</p>
+<p> <pre><code class=shell>curl -O https://raw.githubusercontent.com/hpe-storage/flexvolume-driver/master/hpe-logcollector.sh
+chmod 555 hpe-logcollector.sh
+</code></pre></p>
+<p>Usage:</p>
+<p> <pre><code class=shell>./hpe-logcollector.sh -h
+Diagnostic Script to collect HPE Storage logs using kubectl
+
+Usage:
+     hpe-logcollector.sh [-h|--help][--node-name NODE_NAME][-n|--namespace NAMESPACE][-a|--all]
+Where
+-h|--help                  Print the Usage text
+--node-name NODE_NAME      where NODE_NAME is kubernetes Node Name needed to collect the
+                           hpe diagnostic logs of the Node
+-n|--namespace NAMESPACE   where NAMESPACE is namespace of the pod deployment. default is kube-system
+-a|--all                   collect diagnostic logs of all the nodes.If
+                           nothing is specified logs would be collected
+                           from all the nodes
+</code></pre></p>
+<h2 id="advanced_configuration">Advanced Configuration<a class="headerlink" href="#advanced_configuration" title="Permanent link">&para;</a></h2>
+<p>This section describes some of the advanced configuration steps available to tweak behavior of the HPE Volume Driver for Kubernetes FlexVolume Plugin. </p>
+<h3 id="set_defaults_at_the_compute_node_level">Set defaults at the compute node level<a class="headerlink" href="#set_defaults_at_the_compute_node_level" title="Permanent link">&para;</a></h3>
+<p>During normal operations, defaults are set in either the <code>ConfigMap</code> or in a <code>StorageClass</code> itself. The picking order is:</p>
+<ul>
+<li>StorageClass</li>
+<li>ConfigMap</li>
+<li>driver.json</li>
+</ul>
+<p>Please see <a href="#diagnostics">Diagnostics</a> to locate the driver for your particular environment. Add this object to the configuration file, <code>nimble.json</code>, for example:</p>
+<p> <pre><code class=json>{
+    &quot;defaultOptions&quot;: [{&quot;option1&quot;: &quot;value1&quot;}, {&quot;option2&quot;: &quot;value2&quot;}]
+}
+</code></pre></p>
+<p>Where <code>option1</code> and <code>option2</code> are valid backend volume plugin create options.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It's highly recommended to control defaults with <code>StorageClass</code> API objects or the <code>ConfigMap</code>.</p>
+</div>
+<h3 id="global_options">Global options<a class="headerlink" href="#global_options" title="Permanent link">&para;</a></h3>
+<p>Each driver supports setting certain "global" options in the <code>ConfigMap</code>. Some options are common, some are driver specific.</p>
+<h4 id="common">Common<a class="headerlink" href="#common" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>volumeDir</td>
+<td>Text</td>
+<td>Root directory on the host to mount the volumes. This parameter needs correlation with the <code>podsmountdir</code> path in the <code>volumeMounts</code> stanzas of the deployment.</td>
+</tr>
+<tr>
+<td>logDebug</td>
+<td>Boolean</td>
+<td>Turn on debug logging, set to false by default.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=flexvolume_driver/container_provider/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

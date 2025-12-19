@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/partners/vmware/legacy.html" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>Deprecated - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Deprecated";
+        var mkdocs_page_input_path = "csi_driver/partners/vmware/legacy.md";
+        var mkdocs_page_url = "/csi_driver/partners/vmware/legacy.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Container Storage Providers</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../container_storage_provider/hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_morpheus/install.html">HPE Morpheus Kubernetes Service</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Deprecated</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="deprecated">Deprecated<a class="headerlink" href="#deprecated" title="Permanent link">&para;</a></h1>
+<p>This deployment guide is deprecated. Learn <a href="index.html">more here</a>.</p>
+<h1 id="cloud_native_storage_for_vsphere">Cloud Native Storage for vSphere<a class="headerlink" href="#cloud_native_storage_for_vsphere" title="Permanent link">&para;</a></h1>
+<p>Cloud Native Storage (CNS) for vSphere exposes vSphere storage and features to Kubernetes users and was introduced in vSphere 6.7 U3. CNS is made up of two parts, a Container Storage Interface (CSI) driver for Kubernetes used to provision storage on vSphere and the CNS Control Plane within vCenter allowing visibility to persistent volumes through the new CNS UI within vCenter.</p>
+<p>CNS fully supports Storage Policy-Based Management (SPBM) to provision volumes. SPBM is a feature of VMware vSphere that allows an administrator to match VM workload requirements against storage array capabilities, with the help of VM Storage Profiles. This storage profile can have multiple array capabilities and data services, depending on the underlying storage you use. HPE primary storage (HPE Primera, Nimble Storage, Nimble Storage dHCI, and 3PAR) has the largest user base of vVols in the market, due to its simplicity to deploy and ease of use.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check out the tutorial available on YouTube in the <a href="../../../learn/video_gallery/index.html#using_hpe_primera_and_hpe_nimble_storage_with_the_vmware_tanzu_and_vsphere_csi_driver">Video Gallery</a> on how to configure and use HPE storage with Cloud Native Storage for vSphere. </p>
+<p>Watch the video in its entirety or skip to <a href="https://www.youtube.com/watch?t=191&amp;v=iC5taH0wLs0">configuring Tanzu with HPE storage</a> or <a href="https://www.youtube.com/watch?t=520&amp;v=iC5taH0wLs0">configuring the vSphere CSI Driver with HPE storage</a>.</p>
+</div>
+<div class="toc">
+<ul>
+<li><a href="#deprecated">Deprecated</a></li>
+<li><a href="#cloud_native_storage_for_vsphere">Cloud Native Storage for vSphere</a><ul>
+<li><a href="#feature_comparison">Feature Comparison</a></li>
+<li><a href="#deployment">Deployment</a><ul>
+<li><a href="#prerequisites">Prerequisites</a><ul>
+<li><a href="#configuring_the_vasa_provider">Configuring the VASA provider</a></li>
+<li><a href="#configuring_a_vm_storage_policy">Configuring a VM Storage Policy</a></li>
+</ul>
+</li>
+<li><a href="#install_the_vsphere_cloud_provider_interface_cpi">Install the vSphere Cloud Provider Interface (CPI)</a><ul>
+<li><a href="#check_for_providerid">Check for ProviderID</a></li>
+<li><a href="#create_a_cpi_configmap">Create a CPI ConfigMap</a></li>
+<li><a href="#create_a_cpi_secret">Create a CPI Secret</a></li>
+<li><a href="#check_that_all_nodes_are_tainted">Check that all nodes are tainted</a></li>
+<li><a href="#deploy_the_cpi_manifests">Deploy the CPI manifests</a></li>
+<li><a href="#verify_that_the_cpi_has_been_successfully_deployed">Verify that the CPI has been successfully deployed</a></li>
+</ul>
+</li>
+<li><a href="#install_the_vsphere_container_storage_interface_csi_driver">Install the vSphere Container Storage Interface (CSI) driver</a><ul>
+<li><a href="#create_a_configuration_file_with_vsphere_credentials">Create a configuration file with vSphere credentials</a></li>
+<li><a href="#create_a_kubernetes_secret_for_vsphere_credentials">Create a Kubernetes Secret for vSphere credentials</a></li>
+<li><a href="#create_rbac_vsphere_csi_controller_deployment_and_vsphere_csi_node_daemonset">Create RBAC, vSphere CSI Controller Deployment and vSphere CSI node DaemonSet</a></li>
+<li><a href="#verify_the_vsphere_csi_driver_deployment">Verify the vSphere CSI driver deployment</a></li>
+<li><a href="#create_a_storageclass">Create a StorageClass</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#validate">Validate</a><ul>
+<li><a href="#create_and_deploy_a_mongodb_helm_chart">Create and Deploy a MongoDB Helm chart</a></li>
+<li><a href="#verify_cloud_native_storage_in_vsphere">Verify Cloud Native Storage in vSphere</a></li>
+</ul>
+</li>
+<li><a href="#support">Support</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="feature_comparison">Feature Comparison<a class="headerlink" href="#feature_comparison" title="Permanent link">&para;</a></h3>
+<p>Volume parameters available to the vSphere CSI Driver will be dependent upon options exposed through the vSphere SPBM and may not include all volume features available. Please refer to the <a href="https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&amp;docId=emr_na-a00088903en_us">HPE Primera: VMware ESXi Implementation Guide</a> or <a href="https://psnow.ext.hpe.com/doc/a00044881enw">VMware vSphere Virtual Volumes on HPE Nimble Storage Implementation Guide</a> for list of available features. <br /> <br /> For a list of available volume parameters in the HPE CSI Driver for Kubernetes, refer to the respective <a href="../../container_storage_provider/index.html">CSP</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>HPE CSI Driver</th>
+<th>vSphere CSI Driver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vCenter Cloud Native Storage (CNS) UI Support</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Dynamic Block PV Provisioning (ReadWriteOnce access mode)</td>
+<td>GA</td>
+<td>GA (vVOL)</td>
+</tr>
+<tr>
+<td>Dynamic File Provisioning (ReadWriteMany access mode)</td>
+<td>GA</td>
+<td>GA (vSan Only)</td>
+</tr>
+<tr>
+<td>Volume Snapshots (CSI)</td>
+<td>GA</td>
+<td>Alpha (2.4.0)</td>
+</tr>
+<tr>
+<td>Volume Cloning from VolumeSnapshot (CSI)</td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Volume Cloning from PVC (CSI)</td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Volume Expansion (CSI)</td>
+<td>GA</td>
+<td>GA (offline only)</td>
+</tr>
+<tr>
+<td>Raw Block Volume (CSI)</td>
+<td>GA</td>
+<td>Alpha</td>
+</tr>
+<tr>
+<td>Generic Ephemeral Volumes (CSI)</td>
+<td>GA</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Inline Ephemeral Volumes (CSI)</td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Topology (CSI)</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Health (CSI)</td>
+<td>No</td>
+<td>GA (vSan only)</td>
+</tr>
+<tr>
+<td>CSI Controller multiple replica support</td>
+<td>No</td>
+<td>GA</td>
+</tr>
+<tr>
+<td>Volume Encryption</td>
+<td>GA</td>
+<td>GA (via VMcrypt)</td>
+</tr>
+<tr>
+<td>Volume Mutator<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Volume Groups<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Snapshot Groups<sup>1</sup></td>
+<td>GA</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Peer Persistence Replication<sup>3</sup></td>
+<td>GA</td>
+<td>No<sup>4</sup></td>
+</tr>
+</tbody>
+</table>
+<p><small>
+ <sup>1</sup> = Feature comparison based upon HPE CSI Driver for Kubernetes v2.1.1 and the vSphere CSI Driver v2.4.1<br />
+ <sup>2</sup> = HPE and VMware fully support features listed as GA for their respective CSI drivers.<br />
+ <sup>3</sup> = The HPE Remote Copy Peer Persistence feature of the HPE CSI Driver for Kubernetes is only available with HPE Alletra 9000 and Primera storage systems.<br />
+ <sup>4</sup> = Peer Persistence is an HPE Storage specific platform feature that isn't abstracted up the vSphere CSI Driver. Peer Persistence works with the vSphere CSI Driver when using VMFS datastores.
+</small></p>
+<p>Please refer to <a href="https://docs.vmware.com/en/VMware-vSphere-Container-Storage-Plug-in/2.0/vmware-vsphere-csp-getting-started/GUID-E59B13F5-6F49-4619-9877-DF710C365A1E.html">vSphere CSI Driver - Supported Features Matrix</a> for the most up-to-date information.</p>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h3>
+<p>When considering to use block storage within Kubernetes clusters running on VMware, customers need to evaluate which data protocol (FC or iSCSI) is primarily used within their virtualized environment. This will help best determine which CSI driver can be deployed within your Kubernetes clusters. </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Due to limitations when exposing physical hardware (i.e. Fibre Channel Host Bus Adapters) to virtualized guest OSs and if iSCSI is not an available, HPE recommends the use of the VMware vSphere CSI driver to deliver block-based persistent storage from HPE Primera, Nimble Storage, Nimble Storage dHCI or 3PAR arrays to Kubernetes clusters within VMware environments for customers who are using the Fibre Channel protocol. 
+<br /><br />
+The HPE CSI Driver for Kubernetes does not support N_Port ID Virtualization (NPIV).</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th style="text-align: center;">HPE CSI Driver for Kubernetes</th>
+<th style="text-align: center;">vSphere CSI driver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FC</td>
+<td style="text-align: center;"><strong>Not</strong> supported</td>
+<td style="text-align: center;">Supported*</td>
+</tr>
+<tr>
+<td>iSCSI</td>
+<td style="text-align: center;">Supported</td>
+<td style="text-align: center;">Supported*</td>
+</tr>
+</tbody>
+</table>
+<p><code>*</code> = Limited to the SPBM implementation of the underlying storage array</p>
+<h4 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h4>
+<p>This guide will cover the configuration and deployment of the vSphere CSI driver. Cloud Native Storage for vSphere uses the VASA provider and Storage Policy Based Management (SPBM) to create First Class Disks on supported arrays. </p>
+<p>CNS supports VMware vSphere 6.7 U3 and higher.</p>
+<h5 id="configuring_the_vasa_provider">Configuring the VASA provider<a class="headerlink" href="#configuring_the_vasa_provider" title="Permanent link">&para;</a></h5>
+<p>Refer to the following guides to configure the VASA provider and create a vVol Datastore.</p>
+<table>
+<thead>
+<tr>
+<th>Storage Array</th>
+<th>Guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HPE Alletra 9000</td>
+<td><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00115274en_us&amp;docLocale=en_US">HPE Alletra 9000: VMware ESXi Implementation Guide</a></td>
+</tr>
+<tr>
+<td>HPE Primera</td>
+<td><a href="https://support.hpe.com/hpesc/public/docDisplay?docId=a00101451en_us">VMware vVols with HPE Primera Storage</a></td>
+</tr>
+<tr>
+<td>HPE Nimble Storage</td>
+<td><a href="https://infosight.hpe.com/InfoSight/media/cms/active/public/pubs_VMware_Integration_Guide__5_0_x.pdf">Working with VMware Virtual Volumes</a></td>
+</tr>
+<tr>
+<td>HPE Nimble Storage dHCI &amp; HPE Alletra 5000/6000</td>
+<td><a href="https://infosight.hpe.com/InfoSight/media/cms/active/public/HPE_Nimble_Storage_dHCI_and_VMware_vSphere_Deployment_Guide_-_Greenfield_Alletra_Deployment.pdf">HPE Nimble Storage dHCI and VMware vSphere New Servers Deployment Guide</a></td>
+</tr>
+<tr>
+<td>HPE 3PAR</td>
+<td><a href="https://h20195.www2.hpe.com/v2/getpdf.aspx/4AA5-6907ENW.pdf">Implementing VMware Virtual Volumes on HPE 3PAR StoreServ</a></td>
+</tr>
+</tbody>
+</table>
+<h5 id="configuring_a_vm_storage_policy">Configuring a VM Storage Policy<a class="headerlink" href="#configuring_a_vm_storage_policy" title="Permanent link">&para;</a></h5>
+<p>Once the vVol Datastore is created, create a VM Storage Policy. From the vSphere Web Client, click <strong>Menu</strong> and select <strong>Policies and Profiles</strong>.</p>
+<p><img alt="Select Policies and Profiles" src="img/profile1.png" /></p>
+<p>Click on <strong>VM Storage Policies</strong>, and then click <strong>Create</strong>.</p>
+<p><img alt="Create VM Storage Policy" src="img/profile2.png" /></p>
+<p>Next provide a name for the policy. Click <strong>NEXT</strong>.</p>
+<p><img alt="Specify name of Storage Policy" src="img/profile3.png" /></p>
+<p>Under <strong>Datastore specific rules</strong>, select either: </p>
+<ul>
+<li>Enable rules for "NimbleStorage" storage </li>
+<li>Enable rules for "HPE Primera" storage </li>
+</ul>
+<p>Click <strong>NEXT</strong>.</p>
+<p><img alt="Enable rules" src="img/profile4.png" /></p>
+<p>Next click <strong>ADD RULE</strong>. Choose from the various options available to your array.</p>
+<p><img alt="Add Rule" src="img/profile5.png" /></p>
+<p>Below is an example of a VM Storage Policy for Primera. This may vary depending on your requirements and options available within your array. Once complete, click <strong>NEXT</strong>.</p>
+<p><img alt="Add Rule" src="img/profile5_example.png" /></p>
+<p>Under Storage compatibility, verify the correct vVol datastore is shown as compatible to the options chosen in the previous screen. Click <strong>NEXT</strong>.</p>
+<p><img alt="Compatible Storage" src="img/profile6.png" /></p>
+<p>Verify everything looks correct and click <strong>FINISH</strong>. Repeat this process for any additional Storage Policies you may need.</p>
+<p><img alt="Click Finish" src="img/profile7.png" /></p>
+<p>Now that we have configured a Storage Policy, we can proceed with the deployment of the vSphere CSI driver.</p>
+<h4 id="install_the_vsphere_cloud_provider_interface_cpi">Install the vSphere Cloud Provider Interface (CPI)<a class="headerlink" href="#install_the_vsphere_cloud_provider_interface_cpi" title="Permanent link">&para;</a></h4>
+<p>This is adapted from the following tutorial, please read over to understand all of the vSphere, firewall and guest OS requirements.</p>
+<ul>
+<li><a href="https://cloud-provider-vsphere.sigs.k8s.io/tutorials/kubernetes-on-vsphere-with-kubeadm.html">Deploying a Kubernetes Cluster on vSphere with CSI and CPI</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following is a simplified single-site configuration to demonstrate how to deploy the vSphere CPI and CSI drivers. Make sure to adapt the configuration to match your environment and needs.</p>
+</div>
+<h5 id="check_for_providerid">Check for ProviderID<a class="headerlink" href="#check_for_providerid" title="Permanent link">&para;</a></h5>
+<p>Check if <code>ProviderID</code> is already configured on your cluster.</p>
+<p> <pre><code class=text>kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{&quot;\n&quot;}{end}'
+</code></pre></p>
+<p>If this command returns empty, then proceed with configuring the vSphere Cloud Provider.</p>
+<p>If the <code>ProviderID</code> is set, then you can proceed directly to installing the <a href="#install_the_vsphere_container_storage_interface_csi_driver">vSphere CSI Driver</a>.</p>
+<p> <pre><code class=text>$ kubectl get nodes -o jsonpath='{range .items[*]}{.spec.providerID}{&quot;\n&quot;}{end}'
+vsphere://4238c1a1-e72f-74bf-db48-0d9f4da3e9c9
+vsphere://4238ede5-50e1-29b6-1337-be8746a5016c
+vsphere://4238c6dc-3806-ce36-fd14-5eefe830b227
+</code></pre></p>
+<h5 id="create_a_cpi_configmap">Create a CPI ConfigMap<a class="headerlink" href="#create_a_cpi_configmap" title="Permanent link">&para;</a></h5>
+<p>Create a <code>vsphere.conf</code> file. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>vsphere.conf</code> is a hardcoded filename used by the vSphere Cloud Provider. Do not change it otherwise the Cloud Provider will not deploy correctly.</p>
+</div>
+<p>Set the vCenter server FQDN or IP and vSphere datacenter object name to match your environment. </p>
+<p>Copy and paste the following.</p>
+<p> <pre><code class=yaml># Global properties in this section will be used for all specified vCenters unless overridden in vCenter section.
+global:
+  port: 443
+  # Set insecureFlag to true if the vCenter uses a self-signed cert
+  insecureFlag: true
+  # Where to find the Secret used for authentication to vCenter
+  secretName: cpi-global-secret
+  secretNamespace: kube-system
+
+# vcenter section
+vcenter:
+  tenant-k8s:
+    server: &lt;vCenter FQDN or IP&gt;
+    datacenters:
+      - &lt;vCenter Datacenter name&gt;
+</code></pre></p>
+<p>Create the <code>ConfigMap</code> from the <code>vsphere.conf</code> file.</p>
+<p> <pre><code class=text>kubectl create configmap cloud-config --from-file=vsphere.conf -n kube-system
+</code></pre></p>
+<h5 id="create_a_cpi_secret">Create a CPI Secret<a class="headerlink" href="#create_a_cpi_secret" title="Permanent link">&para;</a></h5>
+<p>The below YAML declarations are meant to be created with <code>kubectl create</code>. Either copy the content to a file on the host where <code>kubectl</code> is being executed, or copy &amp; paste into the terminal, like this:</p>
+<p> <pre><code class=text>kubectl create -f-
+&lt; paste the YAML &gt;
+^D (CTRL + D)
+</code></pre></p>
+<p>Next create the CPI <code>Secret</code>. </p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: cpi-global-secret
+  namespace: kube-system
+stringData:
+  &lt;vCenter FQDN or IP&gt;.username: &quot;Administrator@vsphere.local&quot;
+  &lt;vCenter FQDN or IP&gt;.password: &quot;VMware1!&quot;
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The username and password within the <code>Secret</code> are case-sensitive.</p>
+</div>
+<p>Inspect the <code>Secret</code> to verify it was created successfully.</p>
+<p> <pre><code class=text>kubectl describe secret cpi-global-secret -n kube-system
+</code></pre></p>
+<p>The output is similar to this:</p>
+<p> <pre><code class=text>Name:         cpi-global-secret
+Namespace:    kube-system
+Labels:       &lt;none&gt;
+Annotations:  &lt;none&gt;
+
+Type:  Opaque
+
+Data
+====
+vcenter.example.com.password:  8 bytes
+vcenter.example.com.username:  27 bytes
+</code></pre></p>
+<h5 id="check_that_all_nodes_are_tainted">Check that all nodes are tainted<a class="headerlink" href="#check_that_all_nodes_are_tainted" title="Permanent link">&para;</a></h5>
+<p>Before installing vSphere Cloud Controller Manager, make sure all nodes are tainted with <code>node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule</code>. When the <code>kubelet</code> is started with “external” cloud provider, this taint is set on a node to mark it as unusable. After a controller from the cloud provider initializes this node, the <code>kubelet</code> removes this taint.</p>
+<p>To find your node names, run the following command.</p>
+<p> <pre><code class=text>kubectl get nodes
+
+NAME    STATUS   ROLES                  AGE   VERSION
+cp1     Ready    control-plane,master   46m   v1.20.1
+node1   Ready    &lt;none&gt;                 44m   v1.20.1
+node2   Ready    &lt;none&gt;                 44m   v1.20.1
+</code></pre></p>
+<p>To create the taint, run the following command for each node in your cluster. </p>
+<p> <pre><code class=text>kubectl taint node &lt;node_name&gt; node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
+</code></pre></p>
+<p>Verify the taint has been applied to each node.</p>
+<p> <pre><code class=text>kubectl describe nodes | egrep &quot;Taints:|Name:&quot;
+</code></pre></p>
+<p>The output is similar to this:</p>
+<p> <pre><code class=text>Name:               cp1
+Taints:             node-role.kubernetes.io/master:NoSchedule
+Name:               node1
+Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
+Name:               node2
+Taints:             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
+</code></pre></p>
+<h5 id="deploy_the_cpi_manifests">Deploy the CPI manifests<a class="headerlink" href="#deploy_the_cpi_manifests" title="Permanent link">&para;</a></h5>
+<p>There are 3 manifests that must be deployed to install the vSphere Cloud Provider Interface (CPI). The following example applies the RBAC roles and the RBAC bindings to your Kubernetes cluster. It also deploys the Cloud Controller Manager in a DaemonSet.</p>
+<p> <pre><code class=text>kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-roles.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/cloud-controller-manager-role-bindings.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/cloud-provider-vsphere/master/manifests/controller-manager/vsphere-cloud-controller-manager-ds.yaml
+</code></pre></p>
+<h5 id="verify_that_the_cpi_has_been_successfully_deployed">Verify that the CPI has been successfully deployed<a class="headerlink" href="#verify_that_the_cpi_has_been_successfully_deployed" title="Permanent link">&para;</a></h5>
+<p>Verify <code>vsphere-cloud-controller-manager</code> is running.</p>
+<p> <pre><code class=text>kubectl rollout status ds/vsphere-cloud-controller-manager -n kube-system
+daemon set &quot;vsphere-cloud-controller-manager&quot; successfully rolled out
+</code></pre></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you happen to make an error with the <strong>vsphere.conf</strong>, simply delete the CPI components and the <code>ConfigMap</code>, make any necessary edits to the <strong>vsphere.conf</strong> file, and reapply the steps above.</p>
+</div>
+<p>Now that the CPI is installed, we can proceed with deploying the vSphere CSI driver.</p>
+<h4 id="install_the_vsphere_container_storage_interface_csi_driver">Install the vSphere Container Storage Interface (CSI) driver<a class="headerlink" href="#install_the_vsphere_container_storage_interface_csi_driver" title="Permanent link">&para;</a></h4>
+<p>The following has been adapted from the vSphere CSI driver installation guide. Refer to the official documentation for additional information on how to deploy the vSphere CSI driver.</p>
+<ul>
+<li><a href="https://vsphere-csi-driver.sigs.k8s.io/driver-deployment/installation.html">vSphere CSI driver - Installation</a></li>
+</ul>
+<h5 id="create_a_configuration_file_with_vsphere_credentials">Create a configuration file with vSphere credentials<a class="headerlink" href="#create_a_configuration_file_with_vsphere_credentials" title="Permanent link">&para;</a></h5>
+<p>Since we are connecting to block storage provided from an HPE Primera, Nimble Storage, Nimble Storage dHCI or 3PAR array, we will create a configuration file for block volumes.</p>
+<p>Create a <strong>csi-vsphere.conf</strong> file.</p>
+<p>Copy and paste the following:</p>
+<p> <pre><code class=ini>[Global]
+cluster-id = &quot;csi-vsphere-cluster&quot;
+
+[VirtualCenter &quot;&lt;IP or FQDN&gt;&quot;]
+insecure-flag = &quot;true&quot;
+user = &quot;Administrator@vsphere.local&quot;
+password = &quot;VMware1!&quot;
+port = &quot;443&quot;
+datacenters = &quot;&lt;vCenter datacenter&gt;&quot;
+</code></pre></p>
+<h5 id="create_a_kubernetes_secret_for_vsphere_credentials">Create a Kubernetes Secret for vSphere credentials<a class="headerlink" href="#create_a_kubernetes_secret_for_vsphere_credentials" title="Permanent link">&para;</a></h5>
+<p>Create a Kubernetes <code>Secret</code> that will contain the configuration details to connect to your vSphere environment.</p>
+<p> <pre><code class=text>kubectl create secret generic vsphere-config-secret --from-file=csi-vsphere.conf -n kube-system
+</code></pre></p>
+<p>Verify that the <code>Secret</code> was created successfully.</p>
+<p> <pre><code class=text>kubectl get secret vsphere-config-secret -n kube-system
+NAME                    TYPE     DATA   AGE
+vsphere-config-secret   Opaque   1      43s
+</code></pre></p>
+<p>For security purposes, it is advised to remove the <strong>csi-vsphere.conf</strong> file.</p>
+<h5 id="create_rbac_vsphere_csi_controller_deployment_and_vsphere_csi_node_daemonset">Create RBAC, vSphere CSI Controller <code>Deployment</code> and vSphere CSI node <code>DaemonSet</code><a class="headerlink" href="#create_rbac_vsphere_csi_controller_deployment_and_vsphere_csi_node_daemonset" title="Permanent link">&para;</a></h5>
+<p>Check the official <a href="https://github.com/kubernetes-sigs/vsphere-csi-driver">vSphere CSI Driver Github repo</a> for the latest version.</p>
+<div class=md-fenced-code-tabs id=tab-tab-group-17><input name=tab-group-17 type=radio id=tab-group-17-0_text checked=checked class=code-tab data-lang=text aria-controls=tab-group-17-0_text-panel role=tab><label for=tab-group-17-0_text class=code-tab-label data-lang=text id=tab-group-17-0_text-label>vSphere 6.7 U3</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-17-0_text-panel aria-labelledby=tab-group-17-0_text-label><pre><code class=text>kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-67u3/rbac/vsphere-csi-controller-rbac.yaml
+</code></pre></div><input name=tab-group-17 type=radio id=tab-group-17-1_text class=code-tab data-lang=text aria-controls=tab-group-17-1_text-panel role=tab><label for=tab-group-17-1_text class=code-tab-label data-lang=text id=tab-group-17-1_text-label>vSphere 7.0</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-17-1_text-panel aria-labelledby=tab-group-17-1_text-label><pre><code class=text>kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0/rbac/vsphere-csi-controller-rbac.yaml
+</code></pre></div><input name=tab-group-17 type=radio id=tab-group-17-2_text class=code-tab data-lang=text aria-controls=tab-group-17-2_text-panel role=tab><label for=tab-group-17-2_text class=code-tab-label data-lang=text id=tab-group-17-2_text-label>vSphere 7.0U1</label><div class=code-tabpanel role=tabpanel data-lang=text id=tab-group-17-2_text-panel aria-labelledby=tab-group-17-2_text-label><pre><code class=text>kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-controller-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/deploy/vsphere-csi-node-ds.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/vsphere-csi-driver/master/manifests/v2.1.0/vsphere-7.0u1/rbac/vsphere-csi-controller-rbac.yaml
+</code></pre></div></div>
+<h5 id="verify_the_vsphere_csi_driver_deployment">Verify the vSphere CSI driver deployment<a class="headerlink" href="#verify_the_vsphere_csi_driver_deployment" title="Permanent link">&para;</a></h5>
+<p>Verify that the vSphere CSI driver has been successfully deployed using <code>kubectl rollout status</code>.</p>
+<p> <pre><code class=text>kubectl rollout status deployment/vsphere-csi-controller -n kube-system
+deployment &quot;vsphere-csi-controller&quot; successfully rolled out
+
+kubectl rollout status ds/vsphere-csi-node -n kube-system
+daemon set &quot;vsphere-csi-node&quot; successfully rolled out
+</code></pre></p>
+<p>Verify that the vSphere CSI driver <code>CustomResourceDefinition</code> has been registered with Kubernetes.</p>
+<p> <pre><code class=text>kubectl describe csidriver/csi.vsphere.vmware.com
+Name:         csi.vsphere.vmware.com
+Namespace:
+Labels:       &lt;none&gt;
+Annotations:  &lt;none&gt;
+API Version:  storage.k8s.io/v1
+Kind:         CSIDriver
+Metadata:
+  Creation Timestamp:  2020-11-21T06:27:23Z
+  Managed Fields:
+    API Version:  storage.k8s.io/v1beta1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        f:attachRequired:
+        f:podInfoOnMount:
+        f:volumeLifecycleModes:
+    Manager:         kubectl-client-side-apply
+    Operation:       Update
+    Time:            2020-11-21T06:27:23Z
+  Resource Version:  217131
+  Self Link:         /apis/storage.k8s.io/v1/csidrivers/csi.vsphere.vmware.com
+  UID:               bcda2b5c-3c38-4256-9b91-5ed248395113
+Spec:
+  Attach Required:    true
+  Pod Info On Mount:  false
+  Volume Lifecycle Modes:
+    Persistent
+Events:  &lt;none&gt;
+</code></pre></p>
+<p>Also verify that the vSphere CSINodes <code>CustomResourceDefinition</code> has been created.</p>
+<p> <pre><code class=text>kubectl get csinodes -o=jsonpath='{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.spec.drivers[].name}{&quot;\n&quot;}{end}'
+cp1     csi.vsphere.vmware.com
+node1   csi.vsphere.vmware.com
+node2   csi.vsphere.vmware.com
+</code></pre></p>
+<p>If there are no errors, the vSphere CSI driver has been successfully deployed.</p>
+<h5 id="create_a_storageclass">Create a StorageClass<a class="headerlink" href="#create_a_storageclass" title="Permanent link">&para;</a></h5>
+<p>With the vSphere CSI driver deployed, lets create a <code>StorageClass</code> that can be used by the CSI driver. </p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The following steps will be using the example VM Storage Policy created at the beginning of this guide. If you do not have a Storage Policy available, refer to <a href="#configuring_a_vm_storage_policy">Configuring a VM Storage Policy</a> before proceeding to the next steps.</p>
+</div>
+<p> <pre><code class=yaml>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: primera-default-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+provisioner: csi.vsphere.vmware.com
+parameters:
+  storagepolicyname: &quot;primera-default-profile&quot;
+</code></pre></p>
+<h3 id="validate">Validate<a class="headerlink" href="#validate" title="Permanent link">&para;</a></h3>
+<p>With the vSphere CSI driver deployed and a <code>StorageClass</code> available, lets run through some tests to verify it is working correctly.</p>
+<p>In this example, we will be deploying a stateful MongoDB application with 3 replicas. The persistent volumes deployed by the vSphere CSI driver will be created using the VM Storage Policy and placed on a compatible vVol datastore.</p>
+<h5 id="create_and_deploy_a_mongodb_helm_chart">Create and Deploy a MongoDB Helm chart<a class="headerlink" href="#create_and_deploy_a_mongodb_helm_chart" title="Permanent link">&para;</a></h5>
+<p>This is an example MongoDB chart using a StatefulSet. The default volume size is <strong>8Gi</strong>, if you want to change that use <code>--set persistence.size=50Gi</code>.</p>
+<p> <pre><code class=text>helm install mongodb \
+    --set architecture=replicaset \
+    --set replicaSetName=mongod \
+    --set replicaCount=3 \
+    --set auth.rootPassword=secretpassword \
+    --set auth.username=my-user \
+    --set auth.password=my-password \
+    --set auth.database=my-database \
+    bitnami/mongodb
+</code></pre></p>
+<p>Verify that the MongoDB application has been deployed. Wait for pods to start running and PVCs to be created for each replica.</p>
+<p> <pre><code class=text>kubectl rollout status sts/mongodb
+</code></pre></p>
+<p>Inspect the <code>Pods</code> and <code>PersistentVolumeClaims</code>.</p>
+<p> <pre><code class=text>kubectl get pods,pvc
+NAME       READY   STATUS    RESTARTS   AGE
+mongod-0   1/1     Running   0          90s
+mongod-1   1/1     Running   0          71s
+mongod-2   1/1     Running   0          44s
+
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS         AGE
+datadir-mongodb-0   Bound    pvc-fd3994fb-a5fb-460b-ab17-608a71cdc337   50Gi       RWO            primera-default-sc   13m
+datadir-mongodb-1   Bound    pvc-a3755dbe-210d-4c7b-8ac1-bb0607a2c537   50Gi       RWO            primera-default-sc   13m
+datadir-mongodb-2   Bound    pvc-22bab0f4-8240-48c1-91b1-3495d038533e   50Gi       RWO            primera-default-sc   13m
+</code></pre></p>
+<p>To interact with the Mongo replica set, you can connect to the StatefulSet.</p>
+<p> <pre><code class=text>kubectl exec -it sts/mongod bash
+
+root@mongod-0:/# df -h /bitnami/mongodb
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb         49G  374M   47G   1% /bitnami/mongodb
+</code></pre></p>
+<p>We can see that the vSphere CSI driver has successfully provisioned and mounted the persistent volume to <strong>/bitnami/mongodb</strong>.</p>
+<h5 id="verify_cloud_native_storage_in_vsphere">Verify Cloud Native Storage in vSphere<a class="headerlink" href="#verify_cloud_native_storage_in_vsphere" title="Permanent link">&para;</a></h5>
+<p>Verify that the volumes are now visible within the Cloud Native Storage interface by logging into the vSphere Web Client.</p>
+<p>Click on <strong>Datacenter</strong>, then the <strong>Monitor</strong> tab. Expand <strong>Cloud Native Storage</strong> and highlight <strong>Container Volumes</strong>. </p>
+<p>From here, we can see the persistent volumes that were created as part of our MongoDB deployment. These should match the <code>kubectl get pvc</code> output from earlier. You can also monitor their storage policy compliance status.</p>
+<p><img alt="Container Volumes" src="img/container_volumes.png" /></p>
+<p>This concludes the validations and verifies that all components of vSphere CNS (vSphere CPI and vSphere CSI drivers) are deployed and working correctly. </p>
+<h3 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h3>
+<p>VMware provides enterprise grade support for the vSphere CSI driver. Please use <a href="https://www.vmware.com/support/file-sr.html">VMware Support Services</a> to file a customer support ticket to engage the VMware global support team.</p>
+<p>For support information on the HPE CSI Driver for Kubernetes, visit <a href="../../../legal/support/index.html">Support</a>. For support with other HPE related technologies, visit the <a href="https://support.hpe.com/">Hewlett Packard Enterprise Support Center</a>.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2025 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/partners/vmware/legacy.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
