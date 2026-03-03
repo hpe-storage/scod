@@ -33,6 +33,22 @@ The HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR Container Stor
 !!! caution "HPE 3PAR"
     From HPE CSI Driver v2.5.2 onwards it's recommended to specify "&lt;IP Addr&gt;:443" in the backend `Secret` to avoid using SSH for any HPE Alletra Storage MP B10000 derived platform except 3PAR. See [Deployment](../../deployment.md#secret_parameters) for more information.
 
+### Protocol feature matrix
+
+The Alletra Storage MP B10000 support multiple ways of accessing storage (data paths) and the API (control plane). Certain CSP features may be limited to the protocol of choice. This matrix refers to the latest currently shipping CSI driver version unless noted.
+
+| Protocol     | IPv6<sup>1</sup> data path | Peer Persistence<sup>2</sup> | Platform notes               |
+| ------------ | -------------------------- | ---------------------------- | ---------------------------- |
+| FC           | N/A                        | Yes                          |                              |
+| iSCSI        | Yes                        | Yes                          |                              |
+| NVMe/TCP     | No                         | No                           | Alletra 9000 and B10000 only |
+| NFS          | No                         | No                           | B10000 only                  |
+
+<small>
+ <br /><sup>1</sup> = All IP based protocols support IPv4. IPv6 may be used for the control plane regardless of data protocol.
+ <br /><sup>2</sup> = Please see [Peer Persistence Configuration](#peer_persistence_configuration) for more platform details.
+</small>
+
 ### User Role Requirements
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
@@ -69,7 +85,7 @@ cli% setsys AllowDomainUsersAffectNoDomain hostonly
 Hosts can be created manually at any point using the `createhost` command or other means on the array either from the user domain directly or from the global domain.
 
 !!! caution "Important"
-    From HPE CSI Driver 3.0.0 and newer the hostnames needs to be prefixed with the protocol name, such as "iqn" for iSCSI, "fc" for Fibre Channel, i.e "iqn-myhost" where "myhost" is the host name found in the `HPENodeInfos` `CustomResourceDefinition`. The total string length may not exceed 27 characters.
+    From HPE CSI Driver 3.0.0 and newer the hostnames needs to be prefixed with the protocol name, such as "iqn" for iSCSI, "nqntcp" for NVMe/TCP and "wwn" for Fibre Channel, i.e "iqn-myhost" where "myhost" is the host name found in the `HPENodeInfos` `CustomResourceDefinition`. The total string length may not exceed 27 characters.
 
 The next steps involve installing the HPE CSI Driver for Kubernetes with `disableHostDeletion` set to `true`. The steps to supply the parameter depends on if the Helm chart or Operator is being used.
 
@@ -86,7 +102,9 @@ Once the CSI driver is installed and running, [add an HPE storage backend](../..
 These are the generally known limitation of the CSP.
 
 - The CSP has been tested using iSCSI with up to 250 `VolumeAttachments` per compute node. HPE recommends not exceeding 200 `VolumeAttachments` per node and leave headroom for emergencies. It's always recommended to test the upper bounds before deploying to production. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
-- Compute node hostnames may not exceed 27 characters. The storage platform limitation is 31 characters. Since HPE CSI Driver 3.0.0, the node name has a 4 character protocol prefix such as "iqn-" or "wwn-". Further, the CSP truncates the domain name from the Kubernetes node name.
+- Compute node hostnames may not exceed 27 characters. The storage platform limitation is 31 characters. Since HPE CSI Driver 3.0.0, the node name has a protocol prefix such as "nqntcp-", "iqn-" or "wwn-". Further, the CSP truncates the domain name from the Kubernetes node name. Make sure node uniqueness is in the beginning of the hostname to avoid problems.
+- IPv6 may only be used for iSCSI and API endpoint access. IPv6 addressing may not be used for NVMe/TCP, native NFS or replication.
+- Inline ephemeral volumes are not supported by the CSP due to a constraint in the naming translation.
 
 ## VLUN Templates
 
@@ -122,9 +140,9 @@ Example default `StorageClass` ([download](examples/storageclass.yaml)):
 
 ### Common Provisioning Parameters
 
-| Parameter  | &nbsp;&nbsp;Option&nbsp;&nbsp;  | Description |
+| Parameter  | String<sup>*</sup>  | Description |
 | ---------- | ------- | ----------- |
-| accessProtocol (**Required**)  | fc or iscsi | The access protocol to use when attaching the persistent volume. |
+| accessProtocol (**Required**)  | nvmetcp<sup>5</sup>, fc or iscsi | The access protocol to use when attaching the persistent volume. |
 | cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the `cpg` parameter is not specified, the CSP will select a CPG available to the array. |
 | snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
 | compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
@@ -142,11 +160,14 @@ Example default `StorageClass` ([download](examples/storageclass.yaml)):
 | fcPortsList | Text   | Comma separated list of available FC ports. Example: "0:5:1,1:4:2,2:4:1,3:4:2" Default: Use all available ports. |
 
 <small>
- Restrictions applicable when using the [CSI volume mutator](../../using.md#using_volume_mutations):
+ <sup>*</sup> = All parameter keys and values are case sensitive. For example, `accessProtocol: "FC"` won't have the expected results.
+ <br />Restrictions applicable when using the [CSI volume mutator](../../using.md#using_volume_mutations):
  <br /><sup>1</sup> = Parameters that are editable after provisioning.
  <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
  <br /><sup>3</sup> = HPE 3PAR only parameter
  <br /><sup>4</sup> = HPE Primera/Alletra 9000 only parameter
+ <br />Other notes:
+ <br /><sup>5</sup> = Only HPE Alletra Storage MP B10000 supports NVMe/TCP
 </small>
 
 Please see [using the HPE CSI Driver](../../using.md#base_storageclass_parameters) for additional `StorageClass` examples like CSI snapshots and clones.
@@ -162,7 +183,7 @@ Cloning supports two modes of cloning. Either use `cloneOf` and reference a `Per
 | ---------------- | ----------- | ----------- |
 | cloneOf          | Text        | The name of the `PersistentVolumeClaim` to be cloned. `cloneOf` and `importVolAsClone` are mutually exclusive. |
 | importVolAsClone | Text        | The name of the array volume to clone and import. `importVolAsClone` and `cloneOf` are mutually exclusive. |
-| accessProtocol   | fc or iscsi | The access protocol to use when attaching the cloned volume. |
+| accessProtocol   | nvmetcp, fc or iscsi | The access protocol to use when attaching the cloned volume. |
 
 !!! important
     • **No other parameters** are required in the `StorageClass` while cloning outside of those parameters listed in the table above.<br />
@@ -175,7 +196,7 @@ During the snapshotting process, any existing `PersistentVolumeClaim` defined in
 
 | Parameter          | Option      | Description |
 | ------------------ | ----------- | ----------- |
-| accessProtocol     | fc or iscsi | The access protocol to use when attaching the snapshot volume. |
+| accessProtocol     | nvmetcp, fc or iscsi | The access protocol to use when attaching the snapshot volume. |
 | virtualCopyOf      | Text        | The name of existing `PersistentVolumeClaim` to be snapped |
 
 !!! important
@@ -189,7 +210,7 @@ During the import volume process, any legacy (non-container volumes) defined in 
 
 | Parameter      | Option      | Description |
 | -------------- | ----------- | ----------- |
-| accessProtocol | fc or iscsi | The access protocol to use when importing the volume. |
+| accessProtocol | nvmetcp, fc or iscsi | The access protocol to use when importing the volume. |
 | importVolumeName | Text        | The name of the array volume to import. |
 
 !!! important
@@ -205,6 +226,10 @@ The HPE Alletra Storage MP B10000 CSP supports two modes of performing synchroun
 | ---- | ------------------- | ----------- |
 | APP  | HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;B10000 | Fully automated disaster recovery and workload failover with symmetric topology up to campus distance while requiring a third site for quorum. Restrictions apply, see [Active Peer Persistence Limitations](#active_peer_persistence_limitations) |
 | CPP  | HPE Alletra 9000<br />HPE Primera<br />HPE 3PAR | Data path resillience only, no workload failover. See [Classic Peer Persistence Limitations](#classic_peer_persistence_limitations) |
+
+!!! caution "Protocol consideration"
+    - Only iSCSI or FC is currently supported with Peer Persistence.
+    - If using iSCSI with IPv6, the entire configuration must be using IPv6.
 
 To enable replication within the HPE CSI Driver, the following steps must be completed:
 
@@ -227,6 +252,7 @@ spec:
     targetName: <Target array name>
     targetSecret: <Target Secret name>
     targetSecretNamespace: <Target Secret Namespace>
+    targetMode: <Target Mode> # optional, see StorageClass parameters
 ```
 
 !!! info
@@ -272,7 +298,7 @@ createhost -iscsi iqn-my-compute-node-3 iqn.1994-05.com.redhat:my-compute-node-3
 ```
 
 !!! important
-    Since HPE CSI Driver 3.0.0 the initiator host name need to be prefixed with the protocol, i.e "iqn-" for iSCSI and "wwn-" for Fibre Channel.
+    Since HPE CSI Driver 3.0.0 the initiator host name need to be prefixed with the protocol, i.e "nqntcp-" for NVMe/TCP, "iqn-" for iSCSI and "wwn-" for Fibre Channel.
 
 Create the RCG and set the correct policy:
 
@@ -334,6 +360,7 @@ These `StorageClass` parameters are applicable only for replication, "primarySec
 | primarySecret                      | Text    | The name of the `Secret` for the primary array. |
 | remoteCopyGroup<sup>2</sup>        | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
 | replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+| periodicReplicationInterval        | Text    | Optional interval in seconds when using `targetMode: periodic` in `HPEReplicationDeviceInfos`. Defaults to the minimum of 15 seconds and a maximum of 366 days (31622400 seconds). Integers needs to be quoted as parameters only support strings, i.e: `.parameters.periodicReplicationInterval: "25"`.
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
 | oneRcgPerPvc<sup>2</sup>           | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
@@ -364,12 +391,13 @@ For a tutorial on how to enable Classic Peer Persistence, check out the blog [En
 
 These `StorageClass` parameters are applicable only for replication, "remoteCopyGroup" and "replicationDevices" are mandatory. If the RCG defined in "remoteCopyGroup" doesn't exist on the array, then a new RCG will be created.
 
-| Parameter         | Option  | Description |
-| ----------------- | ------- | ----------- |
-| remoteCopyGroup | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
-| replicationDevices | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+| Parameter                          | Option  | Description |
+| ---------------------------------- | ------- | ----------- |
+| remoteCopyGroup                    | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
+| replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
+| periodicReplicationInterval        | Text    | Optional interval in seconds when using `targetMode: periodic` in `HPEReplicationDeviceInfos`. Defaults to the minimum of 15 seconds and a maximum of 366 days (31622400 seconds).
 | allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
-| oneRcgPerPvc | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
+| oneRcgPerPvc                       | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
 <small><sup>1</sup> = Existing RCGs must have local CPG and target CPG configured along with the correct policy, "path_management".<br />
 </small>
@@ -632,6 +660,7 @@ These are the current limitations of Active Peer Persistence when used with the 
 - Only symmetric host proximity is supported and running Active Peer Persistence beyond a campus distance (around 1km) is not recommended.
 - Only manual host creation is supported (this limitation will be removed in the future).
 - Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is restored. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
+- During an outage (primary down), the CSI driver only responds to publish requests issued to existing `PeristentVolumes` in an RCG. No provisioning requests will be serviced until the primary is back.
 
 <a name="remote_copy_limitations"></a>
 ## Classic Peer Persistence Limitations

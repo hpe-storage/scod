@@ -1,8 +1,8 @@
 # Introduction
 
-HPE Morpheus Kubernetes Service allows customers to deploy and manage Kubernetes clusters through the Morpheus hybrid cloud management platform. Since Morpheus uses a standard Linux distribution and upstream Kubernetes, the solution is fully supported by HPE CSI Driver for Kubernetes.
+HPE Kubernetes Service (HKS) part of HPE Morpheus Enterprise allows customers to deploy and manage Kubernetes clusters through the Morpheus hybrid cloud management platform. Since Morpheus uses a standard Linux distribution and upstream Kubernetes, the solution is fully supported by HPE CSI Driver for Kubernetes.
 
-Familiarize yourself on how to install a [Morpheus Kubernetes Service](https://docs.morpheusdata.com/en/latest/infrastructure/clusters/clusters.html#kubernetes-clusters) cluster on your infrastructure
+Familiarize yourself on how to install a [HPE Kubernetes Service](https://www.hpe.com/support/morpheus-enterprise-documentation-latest) cluster on your infrastructure
 
 [TOC]
 
@@ -22,6 +22,12 @@ Once the CSI driver is installed, a `Secret` and a `StorageClass` is needed to p
 
 - [Add an HPE storage backend](../../deployment.md#add_an_hpe_storage_backend).
 - [Create a base `StorageClass`](../../using.md#base_storageclass_parameters).
+
+Optionally, since HKS installs CEPH, the "rook-ceph-block" `StorageClass` needs to be disabled as the default `StorageClass`.
+
+```text
+kubectl annotate --overwrite storageclass/rook-ceph-block storageclass.kubernetes.io/is-default-class=false
+```
 
 ## Known Issues and Limitations
 

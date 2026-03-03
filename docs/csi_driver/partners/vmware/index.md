@@ -67,7 +67,7 @@ When considering to use block storage within Kubernetes clusters running on VMwa
 | Protocol | HPE CSI Driver for Kubernetes | vSphere Container Storage Plug-in |
 | -------- | :---------------------------: | :-------------------------------: |
 | FC       | **Not** supported             | Supported<sup>&ast;</sup>         |
-| NVMe-oF  | **Not** supported             | Supported<sup>&ast;</sup>         |
+| NVMe/TCP | Supported                     | Supported<sup>&ast;</sup>         |
 | iSCSI    | Supported                     | Supported<sup>&ast;</sup>         |
 
 <small><sup>&ast;</sup> = Limited to the SPBM implementation of the underlying storage array.</small>
