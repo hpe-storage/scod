@@ -41,7 +41,7 @@ The Alletra Storage MP B10000 support multiple ways of accessing storage (data p
 | ------------ | -------------------------- | ---------------------------- | ---------------------------- |
 | FC           | N/A                        | Yes                          |                              |
 | iSCSI        | Yes                        | Yes                          |                              |
-| NVMe/TCP     | No                         | No                           | Alletra 9000 and B10000 only |
+| NVMe/TCP     | No                         | No                           | B10000 only                  |
 | NFS          | No                         | No                           | B10000 only                  |
 
 <small>
