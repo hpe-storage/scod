@@ -132,7 +132,7 @@ Release highlights:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="">Introducing NVMe/TCP for HPE Alletra Storage MP B10000 with HPE CSI Driver for Kubernetes v3.1.0</a>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/introducing-nvme-tcp-for-hpe-alletra-storage-mp-b10000-with-hpe/ba-p/7262519">Introducing NVMe/TCP for HPE Alletra Storage MP B10000 with HPE CSI Driver for Kubernetes 3.1.0</a>
    </td>
  </tr>
 </table>
