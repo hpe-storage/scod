@@ -75,7 +75,7 @@ Release highlights:
 
 * Introducing NVMe/TCP support for Alletra Storage MP B10000
 * Support for IPv6 control and data plane for iSCSI on Alletra Storage MP B10000
-* Periodic replication support for Active/Active and Classic Peer Persistence
+* Periodic replication support for Alletra Storage MP B10000
 * Security updates addressing several active CVEs
 * Incremental ecosystem updates
 
