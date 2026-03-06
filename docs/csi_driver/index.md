@@ -79,6 +79,11 @@ Release highlights:
 * Security updates addressing several active CVEs
 * Incremental ecosystem updates
 
+Upgrade considerations:
+
+* In order to use NVMe/TCP devices on existing clusters with any prior version of HPE CSI Driver installed, see the [upgrade section](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#upgrading-the-chart) in the Helm chart.
+* Existing claims provisioned with the NFS Server Provisioner [may optionally be upgraded](operations.md#upgrade_to_v310).
+
 <table>
   <tr>
     <th>Kubernetes</th>
