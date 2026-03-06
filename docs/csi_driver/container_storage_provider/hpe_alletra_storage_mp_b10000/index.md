@@ -252,7 +252,9 @@ spec:
     targetName: <Target array name>
     targetSecret: <Target Secret name>
     targetSecretNamespace: <Target Secret Namespace>
-    targetMode: <Target Mode> # optional, see StorageClass parameters
+    targetMode: <Target Mode> # "sync" or "periodic", defaults to "sync"
+                              # optional, see StorageClass parameters
+                              # for each mode of Peer Persistence below
 ```
 
 !!! info
@@ -374,7 +376,7 @@ These `StorageClass` parameters are applicable only for replication, "primarySec
 
 #### Classic Peer Persistence Prerequisites
 
-If using existing RCGs for replication, the RCGs need to have the correct sync mode policy applied, "path_management". Periodic sync mode is not supported at this time.
+If using existing RCGs for replication, the RCGs need to have the correct sync mode policy applied, "path_management".
 
 ```text
 setrcopygroup pol path_management my-csi-rcg
