@@ -49,6 +49,9 @@ The Alletra Storage MP B10000 support multiple ways of accessing storage (data p
  <br /><sup>2</sup> = Please see [Peer Persistence Configuration](#peer_persistence_configuration) for more platform details.
 </small>
 
+!!! important
+    Migrating `PersistentVolumes` between protocols is currently not documented and is discouraged until further notice.
+
 ### User Role Requirements
 
 The CSP requires access to a user with either `edit` or the `super` role. It's recommended to use the `edit` role for security best practices.
