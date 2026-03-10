@@ -50,7 +50,7 @@ Create a working directory and set environment variables referenced throughout t
 mkdir hpe-csi-driver
 cd hpe-csi-driver
 export MY_REGISTRY=registry.enterprise.example.com
-export MY_CSI_DRIVER=3.0.1
+export MY_CSI_DRIVER=3.1.0
 ```
 
 Next, create a list with the CSI driver images. Copy and paste the entire text blob in one chunk.
@@ -152,6 +152,10 @@ kubectl get csv -n my-hpe-csi-operator
 
 Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
+```yaml fct_label="HPE CSI Operator v3.1.0"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.1.0-sample.yaml
+{% include "csi_driver/examples/deployment/hpecsidriver-v3.1.0-sample.yaml" %}```
+
 ```yaml fct_label="HPE CSI Operator v3.0.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml" %}```
@@ -163,10 +167,6 @@ Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe
 ```yaml fct_label="v2.5.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
-
-```yaml fct_label="v2.4.2"
-# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml
-{% include "csi_driver/examples/deployment/hpecsidriver-v2.4.2-sample.yaml" %}```
 
 !!! tip
     The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.
@@ -222,6 +222,26 @@ stringData:
   password: 3pardata
 ```
 
+```yaml fct_label="IPv6<sup>1</sup>"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-csp-svc
+  servicePort: "8080"
+  backend: "[2001:db8:85a3:0000:0000:8a2e:0370:7334]"
+  username: 3paradm
+  password: 3pardata
+```
+
+<small>
+ <sup>1</sup> = Only iSCSI is supported with IPv6. Do not include the WSAPI port in the IP address.
+</small>
+
+Other platforms:
+
 ```yaml fct_label="Alletra 5000/6000"
 apiVersion: v1
 kind: Secret
@@ -249,8 +269,6 @@ stringData:
   username: 3paradm
   password: 3pardata
 ```
-
-Legacy platforms:
 
 ```yaml fct_label="Nimble Storage"
 apiVersion: v1
@@ -295,7 +313,7 @@ stringData:
 ```
 
 !!! caution "Improved Security"
-    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 (block) derived platforms except 3PAR should include port 443 with the backend IP address (i.e "192.168.1.110:443") to prevent the CSP from using SSH.
+    From v2.5.2 onwards, all HPE Alletra Storage MP B10000 (block protocols only) platforms except 3PAR should include port 443 with the backend IP address (i.e "192.168.1.110:443") to prevent the CSP from using SSH. This only applies for IPv4 with Alletra Storage MP B10000.
 
 Create the `Secret` using `kubectl`:
 

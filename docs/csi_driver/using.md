@@ -1,4 +1,5 @@
 # Overview
+
 At this point the CSI driver and CSP should be installed and configured.
 
 !!! important
@@ -71,6 +72,17 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v3.1.0"
+# Kubernetes 1.32-1.35
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.4.0 -b hpe-csi-driver-v3.1.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | \
+ yq '.spec.template.spec.containers.0.image = "registry.k8s.io/sig-storage/snapshot-controller:v8.4.0"' | \
+ kubectl create -f-
+```
+
 ```text fct_label="HPE CSI Driver v3.0.1"
 # Kubernetes 1.30-1.33
 git clone https://github.com/kubernetes-csi/external-snapshotter
@@ -94,15 +106,6 @@ kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter
 git checkout tags/v8.0.1 -b hpe-csi-driver-v2.5.0
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
-```text fct_label="v2.4.2"
-# Kubernetes 1.26-1.29
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v6.3.3 -b hpe-csi-driver-v2.4.2
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
@@ -144,9 +147,9 @@ allowVolumeExpansion: true
 
 Common HPE CSI Driver `StorageClass` parameters across CSPs.
 
-| Parameter                     | String         | Description |
+| Parameter                     | String<sup>2</sup> | Description |
 | ----------------------------- | -------------- | ----------- |
-| accessProtocol                | Text           | The access protocol to use when accessing the persistent volume ("nfs", "fc" or "iscsi").  Default: "iscsi" |
+| accessProtocol                | Text           | The access protocol to use when accessing the persistent volume ("nvmetcp", "nfs", "fc" or "iscsi").  Default: "iscsi" |
 | chapSecretName                | Text           | Name of `Secret` to use for iSCSI CHAP. |
 | chapSecretNamespace           | Text           | Namespace of `Secret` to use for iSCSI CHAP. |
 | description<sup>1</sup>       | Text           | Text to be added to the volume PV metadata on the backend CSP. Default: "" |
@@ -169,8 +172,12 @@ Common HPE CSI Driver `StorageClass` parameters across CSPs.
 | hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
 | hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
 | hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
+<!-- | nfsEnableProbes | Boolean | Not exposed, introduced in v3.1.0. Default: "false" |  -->
 
-<small><sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).</small>
+<small>
+ <sup>1</sup> = Parameter is mutable using the [CSI Volume Mutator](#using_volume_mutations).<br />
+ <sup>2</sup> = All parameter keys and values are case sensitive. For example, `accessProtocol: "FC"` won't have the expected results.
+</small>
 
 !!! note
     All common HPE CSI Driver parameters are optional.
@@ -258,9 +265,8 @@ These instructions are provided as an example on how to use the HPE CSI Driver w
 - [Expanding PVCs](#expanding_pvcs)
 - [Using PVC Overrides](#using_pvc_overrides)
 - [Using Volume Mutations](#using_volume_mutations)
-- [Using Volume Encryption](#using_volume_encryption)
 - [Using the NFS Server Provisioner](#using_the_nfs_server_provisioner)
-- [Using volume encryption](#using_volume_encryption)
+- [Using Volume Encryption](#using_volume_encryption)
 - [Topology and volumeBindingMode](#topology_and_volumebindingmode)
 - [Static Provisioning](#static_provisioning)
 
@@ -378,6 +384,7 @@ It's possible to declare a volume "inline" a `Pod` specification. The volume is 
 
 Ephemeral inline volumes are not associated with a `StorageClass`, hence a `Secret` needs to be provided inline with the volume.
 
+Only the Alletra 5000/6000 CSP supports ephemeral inline volumes.
 
 !!! warning
     Allowing user `Pods` to access the CSP `Secret` gives them the same privileges on the backend system as the HPE CSI Driver.
@@ -715,7 +722,7 @@ persistentvolumeclaim/my-pvc patched
 The new `PersistentVolumeClaim` size may be observed with `kubectl get pvc/my-pvc` after a few moments.
 
 !!! tip "Good to know"
-    The CSI driver does a combined controller and node expansion of the `PersistentVolume` that is sometimes referred to as an "online" expansion. That means that the `PersistentVolume` needs to be attached to a node when the expansion request is issued to complete successfully.
+    The CSI driver does a combined controller and node expansion of the `PersistentVolume` that is sometimes referred to as an "online" expansion. That means that the `PersistentVolume` needs to be attached to a node when the expansion request is issued to complete successfully. Offline controller expansion is not supported.
 
 ### Using PVC Overrides
 
@@ -1040,6 +1047,7 @@ spec:
     requests:
       storage: 100Gi
   storageClassName: hpe-encrypted
+  volumeMode: Filesystem # Block volumes are not supported
 ```
 
 Attach a basic `Pod` to verify functionality.

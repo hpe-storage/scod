@@ -6,24 +6,23 @@ It's recommended to familiarize yourself with inspecting workloads on Kubernetes
 
 Once the CSI driver has been deployed either through object configuration files, Helm or an Operator. This view should be representative of what a healthy system should look like after install. If any of the workload deployments lists anything but `Running`, proceed to inspect the logs of the problematic workload.
 
-```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
-kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-hpe-storage   hpe-csi-controller-7d9cd6b855-zzmd9   9/9     Running   0          15s
-hpe-storage   hpe-csi-node-dk5t4                    2/2     Running   0          15s
-hpe-storage   hpe-csi-node-pwq2d                    2/2     Running   0          15s
-hpe-storage   nimble-csp-546c9c4dd4-5lsdt           1/1     Running   0          15s
+```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
+kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller, alletrastoragemp-b10000-nfs-csp)'
+NAMESPACE     NAME                                               READY   STATUS    RESTARTS   AGE
+hpe-storage   alletrastoragemp-b10000-nfs-csp-6fccc4cbdf-dmdst   1/1     Running   0          34m
+hpe-storage   hpe-csi-controller-5f7d7cf87-l9kc5                 9/9     Running   0          34m
+hpe-storage   hpe-csi-node-kv6ff                                 2/2     Running   0          34m
+hpe-storage   hpe-csi-node-q7nqn                                 2/2     Running   0          34m
+hpe-storage   primera3par-csp-d95885d54-kfcwt                    1/1     Running   0          34m
 ```
 
-```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
-kubectl get pods --all-namespaces -l 'app in (primera3par-csp, hpe-csi-node, hpe-csi-controller)'
-NAMESPACE     NAME                                  READY   STATUS    RESTARTS   AGE
-hpe-storage   hpe-csi-controller-7d9cd6b855-fqppd   9/9     Running   0          14s
-hpe-storage   hpe-csi-node-86kh6                    2/2     Running   0          14s
-hpe-storage   hpe-csi-node-k8p4p                    2/2     Running   0          14s
-hpe-storage   hpe-csi-node-r2mg8                    2/2     Running   0          14s
-hpe-storage   hpe-csi-node-vwb5r                    2/2     Running   0          14s
-hpe-storage   primera3par-csp-546c9c4dd4-bcwc6      1/1     Running   0          14s
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
+kubectl get pods --all-namespaces -l 'app in (nimble-csp, hpe-csi-node, hpe-csi-controller)'
+NAMESPACE     NAME                                 READY   STATUS    RESTARTS   AGE
+hpe-storage   hpe-csi-controller-5f7d7cf87-l9kc5   9/9     Running   0          35m
+hpe-storage   hpe-csi-node-kv6ff                   2/2     Running   0          35m
+hpe-storage   hpe-csi-node-q7nqn                   2/2     Running   0          35m
+hpe-storage   nimble-csp-6d9bf4cb5b-lh5tf          1/1     Running   0          35m
 ```
 
 A Custom Resource Definition (CRD) named `hpenodeinfos.storage.hpe.com` holds important network and host initiator information. 
@@ -47,7 +46,7 @@ kubectl get hpenodeinfos/tme-lnx-worker1 -o yaml
 apiVersion: storage.hpe.com/v1
 kind: HPENodeInfo
 metadata:
-  creationTimestamp: "2020-08-24T23:50:09Z"
+  creationTimestamp: "2026-02-24T23:50:09Z"
   generation: 1
   managedFields:
   - apiVersion: storage.hpe.com/v1
@@ -60,9 +59,10 @@ metadata:
         f:iqns: {}
         f:networks: {}
         f:uuid: {}
+        f:nqns: {}
     manager: csi-driver
     operation: Update
-    time: "2020-08-24T23:50:09Z"
+    time: "2026-02-24T23:50:09Z"
   name: tme-lnx-worker1
   resourceVersion: "30337986"
   selfLink: /apis/storage.hpe.com/v1/hpenodeinfos/tme-lnx-worker1
@@ -71,14 +71,28 @@ spec:
   chap_password: RGlkIHlvdSByZWFsbHkgZGVjb2RlIHRoaXM/
   chap_user: chap-user
   iqns:
-  - iqn.1994-05.com.redhat:828e7a4eef40
+  - iqn.1994-05.com.redhat:1f21f7d1a19
   networks:
-  - 10.2.2.2/16
-  - 172.16.6.115/24
-  - 172.16.8.115/24
-  - 172.17.0.1/16
-  - 10.1.1.0/12
-  uuid: 0242f811-3995-746d-652d-6c6e78352d77
+  - 10.132.45.226/22
+  - 2001:db8:a000::3b/64
+  - fe80::f153:a365:7263:2758/64
+  - 2001:db8:b000::3b/64
+  - fe80::4121:8da4:7313:67d5/64
+  - fd01:0:0:5::2/64
+  - fe80::858:52ff:fe44:cfc5/64
+  - fe80::874:e4ff:fe12:9f0f/64
+  - fd69::2/112
+  - fd10:abcd:1234:10::47/64
+  - fe80::250:56ff:fe8e:c9de/64
+  - fe80::82a:2eff:fe99:96ec/64
+  nqns:
+  - nqn.2014-08.org.nvmexpress:uuid:6a660060-d81a-49d8-8151-d313e6f62d71
+  uuid: 1e6ba563-1623-6411-3039-ac80aeb010ca
+  wwpns:
+  - 100020677c5d3c41
+  - 100020677c5d3c49
+  - 1000d06726e092e2
+  - 1000d06726e092e3
 ```
 
 ## NFS Server Provisioner Resources
@@ -150,7 +164,7 @@ kubectl logs -f deployment.apps/hpe-csi-controller hpe-csi-driver -n hpe-storage
 ```
 
 !!! tip
-    The logs for both node and controller drivers are persisted at `/var/log/hpe-csi.log`
+    The logs for both node and controller drivers are persisted at `/var/log/hpe-csi-node.log` and `/var/log/hpe-csi-controller.log` respectively.
 
 ### Log Level
 
@@ -166,12 +180,16 @@ Log levels for both CSI Controller and Node driver can be controlled using `LOG_
 
 CSP logs can be accessed from their respective services.
 
-```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
-kubectl logs -f deploy/nimble-csp -n hpe-storage
-```
-
 ```text fct_label="HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR"
 kubectl logs -f deploy/primera3par-csp -n hpe-storage
+```
+
+```text fct_label="B10000 File Service"
+kubectl logs -f deploy/alletrastoragemp-b10000-nfs-csp -n hpe-storage
+```
+
+```text fct_label="HPE Alletra 5000/6000 and Nimble Storage"
+kubectl logs -f deploy/nimble-csp -n hpe-storage
 ```
 
 ### Log Collector
