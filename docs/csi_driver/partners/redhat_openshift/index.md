@@ -14,18 +14,18 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 Software delivered through the HPE and Red Hat partnership follows a [rigorous certification process](https://redhat-connect.gitbook.io/openshift-badges/badges/container-storage-interface-csi-1) and only qualify what's listed as "Certified" in the below table.
 
-| Status                  | Red Hat OpenShift                 | HPE CSI Operator           | Container Storage Providers                      |
-| ----------------------- | --------------------------------- | -------------------------- | ------------------------------------------------ |
-| Field&nbsp;Tested<sup>3</sup> | 4.21                              | 3.1.0                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2                      | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.19                              | 3.0.1, 3.0.2               | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2, 3.0.1, 3.0.2        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.17                              | 2.5.2, 3.0.1, 3.0.2        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1, 2.5.2, 3.0.1, 3.0.2 | [All](../../container_storage_provider/index.md) |
-| EOL<sup>1</sup>         | 4.15                              | 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1, 3.0.2 | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0, 2.4.1, 2.4.2, 2.5.1, 2.5.2, 3.0.1, 3.0.2 | [All](../../container_storage_provider/index.md) |
-| EOL<sup>1</sup>         | 4.13                              | 2.4.0, 2.4.1, 2.4.2        | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0, 2.4.0, 2.4.1, 2.4.2 | [All](../../container_storage_provider/index.md) |
+| Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
+| ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
+| Field&nbsp;Tested<sup>3</sup> | 4.21                        | 3.1.0            | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.19                              | 3.0.1 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.17                              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.16 EUS<sup>2</sup>              | 2.5.1 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.15                              | 2.4.1 → 3.0.2    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.14 EUS<sup>2</sup>              | 2.4.0 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| EOL<sup>1</sup>         | 4.13                              | 2.4.0 → 2.4.2    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.12 EUS<sup>2</sup>              | 2.3.0 → 2.4.2    | [All](../../container_storage_provider/index.md) |
 
 <small>
  <br /><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).
