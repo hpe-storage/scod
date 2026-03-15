@@ -10,7 +10,7 @@
 
 ## Supportability
 
-HPE supports the underlying host OS, SLE Micro, using the HPE CSI Driver for Kubernetes and the Rancher Kubernetes Engine 2 (RKE2) which is a CNCF certified Kubernetes distribution. SUSE Virtualization (formerly Harvester) embeds KubeVirt and uses standard CSI storage constructs to manage storage resources for virtual machines.
+HPE supports the underlying host OS, SL Micro, using the HPE CSI Driver for Kubernetes and the Rancher Kubernetes Engine 2 (RKE2) which is a CNCF certified Kubernetes distribution. SUSE Virtualization (formerly Harvester) embeds KubeVirt and uses standard CSI storage constructs to manage storage resources for virtual machines.
 
 - Learn more about [Compatibility & Support](../../../csi_driver/index.md#compatibility_and_support)
 
@@ -25,20 +25,34 @@ Many of the features provided by Harvester stem from the capabilities of KubeVir
 
 These limitatons are framed around the integration of the HPE CSI Driver for Kubernetes and Harvester. Other limitations may apply.
 
-### iSCSI Networking
+### iSCSI and NVMe/TCP Networking
 
-As per best practice HPE recommends using dedicated iSCSI networks for data traffic between the Harvester nodes and the storage platform.
+As per best practice HPE recommends using dedicated networks for data traffic between the Harvester nodes and the storage platform.
 
 Ancillary network configuration of Harvester nodes is managed as a post-install step. Creating network configuration files for Harvester nodes is beyond the scope of this document. Follow the guides provided by Harvester.
 
-- [Update Harvester Configuration After Installation](https://docs.harvesterhci.io/v1.5/install/update-harvester-configuration)
+- [Update Harvester Configuration After Installation](https://docs.harvesterhci.io/latest/install/update-harvester-configuration)
 
-#### Example iSCSI Configuration
+#### Example Configuration
+
+Harvester 1.7 and later uses `nmcli` to persist network configuration. In a typical scenario where two physical interfaces are connected to an "A" and "B" network where each network provide DHCP, simply activate the interfaces. See the next section for older versions of Harvester.
+
+Log in as "rancher" on each compute node and run:
+
+```text
+sudo nmcli device connect eno50
+sudo nmcli device connect eno51
+```
+
+!!! tip
+    The "eno50" and "eno51" interfaces above are used as examples. Use `nmcli device` to list available interfaces and use `nmcli -h` for more examples on how to apply a static configuration or set custom MTU sizes.
+
+##### Any Harvester version prior to v1.7
 
 In a typical setup the IP addresses are assigned by DHCP on the NIC directly without any bridges, VLANs or bonds. Network interface configuration on Harvester are part of the node boot strap process post-install. Create the file `/oem/89_hpe-csi-iscsi.yaml` described below on each compute node to reflect a typical configuration.
 
 ```text
-name: HPE CSI Driver for Kubernetes iSCSI configuration
+name: HPE CSI Driver for Kubernetes data network configuration
 stages:
   initramfs:
     - commands: []
@@ -69,7 +83,7 @@ stages:
 
 Reboot the node and verify that IP addresses have been assigned to the NICs by running `ip addr show dev <interface name>` on the compute node prompt.
 
-- Learn more about [Harvester networking](https://docs.harvesterhci.io/v1.5/networking/index) in the official docs.
+- Learn more about [Harvester networking](https://docs.harvesterhci.io/latest/networking/index) in the official docs.
 
 ## Installing HPE CSI Driver for Kubernetes
 
