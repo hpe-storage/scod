@@ -81,6 +81,7 @@ Release highlights:
 
 Upgrade considerations:
 
+* A bug in some versions of OpenShift causes the upgrade to fail due to duplicate NQN on multiple hosts. Review [this Red Hat Knowledgebase article](https://access.redhat.com/solutions/7073579) prior to upgrading. 
 * In order to use NVMe/TCP devices on existing clusters with any prior version of HPE CSI Driver installed, see the [upgrade section](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#upgrading-the-chart) in the Helm chart.
 * Existing claims provisioned with the NFS Server Provisioner [may optionally be upgraded](operations.md#upgrade_to_v310).
 
