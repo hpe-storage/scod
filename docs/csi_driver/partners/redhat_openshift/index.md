@@ -59,6 +59,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
 - The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
 - Deploying the NFS Server Provisioner to a `Namespace` other than "hpe-nfs" requires a separate SCC applied to the `Namespace`. See [NFS Server Provisioner Considerations](#nfs_server_provisioner_considerations).
+- Depending on how the OpenShift worker node was deployed, an issue may arise where the CSI node driver version 3.1.0 or later won't start because of a duplicate NQN issue. Refer t[Duplicate NQNs issue](#duplicate_nqns_issue) for more details.
 
 ### Deployment
 
@@ -248,6 +249,31 @@ v2.storage.hpe.com
 ```
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
+
+## Duplicate NQNs issue
+
+In the event of the CSI node driver not starting because the event log reports a duplicate NQN in `hpenodeinfos`, the host identity and NQN needs to be regenerated to reflect the actual unique machine identity.
+
+This is the message observed on the init container of the CSI node `Pod`:
+
+```text
+time="2026-03-01T12:04:33Z" level=error msg="Initiator validation failed: CRITICAL: Duplicate NQN 'nqn.2014-08.org.nvmexpress:uuid:39373638-3935-584d-5139-313030343450' detected on node 'my-worker-node-0' (attempting to register on node 'my-worker-node-0'). This will cause data corruption. Each node must have unique NVMe Qualified Names" file="flavor.go:275"
+time="2026-03-01T12:04:33Z" level=error msg="GRPC error: rpc error: code = Internal desc = rpc error: code = Internal desc = Failed to load node info" file="utils.go:74"
+```
+
+Create and apply a new `MachineConfig` manifest.
+
+!!! Important
+    If this is applied to a converged cluster, change the role annotation to "master".
+
+```yaml
+# oc apply -f {{ config.site_url }}csi_driver/partners/redhat_openshift/examples/nqns/machine-config.yaml
+#
+# Note: Once the MachineConfig has been applied to the cluster,
+#       a rolling node restart will commence.
+# 
+{% include "csi_driver/partners/redhat_openshift/examples/nqns/machine-config.yaml" %}```
+
 
 ## NFS Server Provisioner Considerations
 

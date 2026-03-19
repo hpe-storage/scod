@@ -167,10 +167,10 @@ Example default `StorageClass` ([download](examples/storageclass.yaml)):
  <br />Restrictions applicable when using the [CSI volume mutator](../../using.md#using_volume_mutations):
  <br /><sup>1</sup> = Parameters that are editable after provisioning.
  <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
- <br /><sup>3</sup> = HPE 3PAR only parameter
- <br /><sup>4</sup> = HPE Primera/Alletra 9000 only parameter
+ <br /><sup>3</sup> = HPE 3PAR only parameter.
+ <br /><sup>4</sup> = Not available for HPE 3PAR.
  <br />Other notes:
- <br /><sup>5</sup> = Only HPE Alletra Storage MP B10000 supports NVMe/TCP
+ <br /><sup>5</sup> = Only HPE Alletra Storage MP B10000 supports NVMe/TCP.
 </small>
 
 Please see [using the HPE CSI Driver](../../using.md#base_storageclass_parameters) for additional `StorageClass` examples like CSI snapshots and clones.
