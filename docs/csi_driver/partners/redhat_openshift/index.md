@@ -264,7 +264,7 @@ time="2026-03-01T12:04:33Z" level=error msg="GRPC error: rpc error: code = Inter
 Create and apply a new `MachineConfig` manifest.
 
 !!! Important
-    If this is applied to a converged cluster, change the role annotation to "master".
+    If this is applied to a converged cluster, change the role annotation to "master" and change the name prefix to "99-master".
 
 ```yaml
 # oc apply -f {{ config.site_url }}csi_driver/partners/redhat_openshift/examples/nqns/machine-config.yaml
