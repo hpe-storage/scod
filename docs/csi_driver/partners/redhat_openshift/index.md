@@ -59,7 +59,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
 - The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
 - Deploying the NFS Server Provisioner to a `Namespace` other than "hpe-nfs" requires a separate SCC applied to the `Namespace`. See [NFS Server Provisioner Considerations](#nfs_server_provisioner_considerations).
-- Depending on how the OpenShift worker node was deployed, an issue may arise where the CSI node driver version 3.1.0 or later won't start because of a duplicate NQN issue. Refer t[Duplicate NQNs issue](#duplicate_nqns_issue) for more details.
+- Depending on how the OpenShift worker node was deployed, an issue may arise where the CSI node driver version 3.1.0 or later won't start because of a duplicate NQN issue. Refer to [Duplicate NQNs issue](#duplicate_nqns_issue) for more details.
 
 ### Deployment
 
