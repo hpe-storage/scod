@@ -366,7 +366,6 @@ These `StorageClass` parameters are applicable only for replication, "primarySec
 | remoteCopyGroup<sup>2</sup>        | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
 | replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | periodicReplicationInterval        | Text    | Optional interval in seconds when using `targetMode: periodic` in `HPEReplicationDeviceInfos`. Defaults to the minimum of 15 seconds and a maximum of 366 days (31622400 seconds). Integers needs to be quoted as parameters only support strings, i.e: `periodicReplicationInterval: "25"`.
-| allowBatchReplicatedVolumeCreation | Boolean | Enable the batch processing of persistent volumes in 10 second intervals and add them to a single Remote Copy group. (Optional) <br /> During this process, the Remote Copy group is stopped and started once. |
 | oneRcgPerPvc<sup>2</sup>           | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
 
 <small>
