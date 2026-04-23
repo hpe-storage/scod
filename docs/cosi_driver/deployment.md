@@ -33,6 +33,7 @@ All parameters are mandatory and described below.
 | glcpUserSecretKey   | The HPE Green Lake API client secret.
 | dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
+| onPremCloudCA       | A Base64-encoded CA certificate for on-premise HPE Data Services Cloud Console deployments. Mandatory for on-premise (Deneb) setups where the DSCC instance uses a certificate signed by a private or non-public Certificate Authority.
 
 !!! note
     The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
@@ -53,7 +54,12 @@ stringData:
   glcpUserSecretKey: 00000000000000000000000000000000
   dsccZone: us1.data.cloud.hpe.com
   clusterSerialNumber: 0000000000
+  # Required for on-premise (Deneb) deployments: Base64-encoded CA certificate
+  # onPremCloudCA: <base64-encoded-ca-certificate>
 ```
+
+!!! note
+    The `onPremCloudCA` parameter is mandatory for on-premise (Deneb) deployments. It must be omitted for cloud-hosted DSCC environments.
 
 Create the `Secret`.
 
@@ -79,11 +85,12 @@ kubectl create -f hpe-object-backend.yaml
     * Select the service that your HPE Alletra Storage MP X10000 device is assigned to and click _Launch_.
     * After the service is launched, save the value of the URL from the browser. E.g.: `https://console-us1.data.cloud.hpe.com`.
     * After dropping the prefix `https://console-`, the Data Services Cloud Console zone FQDN value to be used in the `Secret` should have the following format: `us1.data.cloud.hpe.com`.
-    * Supported Data Services Cloud Console zone FQDNs as of January 2025 are:
+    * Supported Data Services Cloud Console zone FQDNs as of April 2026 are:
         - us1.data.cloud.hpe.com
         - jp1.data.cloud.hpe.com
         - eu1.data.cloud.hpe.com
         - uk1.data.cloud.hpe.com
+        - uae1.data.cloud.hpe.com
 4. To locate the S3 endpoint:
     * Log into HPE Data Services Cloud Console.
     * Launch the service that your HPE Alletra Storage MP X10000 device is assigned to.
@@ -92,6 +99,9 @@ kubectl create -f hpe-object-backend.yaml
     * Click on the _Networking_ tab. Under the _Frontend Network_ section, save the value of the _Network DNS Subdomains_ field.
     * The S3 endpoint can be constructed from the _Network DNS Subdomains_ value by using the format: `http://<Network DNS Subdomains>`.
 5. To locate the cluster serial number of the HPE Alletra Storage MP X10000 system, refer to the following [HPE documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&page=GUID-616CE4D4-C31A-4BFE-8F41-887C2B0B9046.html).
+6. To obtain the on-premise Cloud CA certificate (required for on-premise Deneb setups):
+    * Retrieve the CA certificate from the on-premise HPE Data Services Cloud Console instance being used.
+    * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
 
 !!! tip
     In a real world scenario it's more practical to name the `Secret` something that makes sense for the organization. It could be the hostname of the backend or the role it carries; i.e., "hpe-alletra-sanjose-prod".
