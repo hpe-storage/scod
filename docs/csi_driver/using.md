@@ -79,8 +79,8 @@ cd external-snapshotter
 git checkout tags/v8.4.0 -b hpe-csi-driver-v3.1.0
 kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | \
- yq '.spec.template.spec.containers.0.image = "registry.k8s.io/sig-storage/snapshot-controller:v8.4.0"' | \
- kubectl create -f-
+  yq '(select(.spec.template.spec.containers.0.image) | .spec.template.spec.containers.0.image) = "registry.k8s.io/sig-storage/snapshot-controller:v8.4.0"' | \
+  kubectl apply -f-
 ```
 
 ```text fct_label="HPE CSI Driver v3.0.1"
