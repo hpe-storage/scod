@@ -663,7 +663,7 @@ These are the current limitations of Active Peer Persistence when used with the 
 - Only intra-cluster disaster recovery is supported.
 - Only symmetric host proximity is supported and running Active Peer Persistence beyond a campus distance (around 1km) is not recommended.
 - Only manual host creation is supported (this limitation will be removed in the future).
-- Once an automatic failover has occurred, the recovered workloads needs to be manually restarted when the previous primary is restored. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
+- Once an automatic failover has occurred and the workloads are running on the new primary, the recovered workloads need to be manually restarted, or be migrated back, when the previous primary has been restored. This will resume full redundancy with VLUNs created on both arrays for the workloads (a future platform update will address this workaround).
 - During an outage (primary down), the CSI driver only responds to publish requests issued to existing `PeristentVolumes` in an RCG. No provisioning requests will be serviced until the primary is back.
 
 <a name="remote_copy_limitations"></a>
