@@ -89,4 +89,4 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 
 * Always check with the Kubernetes vendor distribution which CSI features are available for use and supported by the vendor.
 * Inline Ephemeral Volumes are currently not supported. Use Generic Ephemeral Volumes instead as a workaround.
-* In order to delete `PersistentVolumes` (regardless or `retentionPolicy`), the "Trash folder access" feature needs to be enabled on the appliance. See the [admin guide](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00002658en_us&page=GUID-D3DA5E24-5FAA-4A88-BE07-C6D505C3D7B6.html) on how to enable trash access.
+* In order to delete `PersistentVolumes` (regardless of `retentionPolicy`), the "Trash folder access" feature needs to be enabled on the appliance. See the [admin guide](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00002658en_us&page=GUID-D3DA5E24-5FAA-4A88-BE07-C6D505C3D7B6.html) on how to enable trash access.
