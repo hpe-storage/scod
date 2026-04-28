@@ -1,5 +1,6 @@
 # Partner Ecosystems
 
+* [HPE Morpheus Enterprise](hpe_morpheus/install.md)
 * [HPE Ezmeral Runtime Enterprise](hpe_ezmeral/install.md)
 * [Amazon EKS Anywhere](amazon_eks_anywhere/index.md)
 * [Canonical](canonical/index.md)
@@ -8,6 +9,7 @@
 * [Kasten by Veeam](kasten/index.md)
 * [Mirantis](mirantis/index.md)
 * [Red Hat OpenShift](redhat_openshift/index.md)
+* [Spectro Cloud](spectro_cloud/index.md)
 * [SUSE Virtualization](suse_virtualization/index.md)
 * [SUSE Rancher](suse_rancher/index.md)
 * [Tanzu Kubernetes Grid Integrated](tkgi/index.md)

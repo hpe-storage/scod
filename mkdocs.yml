@@ -87,6 +87,7 @@ nav:
       - 'Veeam Kasten': 'csi_driver/partners/kasten/index.md'
       - 'Mirantis': 'csi_driver/partners/mirantis/index.md'
       - 'Red Hat OpenShift': 'csi_driver/partners/redhat_openshift/index.md'
+      - 'Spectro Cloud': 'csi_driver/partners/spectro_cloud/index.md'
       - 'SUSE Virtualization': 'csi_driver/partners/suse_virtualization/index.md'
       - 'SUSE Rancher': 'csi_driver/partners/suse_rancher/index.md'
       - 'Tanzu TKGI': 'csi_driver/partners/tkgi/index.md'
