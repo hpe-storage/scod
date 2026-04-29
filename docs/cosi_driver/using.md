@@ -42,6 +42,11 @@ Optional `BucketClass` `.parameters`.
 | Parameter                     | String         | Description |
 | ----------------------------- | -------------- | ----------- |
 | bucketTags                    | Text           | The tags to be applied on a bucket. The key-value pairs must be comma separated. In a tag, the key is required while the value is optional. Example: `.parameters.bucketTags: mytag1=myval1, mytag2, mytag3=myval3`. |
+| compression                   | Text           | Enable bucket compression. The only accepted value is `Enabled` (case-insensitive). Defaults to `Disabled` if not specified. Example: `.parameters.compression: Enabled`. |
+| versioning                    | Text           | Enable bucket versioning. The only accepted value is `Enabled` (case-insensitive). Defaults to `Disabled` if not specified. Example: `.parameters.versioning: Enabled`. |
+| locking                       | Text           | Enable object locking on the bucket. The only accepted value is `Enabled` (case-insensitive). Requires `versioning` to be `Enabled`. Example: `.parameters.locking: Enabled`. |
+| retentionMode                 | Text           | The default retention mode for object locking. Accepted values are `COMPLIANCE` or `GOVERNANCE`. Only applicable when `locking` is `Enabled`. Example: `.parameters.retentionMode: COMPLIANCE`. |
+| defaultRetentionInterval      | Text           | The default retention duration for object locking. Format is `<number><unit>` where unit is `d` for days, `m` for months (treated as 30 days), or `y` for years. Only applicable when `locking` is `Enabled`. Example: `.parameters.defaultRetentionInterval: 30d`. |
 
 ## Create a BucketClaim
 
