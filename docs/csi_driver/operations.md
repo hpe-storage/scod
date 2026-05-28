@@ -405,6 +405,10 @@ In the event the CSI driver contains updates to the NFS Server Provisioner, any 
 !!! note
     This is generally considered an optional step as existing NFS servers will continue to function across the CSI driver updates. It's only necessary if there are concerns about a particular CVE or explicit functionality being requested in a newer version of the CSI driver. Some functionality is not possible patch and would require recreating the entire NFS `Deployment`.
 
+### Upgrade to v3.2.0
+
+Any prior deployed NFS servers may be upgraded to v3.2.0.
+
 ### Upgrade to v3.1.0
 
 Any prior deployed NFS servers may be upgraded to v3.1.0.
@@ -454,7 +458,7 @@ When patching the NFS `Deployments`, the server `Pods` will restart and result i
 Patch all NFS `Deployments` with the following.
 
 ```text
-curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.1.0.yaml | \
+curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.2.0.yaml | \
   kubectl patch -n hpe-nfs \
   $(kubectl get deploy -n hpe-nfs -o name) \
   --patch-file=/dev/stdin
@@ -465,7 +469,7 @@ curl -s {{ config.site_url}}csi_driver/examples/operations/patch-nfs-server-3.1.
 
 ### Validation
 
-This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.9 of the "nfs-provisioner" image after the upgrade is complete.
+This command will list all "hpe-nfs" `Deployments` across the entire cluster. Each `Deployment` should be using v3.0.10 of the "nfs-provisioner" image after the upgrade is complete.
 
 ```text
 kubectl get deploy -A -o yaml | \

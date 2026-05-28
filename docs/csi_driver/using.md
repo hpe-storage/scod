@@ -72,6 +72,17 @@ kubectl get sts,deploy -A
 
 If no prior CRDs or controllers exist, install the snapshot CRDs and common snapshot controller (once per Kubernetes cluster, independent of any CSI drivers).
 
+```text fct_label="HPE CSI Driver v3.2.0"
+# Kubernetes 1.33-1.36
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.5.0 -b hpe-csi-driver-v3.2.0
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | \
+  yq '(select(.spec.template.spec.containers.0.image) | .spec.template.spec.containers.0.image) = "registry.k8s.io/sig-storage/snapshot-controller:v8.5.0"' | \
+  kubectl apply -f-
+```
+
 ```text fct_label="HPE CSI Driver v3.1.0"
 # Kubernetes 1.32-1.35
 git clone https://github.com/kubernetes-csi/external-snapshotter
@@ -101,21 +112,15 @@ kubectl kustomize client/config/crd | kubectl create -f-
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
 ```
 
-```text fct_label="v2.5.0"
-# Kubernetes 1.27-1.30
-git clone https://github.com/kubernetes-csi/external-snapshotter
-cd external-snapshotter
-git checkout tags/v8.0.1 -b hpe-csi-driver-v2.5.0
-kubectl kustomize client/config/crd | kubectl create -f-
-kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f-
-```
-
 !!! tip
     The [provisioning](#provisioning_concepts) section contains examples on how to create `VolumeSnapshotClass` and `VolumeSnapshot` objects.
 
 ## Base StorageClass Parameters
 
-Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass` example for each version of Kubernetes. See the respective [CSP](container_storage_provider/index.md) for more elaborate examples.
+Each CSP has its own set of unique parameters to control the provisioning behavior. These examples serve as a base `StorageClass`. See the respective [CSP](container_storage_provider/index.md) for more elaborate examples.
+
+!!! warning "File-based CSPs"
+    The example `StorageClass` below is generic for block storage. Each file-based CSP *requires* its own unique `StorageClass`. See [CSP](container_storage_provider/index.md) for details.
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -145,7 +150,7 @@ allowVolumeExpansion: true
 !!! important "Important"
     Replace "hpe-backend" with a `Secret` relevant to the backend being referenced.<br />
 
-Common HPE CSI Driver `StorageClass` parameters across CSPs.
+Common HPE CSI Driver `StorageClass` parameters across block-based CSPs.
 
 | Parameter                     | String<sup>2</sup> | Description |
 | ----------------------------- | -------------- | ----------- |
@@ -988,7 +993,7 @@ See [diagnosing NFS Server Provisioner issues](diagnostics.md#nfs_server_provisi
 
 ### Using Volume Encryption
 
-From version 2.0.0 and onwards of the CSI driver supports host-based volume encryption for any of the CSPs supported by the CSI driver.
+From version 2.0.0 and onwards of the CSI driver supports host-based volume encryption for any of the block-based CSPs supported by the CSI driver.
 
 Host-based volume encryption is controlled by `StorageClass` parameters configured by the Kubernetes administrator and may be configured to be overridden by Kubernetes users. In the below example, a single `Secret` is used to encrypt and decrypt all volumes provisioned by the `StorageClass`.
 
