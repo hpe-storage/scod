@@ -135,7 +135,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="">Unstructured storage for Kubernetes unleashed with HPE Alletra Storage MP X10000</a>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/unstructured-storage-for-kubernetes-unleashed-with-hpe-alletra/ba-p/7267994">Unstructured storage for Kubernetes unleashed with HPE Alletra Storage MP X10000</a>
    </td>
  </tr>
 </table>
