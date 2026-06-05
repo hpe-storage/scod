@@ -21,7 +21,7 @@ read -p "Paste your password: " -s MY_PASSWORD
 Next, paste the following command and input (in the same shell).
 
 ```text
-yq << EOF | vim - -c "wq! ${TEMP}/extoauthclient.yaml"
+cat << EOF | vim - -c "wq! ${TEMP}/extoauthclient.yaml"
 apiVersion: sc.hpe.com/v1
 kind: ExtOAuthClient
 metadata:
