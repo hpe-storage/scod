@@ -1,6 +1,6 @@
 # Introduction
 
-HPE Alletra Storage MP X10000 is primarily an object storage platform. Dynamic provisioning of buckets and credentials is provided by the [HPE COSI Driver for Kubernetes](../../../cosi_driver/index.md). Since Release 3 of the platform, it also offers NFS. The HPE Alletra Storage MP X10000 CSP offers dynamic provisioning of NFS exports through the HPE CSI Driver for Kubernetes.
+HPE Alletra Storage MP X10000 is primarily an object storage platform. Dynamic provisioning of buckets and credentials is provided by the [HPE COSI Driver for Kubernetes](../../../cosi_driver/index.md). Since version 2.0.0.0 of the platform, it also offers NFS. The HPE Alletra Storage MP X10000 CSP offers dynamic provisioning of NFS exports through the HPE CSI Driver for Kubernetes.
 
 [TOC]
 
@@ -12,23 +12,26 @@ HPE Alletra Storage MP X10000 is primarily an object storage platform. Dynamic p
 
 In order to create a `Secret` to reference in the `StorageClass`, an API authorization resource needs to be created on the platform. It's expected that a user with "admin" privileges create the resource via the CLI.
 
-In the CLI, paste in the following command. Make sure to edit `.spec.client_secret`.
+Since the CLI is logging all the visible shell activity, the password needs to be pasted into a silent variable we'll use in the next step.
 
 ```text
-jq << EOF | vim - -c "wq! ${TEMP}/extoauthclient.json"
-{
-  "apiVersion": "sc.hpe.com/v1",
-  "kind": "ExtOAuthClient",
-  "metadata": {
-    "name": "hpe-csi-driver",
-    "namespace": "cm"
-  },
-  "spec": {
-    "client_name": "csp",
-    "client_secret": "my-password-X10000",
-    "groups": ["ext:file-provisioner"]
-  }
-}
+read -p "Paste your password: " -s MY_PASSWORD
+```
+
+Next, paste the following command and input (in the same shell).
+
+```text
+yq << EOF | vim - -c "wq! ${TEMP}/extoauthclient.yaml"
+apiVersion: sc.hpe.com/v1
+kind: ExtOAuthClient
+metadata:
+  name: hpe-csi-driver
+  namespace: cm
+spec:
+  client_name: csp
+  client_secret: "${MY_PASSWORD}"
+  groups:
+    - ext:file-provisioner
 EOF
 ```
 
@@ -183,7 +186,7 @@ spec:
 
 The are the known limitations of the CSP. Please refer to the [HPE Alletra Storage MP X10000 QuickSpecs](https://www.hpe.com/us/en/collaterals/collateral.a50009215enw.html) for platform limits. Also, be familiar with the HPE CSI Driver [limitations](../../index.md#known_limitations).
 
-- The X10000 needs to be running Release 3 or later in order to be supported by the HPE CSI Driver.
+- The X10000 needs to be running 2.0.0.0 or later in order to be supported by the HPE CSI Driver.
 - The Kubernetes cluster needs to be running HPE CSI Driver for Kubernetes 3.2.0 or later.
 - Data management features, such as snapshots and clones is not implemented yet.
 - The X10000 does not have a concept of limiting capacity on an export. The `.spec.resources.requsts.storage` value in the `PersistentVolumeClaim` does not matter, hence volume expansion is not implemented.
