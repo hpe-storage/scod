@@ -41,13 +41,13 @@ EOF
 Create the authorization.
 
 ```text
-glsctl create extoauthclient -f ${TEMP}/extoauthclient.json
+glsctl create extoauthclient -f ${TEMP}/extoauthclient.yaml
 ```
 
 Remove the authorization file from the system.
 
 ```text
-rm -f ${TEMP}/extoauthclient.json
+rm -f ${TEMP}/extoauthclient.yaml
 ```
 
 In the newly created resource, the unique client ID that was generated is going to be used the backend `Secret` username.
