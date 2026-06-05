@@ -112,7 +112,7 @@ Upgrade considerations:
     <th>Platforms<sup>3</sup></th>
     <td>
       Alletra Storage MP B10000 10.2.x - 10.5.x<br />
-      Alletra Storage MP X10000 2.0.0.0<br />
+      Alletra Storage MP X10000 2.0<br />
       Alletra OS 9000 9.3.x - 9.6.x<br />
       Alletra OS 5000/6000 6.0.0.x - 6.1.3.x<br />
       Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.3.x<br />
