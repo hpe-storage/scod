@@ -43,7 +43,7 @@ Below is the official table for CSI features we track and deem readily available
 | Volume Attribute Classes               | Stable            | 1.34              | Future         |
 | Volume Populator                       | Stable            | 1.33              | Future         |
 | Mutable CSI Node Allocatable Count     | Stable            | 1.36              | Future         |
-| Upstream Volume Group Snapshot         | Beta              | 1.32              | Future         |
+| Volume Group Snapshot                  | Stable            | 1.36              | Future         |
 | Volume Health                          | Alpha             | 1.21              | Future         |
 | Cross Namespace Snapshots              | Alpha             | 1.26              | Future         |
 | Change Block Tracking                  | Alpha             | 1.33              | Future         |
@@ -101,8 +101,8 @@ Upgrade considerations:
     <th>Worker&nbsp;OS</th>
     <td>
       Red Hat Enterprise Linux (including CoreOS)<sup>2</sup> 8.x, 9.x, 10.x<br />
-      Ubuntu 18.04, 20.04, 22.04, 24.04, 26.04<br />
-      SUSE Linux Enterprise Server (including SL Micro<sup>4</sup>) 15 SP5, SP6, SP7, 16
+      Ubuntu 18.04, 20.04, 22.04, 24.04<br />
+      SUSE Linux Enterprise Server (including SL Micro<sup>4</sup>) 15 SP5, SP6, SP7
   </tr>
   <tr>
     <th>CPU architecture</th>
@@ -111,13 +111,13 @@ Upgrade considerations:
   <tr>
     <th>Platforms<sup>3</sup></th>
     <td>
-      Alletra Storage MP B10000 10.2.x - 10.5.x<br />
-      Alletra Storage MP X10000 2.0<br />
-      Alletra OS 9000 9.3.x - 9.6.x<br />
-      Alletra OS 5000/6000 6.0.0.x - 6.1.3.x<br />
-      Nimble OS 5.0.10.x, 5.2.1.x, 6.0.0.x, 6.1.3.x<br />
-      Primera OS 4.3.x - 4.6.x<br />
-      3PAR OS 3.3.x
+      Alletra Storage MP B10000 10.5.60<br />
+      Alletra Storage MP X10000 2.0.0.0<br />
+      Alletra OS 9000 9.6.20<br />
+      Alletra OS 5000/6000 6.1.3.300<br />
+      Nimble OS 6.1.3.300<br />
+      Primera OS 4.6.20<br />
+      3PAR OS 3.3.2 EMU1
     </td>
   </tr>
   <tr>

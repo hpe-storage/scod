@@ -50,7 +50,7 @@ Remove the authorization file from the system.
 rm -f ${TEMP}/extoauthclient.yaml
 ```
 
-In the newly created resource, the unique client ID that was generated is going to be used the backend `Secret` username.
+In the newly created resource, the unique client ID that was generated is going to be used by the backend `Secret` username.
 
 Extract the client ID.
 
