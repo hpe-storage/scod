@@ -16,8 +16,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
-| Field&nbsp;Tested<sup>3</sup> | 4.22                        | 3.2.0            | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.21 EUS<sup>2</sup>              | 3.1.0 → 3.2.0    | [All](../../container_storage_provider/index.md) |
+| Field&nbsp;Tested<sup>3</sup> | 4.21                        | 3.1.0            | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.19                              | 3.0.1 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
