@@ -36,6 +36,16 @@ Limited to the HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR 
 | **Proactive Care (PC)**                                                       | 866-211-5211 |
 | **Datacenter Care (DC)**                                                      | 888-751-2149 |
 
+### HPE Alletra Storage MP X10000 Container Storage Provider support
+
+Best effort support is available for the HPE Alletra Storage MP X10000 Container Storage Provider (CSP) with All-inclusive Single or Multi-System software and an active HPE Pointnext support agreement. Since HPE Pointnext support for the CSP is best effort only, any other support levels like Warranty, Foundation Care, Proactive Care, Proactive Care Advanced and Datacenter Care or other support levels do not apply. Best effort response times are based on local standard business days and working hours. If your location is outside the customary service zone, response time may be longer.
+
+| HPE Alletra Storage MP X10000 Hardware Contract Type | Phone Number |
+| ----------------------------------------------------------------------------- | ------------ |
+| **Warranty and Foundation Care**                                              | 800-633-3600 |
+| **Proactive Care (PC)**                                                       | 866-211-5211 |
+| **Datacenter Care (DC)**                                                      | 888-751-2149 |
+
 ## Object Storage Providers
 
 ### HPE Alletra Storage MP X10000

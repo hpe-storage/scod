@@ -17,10 +17,10 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
    HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;B10000
   </th>
   <th>
-   HPE&nbsp;GreenLake&nbsp;for&nbsp;File&nbsp;Storage
+   HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;X10000
   </th>
   <th>
-   HPE&nbsp;Alletra&nbsp;Storage&nbsp;MP&nbsp;X10000
+   HPE&nbsp;GreenLake&nbsp;for&nbsp;File&nbsp;Storage
   </th>
  </tr>
  <tr>
@@ -31,10 +31,10 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
    Block and File
   </td>
   <td>
-   File
+   Object and File
   </td>
   <td>
-   Object
+   File
   </td>
  </tr>
  <tr>
@@ -45,10 +45,10 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
    Large scale and high performance containers and virtual machines.
   </td>
   <td>
-   Data lakes and scalable unstructured workloads.
+   Applications requiring fast AWS S3 compatible object storage and scalable NFS.
   </td>
   <td>
-   Applications requiring fast AWS S3 compatible object storage.
+   Data lakes and scalable unstructured workloads.
   </td>
  </tr>
  <tr>
@@ -59,10 +59,11 @@ HPE provide a broad portfolio of storage products that integrate with Kubernetes
    <a href="../csi_driver">HPE CSI Driver for Kubernetes</a><sup>1</sup>
   </td>
   <td>
-   <a href="../filex_csi_driver">HPE GreenLake for File Storage CSI Driver</a>
+   <a href="../cosi_driver/">HPE COSI Driver for Kubernetes</a><br />
+   <a href="../csi_driver/">HPE CSI Driver for Kubernetes</a>
   </td>
   <td>
-   <a href="../cosi_driver/">HPE COSI Driver for Kubernetes</a>
+   <a href="../filex_csi_driver">HPE GreenLake for File Storage CSI Driver</a>
   </td>
  </tr>
 </table>

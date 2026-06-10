@@ -67,7 +67,7 @@ Besides adding the HPE CSI Driver for Kubernetes pack to the Spectro Cloud clust
 
 ### Using VolumeSnapshotClasses and VolumeSnapshots
 
-It's recommended to deploy the "volume-snapshot-controller" pack provided by Spectro Cloud in order to use `VolumeSnapshotClasses` and `VolumeSnapshots`. Learn how to use [snapshots and clones](../../using#using_csi_snapshots) with the CSI driver.
+It's recommended to deploy the "volume-snapshot-controller" pack provided by Spectro Cloud in order to use `VolumeSnapshotClasses` and `VolumeSnapshots`. Learn how to use [snapshots and clones](../../using.md#using_csi_snapshots) with the CSI driver.
 
 ### iSCSI Networking
 

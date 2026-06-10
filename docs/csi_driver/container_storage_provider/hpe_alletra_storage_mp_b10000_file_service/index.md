@@ -1,5 +1,7 @@
 # Introduction
 
+HPE Alletra Storage MP B10000 from OS version 10.5 and later offer an NFS file service. File service and block protocol CSPs are managed separately and require their own `StorageClass` and `Secret` to provision `PersistentVolumes` with their respective distinct capabilities.
+
 [TOC]
 
 ## Platform Requirements
@@ -95,7 +97,7 @@ It's clear that the first and second `Pod` have different roots in the filesyste
 
 ### Inline NFS
 
-Inline NFS does NOT require the HPE CSI Driver, this procedure leverages the kubelet provide NFS client. It's expected that a share have been created on the array manually. Assume we have a filesystem volume named "volume" and the share name is "example" on the share IP address of 192.168.1.100.
+Inline NFS does NOT require the HPE CSI Driver, this procedure leverages the kubelet provided NFS client. It's expected that a share have been created on the array manually. Assume we have a filesystem volume named "volume" and the share name is "example" on the share IP address of 192.168.1.100.
 
 ```yaml
 kind: Pod
