@@ -16,8 +16,9 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
-| Field&nbsp;Tested<sup>3</sup> | 4.21                        | 3.1.0            | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.22 EUS<sup>2</sup>              | 3.1.0 → 3.2.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.21                              | 3.1.0 → 3.2.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.2.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.19                              | 3.0.1 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.17                              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
@@ -30,7 +31,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 <small>
  <br /><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).
  <br /><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).
- <br /><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [Unsupported Version of the Operator Install](#unsupported_version_of_the_operator_install) method. Formal certification will be part of the next release of the CSI driver.
+ <!-- <br /><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [Unsupported Version of the Operator Install](#unsupported_version_of_the_operator_install) method. Formal certification will be part of the next release of the CSI driver.  -->
 </small>
 
 Check the table above periodically for future releases.
@@ -196,9 +197,13 @@ The next step is to create a `HPECSIDriver` resource.
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.2.0-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v3.2.0-sample.yaml" %}```
 
-```yaml fct_label="HPE CSI Operator v3.0.2"
+```yaml fct_label="v3.1.0"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.1.0-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v3.1.0-sample.yaml" %}```
+
+```yaml fct_label="v3.0.2"
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.2-sample.yaml
+{% include "../../examples/deployment/hpecsidriver-v3.0.2-sample.yaml" %}```
 
 ```yaml fct_label="v3.0.1"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
@@ -443,7 +448,7 @@ operator-sdk run bundle --timeout 5m -n hpe-storage quay.io/hpestorage/csi-drive
 Install a specific version after and including v2.5.0:
 
 ```text
-operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.1.0
+operator-sdk run bundle --security-context-config=restricted --timeout 5m -n hpe-storage quay.io/hpestorage/csi-driver-operator-bundle-ocp:v3.2.0
 ```
 
 !!! important
