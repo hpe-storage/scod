@@ -1,0 +1,89 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-cosi-app
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: install-boto3
+        image: python:3.9
+        command: ["sh", "-c", "pip install boto3 -t /app && cp /scripts/sample_pod.py /app"]
+        env:
+        - name: http_proxy
+          value: ""
+        - name: https_proxy
+          value: ""
+        volumeMounts:
+        - name: app-volume
+          mountPath: /app
+        - name: script-volume
+          mountPath: /scripts
+      containers:
+      - name: my-cosi-app
+        image: python:3.9
+        command: ["python", "-u", "/app/sample_pod.py"]
+        volumeMounts:
+        - name: app-volume
+          mountPath: /app
+        - name: secret-volume
+          mountPath: /data/cosi
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+      volumes:
+      - name: app-volume
+        emptyDir: {}
+      - name: script-volume
+        configMap:
+          name: test-object-script
+      - name: secret-volume
+        secret:
+          secretName: my-first-access-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-object-script
+data:
+  sample_pod.py: |
+    #!/usr/bin/env python3
+
+    import json
+    import boto3
+    import sys
+
+    try:
+        # load the bucket info
+        print("Loading bucket info...")
+        with open('/data/cosi/BucketInfo', 'r') as f:
+            bi = json.load(f)
+
+        # create an s3 client session
+        print("Creating S3 client session...")
+        session = boto3.Session(
+            aws_access_key_id=bi['spec']['secretS3']['accessKeyID'],
+            aws_secret_access_key=bi['spec']['secretS3']['accessSecretKey'],
+        )
+
+        s3 = session.resource(
+            bi['spec']['protocols'][0], # set protocol
+            endpoint_url=bi['spec']['secretS3']['endpoint'], # set endpoint
+        )
+
+        # create an object
+        print("Creating object in S3 bucket...")
+        s3.Object(bi['spec']['bucketName'], 'sample.txt').put(Body='Hello, World!')
+        print('Object created')
+
+        # read the object
+        print('Testing the get-object operation on bucket: ' + bi['spec']['bucketName'] + ', object body: ' + s3.Object(bi['spec']['bucketName'], 'sample.txt').get()['Body'].read().decode('utf-8'))
+
+        # Exit gracefully with zero exit code
+        print("Script completed successfully.")
+        sys.exit(0)
+
+    except Exception as e:
+        print(f"An error occurred: {e}", file=sys.stderr)
+        sys.exit(1)

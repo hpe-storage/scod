@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Hewlett Packard Enterprise" /><link rel="canonical" href="https://scod.hpedev.io/csi_driver/container_storage_provider/hpe_alletra_storage_mp_x10000/index.html" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <meta property="og:title" content="HPE Storage Container Orchestrator Documentation (SCOD)"/>
+    <meta property="og:description" content="This is an umbrella documentation project for all container integrations surrounding HPE block, file and object storage. Tailored for IT ops, developers and technology partners."/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://scod.hpedev.io"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://scod.hpedev.io/img/hpe-social-og-image01.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <title>HPE Alletra Storage MP X10000 - SCOD.HPEDEV.IO</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/hpedev.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "HPE Alletra Storage MP X10000";
+        var mkdocs_page_input_path = "csi_driver/container_storage_provider/hpe_alletra_storage_mp_x10000/index.md";
+        var mkdocs_page_url = "/csi_driver/container_storage_provider/hpe_alletra_storage_mp_x10000/index.html";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC28RTKKTW"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', "G-PC28RTKKTW");
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../..">
+          <img src="../../../img/hpe.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">WELCOME</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../welcome/index.html">Get started!</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE CSI DRIVER FOR KUBERNETES</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Container Storage Providers</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_alletra_storage_mp_b10000/index.html">HPE Alletra Storage MP B10000, Alletra 9000, Primera and 3PAR</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_alletra_storage_mp_b10000_file_service/index.html">HPE Alletra Storage MP B10000 File Service</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">HPE Alletra Storage MP X10000</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#platform_requirements">Platform Requirements</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#csp_client_authorization">CSP Client Authorization</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#storageclass_parameters">StorageClass Parameters</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#access_clients_and_networks">Access Clients and Networks</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#static_provisioning">Static Provisioning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#support">Support</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../hpe_alletra_6000/index.html">HPE Alletra 5000/6000 and Nimble Storage</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../monitor.html">Pod Monitor</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../operations.html">Auxiliary Operations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../diagnostics.html">Diagnostics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Partner Ecosystems</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/hpe_morpheus/install.html">HPE Morpheus Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/hpe_ezmeral/install.html">HPE Ezmeral Runtime Enterprise</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/amazon_eks_anywhere/index.html">Amazon EKS Anywhere</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/canonical/index.html">Canonical</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/cohesity/index.html">Cohesity</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/commvault/index.html">Commvault</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/kasten/index.html">Veeam Kasten</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/mirantis/index.html">Mirantis</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/redhat_openshift/index.html">Red Hat OpenShift</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/spectro_cloud/index.html">Spectro Cloud</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/suse_virtualization/index.html">SUSE Virtualization</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/suse_rancher/index.html">SUSE Rancher</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/tkgi/index.html">Tanzu TKGI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../partners/vmware/index.html">VMware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE COSI DRIVER FOR KUBERNETES</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/using.html">Using</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../cosi_driver/diagnostics.html">Diagnostics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">HPE GREENLAKE FOR FILE STORAGE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/index.html">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/deployment.html">Deployment</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../filex_csi_driver/using.html">Using</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEARN</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/persistent_storage/index.html">Persistent Storage for Kubernetes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/introduction_to_containers/index.html">For HPE partners:<br />&nbsp;&nbsp; Introduction to Containers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_primitives/index.html">Introduction to CSI Primitives</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/video_gallery/index.html">Video Gallery</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../learn/csi_workshop/index.html">Interactive CSI Workshop</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">COMMUNITY</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://developer.hpe.com">HPE Developer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://slack.hpedev.io">Sign up to HPE Developer on Slack</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod/issues/new?title=I have some feedback on SCOD">Got feedback?</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">EXTERNAL LINKS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage/scod">SCOD on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://github.com/hpe-storage">HPE Storage on GitHub</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="https://hpe.com/storage/containers">Storage for Containers on hpe.com</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGAL</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/contributing/index.html">Contributing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/support/index.html">Support</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/license/index.html">License</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legal/notices/index.html">Notices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">LEGACY DRIVERS AND PLUGINS</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../legacy/index.html">Docker, FlexVolume and CSPs</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">SCOD.HPEDEV.IO</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">HPE CSI DRIVER FOR KUBERNETES</li>
+          <li class="breadcrumb-item">Container Storage Providers</li>
+      <li class="breadcrumb-item active">HPE Alletra Storage MP X10000</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>HPE Alletra Storage MP X10000 is primarily an object storage platform. Dynamic provisioning of buckets and credentials is provided by the <a href="../../../cosi_driver/index.html">HPE COSI Driver for Kubernetes</a>. Since version 2.0.0.0 of the platform, it also offers NFS. The HPE Alletra Storage MP X10000 CSP offers dynamic provisioning of NFS exports through the HPE CSI Driver for Kubernetes.</p>
+<div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#platform_requirements">Platform Requirements</a><ul>
+<li><a href="#csp_client_authorization">CSP Client Authorization</a></li>
+</ul>
+</li>
+<li><a href="#storageclass_parameters">StorageClass Parameters</a><ul>
+<li><a href="#access_clients_and_networks">Access Clients and Networks</a></li>
+</ul>
+</li>
+<li><a href="#static_provisioning">Static Provisioning</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#support">Support</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="platform_requirements">Platform Requirements<a class="headerlink" href="#platform_requirements" title="Permanent link">&para;</a></h2>
+<p>An account with admin privileges is needed to create the CSP client authorization in order to use the API through the HPE CSI Driver backend <code>Secret</code>. It's also expected that the frontend data IP range has been provisioned on the platform.</p>
+<h3 id="csp_client_authorization">CSP Client Authorization<a class="headerlink" href="#csp_client_authorization" title="Permanent link">&para;</a></h3>
+<p>In order to create a <code>Secret</code> to reference in the <code>StorageClass</code>, an API authorization resource needs to be created on the platform. It's expected that a user with "admin" privileges create the resource via the CLI.</p>
+<p>Since the CLI is logging all the visible shell activity, the password needs to be pasted into a silent variable we'll use in the next step.</p>
+<p> <pre><code class=text>read -p &quot;Paste your password: &quot; -s MY_PASSWORD
+</code></pre></p>
+<p>Next, paste the following command and input (in the same shell).</p>
+<p> <pre><code class=text>cat &lt;&lt; EOF | vim - -c &quot;wq! ${TEMP}/extoauthclient.yaml&quot;
+apiVersion: sc.hpe.com/v1
+kind: ExtOAuthClient
+metadata:
+  name: hpe-csi-driver
+  namespace: cm
+spec:
+  client_name: csp
+  client_secret: &quot;${MY_PASSWORD}&quot;
+  groups:
+    - ext:file-provisioner
+EOF
+</code></pre></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The "client_secret" value needs to follow the platform password rules. Include a number, upper case letter and a special character with a minimum length of eight characters.</p>
+</div>
+<p>Create the authorization.</p>
+<p> <pre><code class=text>glsctl create extoauthclient -f ${TEMP}/extoauthclient.yaml
+</code></pre></p>
+<p>Remove the authorization file from the system.</p>
+<p> <pre><code class=text>rm -f ${TEMP}/extoauthclient.yaml
+</code></pre></p>
+<p>In the newly created resource, the unique client ID that was generated is going to be used by the backend <code>Secret</code> username.</p>
+<p>Extract the client ID.</p>
+<p> <pre><code class=text>glsctl describe extoauthclient hpe-csi-driver | \
+grep hf_client_id | \
+awk -F= '{print $2}'
+</code></pre></p>
+<p>In this example, "0123456789abcdef" is the client ID.</p>
+<p>Now, create the <code>Secret</code> on the Kubernetes cluster where the HPE CSI Driver is installed.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-backend
+  namespace: hpe-storage
+stringData:
+  serviceName: alletrastoragemp-x10000-nfs-csp-svc
+  servicePort: &quot;8080&quot;
+  backend: 192.168.1.100:443    # Replace with X10000 management IP/hostname
+  username: 0123456789abcdef    # Replace with the generated client ID
+  password: my-password-X10000  # Replace with the actual &quot;client_secret&quot;
+</code></pre></p>
+<h2 id="storageclass_parameters">StorageClass Parameters<a class="headerlink" href="#storageclass_parameters" title="Permanent link">&para;</a></h2>
+<p>The CSP only supports dynamic provisioning of <code>PersistentVolumes</code>. No data management such as snapshot or cloning.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>String</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>accessProtocol</td>
+<td>Text</td>
+<td>Mandatory, set to "nfs". Defaults to "iscsi" when unspecified.</td>
+</tr>
+<tr>
+<td>accessControlList<sup>1</sup></td>
+<td>Text</td>
+<td>A comma separated list of <a href="#access_clients_and_networks">access clients and networks</a>. Defaults to "*" which allows any host to mount the export.</td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>1</sup> = This parameter is mutable when set. See <a href="../../using.html#using_volume_mutations">using volume mutations</a>.</small></p>
+<p>Example default <code>StorageClass</code> (<a href="examples/storageclass.yaml">download</a>):</p>
+<p> <pre><code class=yaml>apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    # There can only be one default StorageClass per cluster
+    storageclass.kubernetes.io/is-default-class: &quot;true&quot;
+  name: hpe-standard-file
+provisioner: csi.hpe.com
+parameters:
+  csi.storage.k8s.io/controller-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-name: hpe-backend
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-name: hpe-backend
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  description: &quot;Volume created by the HPE CSI Driver for Kubernetes&quot;
+  accessProtocol: nfs
+  accessControlList: &quot;*&quot;
+reclaimPolicy: Delete
+allowVolumeExpansion: false
+mountOptions:
+  - vers=4.1
+</code></pre></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Pay attention to the <code>mountOptions</code> stanza, the NFS client and server negotiation fails unless "vers=4.1" is provided.</p>
+</div>
+<h3 id="access_clients_and_networks">Access Clients and Networks<a class="headerlink" href="#access_clients_and_networks" title="Permanent link">&para;</a></h3>
+<p>The "accessControlList" `StorageClass parameter may hold up to 50 comma separated entries with a maximum string length of 253 characters, including the commas.</p>
+<p>Here are some example entries that can be applied to limit access to the export.</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host by IP address</td>
+<td><code>192.168.1.10</code> <code>172.16.1.10</code></td>
+</tr>
+<tr>
+<td>Host by name<sup>1</sup></td>
+<td><code>my-host-01</code> <code>my-host-*</code> <code>my-host-0?</code> <code>my-host-01.example.com</code></td>
+</tr>
+<tr>
+<td>Domain names<sup>1</sup></td>
+<td><code>*.example.com</code> <code>*.my-sub-10.example.com</code> <code>*.my-sub-1?.example.com</code></td>
+</tr>
+<tr>
+<td>Network by CIDR</td>
+<td><code>192.168.1.0/24</code> <code>172.16.0.0/16</code> <code>10.0.0.0/8</code></td>
+</tr>
+<tr>
+<td>Network by wildcard</td>
+<td><code>192.168.1.*</code> <code>172.16.*.*</code> <code>10.10.1?.*</code></td>
+</tr>
+<tr>
+<td>Network by CIDR and wildcard</td>
+<td><code>192.168.*.0/24</code> <code>172.16.1?.*/16</code> <code>10.0.*.0/8</code></td>
+</tr>
+</tbody>
+</table>
+<p><small><sup>1</sup> = Requires DNS properly configured on the X10000 platform.</small></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While the X10000 supports IPv6, the CSI driver and CSP is not compatible with IPv6 on the X10000 at this time.</p>
+</div>
+<p>In a real world example you could for example allow production clusters access to the exports but have a subset of hosts in test and stage for auxiliary use cases.</p>
+<p> <pre><code class=yaml>...
+parameters:
+  accessProtocol: nfs
+  accessControlList: &quot;my-k8s-worker-*-prod,my-k8s-worker-0?-staging,172.16.20.44&quot;
+                   # Allow access to all prod. 
+                   # The first 10 hosts in staging are tainted for prod-like use.
+                   # 172.16.20.44 is the old Jenkins box, WARNING DO NOT REMOVE.
+...
+</code></pre></p>
+<h2 id="static_provisioning">Static Provisioning<a class="headerlink" href="#static_provisioning" title="Permanent link">&para;</a></h2>
+<p>In order to use existing exports on the backend with the CSI driver the name and UUID of the filesystem needs to be known. In the example below, the name is "my-static-filesystem" and needs to be called out in <code>.metadata.name</code> and <code>.spec.csi.volumeAttributes.csi.storage.k8s.io/pv/name</code>. The UUID needs to be populated in <code>.spec.csi.volumeHandle</code>.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-static-filesystem
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 128Gi
+  csi:
+    controllerPublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    driver: csi.hpe.com
+    nodePublishSecretRef:
+      name: hpe-backend
+      namespace: hpe-storage
+    volumeAttributes:
+      csi.storage.k8s.io/pv/name: my-static-filesystem
+      volumeAccessMode: mount
+      description: Volume statically provisioned by HPE CSI Driver for Kubernetes
+      accessProtocol: nfs
+      accessControlList: &quot;*&quot;
+    volumeHandle: 00000000-0000-0000-0000-000000000000
+  mountOptions:
+  - vers=4.1
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+</code></pre></p>
+<p>Create a <code>PVC</code> and explicitly call out the <code>PersistentVolume</code> name. The size must match as well.</p>
+<p> <pre><code class=yaml>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-static-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 128Gi
+  volumeName: my-static-filesystem
+  storageClassName: &quot;&quot;
+</code></pre></p>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h2>
+<p>The are the known limitations of the CSP. Please refer to the <a href="https://www.hpe.com/us/en/collaterals/collateral.a50009215enw.html">HPE Alletra Storage MP X10000 QuickSpecs</a> for platform limits. Also, be familiar with the HPE CSI Driver <a href="../../index.html#known_limitations">limitations</a>.</p>
+<ul>
+<li>The X10000 needs to be running 2.0.0.0 or later in order to be supported by the HPE CSI Driver.</li>
+<li>The Kubernetes cluster needs to be running HPE CSI Driver for Kubernetes 3.2.0 or later.</li>
+<li>Data management features, such as snapshots and clones is not implemented yet.</li>
+<li>The X10000 does not have a concept of limiting capacity on an export. The <code>.spec.resources.requsts.storage</code> value in the <code>PersistentVolumeClaim</code> does not matter, hence volume expansion is not implemented.</li>
+<li>NFS uses the same "frontend" data IP addresses configured for the S3 protocol. <code>PersistentVolumes</code> are deterministically mapped to an IP address in the range. If the range is altered in any way, all workloads using <code>PersistentVolumeClaims</code> must be scaled down to zero on the Kubernetes cluster.</li>
+<li>IPv6 is currently not supported by the CSI driver and CSP with X10000.</li>
+</ul>
+<h2 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
+<p>The HPE Alletra Storage MP X10000 CSP is supported by HPE and covered by the platform support agreement. See <a href="../../../legal/support/index.html#hpe_alletra_storage_mp_x10000_container_storage_provider_support">support</a> for more details.</p>
+              
+            </div>
+          </div>
+
+<footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+    <p>Copyright 2020-2026 Hewlett Packard Enterprise Development LP<br />Give <a href="https://github.com/hpe-storage/scod/issues/new?title=csi_driver/container_storage_provider/hpe_alletra_storage_mp_x10000/index.html">feedback</a> on this page.</p>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hpe-storage/scod" class="fa fa-code-fork" style="color: #fcfcfc"> hpe-storage/scod</a>
+        </span>
+    
+    
+      <span><a href="../hpe_alletra_storage_mp_b10000_file_service/index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../hpe_alletra_6000/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
