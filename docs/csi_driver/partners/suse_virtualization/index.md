@@ -13,6 +13,7 @@
 HPE supports the underlying host OS, SL Micro, using the HPE CSI Driver for Kubernetes and the Rancher Kubernetes Engine 2 (RKE2) which is a CNCF certified Kubernetes distribution. SUSE Virtualization (formerly Harvester) embeds KubeVirt and uses standard CSI storage constructs to manage storage resources for virtual machines.
 
 - Learn more about [Compatibility & Support](../../../csi_driver/index.md#compatibility_and_support)
+- Verify the certification of [HPE CSI Driver for Kubernetes](https://www.suse.com/pcsc/viewVersionPage?versionID=26280) on suse.com
 
 !!! note
     The SCOD documentation refers to SUSE Virtualization as Harvester.
@@ -32,6 +33,16 @@ As per best practice HPE recommends using dedicated networks for data traffic be
 Ancillary network configuration of Harvester nodes is managed as a post-install step. Creating network configuration files for Harvester nodes is beyond the scope of this document. Follow the guides provided by Harvester.
 
 - [Update Harvester Configuration After Installation](https://docs.harvesterhci.io/latest/install/update-harvester-configuration)
+
+### Replacing StorageClasses
+
+If a machine image has been created from a `StorageClass`, the `StorageClass` becomes completely immutable and users are not able to use `replace --force` to edit parameters. This is the error message from Harvester:
+
+```text
+The request is invalid: : storage class hpe-standard is used by virtual machine images: [image-zlxq9]
+```
+
+There is no other workaround than creating a new `StorageClass` with the desired parameters.
 
 #### Example Configuration
 
