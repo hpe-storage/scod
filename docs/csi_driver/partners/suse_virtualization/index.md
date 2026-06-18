@@ -48,17 +48,6 @@ sudo nmcli device connect eno51
 !!! tip
     The "eno50" and "eno51" interfaces above are used as examples. Use `nmcli device` to list available interfaces and use `nmcli -h` for more examples on how to apply a static configuration or set custom MTU sizes.
 
-### Replacing StorageClasses
-
-If a machine image has been created from a `StorageClass`, the `StorageClass` becomes completely immutable and users are not able to use `replace --force` to edit parameters. This is the error message from Harvester:
-
-```text
-The request is invalid: : storage class hpe-standard is used by virtual machine images: [image-zlxq9]
-```
-
-There is no other workaround than creating a new `StorageClass` with the desired parameters.
-
-
 ##### Any Harvester version prior to v1.7
 
 In a typical setup the IP addresses are assigned by DHCP on the NIC directly without any bridges, VLANs or bonds. Network interface configuration on Harvester are part of the node boot strap process post-install. Create the file `/oem/89_hpe-csi-iscsi.yaml` described below on each compute node to reflect a typical configuration.
@@ -96,6 +85,16 @@ stages:
 Reboot the node and verify that IP addresses have been assigned to the NICs by running `ip addr show dev <interface name>` on the compute node prompt.
 
 - Learn more about [Harvester networking](https://docs.harvesterhci.io/latest/networking/index) in the official docs.
+
+### Replacing StorageClasses
+
+If a machine image has been created from a `StorageClass`, the `StorageClass` becomes completely immutable and users are not able to use `replace --force` to edit parameters. This is the error message from Harvester:
+
+```text
+The request is invalid: : storage class hpe-standard is used by virtual machine images: [image-zlxq9]
+```
+
+There is no other workaround than creating a new `StorageClass` with the desired parameters.
 
 ## Installing HPE CSI Driver for Kubernetes
 
