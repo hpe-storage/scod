@@ -34,16 +34,6 @@ Ancillary network configuration of Harvester nodes is managed as a post-install 
 
 - [Update Harvester Configuration After Installation](https://docs.harvesterhci.io/latest/install/update-harvester-configuration)
 
-### Replacing StorageClasses
-
-If a machine image has been created from a `StorageClass`, the `StorageClass` becomes completely immutable and users are not able to use `replace --force` to edit parameters. This is the error message from Harvester:
-
-```text
-The request is invalid: : storage class hpe-standard is used by virtual machine images: [image-zlxq9]
-```
-
-There is no other workaround than creating a new `StorageClass` with the desired parameters.
-
 #### Example Configuration
 
 Harvester 1.7 and later uses `nmcli` to persist network configuration. In a typical scenario where two physical interfaces are connected to an "A" and "B" network where each network provide DHCP, simply activate the interfaces. See the next section for older versions of Harvester.
@@ -57,6 +47,17 @@ sudo nmcli device connect eno51
 
 !!! tip
     The "eno50" and "eno51" interfaces above are used as examples. Use `nmcli device` to list available interfaces and use `nmcli -h` for more examples on how to apply a static configuration or set custom MTU sizes.
+
+### Replacing StorageClasses
+
+If a machine image has been created from a `StorageClass`, the `StorageClass` becomes completely immutable and users are not able to use `replace --force` to edit parameters. This is the error message from Harvester:
+
+```text
+The request is invalid: : storage class hpe-standard is used by virtual machine images: [image-zlxq9]
+```
+
+There is no other workaround than creating a new `StorageClass` with the desired parameters.
+
 
 ##### Any Harvester version prior to v1.7
 
