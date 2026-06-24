@@ -273,15 +273,23 @@ time="2026-03-01T12:04:33Z" level=error msg="GRPC error: rpc error: code = Inter
 Create and apply a new `MachineConfig` manifest.
 
 !!! Important
-    If this is applied to a converged cluster, change the role annotation to "master" and change the name prefix to "99-master".
+    If this is applied to a converged cluster, change the role annotation to "master" and change the name prefix to "99-master". Examples are provided below.
 
-```yaml
+```yaml fct_label="Cluster with dedicated worker nodes"
 # oc apply -f {{ config.site_url }}csi_driver/partners/redhat_openshift/examples/nqns/machine-config.yaml
 #
 # Note: Once the MachineConfig has been applied to the cluster,
 #       a rolling node restart will commence.
 # 
 {% include "csi_driver/partners/redhat_openshift/examples/nqns/machine-config.yaml" %}```
+
+```yaml fct_label="Converged cluster"
+# oc apply -f {{ config.site_url }}csi_driver/partners/redhat_openshift/examples/nqns/machine-config-converged.yaml
+#
+# Note: Once the MachineConfig has been applied to the cluster,
+#       a rolling node restart will commence.
+# 
+{% include "csi_driver/partners/redhat_openshift/examples/nqns/machine-config-converged.yaml" %}```
 
 
 ## NFS Server Provisioner Considerations
