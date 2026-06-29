@@ -259,6 +259,47 @@ v2.storage.hpe.com
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
 
+#### Disconnected install
+
+In order to perform a disconnected install of the HPE CSI Operator for OpenShift, the operator and dependent images needs to be mirrored to a registry accessible by the disconnected cluster. Since `oc-mirror` distributed with OpenShift 4.21, signature verification is mandatory. Third-party Operators are not signed.
+
+The error emitted by `oc-mirror` while trying to fetch the signature looks like this:
+
+```text
+2026/06/29 11:20:19  [ERROR]  : [Worker] error mirroring image docker://registry.connect.redhat.com/hpestorage/csi-driver-operator@sha256:dd97626693fafe538f21b5984f9e74d616b9ecdcea4e032ac6b70c38d2fa63f7 (Operator bundles: [hpe-csi-operator.v3.2.0] - Operators: [hpe-csi-operator]) error: reading signatures: reading manifest sha256-dd97626693fafe538f21b5984f9e74d616b9ecdcea4e032ac6b70c38d2fa63f7.sig in registry.connect.redhat.com/hpestorage/csi-driver-operator: name unknown: Image not found
+```
+
+In order to disable signature verification when mirroring Operators, perform these steps.
+
+```text
+mkdir nosig
+cat <<EOF > nosig/registry.yaml
+docker:
+    registry.connect.redhat.com:
+        use-sigstore-attachments: false
+EOF
+cat <<EOF >imageset.yaml
+kind: ImageSetConfiguration
+apiVersion: mirror.openshift.io/v2alpha2
+mirror:
+  operators:
+  - catalog: registry.redhat.io/redhat/certified-operator-index:v4.22
+    packages:
+    - name: hpe-csi-operator
+      channels:
+        - name: stable
+EOF
+```
+
+Use the registry directory and `ImageSetConfiguration` when calling `oc-mirror`.
+
+```text
+oc-mirror --registries.d nosig --v2 --config=./imageset.yaml file://example
+```
+
+!!! important
+    Replace `file://example` with the actual registry location and ensure the catalog tag matches the OpenShift version in the example `ImageSetConfiguration`.
+
 ## Duplicate NQNs issue
 
 In the event of the CSI node driver not starting because the event log reports a duplicate NQN in `hpenodeinfos`, the host identity and NQN needs to be regenerated to reflect the actual unique machine identity.
