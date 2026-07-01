@@ -255,6 +255,7 @@ The following are `APIServices` installed by the HPE CSI Driver.
 ```text
 v1.storage.hpe.com
 v2.storage.hpe.com
+v3.storage.hpe.com
 ```
 
 Please refer to the OLM Lifecycle Manager documentation on how to safely [Uninstall your operator](https://olm.operatorframework.io/docs/tasks/uninstall-operator/).
