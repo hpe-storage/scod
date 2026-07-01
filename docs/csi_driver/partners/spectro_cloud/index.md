@@ -24,6 +24,7 @@ Due to the minimization phase of the immutable Ubuntu image built with CanvOS, c
 - The Spectro Cloud pack will be installed with `disableNodeConformance=true`, if installing on a supported mutable node, use `disableNodeConformance=false` to enable XFS and NVMe/TCP.
 - Spectro Cloud edge nodes are deployed with very long names. These names are too long to be supported by any Alletra Storage MP B10000 pedigree platform. It's recommended to use the HPE provided `user-data` stanza to shorten the node name.
 - The open-iscsi package is installed during the templating phase of the build process. This will result in duplicate IQN names and the CSI node driver will not start. It's recommended to use the HPE provided `user-data` stanza to use the shortened node UUID as the IQN identifier to avoid duplicate names.
+- iSCSI CHAP validation at pack install is not supported because Spectro Cloud does not support Helm pre-install hooks. Ensure the iSCSI CHAP `Secret` exist prior if using iSCSI CHAP.
 
 ## Building CanvOS edge ISOs
 
