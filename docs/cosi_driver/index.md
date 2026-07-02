@@ -51,6 +51,10 @@ Release highlights:
     <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v1.0.0</a> on ArtifactHub</td>
   </tr>
   <tr>
+    <th>OpenShift</th>
+    <td>v4.21+</td>
+  </tr>
+  <tr>
     <th>Platforms</th>
     <td>
       HPE Alletra Storage MP X10000
@@ -78,7 +82,6 @@ HPE does not currently have any archived releases of the HPE COSI Driver.
 
 ## Known Limitations
 
-* The HPE COSI driver can be deployed only in the `default` namespace due to a [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-provisioner-sidecar/issues/140) in creating events in the COSI API objects when deployed in non-default namespaces.
 * Creating `BucketClaim` or `BucketAccess` objects in parallel can cause failures in the COSI driver. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/101) has been filed to address this issue.
 * A warning event is created in the `Bucket` or `BucketAccess` resources when an error occurs, and has a life-span of one hour. During this period, if the error is resolved the Status will show `Bucket Ready: true` or `Access Granted: true` in the `Bucket` or `BucketAccess` respectively, but the warning event will persist till an hour lapses. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/103) has been raised to resolve this ambiguity.
 * Recreation of `BucketClaim` or `BucketAccess` objects doesn't work intermittently, as gRPC request is not sent to the COSI driver. This [pull request](https://github.com/kubernetes-retired/container-object-storage-interface-api/pull/86) will address the issue.
