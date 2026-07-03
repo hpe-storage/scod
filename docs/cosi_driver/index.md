@@ -52,7 +52,7 @@ Release highlights:
   </tr>
   <tr>
     <th>OpenShift</th>
-    <td>v4.19–v4.21</td>
+    <td>v4.19-v4.21</td>
   </tr>
   <tr>
     <th>Platforms</th>
