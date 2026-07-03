@@ -17,11 +17,11 @@ Below is the official table for COSI features that HPE has officially tested and
 
 | Feature                                | K8s maturity | Since K8s version | HPE COSI Driver |
 |----------------------------------------|--------------|-------------------|-----------------|
-| Bucket Creation                        | Alpha        | 1.25              | 1.0.0           |
-| Bucket Deletion                        | Alpha        | 1.25              | 1.0.0           |
-| Bucket Tagging                         | Alpha        | 1.25              | 1.0.0           |
-| Granting Bucket Access                 | Alpha        | 1.25              | 1.0.0           |
-| Revoking Bucket Access                 | Alpha        | 1.25              | 1.0.0           |
+| Bucket Creation                        | Alpha        | 1.36              | 2.0.0           |
+| Bucket Deletion                        | Alpha        | 1.36              | 2.0.0           |
+| Bucket Tagging                         | Alpha        | 1.36              | 2.0.0           |
+| Granting Bucket Access                 | Alpha        | 1.36              | 2.0.0           |
+| Revoking Bucket Access                 | Alpha        | 1.36              | 2.0.0           |
 
 Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to determine the availability of alpha features. File any issues, questions or feature requests [here](https://github.com/hpe-storage/cosi-driver/issues). You may also join the HPE Slack community to chat with people close to this project on the `#Alletra` and `#Kubernetes` channels. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and log in at [hpedev.slack.com](https://hpedev.slack.com).
 
@@ -33,26 +33,26 @@ Refer to the [official table](https://kubernetes.io/docs/reference/command-line-
 HPE has tested the following combinations and included them as part of the official support services for the first COSI driver release.
 
 <a name="latest_release"></a>
-### HPE COSI Driver for Kubernetes v1.0.0
+### HPE COSI Driver for Kubernetes v2.0.0
 
 Release highlights:
 
-* Support for Kubernetes v1.25 to v1.31.
+* Support for Kubernetes v1.25 to v1.36.
 * Implementation of bucket creation, configuration (bucket tagging), lifecycle and access management.
 * A log collector script that can be used to collect logs from any node.
 
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>v1.25-v1.31</td>
+    <td>v1.25-v1.36</td>
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v1.0.0</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v2.0.0</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>OpenShift</th>
-    <td>v4.21+</td>
+    <td>v4.19–v4.21</td>
   </tr>
   <tr>
     <th>Platforms</th>
@@ -72,7 +72,7 @@ Release highlights:
   </tr>
   <tr>
     <th>Release&nbsp;notes</th>
-    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v1.0.0</a> on GitHub</td>
+    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v2.0.0</a> on GitHub</td>
   </tr>
 </table>
 
