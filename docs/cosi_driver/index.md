@@ -17,11 +17,11 @@ Below is the official table for COSI features that HPE has officially tested and
 
 | Feature                                | K8s maturity | Since K8s version | HPE COSI Driver |
 |----------------------------------------|--------------|-------------------|-----------------|
-| Bucket Creation                        | Alpha        | 1.36              | 2.0.0           |
-| Bucket Deletion                        | Alpha        | 1.36              | 2.0.0           |
-| Bucket Tagging                         | Alpha        | 1.36              | 2.0.0           |
-| Granting Bucket Access                 | Alpha        | 1.36              | 2.0.0           |
-| Revoking Bucket Access                 | Alpha        | 1.36              | 2.0.0           |
+| Bucket Creation                        | v1alpha1     | 1.36              | 2.0.0           |
+| Bucket Deletion                        | v1alpha1     | 1.36              | 2.0.0           |
+| Bucket Tagging                         | v1alpha1     | 1.36              | 2.0.0           |
+| Granting Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
+| Revoking Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
 
 Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to determine the availability of alpha features. File any issues, questions or feature requests [here](https://github.com/hpe-storage/cosi-driver/issues). You may also join the HPE Slack community to chat with people close to this project on the `#Alletra` and `#Kubernetes` channels. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and log in at [hpedev.slack.com](https://hpedev.slack.com).
 
@@ -82,6 +82,7 @@ HPE does not currently have any archived releases of the HPE COSI Driver.
 
 ## Known Limitations
 
+* BucketClaim and Bucket Access related events are observed to be generated under the default namespace, regardless of whether the deployment is running in a non-default namespace.
 * Creating `BucketClaim` or `BucketAccess` objects in parallel can cause failures in the COSI driver. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/101) has been filed to address this issue.
 * A warning event is created in the `Bucket` or `BucketAccess` resources when an error occurs, and has a life-span of one hour. During this period, if the error is resolved the Status will show `Bucket Ready: true` or `Access Granted: true` in the `Bucket` or `BucketAccess` respectively, but the warning event will persist till an hour lapses. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/103) has been raised to resolve this ambiguity.
 * Recreation of `BucketClaim` or `BucketAccess` objects doesn't work intermittently, as gRPC request is not sent to the COSI driver. This [pull request](https://github.com/kubernetes-retired/container-object-storage-interface-api/pull/86) will address the issue.
