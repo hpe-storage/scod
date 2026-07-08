@@ -657,3 +657,86 @@ Visit the [Deployment section](deployment.md#upstream_kubernetes_and_others) for
 
 !!! tip "Good to Know"
     It's recommended to run the CSI driver with the bundled images and only apply changes when instructed by HPE. Customers may replace images as they desire but may need to revert installations when engaging with HPE support.
+
+## Apply nodeSelectors and tolerations to perform rolling upgrades
+
+Since the CSI controller and Container Storage Providers are single replica `Deployment` controllers without HA load-balancing capabilities, it's recommended to run those components separately if rolling cluster upgrades are run routinely. The options are to either run dedicated infrastructure nodes that doesn't use `PersistentVolumes` from the HPE CSI Driver or simply run the controllers on the Kubernetes control-plane nodes to ensure `VolumeAttachments` can be administered during node drains and workload restarts.
+
+!!! info
+    The most common pattern for rolling upgrades and upgrading a Kubernetes cluster in general is to perform the upgrade sequentially on the control-plane nodes first.
+
+The CSI driver must be deployed using the specific `.controller` and `.csp` `nodeSelector` and `tolerations` directives using either the Helm chart or when creating the `HPECSIDriver` resource using the Operator.
+
+In the most common scenario, running the controllers on the control-plane nodes, use the following stanza in a Helm values file.
+
+```yaml
+controller:
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: ""
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"
+csp:
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: ""
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"
+```
+
+Using the `HPECSIDriver` custom resource using the HPE CSI Operator.
+
+```yaml
+...
+spec:
+  controller:
+    affinity: {}
+    labels: {}
+    nodeSelector:
+      node-role.kubernetes.io/control-plane: ""
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Equal"
+      value: ""
+      effect: "NoSchedule"
+  csp:
+    affinity: {}
+    labels: {}
+    nodeSelector:
+      node-role.kubernetes.io/control-plane: ""
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Equal"
+      value: ""
+      effect: "NoSchedule"
+...
+```
+
+In the situation when using dedicated infrastructure nodes, there should be at least two nodes and those nodes need to be tainted. 
+
+```text
+kubectl taint nodes my-infranode-{1..2} node-role.kubernetes.io/infra='':NoSchedule
+```
+
+Next, change the labels in the manifests above to read `node-role.kubernetes.io/infra` instead.
+
+!!! important
+    The CSI node driver will not be started on these tainted nodes and no workloads can be served using `PersistentVolumes` from the CSI driver. Admit other workloads on the infrastructure nodes by adding tolerations to them.
