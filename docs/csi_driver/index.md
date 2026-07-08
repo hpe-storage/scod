@@ -578,6 +578,7 @@ HPE currently supports up to three minor releases of the HPE CSI Driver for Kube
 * If automatic rolling node upgrades are required for the cluster it's recommended to isolate the HPE CSI Driver Controller and related CSPs to a node by itself and schedule the upgrade of that particular node last.
 * The [NFS Server Provisioner](using.md#limitations_and_considerations_for_the_nfs_server_provisioner) and each of the [CSPs](container_storage_provider/index.md) have known limitations listed separately.
 * When attempting import of existing legacy volumes through the CSP specific "importVolumeName" and "importVolAsClone" features, it's important to understand that the CSI driver will attempt to use the largest existing partition on the device and attempt the mount. If the underlying host OS supports mounting the filesystem, the CSI driver will mount it with the following caveats. The "fsRepair" parameter will only work with ext3, ext4 and XFS. Any filesystem dependent kernel modules needed by the mount command needs to be installed by the system administrator of the worker nodes.
+- Performing rolling upgrades of Kubernetes requires that the CSI controller and CSPs are scheduled on nodes that don't allow `PersistentVolumes` from the CSI driver. See [apply nodeSelectors and tolerations to perform rolling upgrades](operations.md#apply_nodeselectors_and_tolerations_to_perform_rolling_upgrades) for more details.
 
 ## iSCSI CHAP Considerations
 

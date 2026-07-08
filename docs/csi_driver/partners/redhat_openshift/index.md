@@ -61,6 +61,7 @@ Since the CSI Operator only provides "Basic Install" capabilities. The following
 - The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
 - Deploying the NFS Server Provisioner to a `Namespace` other than "hpe-nfs" requires a separate SCC applied to the `Namespace`. See [NFS Server Provisioner Considerations](#nfs_server_provisioner_considerations).
 - Depending on how the OpenShift worker node was deployed, an issue may arise where the CSI node driver version 3.1.0 or later won't start because of a duplicate NQN issue. Refer to [Duplicate NQNs issue](#duplicate_nqns_issue) for more details.
+- Performing rolling upgrades of OpenShift requires that the CSI controller and CSPs are scheduled on nodes that don't allow `PersistentVolumes` from the CSI driver. See [apply nodeSelectors and tolerations to perform rolling upgrades](../../operations.md#apply_nodeselectors_and_tolerations_to_perform_rolling_upgrades) for more details.
 
 ### Deployment
 
