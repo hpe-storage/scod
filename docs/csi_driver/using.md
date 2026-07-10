@@ -620,7 +620,7 @@ Again, in HPE CSI Driver v2.5.2 and earlier, the size in `.spec.resources.reques
 !!! tip
     A tutorial on how to use `VolumeGroups` and `SnapshotGroups` is available in the [Video Gallery](../learn/video_gallery/index.md#synchronize_volume_snapshots_for_distributed_workloads).
 
-Before grouping `PeristentVolumeClaims` there needs to be a `VolumeGroupClass` created. It needs to reference a `Secret` that corresponds to the same backend the `PersistentVolumeClaims` were created on. A `VolumeGroupClass` is a cluster resource that needs administrative privileges to create.
+Before grouping `PersistentVolumeClaims` there needs to be a `VolumeGroupClass` created. It needs to reference a `Secret` that corresponds to the same backend the `PersistentVolumeClaims` were created on. A `VolumeGroupClass` is a cluster resource that needs administrative privileges to create.
 
 ```yaml
 apiVersion: storage.hpe.com/v1
