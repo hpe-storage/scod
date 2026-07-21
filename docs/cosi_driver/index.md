@@ -63,7 +63,7 @@ Release highlights:
   <tr>
     <th>HPE Alletra Storage MP X10000 OS</th>
     <td>
-      R1
+      R1, R2, R3
     </td>
   </tr>
   <tr>
@@ -73,6 +73,45 @@ Release highlights:
   <tr>
     <th>Release&nbsp;notes</th>
     <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v2.0.0</a> on GitHub</td>
+  </tr>
+</table>
+
+### HPE COSI Driver for Kubernetes v1.0.0
+
+Release highlights:
+
+* Support for Kubernetes v1.25 to v1.31.
+* Implementation of bucket creation, configuration (bucket tagging), lifecycle and access management.
+* A log collector script that can be used to collect logs from any node.
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>v1.25-v1.31</td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v1.0.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      HPE Alletra Storage MP X10000
+    </td>
+  </tr>
+  <tr>
+    <th>HPE Alletra Storage MP X10000 OS</th>
+    <td>
+      R1
+    </td>
+  </tr>
+  <tr>
+    <th>Protocols</th>
+    <td>S3</td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v1.0.0</a> on GitHub</td>
   </tr>
 </table>
 

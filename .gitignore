@@ -3,3 +3,4 @@ site/
 docs/sandbox
 **/*.tmp
 **/*.swp
+.venv/

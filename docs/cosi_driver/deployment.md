@@ -37,7 +37,7 @@ The following parameters are common to both cloud-hosted and on-premise (Deneb) 
 | dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.For on-premise (Deneb) deployments, prefix the instance hostname with `dscc-api-`.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
-The following parameters are deployment-specific.
+The following parameters are deployment-specific and are applicable only to COSI 2.0.0. They are not applicable to COSI 1.0.0 and can be ignored when using that release.
 
 | Parameter           | Applies To   | Description |
 | ------------------- | ------------ | ------------|
@@ -86,6 +86,24 @@ stringData:
   # onPremCloudCA: <base64-encoded-ca-certificate>
 ```
 
+Example `Secret` manifest for the HPE COSI Driver v1.0.0.0:
+
+```yaml fct_label="Release 1 (v1.0.0)"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hpe-object-backend
+  namespace: default
+stringData:
+  accessKey: testuser
+  secretKey: testkey
+  endpoint: http://192.168.1.100:8080
+  glcpUserClientId: 00000000-0000-0000-0000-000000000000
+  glcpUserSecretKey: 00000000000000000000000000000000
+  dsccZone: us1.data.cloud.hpe.com
+  clusterSerialNumber: 0000000000
+```
+
 Create the `Secret`.
 
 ```text
@@ -125,9 +143,13 @@ kubectl create -f hpe-object-backend.yaml
     * Click on the _Networking_ tab. Under the _Frontend Network_ section, save the value of the _Network DNS Subdomains_ field.
     * The S3 endpoint can be constructed from the _Network DNS Subdomains_ value by using the format: `http://<Network DNS Subdomains>`.
 5. To locate the cluster serial number of the HPE Alletra Storage MP X10000 system, refer to the following [HPE documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&page=GUID-616CE4D4-C31A-4BFE-8F41-887C2B0B9046.html).
-6. To view the workspace ID and manage the workspace, refer to the following [HPE documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&page=GUID-D62EE4D7-5CBF-43A0-B91B-12A07EC3D262.html).
+6. To view the workspace ID and manage the workspace (required for on-cloud DSCC setups):
+    * Log into the HPE Data Services Cloud Console UI.
+    * Navigate to _Quick links_ &rarr; _Manage Workspace_.
+    * The _Workspace ID_ is displayed on the page and is used as the `glcpWorkspaceId` field in the `Secret`.
+    * For more details, refer to the [Manage workspace](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00005271en_us&page=GUID-DD8699BF-D17E-4A1C-863A-AE7ED0AA8C88.html) documentation.
 7. To obtain the on-premise Cloud CA certificate (required for on-premise Deneb setups):
-    * Retrieve the CA certificate from the on-premise HPE Data Services Cloud Console instance being used.
+    * Retrieve the CA certificate from the on-premise HPE Data Services Cloud Console instance being used. For the download steps, refer to the [Downloading your CA certificates](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00005271en_us&page=GUID-F0ADEE0C-7BB5-4010-B290-FF700A6B7878.html) documentation.
     * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
 
 !!! tip
