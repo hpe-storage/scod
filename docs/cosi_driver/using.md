@@ -11,7 +11,22 @@ At this point the HPE COSI Driver and HPE Alletra Storage MP X10000 should be in
 
 The `BucketClass` defines a set of properties that can be used to configure buckets. The `BucketClass` has a variety of fields that you can configure. An example of `BucketClass` is below. `BucketClasses` are clustered resources normally created by Kubernetes administrators.
 
-```yaml
+```yaml fct_label="Release 2 (v2.0.0)"
+kind: BucketClass
+apiVersion: objectstorage.k8s.io/v1alpha1
+metadata:
+  name: hpe-standard-object
+driverName: cosi.hpe.com
+deletionPolicy: Delete
+parameters:
+  cosiUserSecretName: hpe-object-backend
+  cosiUserSecretNamespace: default
+  compression: Enabled
+  versioning: Enabled
+  locking: Enabled
+```
+
+```yaml fct_label="Release 1 (v1.0.0)"
 kind: BucketClass
 apiVersion: objectstorage.k8s.io/v1alpha1
 metadata:
