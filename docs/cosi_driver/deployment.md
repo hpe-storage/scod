@@ -16,6 +16,9 @@ The official [Helm chart](https://github.com/hpe-storage/co-deployments/tree/mas
 
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver).
 
+!!! note "On-Premise (Deneb) Deployments"
+    When deploying against an on-premise DSCC instance, the `glcpCommonCloud` Helm chart value must be set with the `sso-` prefix before the instance hostname.
+
 ## Add an HPE Storage Backend
 
 Once the COSI driver is deployed, you must create a `Secret` with the following details before you can use the [COSI API resources](using.md).
@@ -31,7 +34,7 @@ The following parameters are common to both cloud-hosted and on-premise (Deneb) 
 | endpoint            | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
 | glcpUserClientId    | The HPE Green Lake API client ID.
 | glcpUserSecretKey   | The HPE Green Lake API client secret.
-| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
+| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.For on-premise (Deneb) deployments, prefix the instance hostname with `dscc-api-`.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
 The following parameters are deployment-specific.
