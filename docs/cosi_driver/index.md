@@ -17,11 +17,14 @@ Below is the official table for COSI features that HPE has officially tested and
 
 | Feature                                | K8s maturity | Since K8s version | HPE COSI Driver |
 |----------------------------------------|--------------|-------------------|-----------------|
-| Bucket Creation                        | v1alpha1     | 1.36              | 2.0.0           |
-| Bucket Deletion                        | v1alpha1     | 1.36              | 2.0.0           |
-| Bucket Tagging                         | v1alpha1     | 1.36              | 2.0.0           |
-| Granting Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
-| Revoking Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
+| Bucket Creation                        | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Deletion                        | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Tagging                         | v1alpha1     | 1.25              | 1.0.0           |
+| Granting Bucket Access                 | v1alpha1     | 1.25              | 1.0.0           |
+| Revoking Bucket Access                 | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Compression                     | v1alpha1     | 1.31              | 2.0.0           |
+| Bucket Locking                         | v1alpha1     | 1.31              | 2.0.0           |
+| Bucket Versioning                      | v1alpha1     | 1.31              | 2.0.0           |
 
 Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to determine the availability of alpha features. File any issues, questions or feature requests [here](https://github.com/hpe-storage/cosi-driver/issues). You may also join the HPE Slack community to chat with people close to this project on the `#Alletra` and `#Kubernetes` channels. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and log in at [hpedev.slack.com](https://hpedev.slack.com).
 
@@ -37,14 +40,14 @@ HPE has tested the following combinations and included them as part of the offic
 
 Release highlights:
 
-* Support for Kubernetes v1.25 to v1.36.
+* Support for Kubernetes v1.31 to v1.36.
 * Implementation of bucket creation, configuration (bucket tagging), lifecycle and access management.
 * A log collector script that can be used to collect logs from any node.
 
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>v1.25-v1.36</td>
+    <td>v1.31-v1.36</td>
   </tr>
   <tr>
     <th>Helm Chart</th>
@@ -63,8 +66,12 @@ Release highlights:
   <tr>
     <th>HPE Alletra Storage MP X10000 OS</th>
     <td>
-      R1
+      R1, R2, R3
     </td>
+  </tr>
+  <tr>
+    <th>Container Object Storage Interface</th>
+    <td>v1alpha1</td>
   </tr>
   <tr>
     <th>Protocols</th>
@@ -72,7 +79,50 @@ Release highlights:
   </tr>
   <tr>
     <th>Release&nbsp;notes</th>
-    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v2.0.0</a> on GitHub</td>
+    <td><a href="https://github.com/hpe-storage/cosi-driver/blob/main/release-notes/v2.0.0.md">v2.0.0</a> on GitHub</td>
+  </tr>
+</table>
+
+### HPE COSI Driver for Kubernetes v1.0.0
+
+Release highlights:
+
+* Support for Kubernetes v1.25 to v1.31.
+* Implementation of bucket creation, configuration (bucket tagging), lifecycle and access management.
+* A log collector script that can be used to collect logs from any node.
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>v1.25-v1.31</td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v1.0.0</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Platforms</th>
+    <td>
+      HPE Alletra Storage MP X10000
+    </td>
+  </tr>
+  <tr>
+    <th>HPE Alletra Storage MP X10000 OS</th>
+    <td>
+      R1
+    </td>
+  </tr>
+  <tr>
+    <th>Container Object Storage Interface</th>
+    <td>v1alpha1</td>
+  </tr>
+  <tr>
+    <th>Protocols</th>
+    <td>S3</td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/cosi-driver/tree/main/release-notes/v1.0.0.md">v1.0.0</a> on GitHub</td>
   </tr>
 </table>
 
@@ -82,7 +132,6 @@ HPE does not currently have any archived releases of the HPE COSI Driver.
 
 ## Known Limitations
 
-* BucketClaim and Bucket Access related events are observed to be generated under the default namespace, regardless of whether the deployment is running in a non-default namespace.
 * Creating `BucketClaim` or `BucketAccess` objects in parallel can cause failures in the COSI driver. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/101) has been filed to address this issue.
 * A warning event is created in the `Bucket` or `BucketAccess` resources when an error occurs, and has a life-span of one hour. During this period, if the error is resolved the Status will show `Bucket Ready: true` or `Access Granted: true` in the `Bucket` or `BucketAccess` respectively, but the warning event will persist till an hour lapses. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/103) has been raised to resolve this ambiguity.
 * Recreation of `BucketClaim` or `BucketAccess` objects doesn't work intermittently, as gRPC request is not sent to the COSI driver. This [pull request](https://github.com/kubernetes-retired/container-object-storage-interface-api/pull/86) will address the issue.
