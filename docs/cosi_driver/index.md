@@ -40,7 +40,7 @@ HPE has tested the following combinations and included them as part of the offic
 
 Release highlights:
 
-* Support for Kubernetes v1.25 to v1.36.
+* Support for Kubernetes v1.31 to v1.36.
 * Implementation of bucket creation, configuration (bucket tagging), lifecycle and access management.
 * A log collector script that can be used to collect logs from any node.
 
