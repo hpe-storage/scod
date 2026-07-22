@@ -47,7 +47,7 @@ Release highlights:
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>v1.25-v1.36</td>
+    <td>v1.31-v1.36</td>
   </tr>
   <tr>
     <th>Helm Chart</th>
