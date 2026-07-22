@@ -37,7 +37,7 @@ The following parameters are common to both cloud-hosted and on-premise (Deneb) 
 | dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.For on-premise (Deneb) deployments, prefix the instance hostname with `dscc-api-`.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
-The following parameters are deployment-specific and are applicable only to COSI 2.0.0. They are not applicable to COSI 1.0.0 and can be ignored when using that release.
+The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
 
 | Parameter           | Applies To   | Description |
 | ------------------- | ------------ | ------------|
@@ -86,7 +86,7 @@ stringData:
   # onPremCloudCA: <base64-encoded-ca-certificate>
 ```
 
-Example `Secret` manifest for the HPE COSI Driver v1.0.0.0:
+Example `Secret` manifest for the HPE COSI Driver v1.0.0:
 
 ```yaml fct_label="Release 1 (v1.0.0)"
 apiVersion: v1
@@ -143,7 +143,7 @@ kubectl create -f hpe-object-backend.yaml
     * Click on the _Networking_ tab. Under the _Frontend Network_ section, save the value of the _Network DNS Subdomains_ field.
     * The S3 endpoint can be constructed from the _Network DNS Subdomains_ value by using the format: `http://<Network DNS Subdomains>`.
 5. To locate the cluster serial number of the HPE Alletra Storage MP X10000 system, refer to the following [HPE documentation](https://support.hpe.com/hpesc/public/docDisplay?docId=a00120892en_us&page=GUID-616CE4D4-C31A-4BFE-8F41-887C2B0B9046.html).
-6. \* To view the workspace ID and manage the workspace (required for on-cloud DSCC setups):
+6. \* To view the workspace ID and manage the workspace (required from 2.0.0):
     * Log into the HPE Data Services Cloud Console UI.
     * Navigate to _Quick links_ &rarr; _Manage Workspace_.
     * The _Workspace ID_ is displayed on the page and is used as the `glcpWorkspaceId` field in the `Secret`.
@@ -151,6 +151,8 @@ kubectl create -f hpe-object-backend.yaml
 7. \* To obtain the on-premise Cloud CA certificate (required for on-premise Deneb setups):
     * Retrieve the CA certificate from the on-premise HPE Data Services Cloud Console instance being used. For the download steps, refer to the [Downloading your CA certificates](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00005271en_us&page=GUID-F0ADEE0C-7BB5-4010-B290-FF700A6B7878.html) documentation.
     * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
+
+---
 
 <small>\* Applicable only from the HPE COSI Driver for Kubernetes v2.0.0 onwards. These steps are not applicable to v1.0.0.</small>
 

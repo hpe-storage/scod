@@ -17,11 +17,14 @@ Below is the official table for COSI features that HPE has officially tested and
 
 | Feature                                | K8s maturity | Since K8s version | HPE COSI Driver |
 |----------------------------------------|--------------|-------------------|-----------------|
-| Bucket Creation                        | v1alpha1     | 1.36              | 2.0.0           |
-| Bucket Deletion                        | v1alpha1     | 1.36              | 2.0.0           |
-| Bucket Tagging                         | v1alpha1     | 1.36              | 2.0.0           |
-| Granting Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
-| Revoking Bucket Access                 | v1alpha1     | 1.36              | 2.0.0           |
+| Bucket Creation                        | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Deletion                        | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Tagging                         | v1alpha1     | 1.25              | 1.0.0           |
+| Granting Bucket Access                 | v1alpha1     | 1.25              | 1.0.0           |
+| Revoking Bucket Access                 | v1alpha1     | 1.25              | 1.0.0           |
+| Bucket Compression                     | v1alpha1     | 1.25              | 2.0.0           |
+| Bucket Locking                         | v1alpha1     | 1.25              | 2.0.0           |
+| Bucket Versioning                      | v1alpha1     | 1.25              | 2.0.0           |
 
 Refer to the [official table](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/) of feature gates in the Kubernetes docs to determine the availability of alpha features. File any issues, questions or feature requests [here](https://github.com/hpe-storage/cosi-driver/issues). You may also join the HPE Slack community to chat with people close to this project on the `#Alletra` and `#Kubernetes` channels. Sign up at [slack.hpedev.io](https://slack.hpedev.io/) and log in at [hpedev.slack.com](https://hpedev.slack.com).
 
@@ -67,6 +70,10 @@ Release highlights:
     </td>
   </tr>
   <tr>
+    <th>Container Object Storage Interface</th>
+    <td>v1alpha1</td>
+  </tr>
+  <tr>
     <th>Protocols</th>
     <td>S3</td>
   </tr>
@@ -104,6 +111,10 @@ Release highlights:
     <td>
       R1
     </td>
+  </tr>
+  <tr>
+    <th>Container Object Storage Interface</th>
+    <td>v1alpha1</td>
   </tr>
   <tr>
     <th>Protocols</th>
