@@ -132,7 +132,6 @@ HPE does not currently have any archived releases of the HPE COSI Driver.
 
 ## Known Limitations
 
-* BucketClaim and Bucket Access related events are observed to be generated under the default namespace, regardless of whether the deployment is running in a non-default namespace.
 * Creating `BucketClaim` or `BucketAccess` objects in parallel can cause failures in the COSI driver. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/101) has been filed to address this issue.
 * A warning event is created in the `Bucket` or `BucketAccess` resources when an error occurs, and has a life-span of one hour. During this period, if the error is resolved the Status will show `Bucket Ready: true` or `Access Granted: true` in the `Bucket` or `BucketAccess` respectively, but the warning event will persist till an hour lapses. A [bug](https://github.com/kubernetes-sigs/container-object-storage-interface-api/issues/103) has been raised to resolve this ambiguity.
 * Recreation of `BucketClaim` or `BucketAccess` objects doesn't work intermittently, as gRPC request is not sent to the COSI driver. This [pull request](https://github.com/kubernetes-retired/container-object-storage-interface-api/pull/86) will address the issue.
