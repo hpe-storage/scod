@@ -37,16 +37,15 @@ The following parameters are common to both HPE Alletra Storage MP X10000 and HP
 | dsccZone            | * The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
----
-
-<small>\* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.</small>
-
 The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
 
 | Parameter           | Applies To                             | Description |
 | ------------------- | -------------------------------------- | ------------|
 | glcpWorkspaceId     | HPE Alletra Storage MP X10000          | The HPE GreenLake workspace ID.
 | onPremCloudCA       | HPE Alletra Storage MP Disconnected    | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
+
+---
+<small>\* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.</small>
 
 !!! note
     The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
