@@ -44,7 +44,6 @@ Release highlights:
 * Support for platform HPE Alletra Storage MP Disconnected.
 * Support for Openshift v4.19 to 4.21.
 * Implementation of bucket compression, locking and versioning.
-* A log collector script that can be used to collect logs from any node.
 
 <table>
   <tr>
