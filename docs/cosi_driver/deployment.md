@@ -37,8 +37,9 @@ The following parameters are common to both HPE Alletra Storage MP X10000 and HP
 | dsccZone            | * The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
-------------------------------
-* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.
+---
+
+<small>\* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.</small>
 
 The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
 
