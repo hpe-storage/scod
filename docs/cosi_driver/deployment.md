@@ -25,7 +25,7 @@ Once the COSI driver is deployed, you must create a `Secret` with the following 
 
 ### Secret Parameters
 
-The following parameters are common to both standard and HPE Alletra Storage MP Disconnected deployments.
+The following parameters are common to both HPE Alletra Storage MP X10000 and HPE Alletra Storage MP Disconnected deployments.
 
 | Parameter           | Description |
 | ------------------- | ------------|
@@ -41,15 +41,15 @@ The following parameters are deployment-specific and are applicable only from CO
 
 | Parameter           | Applies To                             | Description |
 | ------------------- | -------------------------------------- | ------------|
-| glcpWorkspaceId     | Standard                               | The HPE GreenLake workspace ID.
+| glcpWorkspaceId     | HPE Alletra Storage MP X10000          | The HPE GreenLake workspace ID.
 | onPremCloudCA       | HPE Alletra Storage MP Disconnected    | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
 
 !!! note
     The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
 
-Example `Secret` manifest for a standard deployment:
+Example `Secret` manifest for a HPE Alletra Storage MP X10000 deployment:
 
-```yaml fct_label="Standard"
+```yaml fct_label="HPE Alletra Storage MP X10000"
 apiVersion: v1
 kind: Secret
 metadata:
