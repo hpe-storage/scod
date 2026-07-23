@@ -34,8 +34,11 @@ The following parameters are common to both HPE Alletra Storage MP X10000 and HP
 | endpoint            | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
 | glcpUserClientId    | The HPE Green Lake API client ID.
 | glcpUserSecretKey   | The HPE Green Lake API client secret.
-| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone. For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.
+| dsccZone            | * The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
+
+------------------------------
+* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.
 
 The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
 
