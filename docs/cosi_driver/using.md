@@ -11,7 +11,22 @@ At this point the HPE COSI Driver and HPE Alletra Storage MP X10000 should be in
 
 The `BucketClass` defines a set of properties that can be used to configure buckets. The `BucketClass` has a variety of fields that you can configure. An example of `BucketClass` is below. `BucketClasses` are clustered resources normally created by Kubernetes administrators.
 
-```yaml
+```yaml fct_label="Release 2 (v2.0.0)"
+kind: BucketClass
+apiVersion: objectstorage.k8s.io/v1alpha1
+metadata:
+  name: hpe-standard-object
+driverName: cosi.hpe.com
+deletionPolicy: Delete
+parameters:
+  cosiUserSecretName: hpe-object-backend
+  cosiUserSecretNamespace: default
+  compression: Enabled
+  versioning: Enabled
+  locking: Enabled
+```
+
+```yaml fct_label="Release 1 (v1.0.0)"
 kind: BucketClass
 apiVersion: objectstorage.k8s.io/v1alpha1
 metadata:
@@ -39,9 +54,14 @@ kubectl create -f hpe-standard-object.yaml
 
 Optional `BucketClass` `.parameters`.
 
-| Parameter                     | String         | Description |
-| ----------------------------- | -------------- | ----------- |
-| bucketTags                    | Text           | The tags to be applied on a bucket. The key-value pairs must be comma separated. In a tag, the key is required while the value is optional. Example: `.parameters.bucketTags: mytag1=myval1, mytag2, mytag3=myval3`. |
+| Parameter                     | String         | Release  | Description |
+| ----------------------------- | -------------- | -------- | ----------- |
+| bucketTags                    | Text           | v1.0.0   | The tags to be applied on a bucket. The key-value pairs must be comma separated. In a tag, the key is required while the value is optional. Example: `.parameters.bucketTags: mytag1=myval1, mytag2, mytag3=myval3`. |
+| compression                   | Text           | v2.0.0   | Enable bucket compression. Accepted values are `Enabled` \| `Disabled` (case-insensitive). Defaults to `Disabled` if not specified. Example: `.parameters.compression: Enabled`. |
+| versioning                    | Text           | v2.0.0   | Enable bucket versioning. Accepted values are `Enabled` \| `Disabled` (case-insensitive). Defaults to `Disabled` if not specified. Example: `.parameters.versioning: Enabled`. |
+| locking                       | Text           | v2.0.0   | Enable object locking on the bucket. The only accepted value is `Enabled` (case-insensitive). Requires `versioning` to be `Enabled`. Example: `.parameters.locking: Enabled`. |
+| retentionMode                 | Text           | v2.0.0   | The default retention mode for object locking. Accepted values are `COMPLIANCE` or `GOVERNANCE`. Only applicable when `locking` is `Enabled`. Example: `.parameters.retentionMode: COMPLIANCE`. |
+| defaultRetentionInterval      | Text           | v2.0.0   | The default retention duration for object locking. Format is `<number><unit>` where unit is `d` for days, `m` for months (treated as 30 days), or `y` for years. Only applicable when `locking` is `Enabled`. Example: `.parameters.defaultRetentionInterval: 30d`. |
 
 ## Create a BucketClaim
 
