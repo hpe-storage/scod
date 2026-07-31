@@ -40,19 +40,19 @@ HPE has tested the following combinations and included them as part of the offic
 
 Release highlights:
 
-* Support for Kubernetes v1.31 to v1.36.
-* Support for platform HPE Alletra Storage MP Disconnected.
+* Support for Kubernetes v1.25 to v1.36.
+* Support for platform HPE Alletra Storage MP Disconnected with X10000 .
 * Support for Openshift v4.19 to 4.21.
 * Implementation of bucket compression, locking and versioning.
 
 <table>
   <tr>
     <th>Kubernetes</th>
-    <td>v1.31-v1.36</td>
+    <td>v1.25-v1.36</td>
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v2.0.0</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/2.0.0">v2.0.0</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>OpenShift</th>
@@ -61,7 +61,7 @@ Release highlights:
   <tr>
     <th>Platforms</th>
     <td>
-      HPE Alletra Storage MP X10000, HPE Alletra Storage MP Disconnected
+      HPE Alletra Storage MP X10000
     </td>
   </tr>
   <tr>

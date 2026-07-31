@@ -17,7 +17,7 @@ The official [Helm chart](https://github.com/hpe-storage/co-deployments/tree/mas
 - Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver).
 
 !!! note "HPE Alletra Storage MP Disconnected Deployments"
-    When deploying against an HPE Alletra Storage MP Disconnected instance, the `glcpCommonCloud` Helm chart value must be set with the `sso-` prefix before the instance hostname. Note that this `sso-` prefix applies to the `glcpCommonCloud` Helm chart value, and is distinct from the `dscc-api-` prefix used for the `dsccZone` field in the `Secret` (see below). The two prefixes apply to different fields and must not be interchanged.
+    When deploying against an HPE Alletra Storage MP Disconnected with X10000 instance, the `glcpCommonCloud` Helm chart value must be set with the `sso-` prefix before the instance hostname. Note that this `sso-` prefix applies to the `glcpCommonCloud` Helm chart value, and is distinct from the `dscc-api-` prefix used for the `dsccZone` field in the `Secret` (see below). The two prefixes apply to different fields and must not be interchanged.
 
 ## Add an HPE Storage Backend
 
@@ -25,7 +25,7 @@ Once the COSI driver is deployed, you must create a `Secret` with the following 
 
 ### Secret Parameters
 
-The following parameters are common to both HPE Alletra Storage MP X10000 and HPE Alletra Storage MP Disconnected deployments.
+The following parameters are common to both HPE Alletra Storage MP X10000 and Disconnected deployments.
 
 | Parameter           | Description |
 | ------------------- | ------------|
@@ -34,7 +34,7 @@ The following parameters are common to both HPE Alletra Storage MP X10000 and HP
 | endpoint            | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
 | glcpUserClientId    | The HPE Green Lake API client ID.
 | glcpUserSecretKey   | The HPE Green Lake API client secret.
-| dsccZone            | * The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
+| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | The backend storage system cluster serial number.
 
 The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
@@ -42,10 +42,10 @@ The following parameters are deployment-specific and are applicable only from CO
 | Parameter           | Applies To                             | Description |
 | ------------------- | -------------------------------------- | ------------|
 | glcpWorkspaceId     | HPE Alletra Storage MP X10000          | The HPE GreenLake workspace ID.
-| onPremCloudCA       | HPE Alletra Storage MP Disconnected    | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
+| onPremCloudCA       | HPE Alletra Storage MP Disconnected    | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected with X10000 instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
 
----
-<small>\* For HPE Alletra Storage MP Disconnected deployments, prefix the instance hostname with `dscc-api-`.</small>
+!!! note
+    For HPE Alletra Storage MP Disconnected with X10000 deployments, prefix the instance hostname with `dscc-api-`.</small>
 
 !!! note
     The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
@@ -69,9 +69,9 @@ stringData:
   clusterSerialNumber: 0000000000
 ```
 
-Example `Secret` manifest for an HPE Alletra Storage MP Disconnected deployment:
+Example `Secret` manifest for an HPE Alletra Storage MP Disconnected with X10000 deployment:
 
-```yaml fct_label="HPE Alletra Storage MP Disconnected"
+```yaml fct_label="HPE Alletra Storage MP Disconnected with X10000"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -151,7 +151,7 @@ kubectl create -f hpe-object-backend.yaml
     * Navigate to _Quick links_ &rarr; _Manage Workspace_.
     * The _Workspace ID_ is displayed on the page and is used as the `glcpWorkspaceId` field in the `Secret`.
     * For more details, refer to the [Manage workspace](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00005271en_us&page=GUID-DD8699BF-D17E-4A1C-863A-AE7ED0AA8C88.html) documentation.
-7. To obtain the CA certificate (required for HPE Alletra Storage MP Disconnected setups):
+7. To obtain the CA certificate (required for HPE Alletra Storage MP Disconnected with X10000 setups):
     * Retrieve the CA certificate from the HPE Data Services Cloud Console instance being used. For the download steps, refer to the [Downloading your CA certificates](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00005271en_us&page=GUID-F0ADEE0C-7BB5-4010-B290-FF700A6B7878.html) documentation.
     * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
 
