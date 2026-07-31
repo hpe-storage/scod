@@ -52,7 +52,7 @@ Release highlights:
   </tr>
   <tr>
     <th>Helm Chart</th>
-    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/1.0.0">v2.0.0</a> on ArtifactHub</td>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver/2.0.0">v2.0.0</a> on ArtifactHub</td>
   </tr>
   <tr>
     <th>OpenShift</th>
