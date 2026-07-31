@@ -41,7 +41,7 @@ HPE has tested the following combinations and included them as part of the offic
 Release highlights:
 
 * Support for Kubernetes v1.31 to v1.36.
-* Support for platform HPE Alletra Storage MP Disconnected.
+* Support for platform HPE Alletra Storage MP Disconnected with X10000 .
 * Support for Openshift v4.19 to 4.21.
 * Implementation of bucket compression, locking and versioning.
 
@@ -61,7 +61,7 @@ Release highlights:
   <tr>
     <th>Platforms</th>
     <td>
-      HPE Alletra Storage MP X10000, HPE Alletra Storage MP Disconnected
+      HPE Alletra Storage MP X10000
     </td>
   </tr>
   <tr>
