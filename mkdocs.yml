@@ -98,6 +98,8 @@ nav:
     - 'Deployment': 'cosi_driver/deployment.md'
     - 'Using': 'cosi_driver/using.md'
     - 'Diagnostics': 'cosi_driver/diagnostics.md'
+    - 'Partner Ecosystems':
+      - 'Red Hat OpenShift': 'cosi_driver/partners/redhat_openshift/index.md'
   - HPE GREENLAKE FOR FILE STORAGE:
     - 'Overview': 'filex_csi_driver/index.md'
     - 'Deployment': 'filex_csi_driver/deployment.md'
