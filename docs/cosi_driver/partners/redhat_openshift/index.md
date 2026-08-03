@@ -264,174 +264,43 @@ helm get values -n default my-hpe-cosi-driver
 
 ### Add an object storage backend
 
-Create a `Secret` containing the S3 credentials and the HPE Data Services Cloud Console details for the array.
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: hpe-object-backend
-  namespace: default
-stringData:
-  accessKey: <s3-access-key>
-  secretKey: <s3-secret-key>
-  endpoint: http://<s3-endpoint>:8080
-  glcpUserClientId: <glcp-api-client-id>
-  glcpUserSecretKey: <glcp-api-client-secret>
-  glcpWorkspaceId: <glcp-workspace-id>
-  dsccZone: <dscc-zone-fqdn>
-  clusterSerialNumber: <cluster-serial-number>
-```
+Create a `Secret` with the S3 credentials and HPE Data Services Cloud Console details. See [Add an HPE Storage Backend](../../deployment.md#add_an_hpe_storage_backend) for the full parameter reference and step-by-step instructions for locating each value.
 
 ```text
 oc apply -f hpe-object-backend.yaml
 ```
 
-!!! note
-    `glcpWorkspaceId` applies to HPE Alletra Storage MP X10000 from v2.0.0. For HPE Alletra Storage MP Disconnected with X10000, omit `glcpWorkspaceId`, prefix the `dsccZone` hostname with `dscc-api-` and, if the CA certificate is not in the cluster truststore, supply a Base64 encoded certificate in `onPremCloudCA`. The complete parameter reference is in the [deployment documentation](../../deployment.md#secret_parameters).
-
 !!! caution
     Do not commit this manifest to source control with real values. Use a sealed secret, an external secrets operator, or apply it out of band.
 
-!!! tip
-    The COSI source repository ships a parameterized script that generates a correctly formatted `Secret`. See [cosi_secret](https://github.com/hpe-storage/cosi-driver/tree/main/scripts/cosi_secret).
-
 ### Create a BucketClass
 
-```yaml
-kind: BucketClass
-apiVersion: objectstorage.k8s.io/v1alpha1
-metadata:
-  name: hpe-standard-object
-driverName: cosi.hpe.com
-deletionPolicy: Delete
-parameters:
-  cosiUserSecretName: hpe-object-backend
-  cosiUserSecretNamespace: default
-  compression: Enabled
-  versioning: Enabled
-  locking: Enabled
-```
+Create a `BucketClass` to define storage properties for provisioned buckets. See [Configure a BucketClass](../../using.md#configure_a_bucketclass) for the full parameter reference.
 
 ```text
 oc apply -f hpe-standard-object.yaml
 ```
 
-Optional `.parameters` available from HPE COSI Driver v2.0.0, unless noted:
-
-| Parameter                  | Values                                  | Notes |
-| -------------------------- | --------------------------------------- | ----- |
-| `bucketTags`               | Comma separated `key=value` pairs       | Available from v1.0.0. The value is optional, the key is required |
-| `compression`              | `Enabled` or `Disabled`                 | Case insensitive. Defaults to `Disabled` |
-| `versioning`               | `Enabled` or `Disabled`                 | Case insensitive. Defaults to `Disabled` |
-| `locking`                  | `Enabled`                               | Requires `versioning: Enabled`. Cannot be disabled once enabled on a bucket |
-| `retentionMode`            | `COMPLIANCE` or `GOVERNANCE`            | Requires `locking: Enabled`. Must be set together with `defaultRetentionInterval` |
-| `defaultRetentionInterval` | `<number><d\|m\|y>`, for example `30d`  | Requires `locking: Enabled`. Must be set together with `retentionMode`. A month counts as 30 days |
-
-!!! important
-    Parameter names are matched case insensitively by the driver, so `locking` and `Locking` behave identically. The accepted values are likewise case insensitive. The lower camel case spelling shown above is the documented form and the one to prefer.
-
-The driver validates parameter combinations before contacting the array and rejects these outright:
-
-| Condition | Error |
-| --------- | ----- |
-| `locking` enabled without `versioning` | `object locking requires versioning; enable versioning in BucketClass and recreate BucketClaim` |
-| `retentionMode` or `defaultRetentionInterval` without `locking` | `retentionMode and defaultRetentionInterval require object locking; enable locking in BucketClass and recreate BucketClaim` |
-| Only one of `retentionMode` / `defaultRetentionInterval` set | `retentionMode and defaultRetentionInterval must both be set or both be omitted` |
-
-!!! note
-    These are client side validation failures raised by the driver, not array errors. As the message states, correcting the `BucketClass` is not enough on its own, the `BucketClaim` has to be recreated.
-
-!!! caution
-    `deletionPolicy: Delete` removes the bucket and its contents on the array when the `BucketClaim` is deleted. Use `Retain` where the data must outlive the claim.
-
-!!! seealso "See Also"
-    The full `BucketClass` reference is in [Configure a BucketClass](../../using.md#configure_a_bucketclass).
-
 ### Create a BucketClaim
 
-```yaml
-kind: BucketClaim
-apiVersion: objectstorage.k8s.io/v1alpha1
-metadata:
-  name: my-first-bucketclaim
-  namespace: default
-spec:
-  bucketClassName: hpe-standard-object
-  protocols:
-  - s3
-```
+Create a `BucketClaim` to provision a bucket. See [Create a BucketClaim](../../using.md#create_a_bucketclaim) for greenfield and brownfield provisioning examples.
 
 ```text
 oc apply -f my-first-bucketclaim.yaml
 oc get bucketclaim,bucket -n default -w
 ```
 
-A successfully provisioned claim reports `bucketReady: true` and the generated bucket name:
-
-```text
-oc get bucketclaim/my-first-bucketclaim -n default -o jsonpath='{.status}'
-{"bucketName":"hpe-standard-object59c0280c-f129-4ea3-996e-5d01f4a9335c","bucketReady":true}
-```
-
-The `Bucket` is a cluster scoped resource named after the `BucketClass` plus a generated suffix. That name, not the `BucketClaim` name, is the bucket created on the array.
-
 !!! note
     Create `BucketClaim` resources serially. Creating them in parallel is a [known limitation](../../index.md#known_limitations).
 
 ### Grant workload access
 
-Create a `BucketAccessClass` defining how credentials are issued:
-
-```yaml
-kind: BucketAccessClass
-apiVersion: objectstorage.k8s.io/v1alpha1
-metadata:
-  name: hpe-standard-access
-driverName: cosi.hpe.com
-authenticationType: Key
-parameters:
-  cosiUserSecretName: hpe-object-backend
-  cosiUserSecretNamespace: default
-```
-
-!!! important
-    `cosiUserSecretName` must reference the same `Secret` used by the `BucketClass`.
-
-Then request access to the provisioned bucket:
-
-```yaml
-kind: BucketAccess
-apiVersion: objectstorage.k8s.io/v1alpha1
-metadata:
-  name: my-first-bucketaccess
-  namespace: default
-spec:
-  bucketAccessClassName: hpe-standard-access
-  credentialsSecretName: my-first-access-secret
-  bucketClaimName: my-first-bucketclaim
-  protocol: s3
-```
+Create a `BucketAccessClass` and a `BucketAccess` to grant a workload credentials to a provisioned bucket. See [Using](../../using.md) for the full resource reference and credential mounting examples.
 
 ```text
 oc apply -f hpe-standard-access.yaml
 oc apply -f my-first-bucketaccess.yaml
 oc get bucketaccess,secret -n default
-```
-
-The driver writes the S3 endpoint, region and generated credentials into the `Secret` as a single `BucketInfo` key:
-
-```text
-oc get secret my-first-access-secret -n default -o jsonpath='{.data.BucketInfo}' | base64 -d | jq
-```
-
-The `Secret` is mounted into a workload. COSI aware applications read `BucketInfo` from the mounted path:
-
-```yaml
-      volumes:
-        - name: cosi-secret
-          secret:
-            secretName: my-first-access-secret
 ```
 
 ## Troubleshooting

@@ -69,9 +69,7 @@ stringData:
   clusterSerialNumber: 0000000000
 ```
 
-Example `Secret` manifest for an HPE Alletra Storage MP Disconnected with X10000 deployment:
-
-```yaml fct_label="HPE Alletra Storage MP Disconnected with X10000"
+```yaml fct_label="Disconnected"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -87,24 +85,6 @@ stringData:
   clusterSerialNumber: 0000000000
   # Optional: include if the DSCC CA certificate is not in the cluster's truststore
   # onPremCloudCA: <base64-encoded-ca-certificate>
-```
-
-Example `Secret` manifest for the HPE COSI Driver v1.0.0:
-
-```yaml fct_label="Release 1 (v1.0.0)"
-apiVersion: v1
-kind: Secret
-metadata:
-  name: hpe-object-backend
-  namespace: default
-stringData:
-  accessKey: testuser
-  secretKey: testkey
-  endpoint: http://192.168.1.100:8080
-  glcpUserClientId: 00000000-0000-0000-0000-000000000000
-  glcpUserSecretKey: 00000000000000000000000000000000
-  dsccZone: us1.data.cloud.hpe.com
-  clusterSerialNumber: 0000000000
 ```
 
 Create the `Secret`.
@@ -156,7 +136,7 @@ kubectl create -f hpe-object-backend.yaml
     * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
 
 !!! note
-    Steps 6 and 7 are applicable only from the HPE COSI Driver for Kubernetes v2.0.0 onwards. These steps are not applicable to v1.0.0.
+    Steps 6 and 7 are applicable only from the HPE COSI Driver for Kubernetes v2.0.0 onwards. These steps are not applicable to any versions prior.
 
 !!! tip
     In a real world scenario it's more practical to name the `Secret` something that makes sense for the organization. It could be the hostname of the backend or the role it carries; i.e., "hpe-alletra-sanjose-prod".
