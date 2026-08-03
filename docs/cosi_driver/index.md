@@ -41,7 +41,7 @@ HPE has tested the following combinations and included them as part of the offic
 Release highlights:
 
 * Support for Kubernetes v1.25 to v1.36.
-* Support for platform HPE Alletra Storage MP Disconnected with X10000 .
+* Support for platform HPE Alletra Storage MP Disconnected with X10000.
 * Support for Openshift v4.19 to 4.21.
 * Implementation of bucket compression, locking and versioning.
 
@@ -67,12 +67,16 @@ Release highlights:
   <tr>
     <th>HPE Alletra Storage MP X10000 OS</th>
     <td>
-      R1, R2, R3
+      2.0.0.0
     </td>
   </tr>
   <tr>
     <th>Container Object Storage Interface</th>
     <td>v1alpha1</td>
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
   </tr>
   <tr>
     <th>Protocols</th>
@@ -110,12 +114,16 @@ Release highlights:
   <tr>
     <th>HPE Alletra Storage MP X10000 OS</th>
     <td>
-      R1
+      1.0.0.0
     </td>
   </tr>
   <tr>
     <th>Container Object Storage Interface</th>
     <td>v1alpha1</td>
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
   </tr>
   <tr>
     <th>Protocols</th>

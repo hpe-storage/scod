@@ -25,30 +25,22 @@ Once the COSI driver is deployed, you must create a `Secret` with the following 
 
 ### Secret Parameters
 
-The following parameters are common to both HPE Alletra Storage MP X10000 and Disconnected deployments.
+| Parameter           | Applies To                          | Description |
+| ------------------- | ----------------------------------- | ------------|
+| accessKey           | All                                 | The access key of the S3 user with bucket creation, bucket-tagging and deletion permissions.
+| secretKey           | All                                 | The secret key for the S3 user who has bucket creation, bucket-tagging and deletion permissions.
+| endpoint            | All                                 | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
+| glcpUserClientId    | All                                 | The HPE Green Lake API client ID.
+| glcpUserSecretKey   | All                                 | The HPE Green Lake API client secret.
+| dsccZone*           | All                                 | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
+| clusterSerialNumber | All                                 | The backend storage system cluster serial number.
+| glcpWorkspaceId     | HPE Alletra Storage MP X10000       | The HPE GreenLake workspace ID.
+| onPremCloudCA       | HPE Alletra Storage MP Disconnected with X10000 | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected with X10000 instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
 
-| Parameter           | Description |
-| ------------------- | ------------|
-| accessKey           | The access key of the S3 user with bucket creation, bucket-tagging and deletion permissions.
-| secretKey           | The secret key for the S3 user who has bucket creation, bucket-tagging and deletion permissions.
-| endpoint            | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
-| glcpUserClientId    | The HPE Green Lake API client ID.
-| glcpUserSecretKey   | The HPE Green Lake API client secret.
-| dsccZone            | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
-| clusterSerialNumber | The backend storage system cluster serial number.
-
-The following parameters are deployment-specific and are applicable only from COSI 2.0.0.
-
-| Parameter           | Applies To                             | Description |
-| ------------------- | -------------------------------------- | ------------|
-| glcpWorkspaceId     | HPE Alletra Storage MP X10000          | The HPE GreenLake workspace ID.
-| onPremCloudCA       | HPE Alletra Storage MP Disconnected    | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected with X10000 instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
+\* For HPE Alletra Storage MP Disconnected with X10000 deployments, prefix the `dsccZone` instance hostname with `dscc-api-`.
 
 !!! note
-    For HPE Alletra Storage MP Disconnected with X10000 deployments, prefix the instance hostname with `dscc-api-`.</small>
-
-!!! note
-    The Kubernetes compute nodes where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
+    The Kubernetes compute `Nodes` where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
 
 Example `Secret` manifest for an HPE Alletra Storage MP X10000 deployment:
 
@@ -69,9 +61,7 @@ stringData:
   clusterSerialNumber: 0000000000
 ```
 
-Example `Secret` manifest for an HPE Alletra Storage MP Disconnected with X10000 deployment:
-
-```yaml fct_label="HPE Alletra Storage MP Disconnected with X10000"
+```yaml fct_label="Disconnected"
 apiVersion: v1
 kind: Secret
 metadata:
@@ -87,24 +77,6 @@ stringData:
   clusterSerialNumber: 0000000000
   # Optional: include if the DSCC CA certificate is not in the cluster's truststore
   # onPremCloudCA: <base64-encoded-ca-certificate>
-```
-
-Example `Secret` manifest for the HPE COSI Driver v1.0.0:
-
-```yaml fct_label="Release 1 (v1.0.0)"
-apiVersion: v1
-kind: Secret
-metadata:
-  name: hpe-object-backend
-  namespace: default
-stringData:
-  accessKey: testuser
-  secretKey: testkey
-  endpoint: http://192.168.1.100:8080
-  glcpUserClientId: 00000000-0000-0000-0000-000000000000
-  glcpUserSecretKey: 00000000000000000000000000000000
-  dsccZone: us1.data.cloud.hpe.com
-  clusterSerialNumber: 0000000000
 ```
 
 Create the `Secret`.
@@ -156,7 +128,7 @@ kubectl create -f hpe-object-backend.yaml
     * Encode the certificate in Base64 format and use the resulting value as the `onPremCloudCA` field in the `Secret`.
 
 !!! note
-    Steps 6 and 7 are applicable only from the HPE COSI Driver for Kubernetes v2.0.0 onwards. These steps are not applicable to v1.0.0.
+    Steps 6 and 7 are applicable only from the HPE COSI Driver for Kubernetes v2.0.0 onwards. These steps are not applicable to any versions prior.
 
 !!! tip
     In a real world scenario it's more practical to name the `Secret` something that makes sense for the organization. It could be the hostname of the backend or the role it carries; i.e., "hpe-alletra-sanjose-prod".

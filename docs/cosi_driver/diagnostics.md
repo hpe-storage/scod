@@ -117,9 +117,9 @@ Log files associated with the HPE COSI Driver posts data to the standard output 
 
 If the logs need to be retained for long term, use a standard logging solution for Kubernetes, such as Fluentd. Alternatively, it's advised to use the log collector script, at regular intervals to preserve logs.
 
-### Identify the Deployments
+### Identify the `Deployments`
 
-Before retrieving logs, list the deployments in the namespace where the HPE COSI Driver is installed to determine the exact deployment names.
+Before retrieving logs, list the `Deployments` in the `Namespace` where the HPE COSI Driver is installed to determine the exact `Deployment` names.
 
 ```text
 kubectl get deployments -n <namespace>
@@ -133,7 +133,7 @@ hpe-objectstorage-provisioner    1/1     1            1           5d
 objectstorage-controller         1/1     1            1           5d
 ```
 
-Use the deployment names from the `NAME` column in the `kubectl logs` commands below.
+Use the `Deployment` names from the `NAME` column in the `kubectl logs` commands below.
 
 ### COSI Driver Logs
 
