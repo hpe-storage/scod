@@ -48,7 +48,9 @@ Two workloads do not declare a `securityContext` of their own, the upstream SIG 
 !!! note
     The validation above was performed in the `default` `Namespace`, which OpenShift labels `pod-security.kubernetes.io/enforce: privileged`. That is not a strict test of restricted admission. When deploying into a dedicated project, which defaults to enforcing the `restricted` Pod Security profile, confirm the admitting SCC with:
 
-    `oc get pod -n <namespace> -l app.kubernetes.io/name=hpe-cosi-driver -o jsonpath='{.items[*].metadata.annotations.openshift\.io/scc}'`
+  ```text
+  oc get pod -n <namespace> -l app.kubernetes.io/name=hpe-cosi-driver -o jsonpath='{.items[*].metadata.annotations.openshift\.io/scc}'
+  ```
 
 If a `Pod` fails to admit with a message referencing security context constraints, see [SCC troubleshooting](#scc_troubleshooting).
 

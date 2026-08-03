@@ -122,6 +122,10 @@ Release highlights:
     <td>v1alpha1</td>
   </tr>
   <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
     <th>Protocols</th>
     <td>S3</td>
   </tr>
