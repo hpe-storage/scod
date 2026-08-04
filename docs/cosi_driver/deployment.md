@@ -19,6 +19,87 @@ The official [Helm chart](https://github.com/hpe-storage/co-deployments/tree/mas
 !!! note "HPE Alletra Storage MP Disconnected Deployments"
     When deploying against an HPE Alletra Storage MP Disconnected with X10000 instance, the `glcpCommonCloud` Helm chart value must be set with the `sso-` prefix before the instance hostname. Note that this `sso-` prefix applies to the `glcpCommonCloud` Helm chart value, and is distinct from the `dscc-api-` prefix used for the `dsccZone` field in the `Secret` (see below). The two prefixes apply to different fields and must not be interchanged.
 
+### Helm for Air-gapped Environments
+
+In the event of deploying the HPE COSI Driver in a secure air-gapped environment, the images used by the Helm chart and the upstream SIG Storage COSI controller need to be mirrored to a private registry.
+
+Establish a working directory on a bastion Linux host that has HTTP access to the Internet, the private registry and the Kubernetes cluster where the COSI driver needs to be installed. The bastion host is assumed to have the `docker`, `helm` and `kubectl` command installed. It's also assumed throughout that the user executing `docker` has logged in to the private registry and that pulling images from the private registry is allowed anonymously by the Kubernetes compute nodes.
+
+Create a working directory and set environment variables referenced throughout the procedure.
+
+```text
+mkdir hpe-cosi-driver
+cd hpe-cosi-driver
+export MY_REGISTRY=registry.enterprise.example.com
+export MY_COSI_DRIVER=2.0.0
+```
+
+Next, create a list with the COSI driver images.
+
+```text
+helm repo add hpe-storage https://hpe-storage.github.io/co-deployments/
+helm repo update
+helm template hpe-storage/hpe-cosi-driver --version ${MY_COSI_DRIVER} \
+| grep 'image:' | awk '{print $2}' | tr -d '"' | sort | uniq > images
+```
+
+The upstream SIG Storage COSI controller is deployed separately from the Helm chart and its image needs to be added to the list.
+
+```text
+kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface//?ref=release-0.2" \
+| grep 'image:' | awk '{print $2}' | sort | uniq >> images
+```
+
+Pull, tag and push the images to the private registry.
+
+```text
+cat images | xargs -n 1 docker pull
+awk '{ print $1" "$1 }' images | sed -E -e "s/ quay.io| registry.k8s.io| gcr.io/ ${MY_REGISTRY}/" | xargs -n 2 docker tag
+sed -E -e "s/quay.io|registry.k8s.io|gcr.io/${MY_REGISTRY}/" images | xargs -n 1 docker push
+```
+
+!!! tip
+    Depending on what kind of private registry being used, the base repositories `hpestorage`, `sig-storage` and `k8s-staging-sig-storage` might need to be created and given write access to the user pushing the images.
+
+All images used by the HPE COSI Driver Helm chart are parameterized individually with the fully qualified URL. Create a `values.yaml` file with the mirrored locations.
+
+```yaml
+containers:
+  cosiDriver:
+    image: registry.enterprise.example.com/hpestorage/cosi-driver:v2.0.0
+  sideCar:
+    image: registry.enterprise.example.com/sig-storage/objectstorage-sidecar:v0.2.2
+```
+
+Install the chart with the `values.yaml` file.
+
+```text
+helm install my-hpe-cosi-driver hpe-storage/hpe-cosi-driver \
+-n default --version ${MY_COSI_DRIVER} \
+-f values.yaml
+```
+
+!!! note
+    If the private registry requires authentication, create a pull `Secret` in the `Namespace` and reference it with the `regSecretName` chart value.
+
+The SIG Storage COSI controller manifests need the image reference replaced before being applied.
+
+```text
+kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface//?ref=release-0.2" \
+| sed -e "s/container-object-storage-system/default/g" \
+| sed -E -e "s|gcr.io|${MY_REGISTRY}|" \
+| kubectl apply -f -
+```
+
+!!! important
+    The SIG Storage COSI controller image is published to a staging registry and the tag encodes a build date and commit rather than a semantic version. Mirror the exact tag emitted by the command above and pin the mirrored copy.
+
+!!! note
+    If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
+
+!!! important
+    Regardless of the deployment being air-gapped, the Kubernetes compute nodes where the HPE COSI Driver runs need network access to the object storage system S3 endpoint and to the HPE Data Services Cloud Console zone specified in the `Secret`.
+
 ## Add an HPE Storage Backend
 
 Once the COSI driver is deployed, you must create a `Secret` with the following details before you can use the [COSI API resources](using.md).

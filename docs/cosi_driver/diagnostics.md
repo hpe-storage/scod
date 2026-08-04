@@ -190,3 +190,56 @@ Options:
 -n|--namespace NAMESPACE   Collect logs from HPE COSI Driver Deployment in Namespace
                            NAMESPACE (default: default)
 ```
+
+## Troubleshooting
+
+### Interpreting Bucket Creation Failures
+
+The COSI sidecar retries provisioning until it succeeds. The error surfaced in the COSI driver log identifies where the request failed.
+
+| Symptom in the driver log | Failure domain | Action |
+| ------------------------- | -------------- | ------ |
+| `lookup <fqdn> ...` | Name resolution | The cluster cannot resolve the S3 endpoint or the HPE Data Services Cloud Console zone. Verify cluster DNS. |
+| `dial tcp <ip>:<port>: connect: no route to host` | Network path | Verify the compute nodes can reach the object storage system and HPE Data Services Cloud Console. |
+| `dial tcp <ip>:<port>: connect: connection refused` | Wrong port or service down | Confirm the S3 port with the storage administrator. |
+| `x509: certificate signed by unknown authority` | Missing CA trust | Supply `onPremCloudCA` in the `Secret` for HPE Alletra Storage MP Disconnected with X10000 deployments. |
+| HTTP `403` with `AccessDenied` | Credentials or access policy | Verify the `Secret` contents and that the S3 user's access policy grants `CreateBucket`, `DeleteBucket` and `PutBucketTagging`. |
+| HTTP `503` with `ServiceUnavailable` | Backend rejected the request | See [Backend Errors](#backend_errors). |
+| `Invalid bucket parameters: ...` | `BucketClass` parameters | The driver rejected the parameter combination before contacting the array. See [Optional BucketClass Parameters](using.md#optional_bucketclass_parameters). |
+
+!!! hint
+    Every completed gRPC call is logged with a `grpc.code` and a `grpc.time_ms` field. A successful `DriverCreateBucket` completes in a few hundred milliseconds, while `DriverGrantBucketAccess` legitimately takes considerably longer as it creates an S3 user and access policy in HPE Data Services Cloud Console. Failures returned in a few milliseconds indicate an immediate rejection, such as a refused connection or an error returned by the object storage system. Failures taking seconds indicate a timeout, typically name resolution or a silently dropped network path.
+
+!!! note
+    Bucket parameter validation errors are raised by the driver before any request is sent to the array. Correcting the `BucketClass` is not sufficient on its own, the `BucketClaim` has to be recreated.
+
+### Backend Errors
+
+An HTTP `503` with an S3 XML error body means the request reached the object storage system and was rejected by it. The driver logs the full response, including a `RequestId` and `HostId`.
+
+```text
+<Error><Code>ServiceUnavailable</Code><Message>The request has failed due to a temporary server failure.</Message>...<RequestId>18C838DCB62839E8</RequestId><HostId>cc2fe58e-...</HostId></Error>
+```
+
+Common causes, in order of likelihood:
+
+1. **Unsupported bucket feature combination.** Retest with a `BucketClass` containing only `cosiUserSecretName` and `cosiUserSecretNamespace`, then add one parameter at a time.
+2. **Insufficient permissions.** The S3 user may authenticate but lack an access policy granting `CreateBucket`.
+3. **Capacity or quota exhaustion** on the backing storage pool.
+4. **Backend service degradation.**
+
+!!! hint
+    Provide the `RequestId` and `HostId` to the storage administrator or HPE Support. The object storage system's own logs contain the specific failure reason behind the generic `503`.
+
+### Stuck Resource Deletion
+
+The COSI API resources each carry a protection finalizer, `cosi.objectstorage.k8s.io/bucketclaim-protection` on a `BucketClaim`, `cosi.objectstorage.k8s.io/bucket-protection` on a `Bucket` and `cosi.objectstorage.k8s.io/bucketaccess-protection` on a `BucketAccess`. If the backend is unreachable, deletion hangs.
+
+Resolve the underlying connectivity or credential failure first. A `Bucket` also cannot be removed until every `BucketAccess` referencing it has been deleted.
+
+```text
+kubectl get bucketclaim,bucket,bucketaccess -A
+```
+
+!!! danger
+    Removing a finalizer bypasses backend cleanup. The bucket and the generated S3 user are orphaned on the object storage system and must be removed manually. Only remove a finalizer when the backend is confirmed unreachable or the bucket has already been deleted out of band.
