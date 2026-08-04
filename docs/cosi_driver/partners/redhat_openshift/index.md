@@ -1,24 +1,23 @@
 # Overview
-HPE and Red Hat have a long standing partnership to provide jointly supported software, platform and services with the absolute best customer experience in the industry.
 
-Red Hat OpenShift uses open source Kubernetes and various other components to deliver a PaaS experience that benefits both developers and operations. This page serves as the authoritative source for deploying the HPE COSI Driver for Kubernetes on Red Hat OpenShift.
+HPE and Red Hat have a long standing partnership to deliver enterprise software on the Red Hat OpenShift platform. The HPE COSI Driver for Kubernetes is supported by HPE on Red Hat OpenShift.
 
 [TOC]
 
 ## OpenShift 4
 
-The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver) published on Artifact Hub, alongside the upstream SIG Storage Container Object Storage Interface (COSI) controller and `CRDs`.
+The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver) published on Artifact Hub, alongside the upstream SIG Storage Container Object Storage Interface (COSI) controller and `CRDs`. Refer to the [Deployment](../../deployment.md) page for installation instructions, [adding a storage backend](../../deployment.md#add_an_hpe_storage_backend), and the [Using](../../using.md) page for COSI resource configuration.
 
 !!! important
     Container Object Storage Interface (COSI) is a Kubernetes SIG Storage project and the `objectstorage.k8s.io` API is at `v1alpha1`. The API is subject to change between releases. Evaluate accordingly before using in production.
 
-### Tested combinations
+### Supported combinations
 
-| Status        | Red Hat OpenShift | HPE COSI Driver | SIG Storage COSI | Container Storage Providers |
-| ------------- | ----------------- | --------------- | ---------------- | --------------------------- |
-| Supported     | 4.21              | 2.0.0           | release-0.2      | Alletra Storage MP X10000   |
-| Supported     | 4.20              | 2.0.0           | release-0.2      | Alletra Storage MP X10000   |
-| Supported     | 4.19              | 2.0.0           | release-0.2      | Alletra Storage MP X10000   |
+| Status        | Red Hat OpenShift | Container Storage Providers |
+| ------------- | ----------------- | --------------------------- |
+| Supported     | 4.21              | Alletra Storage MP X10000   |
+| Supported     | 4.20              | Alletra Storage MP X10000   |
+| Supported     | 4.19              | Alletra Storage MP X10000   |
 
 <small>
  <br />OpenShift support statements for the HPE COSI Driver are published in the [Compatibility and Support](../../index.md#compatibility_and_support) matrix. This page reflects that matrix.
@@ -26,40 +25,16 @@ The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/pa
 
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
-    - Both Red Hat Enterprise Linux and Red Hat CoreOS worker nodes are supported.
-    - Single Node OpenShift (SNO) works along with a 3 Node HA Cluster.
     - HPE Alletra Storage MP Disconnected with X10000 is supported from HPE COSI Driver v2.0.0.
-    - The COSI driver does not require access to block or file storage backends. It communicates with the object storage endpoint over S3 and with HPE Data Services Cloud Console over HTTPS.
-
-### Security model
-
-By default, OpenShift prevents containers from running as root and assigns an arbitrary user ID from the `Namespace` `UID` range. Unlike the HPE CSI Driver, the HPE COSI Driver requires no elevated privileges whatsoever. It does not use host networking, host ports, host paths, or privileged mode.
-
-The chart ships a `Deployment` that is already compliant with the OpenShift `restricted-v2` SCC:
-
-- `spec.securityContext.runAsNonRoot: true` on the `Pod`.
-- `allowPrivilegeEscalation: false`, `capabilities.drop: [ALL]` and `seccompProfile.type: RuntimeDefault` on both containers.
-- The only volume is an `emptyDir` mounted at `/var/lib/cosi` for the COSI gRPC socket.
-
-**No SCC changes are required.** This was verified on OpenShift 4.20.22, where both workloads run without granting any SCC and without modifying the chart. The chart creates two `ServiceAccounts`, `hpe-cosi-provisioner-sa` for the driver and `hpe-cosi-provisioner-pre-upgrade` for the upgrade hook `Job`.
-
-Two workloads do not declare a `securityContext` of their own, the upstream SIG Storage controller `Deployment` and the chart's pre-upgrade hook `Job`. Neither requires elevated access.
-
-!!! note
-    The validation above was performed in the `default` `Namespace`, which OpenShift labels `pod-security.kubernetes.io/enforce: privileged`. That is not a strict test of restricted admission. When deploying into a dedicated project, which defaults to enforcing the `restricted` Pod Security profile, confirm the admitting SCC with:
-
-        oc get pod -n <namespace> -l app.kubernetes.io/name=hpe-cosi-driver -o jsonpath='{.items[*].metadata.annotations.openshift\.io/scc}'
-
-If a `Pod` fails to admit with a message referencing security context constraints, see [SCC troubleshooting](#scc_troubleshooting).
 
 ### Limitations
 
-- The `objectstorage.k8s.io` API is `v1alpha1`. `Bucket`, `BucketClaim`, `BucketAccess`, `BucketClass` and `BucketAccessClass` resources may not be portable across COSI releases.
-- Only the `s3` protocol is supported.
+For generic known limitations applicable to all platforms, see [Known Limitations](../../index.md#known_limitations).
+
+The following limitations are specific to OpenShift:
+
 - There is no OpenShift web console integration for COSI resources. All management is performed with `oc` or the API.
-- The HPE COSI Driver is not published as an Operator bundle and therefore cannot be mirrored with `oc-mirror`. See [Disconnected install](#disconnected_install).
-- Deleting a `BucketClaim` backed by a `BucketClass` with `deletionPolicy: Delete` removes the bucket and its contents on the backend. There is no undo.
-- See the [known limitations](../../index.md#known_limitations) common to all platforms. Notably, creating `BucketClaim` or `BucketAccess` resources in parallel can cause failures, and `Bucket` failure events may only be visible in the "default" `Namespace`.
+- The HPE COSI Driver is not published as an Operator bundle and therefore cannot be mirrored with `oc-mirror`.
 
 ## Deployment
 
