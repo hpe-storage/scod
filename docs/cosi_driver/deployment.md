@@ -92,13 +92,10 @@ kubectl kustomize "github.com/kubernetes-sigs/container-object-storage-interface
 ```
 
 !!! important
-    The SIG Storage COSI controller image is published to a staging registry and the tag encodes a build date and commit rather than a semantic version. Mirror the exact tag emitted by the command above and pin the mirrored copy.
-
-!!! note
-    If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use `helm repo add hpe-storage https://my-web-server.internal/docs` above instead.
-
-!!! important
-    Regardless of the deployment being air-gapped, the Kubernetes compute nodes where the HPE COSI Driver runs need network access to the object storage system S3 endpoint and to the HPE Data Services Cloud Console zone specified in the `Secret`.
+    - The SIG Storage COSI controller image is published to a staging registry and the tag encodes a build date and commit rather than a semantic version. Mirror the exact tag emitted by the command above and pin the mirrored copy.
+    - If the client running `helm` is in the air-gapped environment as well, the [docs](https://github.com/hpe-storage/co-deployments/tree/master/docs) directory needs to be hosted on a web server in the air-gapped environment, and then use below command instead.
+    `helm repo add hpe-storage https://my-web-server.internal/docs`
+    - Regardless of the deployment being air-gapped, the Kubernetes compute nodes where the HPE COSI Driver runs need network access to the object storage system S3 endpoint and to the HPE Data Services Cloud Console zone specified in the `Secret`.
 
 ## Add an HPE Storage Backend
 
@@ -113,15 +110,14 @@ Once the COSI driver is deployed, you must create a `Secret` with the following 
 | endpoint            | All                                 | The S3 frontend network DNS subdomains address of the backend object storage system; that is, an HPE Alletra Storage MP X10000 system.
 | glcpUserClientId    | All                                 | The HPE Green Lake API client ID.
 | glcpUserSecretKey   | All                                 | The HPE Green Lake API client secret.
-| dsccZone*           | All                                 | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
+| dsccZone            | All                                 | The fully qualified domain name (FQDN) of the HPE Data Services Cloud Console zone.
 | clusterSerialNumber | All                                 | The backend storage system cluster serial number.
 | glcpWorkspaceId     | HPE Alletra Storage MP X10000       | The HPE GreenLake workspace ID.
 | onPremCloudCA       | HPE Alletra Storage MP Disconnected with X10000 | A Base64-encoded CA certificate for the HPE Alletra Storage MP Disconnected with X10000 instance. Required when the CA certificate is not present in the cluster's trusted certificate store. If the CA certificate is already available in the cluster's truststore, this parameter can be omitted.
 
-\* For HPE Alletra Storage MP Disconnected with X10000 deployments, prefix the `dsccZone` instance hostname with `dscc-api-`.
-
 !!! note
-    The Kubernetes compute `Nodes` where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
+    - For HPE Alletra Storage MP Disconnected with X10000 deployments, prefix the `dsccZone` instance hostname with `dscc-api-`.
+    - The Kubernetes compute `Nodes` where the HPE COSI Driver is allowed to run need to be able to access the Data Services Cloud Console zone specified.
 
 Example `Secret` manifest for an HPE Alletra Storage MP X10000 deployment:
 
