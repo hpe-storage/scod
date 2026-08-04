@@ -8,13 +8,6 @@ HPE and Red Hat have a long standing partnership to deliver enterprise software 
 
 The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver) published on Artifact Hub, alongside the upstream SIG Storage Container Object Storage Interface (COSI) controller and `CRDs`.
 
-!!! seealso "See Also"
-    - [Deployment](../../deployment.md) for the delivery vehicles and installation instructions.
-    - [Add an HPE Storage Backend](../../deployment.md#add_an_hpe_storage_backend) for the `Secret` and its parameters.
-    - [Creating and Locating Resources](../../deployment.md#creating_and_locating_resources) for obtaining the S3 and HPE Data Services Cloud Console values.
-    - [Using](../../using.md) for `BucketClass`, `BucketClaim`, `BucketAccessClass` and `BucketAccess` configuration.
-    - [Diagnostics](../../diagnostics.md) for sanity checks, logging and troubleshooting.
-
 !!! important
     Container Object Storage Interface (COSI) is a Kubernetes SIG Storage project and the `objectstorage.k8s.io` API is at `v1alpha1`. The API is subject to change between releases. Evaluate accordingly before using in production.
 
@@ -33,6 +26,14 @@ The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/pa
 !!! seealso "Pointers"
     - Other combinations may work but will not be supported.
     - HPE Alletra Storage MP Disconnected with X10000 is supported from HPE COSI Driver v2.0.0.
+
+### Installation and Using
+
+- [Deployment](../../deployment.md) for the delivery vehicles and installation instructions.
+- [Add an HPE Storage Backend](../../deployment.md#add_an_hpe_storage_backend) for the `Secret` and its parameters.
+- [Creating and Locating Resources](../../deployment.md#creating_and_locating_resources) for obtaining the S3 and HPE Data Services Cloud Console values.
+- [Using](../../using.md) for `BucketClass`, `BucketClaim`, `BucketAccessClass` and `BucketAccess` configuration.
+- [Diagnostics](../../diagnostics.md) for sanity checks, logging and troubleshooting.    
 
 ### Limitations
 

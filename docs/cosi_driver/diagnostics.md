@@ -117,7 +117,7 @@ Log files associated with the HPE COSI Driver posts data to the standard output 
 
 If the logs need to be retained for long term, use a standard logging solution for Kubernetes, such as Fluentd. Alternatively, it's advised to use the log collector script, at regular intervals to preserve logs.
 
-### Identify the `Deployments`
+### Identify the Deployments
 
 Before retrieving logs, list the `Deployments` in the `Namespace` where the HPE COSI Driver is installed to determine the exact `Deployment` names.
 
@@ -223,10 +223,10 @@ An HTTP `503` with an S3 XML error body means the request reached the object sto
 
 Common causes, in order of likelihood:
 
-1. **Unsupported bucket feature combination.** Retest with a `BucketClass` containing only `cosiUserSecretName` and `cosiUserSecretNamespace`, then add one parameter at a time.
-2. **Insufficient permissions.** The S3 user may authenticate but lack an access policy granting `CreateBucket`.
-3. **Capacity or quota exhaustion** on the backing storage pool.
-4. **Backend service degradation.**
+1. Unsupported bucket feature combination. Retest with a `BucketClass` containing only `cosiUserSecretName` and `cosiUserSecretNamespace`, then add one parameter at a time.
+2. Insufficient permissions. The S3 user may authenticate but lack an access policy granting `CreateBucket`.
+3. Capacity or quota exhaustion on the backing storage pool.
+4. Backend service degradation.
 
 !!! hint
     Provide the `RequestId` and `HostId` to the storage administrator or HPE Support. The object storage system's own logs contain the specific failure reason behind the generic `503`.

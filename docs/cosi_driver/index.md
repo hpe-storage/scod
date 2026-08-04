@@ -5,7 +5,7 @@ A Container Object Storage Interface ([COSI](https://github.com/kubernetes-sigs/
 ![HPE COSI Driver for Kubernetes architecture](img/cosi_driver_architecture-1.0.0.png)
 
 !!! tip
-    The HPE COSI Driver for Kubernetes is vendor-specific and works only with the HPE Alletra Storage MP X10000 OSP.
+    The HPE COSI Driver for Kubernetes is vendor-specific and works only with the HPE Alletra Storage MP X10000 OSP. In order to use the NFS capabilities of the X10000 platform, see [HPE CSI Driver for Kubernetes](../csi_driver/index.md).
 
 ## Table of Contents
 
