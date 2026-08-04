@@ -6,9 +6,7 @@ HPE and Red Hat have a long standing partnership to deliver enterprise software 
 
 ## OpenShift 4
 
-The HPE COSI Driver is deployed on OpenShift with the same [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver) used on any other Kubernetes distribution. There are no OpenShift specific installation steps.
-
-- Go to the chart on [Artifact Hub](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver).
+The HPE COSI Driver is deployed using the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-cosi-driver) published on Artifact Hub, alongside the upstream SIG Storage Container Object Storage Interface (COSI) controller and `CRDs`.
 
 !!! seealso "See Also"
     - [Deployment](../../deployment.md) for the delivery vehicles and installation instructions.
