@@ -1,55 +1,57 @@
-# Kubernetes Backup and Disaster Recovery with CloudCasa and HPE Alletra Storage MP B10000 & Alletra 9000
+# Overview
 
-This guide shows how to protect Kubernetes and KubeVirt workloads that run on
-**HPE storage** with **CloudCasa**, using the **HPE CSI Driver for
-Kubernetes** and HPE Alletra Storage MP B10000 / 9000 arrays. CloudCasa offers two complementary
+This section explains how to protect Kubernetes and KubeVirt workloads running on
+HPE storage with CloudCasa, using the HPE CSI Driver for
+Kubernetes and HPE Alletra Storage MP B10000 / 9000 arrays. CloudCasa offers two complementary
 forms of protection for these workloads:
 
-- **Backups and restores** based on **CSI volume snapshots** taken through the HPE
+- Backups and restores based on CSI volume snapshots taken through the HPE
   CSI Driver — the standard CloudCasa Kubernetes data-protection workflow.
-- **Array-based disaster recovery (DR)** using **HPE Remote Copy** replication
+- Array-based disaster recovery (DR) using HPE Remote Copy replication
   between a source and a destination array, with CloudCasa DR orchestrating
-  **failover** and **failback**.
+  failover and failback.
 
-!!! note "Scope of this guide"
-    This guide covers the **CloudCasa side** of protecting HPE CSI-backed
-    workloads. The step-by-step backup and restore procedures are documented in
-    the CloudCasa guides linked under [Backups and Restores](#backups-and-restores).
+!!! note "Scope"
+    This page covers the CloudCasa side of protecting workloads using the HPE CSI Driver.
+    The step-by-step backup and restore procedures are documented in
+    the CloudCasa documentation linked under [Backups and Restores](#backups_and_restores).
     For array-based DR, the array-side Remote Copy configuration (replication
     targets, CPGs, and remote-copy groups) is assumed to be set up in advance by
     your storage administrator and is described here only conceptually. For the HPE
     array and HPE CSI Driver configuration, follow the HPE documentation linked in
-    [Related documentation](#related-documentation).
+    [Related documentation](#related_documentation).
 
-## Overview
+## Protection methods
 
-CloudCasa protects HPE CSI-backed Kubernetes and KubeVirt workloads in two ways,
+CloudCasa protects Kubernetes and KubeVirt workloads using the HPE CSI Driver in two ways,
 which you can use independently or together:
 
-- **Backups and restores** — CloudCasa backs up HPE CSI volumes based on CSI
+- Backups and restores — CloudCasa backs up volumes provisioned by the HPE CSI Driver based on CSI
   snapshots taken through the HPE CSI Driver and restores them to the same or a
-  different cluster. Use this for routine data protection and operational recovery (see [Backups and Restores](#backups-and-restores)).
-- **Array-based disaster recovery** — CloudCasa DR orchestrates HPE Remote Copy
+  different cluster. Use this for routine data protection and operational recovery (see [Backups and Restores](#backups_and_restores)).
+- Array-based disaster recovery — CloudCasa DR orchestrates HPE Remote Copy
   replication between two arrays and drives failover and failback at the Remote
   Copy group level. Use this for site-level disaster recovery, where a second
   array already holds a replicated copy of the data (see
-  [Disaster Recovery](#disaster-recovery)).
+  [Disaster Recovery](#disaster_recovery)).
 
 Both modes share a common set of [Prerequisites](#prerequisites).
+
+[TOC]
 
 ### CloudCasa control plane deployment models
 
 CloudCasa's control plane is available in two deployment models. The HPE
-protection workflow in this guide is the same in both; only where the control
+protection workflow described here is the same in both; only where the control
 plane runs differs.
 
-- **SaaS** — the CloudCasa-hosted service at `home.cloudcasa.io`. Nothing extra
+- SaaS — the CloudCasa-hosted service at `home.cloudcasa.io`. Nothing extra
   to install for the control plane; you onboard clusters and drive everything
   from the hosted UI. See the
   [CloudCasa overview](https://docs.cloudcasa.io/help/overview-cloudcasa.html).
-- **Self-hosted** — you run the CloudCasa control plane yourself. Array-based DR
+- Self-hosted — you run the CloudCasa control plane yourself. Array-based DR
   works the same way as in SaaS from a single control plane. Optionally,
-  self-hosted deployments can also register **DR CloudCasa Servers** — a separate
+  self-hosted deployments can also register DR CloudCasa Servers — a separate
   CloudCasa server at the primary and DR sites, syncing DR resources between them
   and running recovery from the remote CC server. This option is only available in
   self-hosted; it is not supported in SaaS. See
@@ -57,51 +59,51 @@ plane runs differs.
 
 ## Prerequisites
 
-The prerequisites below cover all CloudCasa protection of HPE CSI-backed
-workloads. The **shared** group applies to both protection modes; the remaining
-groups add what is needed specifically for **backups and restores** or for
-**array-based DR**.
+The prerequisites below cover all CloudCasa protection of workloads using the HPE CSI Driver.
+The shared group applies to both protection modes; the remaining
+groups add what is needed specifically for backups and restores or for
+array-based DR.
 
 ### Shared prerequisites
 
-- **HPE CSI Driver installed and configured** against the corresponding HPE
+- HPE CSI Driver installed and configured against the corresponding HPE
   Alletra array, including a working backend `Secret` and `StorageClass`. See the
-  HPE SCOD CSI Driver documentation in [Related documentation](#related-documentation).
-- **CloudCasa agent installed and the cluster Active.** Add each cluster in
+  HPE CSI Driver documentation on SCOD in [Related documentation](#related_documentation).
+- CloudCasa agent installed and the cluster Active. Add each cluster in
   CloudCasa, apply the returned agent manifest, and wait for the cluster to reach
-  the **Active** state (see [Cluster onboarding](#appendix-cluster-onboarding-recap)).
-  The agent components install into the **`cloudcasa-io`** namespace.
-- **The HPE CSI backend `Secret`** that authenticates to the array (see
-  [HPE CSI backend Secret](#hpe-csi-backend-secret) below).
+  the Active state (see [Cluster onboarding](#appendix_cluster_onboarding_recap)).
+  The agent components install into the `cloudcasa-io` namespace.
+- The HPE CSI Driver backend `Secret` that authenticates to the array (see
+  [HPE CSI Driver backend Secret](#hpe_csi_driver_backend_secret) below).
 
-#### HPE CSI backend Secret
+#### HPE CSI Driver backend Secret
 
-The HPE CSI backend `Secret` authenticates to the array. It is referenced in two
+The HPE CSI Driver backend `Secret` authenticates to the array. It is referenced in two
 places:
 
 - by the `VolumeSnapshotClass`, so backups based on CSI snapshots can be taken; and
-- by CloudCasa during DR, when it restores workloads on the **destination** cluster
+- by CloudCasa during DR, when it restores workloads on the destination cluster
   during a failover. CloudCasa creates `HPEVolumeInfo` resources and static
-  `PersistentVolume` objects that use the HPE CSI driver (`csi.hpe.com`) and
+  `PersistentVolume` objects that use the HPE CSI Driver (`csi.hpe.com`) and
   reference a Kubernetes `Secret` for the CSI controller/node secret references.
-  You point CloudCasa at this Secret through the **Secret name** and **Secret
-  namespace** fields on the cluster-storage-system link (see
-  [Link the storage system to each cluster](#link-the-storage-system-to-each-cluster)).
+  You point CloudCasa at this Secret through the Secret name and Secret
+  namespace fields on the cluster-storage-system link (see
+  [Link the storage system to each cluster](#link_the_storage_system_to_each_cluster)).
 
-In practice this is the **same backend Secret that the HPE CSI Driver already
-uses** to authenticate to the array — normally created when the HPE CSI Driver
+In practice this is the same backend Secret that the HPE CSI Driver already
+uses to authenticate to the array — normally created when the HPE CSI Driver
 was installed, in the `hpe-storage` namespace. You do not need a CloudCasa-specific
 secret; you reference the existing HPE one.
 
 A backend Secret has the shape below. The exact keys and the `serviceName` value
-are **defined by the HPE CSI Driver**, not by CloudCasa — use the values from
+are defined by the HPE CSI Driver, not by CloudCasa — use the values from
 your HPE CSI Driver backend configuration / the HPE SCOD CSP page for your array.
 
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: hpe-backend-alletra9060      # the existing HPE CSI backend Secret
+  name: my-array-1-backend           # the existing HPE CSI Driver backend Secret
   namespace: hpe-storage
 stringData:
   serviceName: <csp-service-for-your-array>   # e.g. the Alletra 9000 / B10000 CSP service
@@ -112,8 +114,8 @@ stringData:
 ```
 
 !!! note "Secret schema is owned by the HPE CSI Driver"
-    CloudCasa only stores the **name and namespace** of this Secret (via the
-    **Secret name** and **Secret namespace** fields). The key names (`serviceName`, `servicePort`, `backend`,
+    CloudCasa only stores the name and namespace of this Secret (via the
+    Secret name and Secret namespace fields). The key names (`serviceName`, `servicePort`, `backend`,
     `username`, `password`) and the `serviceName` value for each array model are
     defined by the HPE CSI Driver — use the values from the HPE SCOD CSP page for
     your specific array (Alletra 9000 / B10000), and substitute your own array IP
@@ -123,154 +125,156 @@ stringData:
 
 Backups use the CSI snapshot path, which array-based DR does not.
 
-- **CSI snapshots enabled, with the CSI snapshot CRDs and the CSI
-  snapshot-controller deployed** on the cluster. CloudCasa requires functional
+- CSI snapshots enabled, with the CSI snapshot CRDs and the CSI
+  snapshot-controller deployed on the cluster. CloudCasa requires functional
   `VolumeSnapshot` support; any Kubernetes distribution that provides the v1
   snapshot CRDs and a running snapshot-controller is sufficient. Follow the HPE
-  SCOD guides to
+  SCOD instructions to
   [enable CSI snapshots](https://scod.hpedev.io/csi_driver/using.html#enabling_csi_snapshots)
   and [use CSI snapshots](https://scod.hpedev.io/csi_driver/using.html#using_csi_snapshots).
-- **A CloudCasa-discoverable `VolumeSnapshotClass`** for the `csi.hpe.com` driver.
+- A CloudCasa-discoverable `VolumeSnapshotClass` for the `csi.hpe.com` driver.
   CloudCasa discovers a class labeled `cloudcasa.io/csi-volumesnapshot-class: "true"`,
   or you select one in the CloudCasa UI. The `deletionPolicy: Retain` is recommended. See the CloudCasa
   [VolumeSnapshotClass reference](https://docs.cloudcasa.io/help/reference-vol-snapshot.html).
 
 ### Additional prerequisites for disaster recovery
 
-In addition to the [shared prerequisites](#shared-prerequisites) above,
+In addition to the [shared prerequisites](#shared_prerequisites) above,
 array-based DR also requires the following.
 
-**In CloudCasa:**
+#### In CloudCasa
 
-- **The DR feature enabled** for the cluster.
-- **An inventory PVC exists.** Create the inventory PVC in the **`cloudcasa-io`**
-  namespace and ensure it is **replicated to the destination site** (i.e. it is a
+- The DR feature enabled for the cluster.
+- An inventory PVC exists. Create the inventory PVC in the `cloudcasa-io`
+  namespace and ensure it is replicated to the destination site (i.e. it is a
   member of a Remote Copy group). CloudCasa uses this PVC to store the Kubernetes
   manifests (YAMLs) of the protected workloads so they can be restored on the
   destination cluster. You will reference it by name when creating the DR plan.
 
-**On the HPE arrays (B10000 / 9000) (configured by your storage administrator):**
+#### On the HPE arrays
 
-- **Remote Copy is pre-configured** between the source and destination arrays:
-  replication targets are defined and **Active**, CPGs exist on both sides, and
+Your storage administrator must configure the following on the B10000 / 9000 arrays:
+
+- Remote Copy is pre-configured between the source and destination arrays:
+  replication targets are defined and Active, CPGs exist on both sides, and
   the volumes you intend to protect are members of Remote Copy groups (RCGs).
   CloudCasa discovers this configuration — it does not create it.
-- **Array management credentials** (endpoint, username, password) for both
+- Array management credentials (endpoint, username, password) for both
   arrays, with WSAPI access enabled.
 
 ## Backups and Restores
 
-Once the [Prerequisites](#prerequisites) are met, HPE CSI-backed workloads are
-protected with **standard CloudCasa backups and restores** — the same
+Once the [Prerequisites](#prerequisites) are met, workloads using the HPE CSI Driver are
+protected with standard CloudCasa backups and restores — the same
 workflow CloudCasa uses for any CSI-backed Kubernetes storage. CloudCasa takes
 backups based on CSI volume snapshots and restores them to the same or a different cluster.
 
-This is **separate from array-based DR**: backups are based on **CSI snapshots**, while DR
-uses **HPE Remote Copy** replication. Use backups for routine data protection and
+This is separate from array-based DR: backups are based on CSI snapshots, while DR
+uses HPE Remote Copy replication. Use backups for routine data protection and
 operational recovery. Use DR for site-level failover.
 
-The step-by-step procedures are documented in the CloudCasa guides:
+The step-by-step procedures are available in the CloudCasa documentation:
 
-- **Backing up Kubernetes clusters:** <https://docs.cloudcasa.io/help/guide-kubernetes-backup.html>
-- **Restoring Kubernetes clusters:** <https://docs.cloudcasa.io/help/guide-kubernetes-restore.html>
+- [Backing up Kubernetes clusters](https://docs.cloudcasa.io/help/guide-kubernetes-backup.html)
+- [Restoring Kubernetes clusters](https://docs.cloudcasa.io/help/guide-kubernetes-restore.html)
 
 ## Disaster Recovery
 
 Array-based DR protects against the loss of an entire site. CloudCasa DR orchestrates
-**HPE Remote Copy** replication between a source and a destination array,
+HPE Remote Copy replication between a source and a destination array,
 inventories the replicated volumes and their Kubernetes workloads, and drives
-**failover** and **failback** at the storage **Remote Copy group (RCG)** level.
+failover and failback at the storage Remote Copy group (RCG) level.
 There is no data movement at failover time — the data is already present on the
 destination array through Remote Copy. Before a failover, CloudCasa synchronizes
-the protected volumes, then issues an HPE Remote Copy **failover** on the
+the protected volumes, then issues an HPE Remote Copy failover on the
 destination array and attaches the replicated volumes to the workloads it restores
 on the destination cluster. For failback, CloudCasa issues HPE Remote Copy
-**recover** and **restore** commands to return the groups to their original roles.
+recover and restore commands to return the groups to their original roles.
 
 In an array-based DR topology you run two Kubernetes clusters, each backed by an
-HPE Alletra array (B1000 / 9000), with HPE Remote Copy replicating volumes from the source
+HPE Alletra array (B10000 / 9000), with HPE Remote Copy replicating volumes from the source
 array to the destination array:
 
-<img src="img/cloudcasa-hpe-diagram.jpg" alt="CloudCasa + HPE array-based DR architecture" style="max-width: 100%; height: auto;">
+<img src="img/cloudcasa-hpe-diagram.png" alt="CloudCasa + HPE array-based DR architecture" style="max-width: 100%; height: auto;">
 
 !!! note "Optional: DR CloudCasa Servers (self-hosted only)"
     The workflow below runs from a single CloudCasa control plane in both the
-    **SaaS** and **self-hosted** models. In **self-hosted** deployments you can
-    *optionally* register **DR CloudCasa Servers** instead — a CloudCasa server at
+    SaaS and self-hosted models. In self-hosted deployments you can
+    *optionally* register DR CloudCasa Servers instead — a CloudCasa server at
     both the primary and DR sites, with DR resources synced between them and
     recovery run from the remote server. This option is only available in
     self-hosted; it is not supported in SaaS. See
     [DR CloudCasa Servers](https://docs.cloudcasa.io/help/dr-ccservers.html).
 
-What CloudCasa does:
+### CloudCasa orchestration
 
-- **Discovers** the HPE storage systems and their Remote Copy replication
+- Discovers the HPE storage systems and their Remote Copy replication
   targets through the array management API.
-- **Inventories** the replicated volumes, the RCGs they belong
+- Inventories the replicated volumes, the RCGs they belong
   to, and the Kubernetes workloads (Deployments, StatefulSets, KubeVirt VMs)
   that consume them.
-- **Fails over** a DR plan by synchronizing the volumes and issuing an HPE Remote
-  Copy **failover** on the destination array, then re-creating the workloads on
+- Fails over a DR plan by synchronizing the volumes and issuing an HPE Remote
+  Copy failover on the destination array, then re-creating the workloads on
   the destination cluster bound to static PVs/PVCs that point at the now-primary
   replicated volumes.
-- **Fails back** by issuing HPE Remote Copy **recover** (which re-synchronizes the
-  data) and **restore** commands to return the RCGs to their original roles.
+- Fails back by issuing HPE Remote Copy recover (which re-synchronizes the
+  data) and restore commands to return the RCGs to their original roles.
 
-The data path at failover is **HPE Remote Copy**, not CSI snapshots. CloudCasa
+The data path at failover is HPE Remote Copy, not CSI snapshots. CloudCasa
 never copies volume data during a failover.
 
 ### Supported arrays and replication types
 
-**Arrays**
+#### Arrays
 
-- **HPE Alletra Storage MP B10000**
-- **HPE Alletra 9000 family**
+- HPE Alletra Storage MP B10000
+- HPE Alletra 9000 family
 
-**Replication modes**
+#### Replication modes
 
 CloudCasa recognizes and surfaces the following HPE Remote Copy modes on each
 Remote Copy group target:
 
-- **Synchronous**
-- **Periodic**
+- Synchronous
+- Asynchronous (periodic)
 
 !!! warning "Peer Persistence is not supported"
-    CloudCasa does **not** support HPE Peer Persistence. Configure the protected
+    CloudCasa does not support HPE Peer Persistence. Configure the protected
     Remote Copy groups in a standard synchronous or periodic replication mode.
 
-**Management access**
+#### Management access
 
-CloudCasa communicates with HPE Alletra arrays through the **HPE WSAPI** over
+CloudCasa communicates with HPE Alletra arrays through the HPE WSAPI over
 HTTPS.
 
 ### Register the HPE storage system in CloudCasa
 
-Register **both** arrays (source and destination) as storage systems in
+Register both arrays (source and destination) as storage systems in
 CloudCasa. The steps below describe the source array; repeat them for the
 destination array.
 
-1. In the CloudCasa UI, go to **Configuration → Storage Systems** and add a new
+1. In the CloudCasa UI, go to Configuration → Storage Systems and add a new
    storage system.
-2. Choose provider **HPE Alletra**
+2. Choose provider HPE Alletra
 3. Enter the array's management details:
-    - **Endpoint** — the array management URL or IP, e.g. `https://10.0.0.1`.
-    - **Username** / **Password** — the array management credentials.
-    - **Skip TLS verification** — optional; enable only for arrays using
+    - Endpoint — the array management URL or IP, e.g. `https://my-array-1.example.com`.
+    - Username / Password — the array management credentials.
+    - Skip TLS verification — optional; enable only for arrays using
       self-signed certificates.
-4. **Validate** the storage system. Validation runs **through an active
-   cluster's agent**, so select a cluster that is **Active**. CloudCasa connects to
+4. Validate the storage system. Validation runs through an active
+   cluster's agent, so select a cluster that is Active. CloudCasa connects to
    the array over WSAPI and, on success, sets the validation status to
-   **Validated** and discovers:
+   Validated and discovers:
     - the array name, model, and software version.
     - the configured Remote Copy replication targets and their status
-      (**Active** / **Inactive** / **Unknown**).
-5. Repeat for the **destination** array.
-6. Confirm that the **source** array reports an **Active** replication target
+       (Active / Inactive / Unknown).
+5. Repeat for the destination array.
+6. Confirm that the source array reports an Active replication target
    that matches the destination array. This pairing is required later by the
    DR plan.
 
-The validation status progresses **Pending → Validating → Validated** (or
-**Failed**). A storage system must reach **Validated** before it can be linked to
+The validation status progresses Pending → Validating → Validated (or
+Failed). A storage system must reach Validated before it can be linked to
 a cluster.
 
 ### Link the storage system to each cluster
@@ -279,23 +283,23 @@ Each array must be linked to its cluster (a *cluster storage system*) so
 CloudCasa can reach the array through that cluster's agent and discover its
 volumes.
 
-1. In the CloudCasa UI, link the **source** storage system to the **source**
+1. In the CloudCasa UI, link the source storage system to the source
    cluster.
-2. Fill in the **Secret name** and **Secret namespace** fields with the name and
-   namespace of the HPE CSI backend Secret from
-   [HPE CSI backend Secret](#hpe-csi-backend-secret). Both fields are
-   **required** for HPE Alletra links; CloudCasa uses the referenced Secret to
+2. Fill in the Secret name and Secret namespace fields with the name and
+   namespace of the HPE CSI Driver backend Secret from
+   [HPE CSI Driver backend Secret](#hpe_csi_driver_backend_secret). Both fields are
+   required for HPE Alletra links; CloudCasa uses the referenced Secret to
    attach replicated volumes during DR restore on the destination cluster.
-3. **Verify** the link. The connection status progresses
-   **Pending → Connected** (or **Disconnected** on failure). Wait for
-   **Connected**.
-4. Repeat for the **destination** storage system and the **destination**
+3. Verify the link. The connection status progresses
+   Pending → Connected (or Disconnected on failure). Wait for
+   Connected.
+4. Repeat for the destination storage system and the destination
    cluster.
 
 !!! note "Requirements for linking"
-    - The storage system must already be **Validated**.
-    - The cluster must be **Active** with the DR feature enabled.
-    - For HPE Alletra, both **Secret name** and **Secret namespace** are required.
+    - The storage system must already be Validated.
+    - The cluster must be Active with the DR feature enabled.
+    - For HPE Alletra, both Secret name and Secret namespace are required.
     - Only one link may exist per cluster + storage-system combination.
 
 ### Create a DR plan
@@ -305,29 +309,29 @@ links, the inventory PVC, the inventory schedule, and the protected workloads.
 
 In the CloudCasa UI, create a DR plan with:
 
-- **Source cluster** and **destination cluster** — both must be **Active**.
-- **Source** and **destination cluster storage systems** — both must be
-  **Connected**, backed by validated storage systems.
-- **Inventory PVC** — the name of the inventory PVC. It must already exist in the
-  **`cloudcasa-io`** namespace and be **replicated to the destination site** (a
+- Source cluster and destination cluster — both must be Active.
+- Source and destination cluster storage systems — both must be
+  Connected, backed by validated storage systems.
+- Inventory PVC — the name of the inventory PVC. It must already exist in the
+  `cloudcasa-io` namespace and be replicated to the destination site (a
   member of a Remote Copy group); CloudCasa uses it to store the Kubernetes
   manifests (YAMLs) of the protected workloads.
-- **Inventory interval** — how often the storage inventory runs. Default
-  **`6h`**.
-- **Workloads** — the workloads protected by this plan, selected through
+- Inventory interval — how often the storage inventory runs. Default
+  `6h`.
+- Workloads — the workloads protected by this plan, selected through
   dedicated tabs. Specify at least one of:
-    - **Namespaces** — protect one or more entire namespaces; or
-    - **VMs**, **Deployments**, **StatefulSets** — select specific KubeVirt VMs,
+    - Namespaces — protect one or more entire namespaces; or
+    - VMs, Deployments, StatefulSets — select specific KubeVirt VMs,
       Deployments, or StatefulSets by name from their respective tabs.
 
 !!! note "Failover granularity is the Remote Copy group"
-    Although you select workloads at the namespace/resource level, **failover
-    operates at the HPE Remote Copy group (RCG) level**. When you failover,
+    Although you select workloads at the namespace/resource level, failover
+    operates at the HPE Remote Copy group (RCG) level. When you failover,
     CloudCasa fails over each RCG that contains the selected volumes — so all
     volumes in an affected RCG move together. Plan your RCG membership accordingly.
 
 !!! note
-    The source storage system must have an **Active** replication target that
+    The source storage system must have an Active replication target that
     matches the destination storage system, or DR plan operations will fail
     their checks.
 
@@ -337,58 +341,58 @@ The inventory discovers the replicated volumes, their Remote Copy groups, and th
 workloads that use them. It runs automatically on the configured interval and can
 be triggered on demand.
 
-1. From the DR plan in the CloudCasa UI, **run the storage inventory**.
+1. From the DR plan in the CloudCasa UI, run the storage inventory.
 2. Watch the inventory status progress
-   **Pending → In Progress → Completed** (or **Failed**). Wait for
-   **Completed**.
+   Pending → In Progress → Completed (or Failed). Wait for
+   Completed.
 3. Review what was discovered:
-    - **Storage consistency groups** — CloudCasa's term for HPE **Remote Copy
-      Groups (RCGs)**. Each shows its replication target mode (**Synchronous** or
-      **Periodic**), state (e.g. **Started**, **Stopped**, **Failsafe**), and
-      role (**Primary**, **Secondary**, or, after a failover, **Primary-Reverse**
-      / **Secondary-Reverse**).
-    - **Storage volumes** — each shows whether it is replicated, its Remote Copy
+    - Storage consistency groups — CloudCasa's term for HPE Remote Copy
+      Groups (RCGs). Each shows its replication target mode (Synchronous or
+      Asynchronous), state (e.g. Started, Stopped, Failsafe), and
+      role (Primary, Secondary, or, after a failover, Primary-Reverse
+      / Secondary-Reverse).
+    - Storage volumes — each shows whether it is replicated, its Remote Copy
       group, remote-volume targets, and the per-target replication status.
 
 ### Execute a failover (DR recovery)
 
-A **DR recovery** defines and runs a failover to the destination cluster.
+A DR recovery defines and runs a failover to the destination cluster.
 
 #### Create the DR recovery
 
-In the CloudCasa UI, open **DR recovery details** and step through the wizard:
+In the CloudCasa UI, open DR recovery details and step through the wizard:
 
-- **DR plan** — the DR plan to recover.
-- **Selection** — enable **Recover all workloads** to recover everything in the
-  plan, or turn the toggle off to recover a **subset** of the plan's workloads.
-- **Transforms** — optional adjustments applied during restore:
-    - **Enable resource modifiers** — apply resource-modifier YAML, as in
+- DR plan — the DR plan to recover.
+- Selection — enable Recover all workloads to recover everything in the
+  plan, or turn the toggle off to recover a subset of the plan's workloads.
+- Transforms — optional adjustments applied during restore:
+    - Enable resource modifiers — apply resource-modifier YAML, as in
       standard CloudCasa restores.
-    - **VM options** (KubeVirt) — **Clear MAC address(es)**, **Generate new
-      firmware UUID**, and **Run strategy** (e.g. **Halted**).
-- **Summary** — review the selections and run the recovery.
+    - VM options (KubeVirt) — Clear MAC address(es), Generate new
+      firmware UUID, and Run strategy (e.g. Halted).
+- Summary — review the selections and run the recovery.
 
 #### Run the failover
 
-Run the DR recovery. Before it starts, CloudCasa runs **pre-flight checks** and
-refuses to proceed (returns an error) unless **all** of the following hold:
+Run the DR recovery. Before it starts, CloudCasa runs pre-flight checks and
+refuses to proceed (returns an error) unless all of the following hold:
 
 - The DR recovery and its DR plan are not already completed.
-- The **destination cluster storage system** is **Connected** and backed by a
+- The destination cluster storage system is Connected and backed by a
   supported, validated storage system.
-- The **destination cluster is Active**.
+- The destination cluster is Active.
 
-**What happens during failover:**
+During failover, CloudCasa:
 
-1. CloudCasa **synchronizes** the volumes and then issues an HPE Remote Copy
-   **failover** on each affected Remote Copy group so the destination array's copy
+1. Synchronizes the volumes and then issues an HPE Remote Copy
+   failover on each affected Remote Copy group so the destination array's copy
    becomes primary.
-2. On the destination cluster, CloudCasa creates **static `PersistentVolume`
-   objects** (HPE CSI driver `csi.hpe.com`, reclaim policy `Retain`) bound to the
+2. On the destination cluster, creates static `PersistentVolume`
+   objects (HPE CSI Driver `csi.hpe.com`, reclaim policy `Retain`) bound to the
    now-primary replicated volumes, with the CSI secret references pointing at the
-   Secret named in the cluster-storage-system link's **Secret name** / **Secret
-   namespace** fields, plus the matching PVCs.
-3. CloudCasa **restores the workloads** (Deployments, StatefulSets, KubeVirt VMs)
+   Secret named in the cluster-storage-system link's Secret name / Secret
+   namespace fields, plus the matching PVCs.
+3. Restores the workloads (Deployments, StatefulSets, KubeVirt VMs)
    on the destination cluster, attached to those PVCs, along with the other
    Kubernetes resources they depend on (for example Secrets, ConfigMaps or Services).
 
@@ -398,47 +402,47 @@ array via Remote Copy.
 ### Failback / role restoration
 
 Failback returns service to the original source site once it is healthy. CloudCasa
-performs it with HPE Remote Copy **recover** and **restore** commands:
+performs it with HPE Remote Copy recover and restore commands:
 
-- **Recover** re-synchronizes the data from the current primary (the destination
+- Recover re-synchronizes the data from the current primary (the destination
   site) back to the original source array.
-- **Restore** then switches the roles back so the original source site becomes
+- Restore then switches the roles back so the original source site becomes
   primary again and the destination site returns to secondary.
 
 The role change is visible in the Remote Copy group role: after a failover a group
-shows either the reversed roles **Primary-Reverse** / **Secondary-Reverse**, or a
-straight swap where the former **Primary** becomes **Secondary** and the former
-**Secondary** becomes **Primary**. A completed failback returns the roles to their
-original **Primary** / **Secondary** assignment.
+shows either the reversed roles Primary-Reverse / Secondary-Reverse, or a
+straight swap where the former Primary becomes Secondary and the former
+Secondary becomes Primary. A completed failback returns the roles to their
+original Primary / Secondary assignment.
 
 !!! warning "Recover or restore depends on the auto-synchronize policy"
-    When a Remote Copy group's **`auto_synchronize` policy is disabled**, CloudCasa
-    runs the **Recover** command to re-synchronize the group. When it is
-    **enabled**, CloudCasa runs the **Restore** command.
+    When a Remote Copy group's `auto_synchronize` policy is disabled, CloudCasa
+    runs the Recover command to re-synchronize the group. When it is
+    enabled, CloudCasa runs the Restore command.
 
 The detailed array-side behavior of Remote Copy recover, synchronize, and restore
 is governed by HPE. Defer to the HPE Remote Copy documentation in
-[Related documentation](#related-documentation) for array-specific semantics.
+[Related documentation](#related_documentation) for array-specific semantics.
 
 ### Verification and monitoring
 
 Use these signals to confirm DR health before and after a failover:
 
-- **Remote Copy group roles and states** — confirm the expected role
-  (**Primary** / **Secondary**, or **Primary-Reverse** / **Secondary-Reverse**
-  after failover) and a healthy state (e.g. **Started**).
-- **Volume replication status** — per-target status should be **Synced**.
-  **Syncing** is transient; **Out of Sync** or **Stopped** indicates replication
+- Remote Copy group roles and states — confirm the expected role
+  (Primary / Secondary, or Primary-Reverse / Secondary-Reverse
+  after failover) and a healthy state (e.g. Started).
+- Volume replication status — per-target status should be Synced.
+  Syncing is transient; Out of Sync or Stopped indicates replication
   needs attention before relying on DR.
-- **DR job logs** — review the failover/failback job activity in CloudCasa.
+- DR job logs — review the failover/failback job activity in CloudCasa.
 
-**Post-failover checklist:**
+#### Post-failover checklist
 
 1. The DR recovery job completed successfully.
 2. Affected Remote Copy groups show their roles changed — either the reversed
-   roles **Primary-Reverse** / **Secondary-Reverse**, or a straight swap where the
-   former **Primary** is now **Secondary** and the former **Secondary** is now
-   **Primary**.
+   roles Primary-Reverse / Secondary-Reverse, or a straight swap where the
+   former Primary is now Secondary and the former Secondary is now
+   Primary.
 3. Workloads are running on the destination cluster and their PVCs are bound to
    the static PVs CloudCasa created.
 4. Applications are serving from the destination site as expected.
@@ -447,32 +451,31 @@ Use these signals to confirm DR health before and after a failover:
 
 For reference, onboarding a cluster to CloudCasa:
 
-1. **Add the cluster** in the CloudCasa UI. CloudCasa returns an agent manifest
-   URL and the cluster starts in state **Pending**.
-2. **Apply the agent manifest:**
+1. Add the cluster in the CloudCasa UI. CloudCasa returns an agent manifest
+   URL and the cluster starts in state Pending.
+2. Apply the agent manifest:
    ```
    kubectl apply -f <agentURL>
    ```
-   The agent components install into the **`cloudcasa-io`** namespace.
+   The agent components install into the `cloudcasa-io` namespace.
 3. The cluster advances through the state lifecycle:
-   **Registered → Discovered → Inventory → Active**.
-4. DR requires the cluster to be **Active** with the DR feature enabled.
+   Registered → Discovered → Inventory → Active.
+4. DR requires the cluster to be Active with the DR feature enabled.
 
 ## Related documentation
 
-**Catalogic CloudCasa**
+### Catalogic CloudCasa
 
-- CloudCasa overview (deployment models): <https://docs.cloudcasa.io/help/overview-cloudcasa.html>
-- DR CloudCasa Servers (self-hosted): <https://docs.cloudcasa.io/help/dr-ccservers.html>
-- CloudCasa Kubernetes backup guide: <https://docs.cloudcasa.io/help/guide-kubernetes-backup.html>
-- CloudCasa Kubernetes restore guide: <https://docs.cloudcasa.io/help/guide-kubernetes-restore.html>
-- CloudCasa client guide: <https://docs.cloudcasa.io/help/guide-dr-failover.html>
-- CloudCasa product site: <https://cloudcasa.io>
+- [CloudCasa overview (deployment models)](https://docs.cloudcasa.io/help/overview-cloudcasa.html)
+- [DR CloudCasa Servers (self-hosted)](https://docs.cloudcasa.io/help/dr-ccservers.html)
+- [CloudCasa Kubernetes backup documentation](https://docs.cloudcasa.io/help/guide-kubernetes-backup.html)
+- [CloudCasa Kubernetes restore documentation](https://docs.cloudcasa.io/help/guide-kubernetes-restore.html)
+- [CloudCasa DR failover and failback documentation](https://docs.cloudcasa.io/help/guide-dr-failover.html)
+- [CloudCasa product site](https://cloudcasa.io)
 
-**HPE — array and CSI driver (HPE SCOD, scod.hpedev.io)**
+### HPE — array and CSI driver (HPE SCOD, scod.hpedev.io)
 
 - HPE CSI Driver for Kubernetes — installation and configuration.
-- HPE Alletra Storage MP B10000 Container Storage Provider (CSP):
-  <https://scod.hpedev.io/csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html>
+- [HPE Alletra Storage MP B10000 Container Storage Provider (CSP)](https://scod.hpedev.io/csi_driver/container_storage_provider/hpe_alletra_storage_mp_b10000/index.html)
 - HPE Alletra 9000 / Primera / 3PAR Container Storage Provider (CSP).
-- HPE Remote Copy configuration guides for your array.
+- HPE Remote Copy configuration documentation for your array.
