@@ -50,11 +50,12 @@ plugins:
         'partners/suse_harvester/index.md': 'csi_driver/partners/suse_virtualization/index.md'
         'csi_driver/partners/suse_harvester/index.md': 'csi_driver/partners/suse_virtualization/index.md'
         'partners/suse_rancher/index.md': 'csi_driver/partners/suse_rancher/index.md'
-        'partners/tkgi/index.md': 'csi_driver/partners/tkgi/index.md'
+        'partners/tkgi/index.md': 'csi_driver/partners/vmware/index.md'
         'partners/vmware/index.md': 'csi_driver/partners/vmware/index.md'
         'partners/index.md': 'csi_driver/partners/index.md'
         'ezmeral_container_platform/install.md': 'csi_driver/partners/hpe_ezmeral/install.md'
         'ezmeral/index.md': 'csi_driver/partners/hpe_ezmeral/install.md'
+        'csi_driver/partners/tkgi/index.md': 'csi_driver/partners/vmware/index.md'
   - include-markdown:
   - macros:
 exclude_docs: |
@@ -91,7 +92,6 @@ nav:
       - 'Spectro Cloud': 'csi_driver/partners/spectro_cloud/index.md'
       - 'SUSE Virtualization': 'csi_driver/partners/suse_virtualization/index.md'
       - 'SUSE Rancher': 'csi_driver/partners/suse_rancher/index.md'
-      - 'Tanzu TKGI': 'csi_driver/partners/tkgi/index.md'
       - 'VMware': 'csi_driver/partners/vmware/index.md'
   - HPE COSI DRIVER FOR KUBERNETES:
     - 'Overview': 'cosi_driver/index.md'

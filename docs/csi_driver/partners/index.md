@@ -12,7 +12,6 @@
 * [Spectro Cloud](spectro_cloud/index.md)
 * [SUSE Virtualization](suse_virtualization/index.md)
 * [SUSE Rancher](suse_rancher/index.md)
-* [Tanzu Kubernetes Grid Integrated](tkgi/index.md)
 * [VMware](vmware/index.md)
 
 !!! tip
