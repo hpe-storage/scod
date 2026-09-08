@@ -27,3 +27,5 @@ parameters:
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
+# mountOptions: Optional client mount arguments
+#  - noatime

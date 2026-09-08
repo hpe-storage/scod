@@ -138,7 +138,7 @@ Upgrade considerations:
   <tr>
    <th>Blogs</th>
    <td>
-    <a href="">Improved scalability and multitenancy with HPE CSI Driver for Kubernetes 3.3.0</a>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/improved-scalability-and-multitenancy-with-hpe-csi-driver-for/ba-p/7272513">Improved scalability and multitenancy with HPE CSI Driver for Kubernetes 3.3.0</a>
    </td>
  </tr>
 </table>
