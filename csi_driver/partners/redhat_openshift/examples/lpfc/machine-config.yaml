@@ -1,0 +1,11 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 05-worker-kernel-arg
+spec:
+  kernelArguments:
+    - 'lpfc.lpfc_max_luns=2048'
+    - 'scsi_mod.max_luns=2048'
+    - 'scsi_mod.max_report_luns=2048'
