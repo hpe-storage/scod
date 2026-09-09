@@ -19,6 +19,7 @@ The CSP only supports dynamic provisioning of `PersistentVolumes` and no data ma
 | shareSquashingOption           | Text    | Controls the NFS client UID to server UID mapping. Valid options: "no_root_squash", "root_squash", "all_squash". Defaults to "no_root_squash". |
 | shareReadOnly                  | Boolean | Sets the server share read only. Defaults to "false". |
 | shareNfsVersion                | Float   | For future use, Defaults to "4". |
+| shareSourcePorts               | Text    | Set to "insecure" to allow NFS clients to mount exports from ports above 1024. Set to "secure" to only allow mounts from 1024 and below. Default: "secure" |
 
 <small><sup>1</sup> = This parameter has no effect if the `PersistentVolume` being removed is empty (no user data).</small>
 
@@ -234,10 +235,10 @@ The `PVC` may now be referenced and attached to a workload.
 These are the current limitations of the HPE Alletra Storage MP B10000 File Service CSP.
 
 - Snapshots and clones are not yet implemented.
-- Maximum 16 File Service shares may exist at any given time per array controller.
-- Maximum 20% of the array provisioned capacity may be used for File Service storage.
+- Maximum 64 File Service shares may exist at any given time on the array regardless of array node count.
 - Maximum 64TiB capacity per file share.
 - Export permissions on the array are set to `*` (defined as "all" in the array interfaces) and will be reachable from any host that can reach the File interfaces on the array.
+- Due to how exports are presented on the array, deep directory structures may exceed the kernel hard-coded MAXPATHLEN limit of 4096 characters. The number of characters available to applications is 4008.
 
 ## Support
 

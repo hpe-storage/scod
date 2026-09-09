@@ -23,6 +23,7 @@ parameters:
   snapCpg: SSD_r6
   hostSeesVLUN: "true"
   provisioningType: tpvv
+  # virtualDomain: "my-virtual-domain-1"
   # compression: "true" # For 3PAR only
 provisioner: csi.hpe.com
 reclaimPolicy: Delete

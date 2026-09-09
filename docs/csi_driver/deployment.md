@@ -150,9 +150,16 @@ The Operator will be installed in `my-hpe-csi-operator` namespace. Watch it come
 kubectl get csv -n my-hpe-csi-operator
 ```
 
-Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
+Next, a `HPECSIDriver` resource needs to be created. Create a file named `hpe-csi-operator.yaml`, edit and apply (or copy the command from the top of the content).
 
-```yaml fct_label="HPE CSI Operator v3.2.0"
+!!! note "Good to know"
+    From HPE CSI Driver v3.3.0 and later, the defaults are taken from the shipping version of the CSI driver Helm chart values. In order to make customizations, simply add the necessary Helm chart keys in the `.spec` of the `HPECSIDriver`, an [example](https://github.com/hpe-storage/co-deployments/blob/master/operators/hpe-csi-operator/destinations/hpecsidriver-latest-sample.yaml).
+
+```yaml fct_label="HPE CSI Operator v3.3.0 and later"
+# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-sample.yaml
+{% include "csi_driver/examples/deployment/hpecsidriver-sample.yaml" %}```
+
+```yaml fct_label="v3.2.0"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.2.0-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v3.2.0-sample.yaml" %}```
 
@@ -163,10 +170,6 @@ Next, a `HPECSIDriver` object needs to be instantiated. Create a file named `hpe
 ```yaml fct_label="v3.0.1"
 # kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
 {% include "csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml" %}```
-
-```yaml fct_label="v2.5.2"
-# kubectl apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
-{% include "csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
 
 !!! tip
     The contents depends on which version of the CSI driver is installed. Please visit [OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) or [ArtifactHub](https://artifacthub.io/packages/olm/community-operators/hpe-csi-operator) for more details.

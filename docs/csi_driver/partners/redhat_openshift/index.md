@@ -16,9 +16,9 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
-| Certified               | 4.22 EUS<sup>2</sup>              | 3.1.0 → 3.2.0    | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.21                              | 3.1.0 → 3.2.0    | [All](../../container_storage_provider/index.md) |
-| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.2.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.22 EUS<sup>2</sup>              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.21                              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
+| Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.3.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.19                              | 3.0.1 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.18 EUS<sup>2</sup>              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
 | EOL<sup>1</sup>         | 4.17                              | 2.5.2 → 3.1.0    | [All](../../container_storage_provider/index.md) |
@@ -58,7 +58,6 @@ For more information on OpenShift security, see [Managing security context const
 Since the CSI Operator only provides "Basic Install" capabilities. The following limitations apply:
 
 - The `ConfigMap` "hpe-linux-config" that controls host configuration is immutable
-- The NFS Server Provisioner can not be used with Operators deploying `PersistentVolumeClaims` as part of the installation. See [#295](https://github.com/hpe-storage/csi-driver/issues/295) on GitHub.
 - Deploying the NFS Server Provisioner to a `Namespace` other than "hpe-nfs" requires a separate SCC applied to the `Namespace`. See [NFS Server Provisioner Considerations](#nfs_server_provisioner_considerations).
 - Depending on how the OpenShift worker node was deployed, an issue may arise where the CSI node driver version 3.1.0 or later won't start because of a duplicate NQN issue. Refer to [Duplicate NQNs issue](#duplicate_nqns_issue) for more details.
 - Performing rolling upgrades of OpenShift requires that the CSI controller and CSPs are scheduled on nodes that don't allow `PersistentVolumes` from the CSI driver. See [apply nodeSelectors and tolerations to perform rolling upgrades](../../operations.md#apply_nodeselectors_and_tolerations_to_perform_rolling_upgrades) for more details.
@@ -194,7 +193,14 @@ deployment "hpe-csi-driver-operator" successfully rolled out
 
 The next step is to create a `HPECSIDriver` resource.
 
-```yaml fct_label="HPE CSI Operator v3.2.0"
+!!! note "Good to know"
+    From HPE CSI Driver v3.3.0 and later, the defaults are taken from the shipping version of the CSI driver Helm chart values. In order to make customizations, simply add the necessary Helm chart keys in the `.spec` of the `HPECSIDriver`, an [example](https://github.com/hpe-storage/co-deployments/blob/master/operators/hpe-csi-operator/destinations/hpecsidriver-latest-sample.yaml).
+
+```yaml fct_label="HPE CSI Operator v3.3.0 and later"
+# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-sample.yaml
+{% include "../../examples/deployment/hpecsidriver-sample.yaml" %}```
+
+```yaml fct_label="v3.2.0"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.2.0-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v3.2.0-sample.yaml" %}```
 
@@ -209,14 +215,6 @@ The next step is to create a `HPECSIDriver` resource.
 ```yaml fct_label="v3.0.1"
 # oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v3.0.1-sample.yaml
 {% include "../../examples/deployment/hpecsidriver-v3.0.1-sample.yaml" %}```
-
-```yaml fct_label="v2.5.2"
-# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.2-sample.yaml
-{% include "../../examples/deployment/hpecsidriver-v2.5.2-sample.yaml" %}```
-
-```yaml fct_label="v2.5.1"
-# oc apply -n hpe-storage -f {{ config.site_url }}csi_driver/examples/deployment/hpecsidriver-v2.5.1-sample.yaml
-{% include "../../examples/deployment/hpecsidriver-v2.5.1-sample.yaml" %}```
 
 The CSI driver is now ready for use. Next, an [HPE storage backend needs to be added](../../deployment.md#add_an_hpe_storage_backend) along with a [`StorageClass`](../../using.md#base_storageclass_parameters).
 
@@ -334,6 +332,15 @@ Create and apply a new `MachineConfig` manifest.
 # 
 {% include "csi_driver/partners/redhat_openshift/examples/nqns/machine-config-converged.yaml" %}```
 
+## Increase LUNs for Emulex FC HBAs
+
+In order to take advantage of more `VolumeAttachments` than 250 with Emulex HBAs using the Emulex LightPulse Fibre Channel (lpfc) device driver, apply the following `MachineConfig`.
+
+```yaml
+{% include "csi_driver/partners/redhat_openshift/examples/lpfc/machine-config.yaml" %}```
+
+!!! warning
+    A rolling restart will be performed once the `MachineConfig` has been applied.
 
 ## NFS Server Provisioner Considerations
 
@@ -420,71 +427,6 @@ kubernetes   192.168.1.166:6443,192.168.1.190:6443,192.168.1.222:6443   13d
 ### Custom NFS Server Provisioner Namespace
 
 By default, the NFS Server Provisioner deploys NFS servers in the "hpe-nfs" `Namespace`. If users are allowed to deploy in their own `Namespaces` or a custom `Namespace` is used, the "hpe-nfs-policy" `NetworkPolicy` needs to be deployed in the `Namespace` accordingly.
-
-## StorageProfile for OpenShift Virtualization Source PVCs
-
-If OpenShift Virtualization is being used and Live Migration is desired for virtual machines `PVCs` cloned from the "openshift-virtualization-os-images" `Namespace`, the `StorageProfile` needs to be updated to "ReadWriteMany".
-
-!!! info
-    These steps are not necessary on recent OpenShift EUS (v4.12.11 onwards) releases as the default `StorageProfile` for "csi.hpe.com" has been corrected upstream.
-
-If the default `StorageClass` is named "hpe-standard", issue the following command:
-
-```text
-oc edit -n openshift-cnv storageprofile hpe-standard
-```
-
-Replace the `spec: {}` with the following:
-
-```yaml
-spec:
-  claimPropertySets:
-  - accessModes:
-    - ReadWriteMany
-    volumeMode: Block
-```
-
-Ensure there are no errors. Recreate the OS images:
-
-```text
-oc delete pvc -n openshift-virtualization-os-images --all
-```
-
-Inspect the `PVCs` and ensure they are re-created with "RWX":
-
-```text
-oc get pvc -n openshift-virtualization-os-images -w
-```
-
-!!! hint
-    The "accessMode" transformation for block volumes from RWO PVC to RWX clone has been resolved in HPE CSI Driver v2.5.0. Regardless, using source RWX PVs will simplify the workflows for users.
-
-## Live VM migrations for Alletra Storage MP B10000
-
-With HPE CSI Operator for OpenShift v2.4.2 and older there's an issue that prevents live migrations of VMs that has `PVCs` attached that has been clones from an OS image residing on Alletra Storage MP B10000 backends including 3PAR, Primera and Alletra 9000.
-
-Identify the `PVC` that that has been cloned from an OS image. The VM name is "centos7-silver-bedbug-14" in this case.
-
-```text
-oc get vm/centos7-silver-bedbug-14 -o jsonpath='{.spec.template.spec.volumes}' | jq
-```
-
-In this instance, the `dataVolume` is the same name as the VM. Grab the `PV` name from the `PVC` name.
-
-```text
-MY_PV_NAME=$(oc get pvc/centos7-silver-bedbug-14 -o jsonpath='{.spec.volumeName}')
-```
-
-Next, patch the `hpevolumeinfo` `CRD`.
-
-```text
-oc patch hpevolumeinfo/${MY_PV_NAME} --type=merge --patch '{"spec": {"record": {"MultiInitiator": "true"}}}'
-```
-
-The VM is now ready to be migrated.
-
-!!! hint
-    If there are multiple `dataVolumes`, each one needs to be patched.
 
 ## Unsupported Version of the Operator Install
 

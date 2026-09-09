@@ -7,9 +7,6 @@ The HPE Alletra Storage MP B10000, Alletra 9000 and Primera and 3PAR Storage Con
 
 [TOC]
 
-!!! note
-    For help getting started with deploying the HPE CSI Driver using HPE Alletra Storage MP B10000, Alletra 9000, Primera or 3PAR storage, check out the [tutorial over at HPE Developer](https://developer.hpe.com/blog/9o7zJkqlX5cErkrzgopL/tutorial-how-to-get-started-with-the-hpe-csi-driver-and-hpe-primera-and-).
-
 ## Platform Requirements
 
 Check the corresponding CSI driver version in the [compatibility and support](../../index.md#compatibility_and_support) table for the latest updates on supported Kubernetes version, orchestrators and host OS.
@@ -61,13 +58,13 @@ The CSP requires access to a user with either `edit` or the `super` role. It's r
 
 ### Virtual Domains
 
-Virtual Domains are not yet fully implemented by the CSP. From HPE CSI Driver v2.5.0, it's possible to manually create the Kubernetes hosts connecting to storage within the Virtual Domain. Once the hosts have been created, deploy the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true". The Virtual Domain user may create the hosts through the Virtual Domain if the "AllowDomainUsersAffectNoDomain" parameter is set to either "hostonly" or "yes" on the array.
+Virtual Domains were officially introduced in v3.3.0. In earlier releases it was possible to manually create the hosts on the array within the Virtual Domain. Once the hosts had been created, deploying the CSI driver with the Helm chart using the "disableHostDeletion" parameter set to "true" prevented the hosts from being managed by the CSI driver. The "disableHostDeletion" parameter is not needed for v3.3.0 and later when using Virtual Domains as the hosts are now managed by the CSI driver as usual.
 
 #### Detailed steps to use Virtual Domains
 
 These steps assumes access to the storage platform with privileges to create domains and change settings.
 
-Login to the storage platform with SSH. Create an new domain:
+Login to the storage system with SSH. Create an new domain:
 
 ```text
 cli% createdomain -comment "This is a test domain." my-kubernetes-domain-0
@@ -85,29 +82,35 @@ Next, make sure domain users are allowed to create hosts outside the domain.
 cli% setsys AllowDomainUsersAffectNoDomain hostonly
 ```
 
-Hosts can be created manually at any point using the `createhost` command or other means on the array either from the user domain directly or from the global domain.
+Next steps would involve creating a `StorageClass` with the "virtualDomain" parameter set to the domain name. The credentials in the `Secret` should refer to the user assigned to the domain.
+
+!!! important "Pro tip"
+    A host can only belong to one domain. Hence using multiple `StorageClasses` to create tenant separation will only work if the hosts are separated per `StorageClass` [using CSI topology](../../using.md#topology_and_volumebindingmode). Further, if it's expected to create multiple virtual domains serving different DNS domains where users are expected to have identical hostnames, i.e "my-compute-1", there will be a name collision where only the existing host will be honored. This problem will surface intermittently as hosts are created and deleted on the array as needed during normal operations. Consider using hashed hostnames (explained in [the Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver#configuration-and-installation)) if naming collisions might become an issue.
+
+##### Virtual Domains with HPE CSI Driver v3.2.0 or Earlier
+
+Once the previous steps have been completed, hosts can be created manually at any point using the `createhost` command or other means on the array either from the user domain directly or from the global domain.
 
 !!! caution "Important"
     From HPE CSI Driver 3.0.0 and newer the hostnames needs to be prefixed with the protocol name, such as "iqn" for iSCSI, "nqntcp" for NVMe/TCP and "wwn" for Fibre Channel, i.e "iqn-myhost" where "myhost" is the host name found in the `HPENodeInfos` `CustomResourceDefinition`. The total string length may not exceed 27 characters.
 
-The next steps involve installing the HPE CSI Driver for Kubernetes with `disableHostDeletion` set to `true`. The steps to supply the parameter depends on if the Helm chart or Operator is being used.
+The next steps involve installing the HPE CSI Driver for Kubernetes with "disableHostDeletion" set to "true". The steps to supply the parameter depends on if the Helm chart or Operator is being used.
 
 - Helm chart install from [ArtifactHub.io](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver).
 - Operator install for [OpenShift](../../partners/redhat_openshift/index.md).
 
 Once the CSI driver is installed and running, [add an HPE storage backend](../../deployment.md#add_an_hpe_storage_backend) with the credentials provided in the steps above.
 
-!!! note
-    Remote Copy Groups managed by the CSP have not been tested with Virtual Domains at this time.
-
 ### Limitations
 
 These are the generally known limitation of the CSP.
 
-- The CSP has been tested using iSCSI with up to 250 `VolumeAttachments` per compute node. HPE recommends not exceeding 200 `VolumeAttachments` per node and leave headroom for emergencies. It's always recommended to test the upper bounds before deploying to production. Increasing the "maxVolumesPerNode" parameter from the default of 100 is explained in the [Helm chart](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). The default limit of 100 has been tested and is supported with FC, iSCSI and NVMe/TCP.
-- Compute node hostnames may not exceed 27 characters. The storage platform limitation is 31 characters. Since HPE CSI Driver 3.0.0, the node name has a protocol prefix such as "nqntcp-", "iqn-" or "wwn-". Further, the CSP truncates the domain name from the Kubernetes node name. Make sure node uniqueness is in the beginning of the hostname to avoid problems.
+- The CSP supports up to 1000 `VolumeAttachments` per node with iSCSI and FC. NVMe/TCP has a platform limitation of 256. See [VolumeAttachment Limitations](../../index.md#volumeattachment_limitations) for more details.
+- Increasing the "maxVolumesPerNode" parameter in the Helm chart above 253 will start LUN enumeration for the CSP at 255 for iSCSI and FC. Ensure your FC HBA is configured to enumerate LUNs above 255.
+- Compute node hostnames may not exceed 27 characters. The storage platform limitation is 31 characters. Since HPE CSI Driver 3.0.0, the node name has a protocol prefix such as "nqntcp-", "iqn-" or "wwn-". Further, the CSP truncates the domain name from the Kubernetes node name. Make sure node uniqueness is in the beginning of the hostname to avoid problems. From CSI driver v3.3.0 it's possible to hash the node names during [Helm chart install](https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver). Using hashed names is limited to greenfield Kubernetes clusters with no existing `VolumeAttachments`.
 - IPv6 may only be used for iSCSI and API endpoint access. IPv6 addressing may not be used for NVMe/TCP, native NFS or replication.
 - Inline ephemeral volumes are not supported by the CSP due to a constraint in the naming translation.
+- Making `PVC` annotations for mutations of RCGs is not supported with Virtual Domains at this time.
 
 ## VLUN Templates
 
@@ -146,21 +149,22 @@ Example default `StorageClass` ([download](examples/storageclass.yaml)):
 | Parameter  | String<sup>*</sup>  | Description |
 | ---------- | ------- | ----------- |
 | accessProtocol (**Required**)  | nvmetcp<sup>5</sup>, fc or iscsi | The access protocol to use when attaching the persistent volume. |
-| cpg <sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the `cpg` parameter is not specified, the CSP will select a CPG available to the array. |
-| snapCpg <sup>1</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
-| compression <sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
-| provisioningType <sup>1</sup> | tpvv | Default. Indicates Thin provisioned volume type. |
+| cpg<sup>1</sup> | Text | The name of existing CPG to be used for volume provisioning. If the `cpg` parameter is not specified, the CSP will select a CPG available to the array. |
+| snapCpg<sup>6</sup> | Text | The name of the snapshot CPG to be used for volume provisioning. Defaults to value of `cpg` if not specified. |
+| compression<sup>1</sup> | Boolean | Indicates that the volume should be compressed. (3PAR only) |
+| provisioningType<sup>1</sup> | tpvv | Default. Indicates Thin provisioned volume type. |
 |                               | full <sup>3</sup> | Indicates Full provisioned volume type. |
 |                               | dedup <sup>3</sup> | Indicates Thin Deduplication volume type. |
 |                               | reduce <sup>4</sup> | Indicates Data Reduction volume type. |
 | hostSeesVLUN | Boolean | Enable "host sees" VLUN template. |
 | importVolumeName | Text | Name of the volume to import. |
 | importVolAsClone | Text | Name of the volume to clone and import. |
-| cloneOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. |
-| virtualCopyOf <sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. |
+| cloneOf<sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to clone. |
+| virtualCopyOf<sup>2</sup> | Text | Name of the `PersistentVolumeClaim` to snapshot. |
 | qosName | Text | Name of the volume set which has QoS rules applied. |
 | iscsiPortalIps | Text | Comma separated list of the array iSCSI port IPs. |
 | fcPortsList | Text   | Comma separated list of available FC ports. Example: "0:5:1,1:4:2,2:4:1,3:4:2" Default: Use all available ports. |
+| virtualDomain | Text | Existing domain on the array to create hosts and volumes in. Default: no domain assigned. |
 
 <small>
  <sup>*</sup> = All parameter keys and values are case sensitive. For example, `accessProtocol: "FC"` won't have the expected results.
@@ -169,6 +173,7 @@ Example default `StorageClass` ([download](examples/storageclass.yaml)):
  <br /><sup>2</sup> = Volumes with snapshots/clones can't be modified.
  <br /><sup>3</sup> = HPE 3PAR only parameter.
  <br /><sup>4</sup> = Not available for HPE 3PAR.
+ <br /><sup>6</sup> = Parameters that are not editable after provisioning on Alletra Storage MP B10000 10.5 and later.
  <br />Other notes:
  <br /><sup>5</sup> = Only HPE Alletra Storage MP B10000 supports NVMe/TCP.
 </small>
@@ -364,6 +369,7 @@ These `StorageClass` parameters are applicable only for replication, "primarySec
 | primarySecretNamespace             | Text    | The `Namespace` for the primary array `Secret`. |
 | primarySecret                      | Text    | The name of the `Secret` for the primary array. |
 | remoteCopyGroup<sup>2</sup>        | Text    | Name of new or existing RCG<sup>1</sup> on the array. |
+| replicationPolicy                  | Text    | Set to "active" Active Peer Persistence, omit or change to empty string if using Classic Peer Persistence. |
 | replicationDevices                 | Text    | Indicates name of `hpereplicationdeviceinfos` Custom Resource Definition (CRD). |
 | periodicReplicationInterval        | Text    | Optional interval in seconds when using `targetMode: periodic` in `HPEReplicationDeviceInfos`. Defaults to the minimum of 15 seconds and a maximum of 366 days (31622400 seconds). Integers needs to be quoted as parameters only support strings, i.e: `periodicReplicationInterval: "25"`.
 | oneRcgPerPvc<sup>2</sup>           | Boolean | Creates a dedicated Remote Copy group per persistent volume. (Optional) |
@@ -430,7 +436,7 @@ Description of the parameters.
 
 | Parameter          | Option  | Description |
 | ------------------ | ------- | ----------- |
-| replicationPolicy  | Text    | Set to "active" for Active Peer Persistence and omit or change to empty string if using Classic Peer Persistence. |
+| replicationPolicy  | Text    | Set to "active" for Active Peer Persistence, omit or change to empty string if using Classic Peer Persistence. |
 | remoteCopyGroup    | Text    | Name of existing RCG. |
 | replicationDevices | Text    | Name of `HPEReplicationDeviceInfo` `CRD`. |
 | oneRcgPerPvc       | Boolean | Creates a dedicated RCG per `PVC`. (Optional) |
@@ -510,7 +516,7 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | Parameter    | String   | Description |
 | ------------ | -------- | ----------- |
 | description  | Text     | An identifier to describe the `VolumeGroupClass`. Example: "My VolumeGroupClass" |
-| domain       | Text     | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample_domain" |
+| virtualDomain<sup>2</sup>| Text     | The array Virtual Domain, with which the volume group and related objects are associated with. Example: "sample-domain" |
 | bwMaxLimitKb | Text     | Bandwidth maximum limit in kilobytes per second for the target volume set. Example: "30000" |
 | priority<sup>1</sup>    | Text   | The priority level for the target volume set. Example: "low", "normal", "high"|
 | ioMinGoal<sup>1</sup>   | Text   | IOPS minimum goal for the target volume set. Example: "300" |
@@ -518,7 +524,9 @@ In the HPE CSI Driver version 1.4.0+, a volume set with QoS settings can be crea
 | bwMinGoalKb<sup>1</sup> | Text   | Bandwidth minimum goal in kilobytes per second for the target volume set. Example: "300" |
 | latencyGoal<sup>1</sup> | Text   | Latency goal in milliseconds (ms) or microseconds(us) for the target volume set. Example: "300ms" or "500us" |
 
-<small><sup>1</sup> = Parameter is deprecated and have no effect on HPE Alletra Storage MP B10000 10.5 and later.</small>
+<small><sup>1</sup> = Parameter have no effect on HPE Alletra Storage MP B10000 10.5 and earlier.<br />
+       <sup>2</sup> = This parameter was named "domain" in versions prior to v3.3.0.
+</small>
 
 !!! caution "Important"
     All QoS parameters supported by the platform are mandatory when creating a `VolumeGroupClass`.

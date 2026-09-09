@@ -18,6 +18,6 @@ Use the navigation on the left-hand side to explore the different topics. Feel f
 Use the navigation to the left. Not sure what you're looking for? → [Get started](welcome/index.md)!
 
 !!! note "Did you know?"
-    SCOD is "docs" in reverse?
+    SCOD is "docs" in reverse.
 
 <div align="right"><img src="https://github.com/hpe-storage/scod/workflows/Publish%20docs%20via%20GitHub%20Pages/badge.svg"></div>
