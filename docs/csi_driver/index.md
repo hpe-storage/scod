@@ -76,7 +76,7 @@ Release highlights:
 * Support for Alletra Storage MP B10000 10.6
 * Improved `VolumeAttachment` scaling for Alletra Storage MP B10000
 * Enhanced multitenancy with hashed CSI hostnames and Virtual Domains
-* Added an "insecure" option to allow Alletra Storage MP B10000 File Service NFS clients to mount exports from random sources ports >1024
+* Added an "insecure" option to allow Alletra Storage MP B10000 File Service NFS clients to mount exports from random source ports >1024
 * Many improvements to security, reliability, availability and scalability
 
 Upgrade considerations:
