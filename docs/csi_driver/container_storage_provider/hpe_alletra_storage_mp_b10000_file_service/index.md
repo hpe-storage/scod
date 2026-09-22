@@ -235,7 +235,7 @@ The `PVC` may now be referenced and attached to a workload.
 These are the current limitations of the HPE Alletra Storage MP B10000 File Service CSP.
 
 - Snapshots and clones are not yet implemented.
-- Maximum 64 File Service shares may exist at any given time on the array regardless of array node count.
+- Maximum 64 File Service shares for four or more array nodes, 32 for a two node system.
 - Maximum 64TiB capacity per file share.
 - Export permissions on the array are set to `*` (defined as "all" in the array interfaces) and will be reachable from any host that can reach the File interfaces on the array.
 - Due to how exports are presented on the array, deep directory structures may exceed the kernel hard-coded MAXPATHLEN limit of 4096 characters. The number of characters available to applications is 4008.
