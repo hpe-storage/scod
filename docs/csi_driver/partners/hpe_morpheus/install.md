@@ -1,13 +1,13 @@
 # Introduction
 
-HPE Kubernetes Service (HKS) part of HPE Morpheus Enterprise allows customers to deploy and manage Kubernetes clusters through the Morpheus hybrid cloud management platform. Since Morpheus uses a standard Linux distribution and upstream Kubernetes, the solution is fully supported by HPE CSI Driver for Kubernetes.
+HKS, HPE's enterprise Kubernetes allows customers to deploy and manage Kubernetes clusters through the HPE Morpheus Software hybrid cloud and multi-cloud management platform. Since HPE Morpheus uses a standard Linux distribution and upstream Kubernetes, the solution is fully supported by HPE CSI Driver for Kubernetes.
 
-Familiarize yourself on how to install a [HPE Kubernetes Service](https://www.hpe.com/support/morpheus-enterprise-documentation-latest) cluster on your infrastructure
+Familiarize yourself on how to install a [HKS](https://www.hpe.com/support/morpheus-enterprise-documentation-latest) cluster on your infrastructure
 
 [TOC]
 
 !!! tip "Brownfield Managed Clusters"
-    Clusters that have been deployed prior to being managed by Morpheus are subject to qualification using the [Compatibility and Support](../../index.md#latest_release) matrix. Both the host OS and Kubernetes distribution needs to be supported.
+    Clusters that have been deployed prior to being managed by HPE Morpheus are subject to qualification using the [Compatibility and Support](../../index.md#latest_release) matrix. Both the host OS and Kubernetes distribution needs to be supported.
 
 ## Installation
 
@@ -33,4 +33,4 @@ kubectl annotate --overwrite storageclass/rook-ceph-block storageclass.kubernete
 
 All most recent configurations will most likely work and be supported by HPE. Here are some of the current limitations and issues.
 
-- Morpheus allows users to deploy and manage Kubernetes on AWS. The logical choice for storage would be [HPE GreenLake Block Storage for AWS](https://aws.amazon.com/marketplace/pp/prodview-rvhlswizjagfs) but the HPE CSI Driver for Kubernetes is not yet supported with the storage platform.
+- HPE Morpheus allows users to deploy and manage Kubernetes on AWS. The logical choice for storage would be [HPE GreenLake Block Storage for AWS](https://aws.amazon.com/marketplace/pp/prodview-rvhlswizjagfs) but the HPE CSI Driver for Kubernetes is not yet supported with the storage platform.

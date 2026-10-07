@@ -80,7 +80,7 @@ nav:
     - 'Auxiliary Operations': 'csi_driver/operations.md'
     - 'Diagnostics': 'csi_driver/diagnostics.md'
     - 'Partner Ecosystems':
-      - 'HPE Morpheus Enterprise': 'csi_driver/partners/hpe_morpheus/install.md'
+      - 'HPE Morpheus Software': 'csi_driver/partners/hpe_morpheus/install.md'
       - 'HPE Ezmeral Runtime Enterprise': 'csi_driver/partners/hpe_ezmeral/install.md'
       - 'Amazon EKS Anywhere': 'csi_driver/partners/amazon_eks_anywhere/index.md'
       - 'Canonical': 'csi_driver/partners/canonical/index.md'

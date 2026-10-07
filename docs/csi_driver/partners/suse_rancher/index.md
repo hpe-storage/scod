@@ -1,4 +1,5 @@
 # Overview
+<!--a href="https://www.suse.com/pcsc/home#search?productName=HPE%20CSI%20Driver%20for%20Kubernetes"><img border="0" src="img/placeholder.png" align="right" width="128" hspace="12" vspace="2" /></a-->
 
 SUSE Rancher provides a platform to deploy Kubernetes-as-a-service everywhere. HPE partners with SUSE Rancher to provide effortless management of the CSI driver on managed Kubernetes clusters. This allows our joint customers and channel partners to enable hybrid cloud stateful workloads on Kubernetes.
 
@@ -12,10 +13,11 @@ Rancher is capable of managing Kubernetes across a broad spectrum of managed and
 
 Rancher uses Helm to deploy and manage partner software. The concept of a Helm repository in Rancher is organized under "Apps" in the Rancher UI. The HPE CSI Driver for Kubernetes is a partner solution present in the official Partner repository.
 
-| Rancher release | Install methods                       | Recommended CSI driver |
-| --------------- | ------------------------------------- | ---------------------- |
-| 2.7             | Cluster Manager App Chart             | latest                 |
-| 2.8             | Cluster Manager App Chart             | latest                 |
+| Rancher release | Install methods                       | Recommended CSI driver                              |
+| --------------- | ------------------------------------- | --------------------------------------------------- |
+| 2.x             | Cluster Manager App Chart             | [latest](../../index.md#latest_release)<sup>1</sup> |
+
+<small><sup>1</sup> = Make sure to verify the HPE CSI Driver version against the [SUSE Partner Certification & Solutions Catalog entry](https://www.suse.com/pcsc/home#search?productName=HPE%20CSI%20Driver%20for%20Kubernetes).</small>
 
 !!! tip
     Learn more about Helm Charts and Apps in the [Rancher documentation](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher)

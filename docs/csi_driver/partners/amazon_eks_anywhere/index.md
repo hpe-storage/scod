@@ -1,4 +1,3 @@
-
 # Overview
 
 Amazon Elastic Kubernetes Service (EKS) Anywhere allows customers to deploy Amazon EKS-D (Amazon Elastic Kubernetes Service Distro) on their private or non-AWS clouds. AWS users familiar with the ecosystem gain the ability to cross clouds and manage their Kubernetes estate in a single pane of glass. 
@@ -20,7 +19,7 @@ The default Linux distribution AWS favors is Bottlerocket OS which is a containe
 
 ### EKS Anywhere on vSphere
 
-Only iSCSI is supported as the HPE CSI Driver does not support NPIV which is required for virtual Fibre Channel host bus adapters (HBA). More information on this limitation is elaborated on in the [VMware section](../vmware/index.md#deployment) on SCOD.
+Only iSCSI is supported as the HPE CSI Driver does not support NPIV which is required for virtual Fibre Channel host bus adapters (HBA). More information on this limitation is elaborated on in the [VMware section](../vmware/index.md) on SCOD.
 
 Due to `VSphereMachineConfig` VM templates only allow a single vNIC, no multipath redundancy is available to the host. Ensure network fault tolerance according to VMware best practices is available to the VM. Also keep in mind that the backend storage system needs to have a data interface in the same subnet as the HPE CSI Driver will not try to discover targets over routed networks.
 

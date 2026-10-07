@@ -12,10 +12,11 @@ Software deployed on OpenShift 4 follows the [Operator pattern](https://kubernet
 
 ### Certified combinations
 
-Software delivered through the HPE and Red Hat partnership follows a [rigorous certification process](https://redhat-connect.gitbook.io/openshift-badges/badges/container-storage-interface-csi-1) and only qualify what's listed as "Certified" in the below table.
+Software delivered through the HPE and Red Hat partnership follows a [rigorous certification process](https://docs.redhat.com/en/documentation/red_hat_software_certification/2025/html/red_hat_software_certification_workflow_guide/con_csi-certification_openshift-sw-cert-workflow-working-with-container-network-interface) and only qualify what's listed as "Certified" in the below table.
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
+| Certified               | 5.0<sup>3</sup>                   | 3.3.0            | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.22 EUS<sup>2</sup>              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.21                              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.3.0    | [All](../../container_storage_provider/index.md) |
@@ -31,6 +32,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 <small>
  <br /><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).
  <br /><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).
+ <br /><sup>3</sup> = The HPE CSI Operator for OpenShift 3.3.0 passes HPE internal end-to-end testing on Red Hat OpenShift 5.0.0-rc.5. The tests will be re-run on the GA build of 5.0 at release.
  <!-- <br /><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [Unsupported Version of the Operator Install](#unsupported_version_of_the_operator_install) method. Formal certification will be part of the next release of the CSI driver.  -->
 </small>
 
@@ -48,7 +50,7 @@ By default, OpenShift prevents containers from running as root. Containers are r
 
 Users deploying applications that require persistent storage (i.e. through the HPE CSI Driver) will need the appropriate permissions and Security Context Constraints (SCC) to be able to request and manage storage through OpenShift. Modifying container security to work with OpenShift is outside the scope of this document.
 
-For more information on OpenShift security, see [Managing security context constraints](https://docs.openshift.com/container-platform/4.17/authentication/managing-security-context-constraints.html).
+For more information on OpenShift security, see [Managing security context constraints](https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies).
 
 !!! note
     If you run into issues writing to persistent volumes provisioned by the HPE CSI Driver under a restricted SCC, add the `fsMode: "0770"` parameter to the `StorageClass` with RWO claims or `fsMode: "0777"` for RWX claims.
@@ -220,7 +222,7 @@ The CSI driver is now ready for use. Next, an [HPE storage backend needs to be a
 
 #### Additional information
 
-At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.openshift.com/container-platform/4.19/operators/index.html).
+At this point the CSI driver is managed like any other Operator on Kubernetes and the life-cycle management capabilities may be explored further in the [official Red Hat OpenShift documentation](https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/operators-overview).
 
 #### Uninstall the HPE CSI Operator
 
@@ -303,6 +305,9 @@ oc-mirror --registries.d nosig --v2 --config=./imageset.yaml file://example
 ## Duplicate NQNs issue
 
 In the event of the CSI node driver not starting because the event log reports a duplicate NQN in `hpenodeinfos`, the host identity and NQN needs to be regenerated to reflect the actual unique machine identity.
+
+!!! note "Good to know"
+    This is not necessary on Red Hat OpenShift 5.0 and later.
 
 This is the message observed on the init container of the CSI node `Pod`:
 
