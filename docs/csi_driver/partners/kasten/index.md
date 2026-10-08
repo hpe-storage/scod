@@ -13,7 +13,7 @@ HPE CSI Driver for Kubernetes is on the Veeam Alliance Partner Technical Program
 
 ## Prerequisites
 
-The cluster needs to be running Kubernetes 1.25 or later and have the CSI snapshot `CustomResourceDefinitions` (CRDs) and the CSI snapshot-controller deployed. Follow the guides available on SCOD to:
+The cluster needs to be running Kubernetes 1.25 or later and have the CSI snapshot `CustomResourceDefinitions` (`CRDs`) and the CSI snapshot-controller deployed. Follow the guides available on SCOD to:
 
 - [Enable CSI snapshots](../../using.md#enabling_csi_snapshots)
 - [Using CSI snapshots](../../using.md#using_csi_snapshots)
@@ -31,7 +31,7 @@ Assuming we have a default `VolumeSnapshotClass` named "hpe-snapshot":
 kubectl annotate volumesnapshotclass hpe-snapshot k10.kasten.io/is-snapshot-class=true
 ```
 
-### Annotate the StorageClass volumeMode: Block
+### Annotate the StorageClass for volumeMode: Block
 
 For Kasten to understand that block volumes are supported, the `StorageClass` needs to be annotated. This is necessary for backing up KubeVirt virtual machines among other block-based applications.
 
