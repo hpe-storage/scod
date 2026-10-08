@@ -16,7 +16,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 
 | Status                  | Red Hat OpenShift                 | HPE CSI Operator | Container Storage Providers                      |
 | ----------------------- | --------------------------------- | ---------------- | ------------------------------------------------ |
-| Certified               | 5.0<sup>3</sup>                   | 3.3.0            | [All](../../container_storage_provider/index.md) |
+| Tested<sup>3</sup>      | 5.0                               | 3.3.0            | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.22 EUS<sup>2</sup>              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.21                              | 3.1.0 → 3.3.0    | [All](../../container_storage_provider/index.md) |
 | Certified               | 4.20 EUS<sup>2</sup>              | 3.0.2 → 3.3.0    | [All](../../container_storage_provider/index.md) |
@@ -32,7 +32,7 @@ Software delivered through the HPE and Red Hat partnership follows a [rigorous c
 <small>
  <br /><sup>1</sup> = End of life support per [Red Hat OpenShift Life Cycle Policy](https://access.redhat.com/support/policy/updates/openshift).
  <br /><sup>2</sup> = Red Hat OpenShift [Extended Update Support](https://access.redhat.com/support/policy/updates/openshift-eus).
- <br /><sup>3</sup> = The HPE CSI Operator for OpenShift 3.3.0 passes HPE internal end-to-end testing on Red Hat OpenShift 5.0.0-rc.5. The tests will be re-run on the GA build of 5.0 at release.
+ <br /><sup>3</sup> = The HPE CSI Operator for OpenShift 3.3.0 passes HPE internal and Red Hat end-to-end testing on Red Hat OpenShift 5.0.0-rc.5. The tests will be re-run on the GA build of 5.0 at release when Red Hat open 5.0 for third party certification.
  <!-- <br /><sup>3</sup> = Passes the Kubernetes CSI e2e test suite on the listed CSPs using the [Unsupported Version of the Operator Install](#unsupported_version_of_the_operator_install) method. Formal certification will be part of the next release of the CSI driver.  -->
 </small>
 
