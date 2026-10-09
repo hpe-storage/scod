@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pvc-copy-block
+spec:
+  template:
+    spec:
+      containers:
+        - name: ddrescue
+          image: quay.io/hpestorage/pvc-copy-util:v1.0
+          imagePullPolicy: IfNotPresent
+          volumeDevices:
+            - name: src-pv
+              devicePath: /dev/xvd-src
+            - name: dst-pv
+              devicePath: /dev/xvd-dst
+          command: 
+            - ddrescue
+          args: 
+            - -f
+            - -n
+            - /dev/xvd-src
+            - /dev/xvd-dst
+      restartPolicy: Never
+      volumes:
+      - name: src-pv
+        persistentVolumeClaim:
+          claimName: old-pvc
+      - name: dst-pv
+        persistentVolumeClaim:
+          claimName: new-pvc
