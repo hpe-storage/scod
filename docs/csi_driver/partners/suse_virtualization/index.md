@@ -1,5 +1,5 @@
 # Overview
-<img src="img/SUSECertifiedSV.png" align="right" width="128" hspace="12" vspace="2" />
+<a href="https://www.suse.com/pcsc/home#search?productName=HPE%20CSI%20Driver%20for%20Kubernetes"><img border="0" src="img/SUSECertifiedSV.png" align="right" width="128" hspace="12" vspace="2" /></a>
 
 *"Harvester is a modern hyperconverged infrastructure (HCI) solution built for bare metal servers using enterprise-grade open-source technologies including Linux, KVM, Kubernetes, KubeVirt, and Longhorn. Designed for users looking for a flexible and affordable solution to run cloud-native and virtual machine (VM) workloads in your datacenter and at the edge, Harvester provides a single pane of glass for virtualization and cloud-native workload management."*<sup>1</sup>
 
@@ -13,7 +13,7 @@
 HPE supports the underlying host OS, SL Micro, using the HPE CSI Driver for Kubernetes and the Rancher Kubernetes Engine 2 (RKE2) which is a CNCF certified Kubernetes distribution. SUSE Virtualization (formerly Harvester) embeds KubeVirt and uses standard CSI storage constructs to manage storage resources for virtual machines.
 
 - Learn more about [Compatibility & Support](../../../csi_driver/index.md#compatibility_and_support)
-- Verify the certification of [HPE CSI Driver for Kubernetes](https://www.suse.com/pcsc/viewVersionPage?versionID=26280) on suse.com
+- Verify the certification of [HPE CSI Driver for Kubernetes](https://www.suse.com/pcsc/home#search?productName=HPE%20CSI%20Driver%20for%20Kubernetes) on suse.com
 
 !!! note
     The SCOD documentation refers to SUSE Virtualization as Harvester.

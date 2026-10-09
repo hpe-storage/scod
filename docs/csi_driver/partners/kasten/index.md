@@ -13,7 +13,7 @@ HPE CSI Driver for Kubernetes is on the Veeam Alliance Partner Technical Program
 
 ## Prerequisites
 
-The cluster needs to be running Kubernetes 1.25 or later and have the CSI snapshot `CustomResourceDefinitions` (CRDs) and the CSI snapshot-controller deployed. Follow the guides available on SCOD to:
+The cluster needs to be running Kubernetes 1.25 or later and have the CSI snapshot `CustomResourceDefinitions` (`CRDs`) and the CSI snapshot-controller deployed. Follow the guides available on SCOD to:
 
 - [Enable CSI snapshots](../../using.md#enabling_csi_snapshots)
 - [Using CSI snapshots](../../using.md#using_csi_snapshots)
@@ -31,24 +31,32 @@ Assuming we have a default `VolumeSnapshotClass` named "hpe-snapshot":
 kubectl annotate volumesnapshotclass hpe-snapshot k10.kasten.io/is-snapshot-class=true
 ```
 
+### Annotate the StorageClass for volumeMode: Block
+
+For Kasten to understand that block volumes are supported, the `StorageClass` needs to be annotated. This is necessary for backing up KubeVirt virtual machines among other block-based applications.
+
+```text
+kubectl annotate storageclass hpe-standard k10.kasten.io/sc-supports-block-mode-exports=true
+```
+
 ## Installing Kasten
 
 Kasten installs in its own namespace using a Helm chart. It also assumes there's a performant default `StorageClass` on the cluster to serve the various `PersistentVolumeClaims` needed for the controllers.
 
-- [Pre-flight checks and prerequisites](https://docs.kasten.io/latest/install/requirements.html#pre-flight-checks)
-- [Install Kasten on Kubernetes](https://docs.kasten.io/latest/install/other/other.html)
+- [Pre-flight checks and prerequisites](https://docs.kasten.io/latest/install/requirements/#pre-flight-checks)
+- [Install Kasten on Kubernetes](https://docs.kasten.io/latest/install/other/other/)
 
 !!! note
     Above links are external to [docs.kasten.io](https://docs.kasten.io).
 
 ## Snapshots and restores
 
-Kasten provides the user with a graphical interface and dashboard to schedule and perform data management operations. There's also an API that can be manipulated with `kubectl` using CRDs.
+Kasten provides the user with a graphical interface and dashboard to schedule and perform data management operations. There's also an API that can be manipulated with `kubectl` using `CRDs`.
 
 To perform snapshot and restore operations through Kasten using the HPE CSI Driver for Kubernetes, please refer to the Kasten documentation.
 
-- [Accessing Kasten](https://docs.kasten.io/latest/access/access.html)
-- [Using Kasten](https://docs.kasten.io/latest/usage/usage.html)
+- [Accessing Kasten](https://docs.kasten.io/latest/access/)
+- [Using Kasten](https://docs.kasten.io/latest/usage/usage)
 
 !!! note
     Above links are external to [docs.kasten.io](https://docs.kasten.io).

@@ -22,7 +22,7 @@ Due to the minimization phase of the immutable Ubuntu image built with CanvOS, c
 - NVMe/TCP is not supported due to missing user space tools.
 - The xfsprogs package is not installed which disables all XFS filesystem support.
 - The Spectro Cloud pack will be installed with `disableNodeConformance=true`, if installing on a supported mutable node, use `disableNodeConformance=false` to enable XFS and NVMe/TCP.
-- Spectro Cloud edge nodes are deployed with very long names. These names are too long to be supported by any Alletra Storage MP B10000 pedigree platform. It's recommended to use the HPE provided `user-data` stanza to shorten the node name.
+- Spectro Cloud edge nodes are deployed with very long names. These names are too long to be supported by any Alletra Storage MP B10000 pedigree platform. It's recommended to use the HPE provided `user-data` stanza to shorten the node name or install the pack with `disableHostname=true` which hashes the hostname on the backend. It's recommended to shorten the original hostname if possible.
 - The open-iscsi package is installed during the templating phase of the build process. This will result in duplicate IQN names and the CSI node driver will not start. It's recommended to use the HPE provided `user-data` stanza to use the shortened node UUID as the IQN identifier to avoid duplicate names.
 - iSCSI CHAP validation at pack install is not supported because Spectro Cloud does not support Helm pre-install hooks. Ensure the iSCSI CHAP `Secret` exist prior if using iSCSI CHAP.
 
@@ -30,7 +30,7 @@ Due to the minimization phase of the immutable Ubuntu image built with CanvOS, c
 
 When building ISOs with the CanvOS utility provided by Spectro Cloud, a custom `user-data` file needs to be prepared to customize the image for the environment it's being deployed into and which Spectro Cloud tenant to connect to. The CSI driver require additional steps as highlighted in the limitations.
 
-```yaml
+```yaml fct_label="Shorten hostname and reset IQN"
 #cloud-config
 stylus:
   site:
@@ -55,6 +55,29 @@ stages:
       commands:
         - mkdir -p /etc/palette
         - sed -e 's/.*\(.\{12\}\)$/edge-\1/' /sys/class/dmi/id/product_uuid > /etc/palette/metadata-regex
+    - name: Reset host IQN
+      commands:
+        - sed -e 's/.*\(.\{12\}\)$/InitiatorName=iqn.2016-04.com.open-iscsi:\1/' /sys/class/dmi/id/product_uuid > /etc/iscsi/initiatorname.iscsi
+```
+
+```yaml fct_label="IQN reset only"
+#cloud-config
+stylus:
+  site:
+    paletteEndpoint: my-org.console.spectrocloud.com
+    edgeHostToken: <Your Spectro Cloud token>
+    tags:
+      city: "Houston"
+install:
+  poweroff: true
+stages:
+  initramfs:
+    - name: Create user and assign to sudo group
+      users:
+        kairos:
+          groups:
+            - sudo
+          passwd: kairos
     - name: Reset host IQN
       commands:
         - sed -e 's/.*\(.\{12\}\)$/InitiatorName=iqn.2016-04.com.open-iscsi:\1/' /sys/class/dmi/id/product_uuid > /etc/iscsi/initiatorname.iscsi
