@@ -114,7 +114,7 @@ Upgrade considerations:
   <tr>
     <th>Platforms<sup>3</sup></th>
     <td>
-      Alletra Storage MP B10000 10.6.0<br />
+      Alletra Storage MP B10000 10.5.55 - 10.6.0<br />
       Alletra Storage MP X10000 2.0.0.0<br />
       Alletra OS 9000 9.6.20<br />
       Alletra OS 5000/6000 6.1.3.300<br />
