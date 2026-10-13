@@ -1,0 +1,17 @@
+varReference:
+- kind: PersistentVolumeClaim
+  path: spec/resources/requests/storage
+- kind: ConfigMap
+  path: data
+- kind: Deployment
+  path: spec/selector/matchLabels/app
+- kind: Deployment
+  path: spec/selector/matchLabels/app
+- kind: Deployment
+  path: spec/template/metadata/labels/app
+- kind: Deployment
+  path: spec/template/spec/containers/resources/limits/cpu
+- kind: Deployment
+  path: spec/template/spec/containers/resources/limits/memory
+- kind: Service
+  path: spec/selector/app
