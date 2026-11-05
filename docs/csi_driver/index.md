@@ -69,6 +69,71 @@ These are the combinations HPE has tested and can provide official support servi
     For Kubernetes 1.12 and earlier please see [legacy FlexVolume drivers](../flexvolume_driver/index.md), do note that the FlexVolume drivers are being deprecated.
 
 <a name="latest_release"></a>
+#### HPE CSI Driver for Kubernetes 3.3.1
+
+Release highlights:
+
+* Patch release for customers running multiple arrays using block storage with HPE Alletra Storage MP B10000 and its predecessors.
+
+<table>
+  <tr>
+    <th>Kubernetes</th>
+    <td>1.34-1.37<sup>1</sup></td>
+  </tr>
+  <tr>
+    <th>Helm Chart</th>
+    <td><a href="https://artifacthub.io/packages/helm/hpe-storage/hpe-csi-driver/3.3.1">v3.3.1</a> on ArtifactHub</td>
+  </tr>
+  <tr>
+    <th>Operators</th>
+    <td>
+     <a href="https://operatorhub.io/operator/hpe-csi-operator/stable/hpe-csi-operator.v3.3.1">v3.3.1</a> on OperatorHub<br />
+     <a href="https://catalog.redhat.com/software/container-stacks/detail/5e9874643f398525a0ceb004">v3.3.1</a> via OpenShift console, see <a href="partners/redhat_openshift">Partner Ecosystems / Red Hat OpenShift</a>
+    </td>
+  </tr>
+  <tr>
+    <th>Worker&nbsp;OS</th>
+    <td>
+      Red Hat Enterprise Linux (including CoreOS)<sup>2</sup> 8.x, 9.x, 10.x<br />
+      Ubuntu 20.04, 22.04, 24.04, 26.04<br />
+      SUSE Linux Enterprise Server (including SL Micro<sup>4</sup>) 15 SP5, SP6, SP7, 16
+  </tr>
+  <tr>
+    <th>CPU architecture</th>
+    <td>AMD64, ARM64</td>
+  </tr>
+  <tr>
+    <th>Platforms<sup>3</sup></th>
+    <td>
+      Alletra Storage MP B10000 10.5.55 - 10.6.0<br />
+      Alletra Storage MP X10000 2.0.0.0<br />
+      Alletra OS 9000 9.6.20<br />
+      Alletra OS 5000/6000 6.1.3.300<br />
+      Nimble OS 6.1.3.300<br />
+      Primera OS 4.6.20<br />
+      3PAR OS 3.3.2 EMU1
+    </td>
+  </tr>
+  <tr>
+    <th>Data&nbsp;protocols</th>
+    <td>Fibre Channel, iSCSI, NVMe/TCP and NFS</td>
+  </tr>
+  <tr>
+    <th>Filesystems</th>
+    <td>XFS, ext3/ext4, btrfs, NFSv4<sup>&ast;</sup></td>
+  </tr>
+  <tr>
+    <th>Release&nbsp;notes</th>
+    <td><a href="https://github.com/hpe-storage/csi-driver/blob/master/release-notes/v3.3.1.md">v3.3.1</a> on GitHub</td>
+  </tr>
+  <!--tr>
+   <th>Blogs</th>
+   <td>
+    <a href="https://community.hpe.com/t5/around-the-storage-block/improved-scalability-and-multitenancy-with-hpe-csi-driver-for/ba-p/7272513">Improved scalability and multitenancy with HPE CSI Driver for Kubernetes 3.3.0</a>
+   </td>
+ </tr-->
+</table>
+
 #### HPE CSI Driver for Kubernetes 3.3.0
 
 Release highlights:
