@@ -75,7 +75,18 @@ If no prior CRDs or controllers exist, install the snapshot CRDs and common snap
 !!! note
     The following stanzas require `git`, `kubectl` and `yq`.
 
-```text fct_label="HPE CSI Driver v3.3.0"
+```text fct_label="HPE CSI Driver v3.3.1"
+# Kubernetes 1.34-1.37
+git clone https://github.com/kubernetes-csi/external-snapshotter
+cd external-snapshotter
+git checkout tags/v8.6.0 -b hpe-csi-driver-v3.3.1
+kubectl kustomize client/config/crd | kubectl create -f-
+kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | \
+  yq '(select(.spec.template.spec.containers.0.image) | .spec.template.spec.containers.0.image) = "registry.k8s.io/sig-storage/snapshot-controller:v8.6.0"' | \
+  kubectl apply -f-
+```
+
+```text fct_label="v3.3.0"
 # Kubernetes 1.34-1.37
 git clone https://github.com/kubernetes-csi/external-snapshotter
 cd external-snapshotter

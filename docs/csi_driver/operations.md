@@ -405,6 +405,10 @@ In the event the CSI driver contains updates to the NFS Server Provisioner, any 
 !!! note
     This is generally considered an optional step as existing NFS servers will continue to function across the CSI driver updates. It's only necessary if there are concerns about a particular CVE or explicit functionality being requested in a newer version of the CSI driver. Some functionality is not possible patch and would require recreating the entire NFS `Deployment`.
 
+### Upgrade to v3.3.1
+
+There were no changes made to the NFS server image in v3.3.1. Use v3.3.0.
+
 ### Upgrade to v3.3.0
 
 Any prior deployed NFS servers may be upgraded to v3.3.0.
