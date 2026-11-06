@@ -190,6 +190,7 @@ Common HPE CSI Driver `StorageClass` parameters across block-based CSPs.
 | nfsResourceLimitsCpuM         | Text           | Specify CPU limits for the server `Deployment` in milli CPU. Default: "1000m". Example: "4000m". Set to "0" to disable. |
 | nfsResourceLimitsMemoryMi     | Text           | Specify memory limits (in megabytes) for the server `Deployment`. Default: "2048Mi". Example: "500Mi". Recommended minimum: "2048Mi". Set to "0" to disable. |
 | nfsTolerationSeconds          | Text           | Change the milestone wait time for an unresponsive host. Default: "30" |
+| nfsTopologyKey                | Text           | Customize the node label used as topology key to spread NFS server `Pods`. Any valid label key is allowed. The spread is a preference, not a limit. Default: "kubernetes.io/hostname" |
 | hostEncryption                | Boolean        | Direct the CSI driver to invoke Linux Unified Key Setup (LUKS) via the `dm-crypt` kernel module. Default: "false". See [Volume encryption](#using_volume_encryption) to learn more. |
 | hostEncryptionSecretName      | Text           | Name of the `Secret` to use for the volume encryption. Mandatory if "hostEncryption" is enabled. Default: "" |
 | hostEncryptionSecretNamespace | Text           | `Namespace` where to find "hostEncryptionSecretName". Default: "" |
@@ -986,6 +987,8 @@ Next, provision "RWO" or "RWX" claims from the "hpe-nfs-servers" `StorageClass`.
 These are some common issues and gotchas that are useful to know about when planning to use the NFS Server Provisioner.
 
 - The current tested and supported limit for the NFS Server Provisioner is 32 NFS servers per Kubernetes worker node.
+- NFS servers are spread across nodes using the topology key in "nfsTopologyKey". The spread is a preference, so the limit of 32 NFS servers per node can still be exceeded. Running NFS servers are not moved automatically, moving them requires manual intervention.
+- An empty or malformed "nfsTopologyKey" fails provisioning of the `PVC`. A well-formed key that no node carries has no effect and reports no error.
 - The two `StorageClass` parameters "nfsResourceLimitsCpuM" and "nfsResourceLimitsMemoryMi" control how much CPU and memory it may consume. Tests show that the NFS server consumes about 150MiB at instantiation and 2GiB is the recommended minimum for most workloads. The NFS server `Pod` is by default limited to 2GiB of memory and 1000 milli CPU.
 - HPE CSI Driver v2.5.2 or later is required to expand NFS `PersistentVolumeClaims`.
 - Due to the fact that the NFS Server Provisioner deploys a number of different resources on the hosting cluster per `PVC`, provisioning times may differ greatly between clusters. On an idle cluster with the NFS Server Provisioning image cached, less than 30 seconds is the most common sighting but it may exceed 30 seconds which may trigger warnings on the requesting `PVC`. This is normal behavior.
