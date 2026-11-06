@@ -109,7 +109,7 @@ spec:
           matchLabels:
             spread-by: hpe-nfs
         maxSkew: 1
-        topologyKey: node
+        topologyKey: kubernetes.io/hostname
         whenUnsatisfiable: ScheduleAnyway
       volumes:
       - name: hpe-nfs
