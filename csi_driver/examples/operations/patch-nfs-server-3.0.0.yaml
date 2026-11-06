@@ -1,0 +1,48 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: hpe-nfs
+          image: quay.io/hpestorage/nfs-provisioner:v3.0.8
+          readinessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - /nfsHealthCheck.sh
+              - READINESS
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          startupProbe:
+            exec:
+              command:
+              - /bin/sh
+              - /nfsHealthCheck.sh
+              - STARTUP
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - /nfsHealthCheck.sh
+              - LIVENESS
+            failureThreshold: 3
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 90
+      tolerations:
+      - effect: NoSchedule
+        key: csi.hpe.com/hpe-nfs
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 30
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 30
