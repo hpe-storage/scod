@@ -70,13 +70,19 @@ Login to the storage system with SSH. Create an new domain:
 cli% createdomain -comment "This is a test domain." my-kubernetes-domain-0
 ```
 
-Then, create a new user and assign to the domain. These credentials will be used by the CSI driver.
+A CPG needs to be created and assigned to the domain, see [HPE Alletra Storage MP B10000: CLI installation and reference](https://support.hpe.com/hpesc/public/docDisplay?docId=sd00002409en_us&page=GUID-18C9531E-4E9E-4BF1-8C02-D868E08B0576.html) for the full `createcpg` syntax.
+
+```text
+cli% createcpg -domain my-kubernetes-domain-0 SSD_r0
+```
+
+Create a new user and assign to the domain. These credentials will be used by the CSI driver.
 
 ```text
 cli% createuser -c my-password-0 domain-user-0 my-kubernetes-domain-0 edit
 ```
 
-Next, make sure domain users are allowed to create hosts outside the domain.
+Next, make sure domain users are allowed to create hosts outside the domain (hosts are global resources).
 
 ```text
 cli% setsys AllowDomainUsersAffectNoDomain hostonly
