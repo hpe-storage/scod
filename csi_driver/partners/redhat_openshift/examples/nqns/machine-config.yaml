@@ -1,0 +1,36 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-worker-nvme-gen-hostnqn-hostid
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    systemd:
+      units:
+        - contents: |
+            [Unit]
+            Description=CoreOS Generate NVMe Hostnqn
+            Documentation=https://bugzilla.redhat.com/show_bug.cgi?id=2049991#c2
+            [Service]
+            Type=oneshot
+            ExecStart=/usr/bin/sh -c 'nvme gen-hostnqn > /etc/nvme/hostnqn'
+            RemainAfterExit=yes
+            [Install]
+            WantedBy=multi-user.target
+          enabled: true
+          name: nvme-gen-hostnqn.service
+        - contents: |
+            [Unit]
+            Description=CoreOS Generate NVMe Hostid
+            Documentation=https://bugzilla.redhat.com/show_bug.cgi?id=2049991#c2
+            [Service]
+            Type=oneshot
+            ExecStart=/usr/bin/sh -c 'dmidecode -s system-uuid > /etc/nvme/hostid'
+            RemainAfterExit=yes
+            [Install]
+            WantedBy=multi-user.target
+          enabled: true
+          name: nvme-gen-hostid.service

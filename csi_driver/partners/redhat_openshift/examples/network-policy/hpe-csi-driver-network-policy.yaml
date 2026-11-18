@@ -1,0 +1,148 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hpe-storage-policy
+  namespace: hpe-storage
+spec:
+  policyTypes:
+  - Egress  
+  egress:
+
+  # OpenShift DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: openshift-dns
+    ports:
+    - port: 5353
+      protocol: UDP
+    - port: 5353
+      protocol: TCP
+
+  # Primera, Alletra 9000 and Alletra Storage MP B10000
+  #- to: 
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 443
+  #    protocol: TCP
+  
+  # Nimble Storage and Alletra 5000/6000 
+  #- to: 
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 443
+  #    protocol: TCP
+  #  - port: 5392
+  #    protocol: TCP
+
+  # 3PAR
+  #- to: 
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
+  #  ports:
+  #  - port: 8080
+  #    protocol: TCP
+  #  - port: 443
+  #    protocol: TCP
+  #  - port: 22
+  #    protocol: TCP
+
+  # Control-plane endpoints
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hpe-nfs-policy
+  namespace: hpe-nfs
+spec:
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: hpe-storage
+  - ports:
+    - protocol: TCP
+      port: 49000
+    - protocol: TCP
+      port: 2049
+    - protocol: TCP
+      port: 32803
+    - protocol: TCP
+      port: 20048
+    - protocol: TCP
+      port: 111
+    - protocol: TCP
+      port: 662
+    - protocol: TCP
+      port: 875
+    - protocol: UDP
+      port: 49000
+    - protocol: UDP
+      port: 2049
+    - protocol: UDP
+      port: 32803
+    - protocol: UDP
+      port: 20048
+    - protocol: UDP
+      port: 111
+    - protocol: UDP
+      port: 662
+    - protocol: UDP
+      port: 875
+  egress:
+
+  # OpenShift DNS
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: openshift-dns
+    ports:
+    - port: 5353
+      protocol: UDP
+    - port: 5353
+      protocol: TCP
+
+  # Control-plane endpoints
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP
+  - to: 
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - port: 6443
+      protocol: TCP

@@ -1,0 +1,56 @@
+# HPE NFS server resources
+resources:
+- pvc.yaml
+- service.yaml
+- configmap.yaml
+- deployment.yaml
+
+# Environment specific properties, do not edit in base.
+configMapGenerator:
+- name: local-conf
+  envs: 
+  - environment.properties
+
+# Where variables needs to be interpolated.
+configurations:
+- values.yaml
+
+# Manifest variables
+vars:
+- name: PERSISTENCE_SIZE
+  objref:
+    kind: ConfigMap
+    name: local-conf
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.PERSISTENCE_SIZE
+
+- name: CLUSTER_NODE_DOMAIN_NAME
+  objref:
+    kind: ConfigMap
+    name: local-conf
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.CLUSTER_NODE_DOMAIN_NAME
+
+- name: SERVICE_SELECTOR
+  objref:
+    kind: Deployment
+    name: hpe-nfs
+    apiVersion: apps/v1
+
+- name: NFS_SERVER_CPU_LIMIT
+  objref:
+    kind: ConfigMap
+    name: local-conf
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.NFS_SERVER_CPU_LIMIT
+
+- name: NFS_SERVER_MEMORY_LIMIT
+  objref:
+    kind: ConfigMap
+    name: local-conf
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.NFS_SERVER_MEMORY_LIMIT
